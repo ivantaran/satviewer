@@ -1,0 +1,1612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Options</string>
+  </property>
+  <property name="locale">
+   <locale language="C" country="AnyCountry"/>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="margin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="wgtTool" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>72</width>
+       <height>0</height>
+      </size>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_7">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="margin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QToolBox" name="toolBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="page_5">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>72</width>
+           <height>319</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <attribute name="label">
+          <string>Objects</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QToolButton" name="btnToolSat">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Satellites</string>
+            </property>
+            <property name="icon">
+             <iconset resource="SatViewer.qrc">
+              <normaloff>:/options/gnome-applets.png</normaloff>:/options/gnome-applets.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextUnderIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="btnToolLoc">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Locations</string>
+            </property>
+            <property name="icon">
+             <iconset resource="SatViewer.qrc">
+              <normaloff>:/options/stock_channel.png</normaloff>:/options/stock_channel.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextUnderIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="page_6">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>96</width>
+           <height>110</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <attribute name="label">
+          <string>Data</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QToolButton" name="btnToolZRV">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Footprint</string>
+            </property>
+            <property name="icon">
+             <iconset resource="SatViewer.qrc">
+              <normaloff>:/options/clock.png</normaloff>:/options/clock.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextUnderIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="btnToolParams">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Parameters</string>
+            </property>
+            <property name="icon">
+             <iconset resource="SatViewer.qrc">
+              <normaloff>:/options/calc.png</normaloff>:/options/calc.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextUnderIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="page_7">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>96</width>
+           <height>275</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <attribute name="label">
+          <string>Settings</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QToolButton" name="btnToolWidgets">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Widgets</string>
+            </property>
+            <property name="icon">
+             <iconset resource="SatViewer.qrc">
+              <normaloff>:/options/widgets.png</normaloff>:/options/widgets.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextUnderIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="btnToolTle">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>TLE</string>
+            </property>
+            <property name="icon">
+             <iconset resource="SatViewer.qrc">
+              <normaloff>:/actions/reload.png</normaloff>:/actions/reload.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextUnderIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="btnToolMap">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Map</string>
+            </property>
+            <property name="icon">
+             <iconset resource="SatViewer.qrc">
+              <normaloff>:/options/mapsettings.png</normaloff>:/options/mapsettings.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextUnderIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="btnToolSettings">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Settings</string>
+            </property>
+            <property name="icon">
+             <iconset resource="SatViewer.qrc">
+              <normaloff>:/options/configure.png</normaloff>:/options/configure.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextUnderIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="btnInfo">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>?</string>
+            </property>
+            <property name="icon">
+             <iconset resource="SatViewer.qrc">
+              <normaloff>:/options/info.png</normaloff>:/options/info.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextUnderIcon</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="baseSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="page">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>6</number>
+       </property>
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="widget" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QListView" name="listViewDBSat">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::ExtendedSelection</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QListView" name="listViewSat">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::ExtendedSelection</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QWidget" name="widget_2" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="margin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QToolButton" name="btnOpenTle">
+               <property name="toolTip">
+                <string>Open TLE File</string>
+               </property>
+               <property name="icon">
+                <iconset resource="SatViewer.qrc">
+                 <normaloff>:/actions/fileopen.png</normaloff>:/actions/fileopen.png</iconset>
+               </property>
+               <property name="shortcut">
+                <string extracomment="Open TLE"/>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="btnDeleteDbSat">
+               <property name="toolTip">
+                <string>Remove</string>
+               </property>
+               <property name="icon">
+                <iconset resource="SatViewer.qrc">
+                 <normaloff>:/actions/remove.png</normaloff>:/actions/remove.png</iconset>
+               </property>
+               <property name="shortcut">
+                <string extracomment="Remove"/>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="btnClearDbSat">
+               <property name="toolTip">
+                <string>Remove All</string>
+               </property>
+               <property name="icon">
+                <iconset resource="SatViewer.qrc">
+                 <normaloff>:/actions/14_layer_deletelayer.png</normaloff>:/actions/14_layer_deletelayer.png</iconset>
+               </property>
+               <property name="shortcut">
+                <string extracomment="Remove All"/>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QToolButton" name="btnAddToSatList">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string>View</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="SatViewer.qrc">
+                 <normaloff>:/list/1rightarrow.png</normaloff>:/list/1rightarrow.png</iconset>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QWidget" name="widget_7" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="margin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QToolButton" name="btnChangeDbSat">
+               <property name="toolTip">
+                <string>Edit</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="SatViewer.qrc">
+                 <normaloff>:/actions/tooloptions.png</normaloff>:/actions/tooloptions.png</iconset>
+               </property>
+               <property name="shortcut">
+                <string extracomment="Edit"/>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="btnDeleteSatList">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string>Remove</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="SatViewer.qrc">
+                 <normaloff>:/actions/remove.png</normaloff>:/actions/remove.png</iconset>
+               </property>
+               <property name="shortcut">
+                <string extracomment="Remove"/>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="btnClearSatList">
+               <property name="toolTip">
+                <string>Remove All</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="SatViewer.qrc">
+                 <normaloff>:/actions/14_layer_deletelayer.png</normaloff>:/actions/14_layer_deletelayer.png</iconset>
+               </property>
+               <property name="shortcut">
+                <string extracomment="Select All"/>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTabWidget" name="tabWidget">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="tab">
+          <attribute name="title">
+           <string>Selection</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_6">
+           <item row="0" column="0">
+            <widget class="QLabel" name="labelSatFind">
+             <property name="text">
+              <string>Name Search</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditSatNameFilter</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="3">
+            <widget class="QLineEdit" name="lineEditSatNameFilter"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="labelSatName">
+             <property name="text">
+              <string>Name</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditSatName</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0" colspan="2">
+            <widget class="QLineEdit" name="lineEditSatName">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2" colspan="3">
+            <widget class="QLineEdit" name="lineEditSatGroup">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="labelSatFilter">
+             <property name="text">
+              <string>SQL filter</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditSatFilter</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0" colspan="3">
+            <widget class="QLineEdit" name="lineEditSatFilter">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="4">
+            <widget class="QToolButton" name="btnSatSqlHelp">
+             <property name="text">
+              <string>?</string>
+             </property>
+             <property name="autoRaise">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="3">
+            <widget class="QToolButton" name="btnSatFilter">
+             <property name="text">
+              <string>on</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="autoRaise">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLabel" name="labelSatGroup">
+             <property name="text">
+              <string>Group</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditSatGroup</cstring>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_2">
+          <attribute name="title">
+           <string>Orbital</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="0" column="0">
+            <widget class="QLabel" name="labelI">
+             <property name="text">
+              <string>Inclination</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditSatI</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="labelOmg">
+             <property name="text">
+              <string>Ascending node</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditSatOmg</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLineEdit" name="lineEditSatI">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="lineEditSatOmg">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="labelW">
+             <property name="text">
+              <string>Arg. perigee lat.</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditSatW</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="labelM0">
+             <property name="text">
+              <string>Mean anomaly</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditSatM0</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLineEdit" name="lineEditSatW">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="lineEditSatM0">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLineEdit" name="lineEditSatE">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="labelE">
+             <property name="text">
+              <string>Eccentricity</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditSatE</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QLineEdit" name="lineEditSatN">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLabel" name="labelN">
+             <property name="text">
+              <string>Mean motion</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditSatN</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLineEdit" name="lineEditSatBStar">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="labelB">
+             <property name="text">
+              <string>Ballistic coeff.</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditSatBStar</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1" colspan="2">
+            <widget class="QLineEdit" name="lineEditSatTime">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLabel" name="labelSatTime">
+             <property name="text">
+              <string>Timestamp</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditSatTime</cstring>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_3">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="widget_3" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QListView" name="listViewDBLoc">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::ExtendedSelection</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QListView" name="listViewLoc">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::ExtendedSelection</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QWidget" name="widget_8" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="margin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QToolButton" name="btnChangeDbLoc">
+               <property name="toolTip">
+                <string>Edit</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="SatViewer.qrc">
+                 <normaloff>:/actions/tooloptions.png</normaloff>:/actions/tooloptions.png</iconset>
+               </property>
+               <property name="shortcut">
+                <string extracomment="Edit"/>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="btnDeleteLocList">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string>Remove</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="SatViewer.qrc">
+                 <normaloff>:/actions/remove.png</normaloff>:/actions/remove.png</iconset>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="btnClearLocList">
+               <property name="toolTip">
+                <string>Remove All</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="SatViewer.qrc">
+                 <normaloff>:/actions/14_layer_deletelayer.png</normaloff>:/actions/14_layer_deletelayer.png</iconset>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>157</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QWidget" name="widget_4" native="true">
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="margin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QToolButton" name="btnAddToLocList">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="toolTip">
+                <string>View</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="SatViewer.qrc">
+                 <normaloff>:/list/1rightarrow.png</normaloff>:/list/1rightarrow.png</iconset>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QToolButton" name="btnClearDbLoc">
+               <property name="toolTip">
+                <string>Remove All</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="SatViewer.qrc">
+                 <normaloff>:/actions/14_layer_deletelayer.png</normaloff>:/actions/14_layer_deletelayer.png</iconset>
+               </property>
+               <property name="shortcut">
+                <string extracomment="Remove All"/>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="btnDeleteDbLoc">
+               <property name="toolTip">
+                <string>Remove</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="SatViewer.qrc">
+                 <normaloff>:/actions/remove.png</normaloff>:/actions/remove.png</iconset>
+               </property>
+               <property name="shortcut">
+                <string extracomment="Remove"/>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="btnAddDbLoc">
+               <property name="toolTip">
+                <string>Add</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="SatViewer.qrc">
+                 <normaloff>:/actions/add.png</normaloff>:/actions/add.png</iconset>
+               </property>
+               <property name="shortcut">
+                <string extracomment="Add"/>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="btnOpenLoc">
+               <property name="toolTip">
+                <string>Open Locations</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="SatViewer.qrc">
+                 <normaloff>:/actions/fileopen.png</normaloff>:/actions/fileopen.png</iconset>
+               </property>
+               <property name="shortcut">
+                <string extracomment="Open"/>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTabWidget" name="tabWidget_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="tab_4">
+          <attribute name="title">
+           <string>Selection</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="1" column="0">
+            <widget class="QLineEdit" name="lineEditLocNameFilter"/>
+           </item>
+           <item row="1" column="1" colspan="3">
+            <widget class="QLineEdit" name="lineEditLocName"/>
+           </item>
+           <item row="3" column="0" colspan="2">
+            <widget class="QLineEdit" name="lineEditLocFilter"/>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="labelLocFind">
+             <property name="text">
+              <string>Name Search</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditLocNameFilter</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="labelLocName">
+             <property name="text">
+              <string>Name</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditLocName</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="labelLocFilter">
+             <property name="text">
+              <string>SQL filter</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditLocFilter</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QToolButton" name="btnLocSqlHelp">
+             <property name="text">
+              <string>?</string>
+             </property>
+             <property name="checkable">
+              <bool>false</bool>
+             </property>
+             <property name="autoRaise">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QToolButton" name="btnLocFilter">
+             <property name="text">
+              <string>on</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="autoRaise">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_5">
+          <attribute name="title">
+           <string>Coordinates</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="4" column="0">
+            <widget class="QLineEdit" name="lineEditLocLat"/>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLineEdit" name="lineEditLocLon"/>
+           </item>
+           <item row="4" column="2">
+            <widget class="QLineEdit" name="lineEditLocHeight"/>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLineEdit" name="lineEditLocAzimuth"/>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLineEdit" name="lineEditLocWidth"/>
+           </item>
+           <item row="6" column="2">
+            <widget class="QLineEdit" name="lineEditLocRange"/>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="labelAzimuth">
+             <property name="text">
+              <string>Azimuth</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditLocAzimuth</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="labelLat">
+             <property name="text">
+              <string>Longitude</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditLocLon</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="labelLon">
+             <property name="text">
+              <string>Latitude</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditLocLat</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QLabel" name="labelHeight">
+             <property name="text">
+              <string>Altitude</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditLocHeight</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLabel" name="labelWidth">
+             <property name="text">
+              <string>Sector</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditLocWidth</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="2">
+            <widget class="QLabel" name="labelRange">
+             <property name="text">
+              <string>Range</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEditLocRange</cstring>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_2">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QTextEdit" name="textZRVList">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnClearZrvList">
+         <property name="text">
+          <string>Clear</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_4">
+      <layout class="QVBoxLayout" name="verticalLayout_10">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QTextEdit" name="teAbout">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+         <property name="html">
+          <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/options/satviewer.png&quot; /&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-size:36pt; font-weight:600;&quot;&gt;SatViewer&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;satellite tracking tool&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;version 201&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:18pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Website:	&lt;/span&gt;&lt;a href=&quot;http://satviewer.net&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://satviewer.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Forum:	&lt;/span&gt;&lt;a href=&quot;http://groups.google.com/group/satviewer&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://groups.google.com/group/satviewer&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Mail:	&lt;/span&gt;&lt;a href=&quot;mailto:coduemat@gmail.com&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;coduemat@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="acceptRichText">
+          <bool>false</bool>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_5" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <property name="margin">
+           <number>0</number>
+          </property>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnAboutQt">
+            <property name="text">
+             <string>About Qt</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>listViewDBSat</tabstop>
+  <tabstop>listViewSat</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>lineEditSatNameFilter</tabstop>
+  <tabstop>lineEditSatName</tabstop>
+  <tabstop>lineEditSatGroup</tabstop>
+  <tabstop>lineEditSatFilter</tabstop>
+  <tabstop>btnSatSqlHelp</tabstop>
+  <tabstop>btnSatFilter</tabstop>
+  <tabstop>lineEditSatI</tabstop>
+  <tabstop>lineEditSatOmg</tabstop>
+  <tabstop>lineEditSatE</tabstop>
+  <tabstop>lineEditSatW</tabstop>
+  <tabstop>lineEditSatM0</tabstop>
+  <tabstop>lineEditSatN</tabstop>
+  <tabstop>lineEditSatBStar</tabstop>
+  <tabstop>lineEditSatTime</tabstop>
+  <tabstop>listViewDBLoc</tabstop>
+  <tabstop>listViewLoc</tabstop>
+  <tabstop>tabWidget_2</tabstop>
+  <tabstop>lineEditLocNameFilter</tabstop>
+  <tabstop>lineEditLocName</tabstop>
+  <tabstop>lineEditLocFilter</tabstop>
+  <tabstop>btnLocFilter</tabstop>
+  <tabstop>btnLocSqlHelp</tabstop>
+  <tabstop>lineEditLocWidth</tabstop>
+  <tabstop>lineEditLocRange</tabstop>
+  <tabstop>lineEditLocAzimuth</tabstop>
+  <tabstop>lineEditLocLat</tabstop>
+  <tabstop>lineEditLocLon</tabstop>
+  <tabstop>lineEditLocHeight</tabstop>
+  <tabstop>textZRVList</tabstop>
+  <tabstop>btnToolMap</tabstop>
+  <tabstop>btnToolSettings</tabstop>
+  <tabstop>btnInfo</tabstop>
+  <tabstop>btnOpenTle</tabstop>
+  <tabstop>btnDeleteDbSat</tabstop>
+  <tabstop>btnClearDbSat</tabstop>
+  <tabstop>btnOpenLoc</tabstop>
+  <tabstop>btnAddDbLoc</tabstop>
+  <tabstop>btnDeleteDbLoc</tabstop>
+  <tabstop>btnClearDbLoc</tabstop>
+  <tabstop>btnClearZrvList</tabstop>
+  <tabstop>btnToolLoc</tabstop>
+  <tabstop>btnToolZRV</tabstop>
+  <tabstop>btnToolParams</tabstop>
+  <tabstop>btnToolWidgets</tabstop>
+  <tabstop>btnToolTle</tabstop>
+  <tabstop>btnToolSat</tabstop>
+  <tabstop>btnAddToSatList</tabstop>
+  <tabstop>btnChangeDbSat</tabstop>
+  <tabstop>btnDeleteSatList</tabstop>
+  <tabstop>btnClearSatList</tabstop>
+  <tabstop>btnChangeDbLoc</tabstop>
+  <tabstop>btnDeleteLocList</tabstop>
+  <tabstop>btnClearLocList</tabstop>
+  <tabstop>btnAddToLocList</tabstop>
+  <tabstop>teAbout</tabstop>
+  <tabstop>btnAboutQt</tabstop>
+ </tabstops>
+ <resources>
+  <include location="SatViewer.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>btnClearZrvList</sender>
+   <signal>clicked()</signal>
+   <receiver>textZRVList</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>403</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>29</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

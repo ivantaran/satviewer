@@ -1,0 +1,20 @@
+profile is exists
+E:/environment/netbeans/SatViewer/bin/plugins/model_sgp.dll [getSatModel 6e0412c0]
+E:/environment/netbeans/SatViewer/bin/plugins/model_sun.dll [getSunModel 635812c0]
+sun1980 model added
+selectModel
+No such file or directory
+E:/environment/netbeans/SatViewer/bin/plugins/model_sgp.dll [getSatModel 6e0412c0]
+sgp model sat added
+E:/environment/netbeans/SatViewer/bin/plugins/model_sgp.dll [getSatModel 6e0412c0]
+sgp model sat added
+E:/environment/netbeans/SatViewer/bin/plugins/model_sgp.dll [getSatModel 6e0412c0]
+sgp model sat added
+E:/environment/netbeans/SatViewer/bin/plugins/model_sgp.dll [getSatModel 6e0412c0]
+sgp model sat added
+list_map 15
+sprite is removed
+sprite is removed
+sprite is removed
+satellite is removed
+location is removed

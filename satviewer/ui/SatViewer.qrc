@@ -1,0 +1,47 @@
+<RCC>
+  <qresource prefix="toolbar">
+    <file>fullscreen.png</file>
+    <file>exit.png</file>
+    <file>player_eject.png</file>
+    <file>player_fwd.png</file>
+    <file>player_pause.png</file>
+    <file>player_play.png</file>
+    <file>player_rew.png</file>
+    <file>utilities.png</file>
+  </qresource>
+  <qresource prefix="status">
+    <file>ok.png</file>
+    <file>task.png</file>
+    <file>no.png</file>
+  </qresource>
+  <qresource prefix="options">
+    <file>widgets.png</file>
+    <file>satviewer.png</file>
+    <file>calc.png</file>
+    <file>mapsettings.png</file>
+    <file>clock.png</file>
+    <file>reload.png</file>
+    <file>configure.png</file>
+    <file>stock_channel.png</file>
+    <file>info.png</file>
+    <file>gnome-applets.png</file>
+  </qresource>
+  <qresource prefix="actions">
+    <file>tooloptions.png</file>
+    <file>cancel.png</file>
+    <file>14_layer_deletelayer.png</file>
+    <file>select.png</file>
+    <file>filesave.png</file>
+    <file>reload.png</file>
+    <file>fileopen.png</file>
+    <file>edit.png</file>
+    <file>add.png</file>
+    <file>remove.png</file>
+    <file>clear.png</file>
+  </qresource>
+  <qresource prefix="list">
+    <file>1rightarrow.png</file>
+    <file>1leftarrow.png</file>
+  </qresource>
+  <qresource prefix="icon"/>
+</RCC>

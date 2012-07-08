@@ -1,0 +1,16 @@
+Platform:
+---------
+- Windows 2000 or later
+- Linux
+
+Depending:
+----------
+- standart c/c++ libraries
+- Qt4 libraries (v4.5.2) for Win32 'http://qt.nokia.com/downloads/windows-cpp', for Linux 'http://qt.nokia.com/downloads/linux-x11-cpp'
+
+Installation:
+-------------
+1. 'cd' to the directory (e.g. 'src') containing the package's source code and type 'qmake' to configure the package;
+2. Type 'make' ('make -release') to compile the package;
+3. Under Linux type 'su install.sh', under Windows type 'install.bat'
+4. Run SatViewer file in the directory 'src/bin' or '/usr/local/satviewer'
