@@ -10,7 +10,6 @@
 
 #include <inttypes.h>
 #include "ui_options.h"
-#include "SSatDialog.h"
 #include "SLocDialog.h"
 #include "satutils/Satellite.h"
 #include "zrvutils/ZrvIoList.h"

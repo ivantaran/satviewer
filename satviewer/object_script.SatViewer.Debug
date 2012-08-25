@@ -2,7 +2,6 @@ INPUT(
 ./debug/SatViewer.o
 ./debug/SWindow.o
 ./debug/SDlgOptions.o
-./debug/SSatDialog.o
 ./debug/SLocDialog.o
 ./debug/SScriptFrame.o
 ./debug/GLSatWidget.o
@@ -25,7 +24,6 @@ INPUT(
 ./debug/SAbstractObjDialog.o
 ./debug/moc_SWindow.o
 ./debug/moc_SDlgOptions.o
-./debug/moc_SSatDialog.o
 ./debug/moc_SLocDialog.o
 ./debug/moc_SScriptFrame.o
 ./debug/moc_GLSatWidget.o

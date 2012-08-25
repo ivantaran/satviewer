@@ -36,6 +36,32 @@ Satellite::Satellite(void) {
     _track = 0.5;
     model_index = 0;
     satWObject = 0;
+    satellite = true;
+    location = false;
+}
+
+void Satellite::setLocation(bool value) {
+    location = value;
+}
+
+bool Satellite::isLocation() const {
+    return location;
+}
+
+void Satellite::setSatellite(bool value) {
+    satellite = value;
+}
+
+bool Satellite::isSatellite() const {
+    return satellite;
+}
+
+int Satellite::stateSize() const {
+    return state_size;
+}
+
+char* Satellite::getState() const {
+    return state;
 }
 
 Satellite::~Satellite(void)
@@ -197,5 +223,11 @@ void Satellite::setNameY(double value) {
 }
 
 void Satellite::setLinesWidth(double value) {
-	lines_width = value;
+    lines_width = value;
+}
+
+int Satellite::modelInit(char* state, int size) {
+    this->state = state;
+    state_size = size;
+    return 0;
 }

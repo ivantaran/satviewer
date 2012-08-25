@@ -2,7 +2,6 @@ INPUT(
 ./release/SatViewer.o
 ./release/SWindow.o
 ./release/SDlgOptions.o
-./release/SSatDialog.o
 ./release/SLocDialog.o
 ./release/SScriptFrame.o
 ./release/GLSatWidget.o
@@ -25,7 +24,6 @@ INPUT(
 ./release/SAbstractObjDialog.o
 ./release/moc_SWindow.o
 ./release/moc_SDlgOptions.o
-./release/moc_SSatDialog.o
 ./release/moc_SLocDialog.o
 ./release/moc_SScriptFrame.o
 ./release/moc_GLSatWidget.o

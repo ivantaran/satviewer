@@ -25,6 +25,31 @@ SatModel::~SatModel() {
 
 }
 
+int SatModel::modelInit(char *state, int size) {
+    if (size != sizeof(struct ms)) return - 1;
+    struct ms *s = (struct ms *)state;
+
+    Satellite::modelInit(state, size);
+    
+    this->state.argpo = s->argpo;
+    this->state.bstar = s->bstar;
+    this->state.consttype = s->consttype;
+    this->state.ecco = s->ecco;
+    this->state.inclo = s->inclo;
+    this->state.jdsatepoch = s->jdsatepoch;
+    this->state.mo = s->mo;
+    this->state.no = s->no;
+    this->state.nodeo = s->nodeo;
+    
+    modelInit(this->state.consttype, this->state.jdsatepoch, this->state.bstar, 
+            this->state.inclo, this->state.argpo, this->state.ecco, 
+            this->state.nodeo, this->state.mo, this->state.no
+    );
+    
+    return 0;
+}
+
+
 int SatModel::modelInit(int whichconst, double _jdsatepoch, double _bstar, double _inclo, double _argpo, double _ecco, double _nodeo, double _mo, double _no) {
 	/* ------------------------ initialization --------------------- */
 	/* ----------- set all near earth variables to zero ------------ */

@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'earthsettings.ui'
 **
-** Created: Fri 15. Jun 11:32:01 2012
-**      by: Qt User Interface Compiler version 4.8.0
+** Created: Fri 24. Aug 12:25:54 2012
+**      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/

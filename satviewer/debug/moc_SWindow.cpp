@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'SWindow.h'
 **
-** Created: Sun 8. Jul 20:58:12 2012
+** Created: Sat 25. Aug 13:48:13 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.2)
 **
 ** WARNING! All changes made in this file will be lost!

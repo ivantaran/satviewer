@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'GLSatWidget.h'
 **
-** Created: Sun 8. Jul 19:53:38 2012
+** Created: Sat 25. Aug 13:48:56 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.2)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -10,14 +10,28 @@
 
 #include "../../satviewer/satutils/Satellite.h"
 
+struct ms {
+        int consttype;
+        double jdsatepoch; 
+        double bstar; 
+        double inclo; 
+        double argpo; 
+        double ecco; 
+        double nodeo; 
+        double mo; 
+        double no;    
+};
+
 class SatModel : public Satellite {
 public:
 	SatModel();
 	virtual ~SatModel();
 	int modelInit(int consttype, double jdsatepoch, double bstar, double inclo, double argpo, double ecco, double nodeo, double mo, double no);
+	int modelInit(char *state, int size);
 	int model(double time);
 
 private:
+    struct ms state;
     int error;
     char method;
     double inclo, nodeo, ecco, argpo, mo, ao, no;
