@@ -41,10 +41,11 @@ GLSatAbstractWidget::GLSatAbstractWidget(QWidget *parent) : QGLWidget(parent) {
     shwSun = true;
     shwNight = true;
     setSatModel();
-    setSunModel();
-    sun = getSunModel();
-    sun->modelInit(WGS84, 0, 0, 0, 0, 0, 0, 0, 0);
-    sun->setName("Sun");
+//    setSunModel();
+//    sun = getSunModel();
+//    sun->modelInit(WGS84, 0, 0, 0, 0, 0, 0, 0, 0);
+//    sun->modelInit(0, 0);
+//    sun->setName("Sun");
     makeCurrent();
 }
 

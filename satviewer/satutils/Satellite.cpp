@@ -38,6 +38,8 @@ Satellite::Satellite(void) {
     satWObject = 0;
     satellite = true;
     location = false;
+//    state = 0;
+//    state_size = 0;
 }
 
 void Satellite::setLocation(bool value) {
@@ -56,62 +58,18 @@ bool Satellite::isSatellite() const {
     return satellite;
 }
 
-int Satellite::stateSize() const {
-    return state_size;
-}
-
-char* Satellite::getState() const {
-    return state;
-}
+//int Satellite::stateSize() const {
+//    return state_size;
+//}
+//
+//char* Satellite::getState() const {
+//    return state;
+//}
 
 Satellite::~Satellite(void)
 {
     if (satWObject != 0) delete satWObject;
     puts("satellite is removed");
-}
-
-void Satellite::getgravconst(int whichconst) {
-
-    switch (whichconst) {
-    // -- wgs-72 low precision str#3 constants --
-        case WGS72OLD:
-            mu     = 398600.79964;        // in km3 / s2
-            radius_earth_km = 6378.135;     // km
-            radius_earth = 6378135.0;    //m
-            xke    = 0.0743669161;
-            tumin  = 1.0 / xke;
-            j2     =   0.001082616;
-            j3     =  -0.00000253881;
-            j4     =  -0.00000165597;
-            j3oj2  =  j3 / j2;
-        break;
-    // ------------ wgs-72 constants ------------
-        case WGS72:
-            mu     = 398600.8;            // in km3 / s2
-            radius_earth_km = 6378.135;     // km
-            radius_earth = 6378135.0;     // m
-            xke    = 60.0 / sqrt(radius_earth_km*radius_earth_km*radius_earth_km/mu);
-            tumin  = 1.0 / xke;
-            j2     =   0.001082616;
-            j3     =  -0.00000253881;
-            j4     =  -0.00000165597;
-            j3oj2  =  j3 / j2;
-        break;
-        // ------------ wgs-84 constants ------------
-        case WGS84: default:
-
-            mu     = 398600.5;            // in km3 / s2
-            radius_earth_km = 6378.137;     // km
-            radius_earth = 6378137.0;     // m
-            xke    = 60.0 / sqrt(radius_earth_km*radius_earth_km*radius_earth_km/mu);
-            tumin  = 1.0 / xke;
-            j2     =   0.00108262998905;
-            j3     =  -0.00000253215306;
-            j4     =  -0.00000161098761;
-            j3oj2  =  j3 / j2;
-        break;
-    }
-
 }
 
 void Satellite::getGeod() {
@@ -147,8 +105,9 @@ void Satellite::getGeod() {
 }
 
 void Satellite::copy(Satellite *src) {
-    modelInit(WGS84, src->jdsatepoch, src->bstar, src->incl0, src->argp0, src->ecc0, src->node0, src->m0, src->n0);
-
+//    modelInit(WGS84, src->jdsatepoch, src->bstar, src->incl0, src->argp0, src->ecc0, src->node0, src->m0, src->n0);
+    modelInit(src->getState(), src->getStateSize());
+    
     visibleLabel(src->isVisibleLabel());
     visibleLines(src->isVisibleLines());
     visibleTrack(src->isVisibleTrack());
@@ -226,8 +185,8 @@ void Satellite::setLinesWidth(double value) {
     lines_width = value;
 }
 
-int Satellite::modelInit(char* state, int size) {
-    this->state = state;
-    state_size = size;
-    return 0;
-}
+//int Satellite::modelInit(char* state, int size) {
+//    this->state = state;
+//    state_size = size;
+//    return 0;
+//}

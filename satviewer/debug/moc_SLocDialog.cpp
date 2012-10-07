@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'SLocDialog.h'
 **
-** Created: Sat 25. Aug 13:48:33 2012
+** Created: Sun 7. Oct 19:14:34 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.2)
 **
 ** WARNING! All changes made in this file will be lost!

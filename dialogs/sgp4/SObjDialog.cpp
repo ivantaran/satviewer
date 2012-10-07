@@ -6,7 +6,7 @@
  */
 
 #include "SObjDialog.h"
-
+#include "../../models/sgp/sgp_struct.h"
 #include "math.h"
 
 SObjDialog::SObjDialog(GLSatAbstractWidget *satWidget) : SAbstractObjDialog(satWidget) {
@@ -130,20 +130,32 @@ void SObjDialog::makeSat(Satellite *sat, bool fromlist) {
 	if (m_sat == 0) return;
 
 	QString name = lineEditName->text();
-	double i     = lineEditI->text().toDouble()*deg2rad;
-	double omg   = lineEditOmg->text().toDouble()*deg2rad;
-	double e     = lineEditE->text().toDouble();
-	double w     = lineEditW->text().toDouble()*deg2rad;
-	double m0    = lineEditM0->text().toDouble()*deg2rad;
-	double n     = lineEditN->text().toDouble()/xpdotp;
-	double bstar = lineEditBStar->text().toDouble();
-	double epoch = lineEditTime->text().toDouble();
+    struct ms state;
+//	double i     = lineEditI->text().toDouble()*deg2rad;
+//	double omg   = lineEditOmg->text().toDouble()*deg2rad;
+//	double e     = lineEditE->text().toDouble();
+//	double w     = lineEditW->text().toDouble()*deg2rad;
+//	double m0    = lineEditM0->text().toDouble()*deg2rad;
+//	double n     = lineEditN->text().toDouble()/xpdotp;
+//	double bstar = lineEditBStar->text().toDouble();
+//	double epoch = lineEditTime->text().toDouble();
+
+    state.inclo     = lineEditI->text().toDouble()*deg2rad;
+    state.argpo   = lineEditOmg->text().toDouble()*deg2rad;
+    state.ecco     = lineEditE->text().toDouble();
+    state.nodeo     = lineEditW->text().toDouble()*deg2rad;
+    state.mo    = lineEditM0->text().toDouble()*deg2rad;
+    state.no     = lineEditN->text().toDouble()/xpdotp;
+    state.bstar = lineEditBStar->text().toDouble();
+    state.jdsatepoch = lineEditTime->text().toDouble();
+    state.consttype = WGS84;
+    
 //		double epoch = 	QDateTime::fromString(lineEditSatTime->text(), "dd.MM.yyyy H:mm:ss").toTime_t();
 //		epoch = epoch/86400.0 + 2440587.5;
 	double zrv = spinZRV->value()*deg2rad;
 
 //	return;
-	m_sat->modelInit(WGS84, epoch, bstar, i, omg, e, w, m0, n);
+	m_sat->modelInit((char *)&state, sizeof(state));
 	m_sat->setName(name);
 	m_sat->setZRV(zrv);
 	m_sat->setTrack(spinTrack->value());

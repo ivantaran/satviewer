@@ -16,9 +16,9 @@
 #include <QFont>
 #include "../ogl/SatWidgetObject.h"
 
-#define WGS72OLD 0
-#define WGS72 1
-#define WGS84 2
+//#define WGS72OLD 0
+//#define WGS72 1
+//#define WGS84 2
 
 class Satellite {
 
@@ -27,18 +27,21 @@ public:
     virtual ~Satellite(void);
     SatWidgetObject *satWObject;
     virtual int model(double) {return 0;}
-    virtual int modelInit(char *state, int size);
-    virtual int modelInit(int consttype, double jdsatepoch, double bstar, double inclo, double argpo, double ecco, double nodeo, double mo, double no) {
-        this->ecc0 		 = ecco;
-        this->argp0      = argpo;
-        this->incl0      = inclo;
-        this->m0	     = mo;
-        this->n0	     = no;
-        this->node0      = nodeo;
-        this->jdsatepoch = jdsatepoch;
-        this->bstar      = bstar;
-        return 0;
-    }
+    virtual int modelInit(char *state, int size) {return 0;}
+    virtual char *getState() {return 0;}
+    virtual int getStateSize() {return 0;}
+    
+//    virtual int modelInit(int consttype, double jdsatepoch, double bstar, double inclo, double argpo, double ecco, double nodeo, double mo, double no) {
+//        this->ecc0 		 = ecco;
+//        this->argp0      = argpo;
+//        this->incl0      = inclo;
+//        this->m0	     = mo;
+//        this->n0	     = no;
+//        this->node0      = nodeo;
+//        this->jdsatepoch = jdsatepoch;
+//        this->bstar      = bstar;
+//        return 0;
+//    }
 
     void copy(Satellite *src);
     void setName(QString name);
@@ -114,8 +117,8 @@ public:
     bool isLocation() const;
     void setSatellite(bool satellite);
     bool isSatellite() const;
-    int stateSize() const;
-    char* getState() const;
+//    int stateSize() const;
+//    char* getState() const;
 
 protected:
     double lon, lat, _height;
@@ -126,7 +129,7 @@ protected:
     double t;    //current model time in minutes
     double tumin, mu, radius_earth_km, xke, j2, j3, j4, j3oj2;
     double radius_earth;
-    void getgravconst(int whichconst);
+//    void getgravconst(int whichconst);
     void getGeod();
 
 private:
@@ -140,7 +143,5 @@ private:
     bool show_label, show_track, show_zrv, show_lines, active_zone, show_track_shadow;
     int model_index;
     bool satellite, location;
-    char *state;
-    int state_size;
 };
 #endif /* SATELLITE_H_ */

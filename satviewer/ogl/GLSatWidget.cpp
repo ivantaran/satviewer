@@ -38,11 +38,11 @@ GLSatWidget::GLSatWidget(QWidget *parent) : GLSatAbstractWidget(parent) {
     dir.cd("satviewer/icons");
     sprite_current.load(dir.filePath("current.png"), this);
     sprite_active.load(dir.filePath("active.png"), this);
-    sun->satWObject = new GLSprite(dir.filePath("sun.png"), this);
+//    sun->satWObject = new GLSprite(dir.filePath("sun.png"), this);
 }
 
 GLSatWidget::~GLSatWidget() {
-    delete sun->satWObject;
+//    delete sun->satWObject;
     makeCurrent();
 }
 
@@ -306,7 +306,7 @@ void GLSatWidget::compileSatList() {
                         sat->model(i + m_time);
                         if (sat->isVisibleTrackShadow()) {
                             shadow_tmp = shadow_state;
-                            shadow_state = testShadow(sat, sun);
+//                            shadow_state = testShadow(sat, sun);
                             //							if ((shadow_tmp == 0) && (shadow_state == 1)) {
                             //								glEnd();
                             //								glPushMatrix();
@@ -461,26 +461,26 @@ void GLSatWidget::compileEventsList() {
 
 void GLSatWidget::compileSunList() {
     glNewList(list_sun, GL_COMPILE);
-        sun->model(m_time);
-        float px =  sun->longitude()/M_PI;
-        float py = -2*sun->latitude()/M_PI;
-
-        if (shwNight) {
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            glEnable(GL_BLEND);
-            compileZRV(sun, false, false, 0, 0);
-            glColor4ubv((uint8_t *)&clrNight);
-            glZoneNight(sun->latitude());
-            if (true) {
-                glColor3f(0.4, 0.4, 0.4);
-                glZoneLines(sun->latitude());
-            }
-                glDisable(GL_BLEND);
-        }
-
-        if (shwSun) {
-        sun->satWObject->exec(px, py);
-        }
+//        sun->model(m_time);
+//        float px =  sun->longitude()/M_PI;
+//        float py = -2*sun->latitude()/M_PI;
+//
+//        if (shwNight) {
+//            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//            glEnable(GL_BLEND);
+//            compileZRV(sun, false, false, 0, 0);
+//            glColor4ubv((uint8_t *)&clrNight);
+//            glZoneNight(sun->latitude());
+//            if (true) {
+//                glColor3f(0.4, 0.4, 0.4);
+//                glZoneLines(sun->latitude());
+//            }
+//                glDisable(GL_BLEND);
+//        }
+//
+//        if (shwSun) {
+//        sun->satWObject->exec(px, py);
+//        }
     glEndList();
 }
 

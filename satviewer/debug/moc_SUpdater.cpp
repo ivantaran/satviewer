@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'SUpdater.h'
 **
-** Created: Fri 24. Aug 12:29:00 2012
+** Created: Sun 7. Oct 19:15:29 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.2)
 **
 ** WARNING! All changes made in this file will be lost!

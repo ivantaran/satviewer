@@ -10,6 +10,10 @@
 
 #include "../../satviewer/satutils/Satellite.h"
 
+#define WGS72OLD 0
+#define WGS72 1
+#define WGS84 2
+
 struct ms {
         int consttype;
         double jdsatepoch; 
@@ -24,17 +28,18 @@ struct ms {
 
 class SatModel : public Satellite {
 public:
-	SatModel();
-	virtual ~SatModel();
-	int modelInit(int consttype, double jdsatepoch, double bstar, double inclo, double argpo, double ecco, double nodeo, double mo, double no);
-	int modelInit(char *state, int size);
-	int model(double time);
-
+    SatModel();
+    virtual ~SatModel();
+    int modelInit(char *state, int size);
+    int model(double time);
+    char *getState();
+    int getStateSize();
+    
 private:
     struct ms state;
     int error;
     char method;
-    double inclo, nodeo, ecco, argpo, mo, ao, no;
+    double jdsatepoch, bstar, inclo, nodeo, ecco, argpo, mo, ao, no;
     /* Near Earth */
     int isimp;
     double aycof  , con41  , cc1    , cc4      , cc5    , d2      , d3   , d4 ,
@@ -70,6 +75,8 @@ private:
 
     double ep, xincp, nodep, argpp, mp;
 
+	int modelInit(int consttype, double jdsatepoch, double bstar, double inclo, double argpo, double ecco, double nodeo, double mo, double no);
+        void getgravconst(int whichconst);
 	void initl(double epoch);
 	double gstime(double jdut1);
 	void dscom(double epoch);

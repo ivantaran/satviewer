@@ -24,12 +24,19 @@ SatModel::SatModel() {
 SatModel::~SatModel() {
 
 }
+char * SatModel::getState() {
+    return (char *)&state;
+}
+
+int SatModel::getStateSize() {
+    return sizeof(state);
+}
 
 int SatModel::modelInit(char *state, int size) {
     if (size != sizeof(struct ms)) return - 1;
     struct ms *s = (struct ms *)state;
 
-    Satellite::modelInit(state, size);
+    Satellite::modelInit(state, sizeof(struct ms));
     
     this->state.argpo = s->argpo;
     this->state.bstar = s->bstar;
@@ -48,7 +55,6 @@ int SatModel::modelInit(char *state, int size) {
     
     return 0;
 }
-
 
 int SatModel::modelInit(int whichconst, double _jdsatepoch, double _bstar, double _inclo, double _argpo, double _ecco, double _nodeo, double _mo, double _no) {
 	/* ------------------------ initialization --------------------- */
@@ -94,11 +100,12 @@ int SatModel::modelInit(int whichconst, double _jdsatepoch, double _bstar, doubl
 	mo	       = _mo;
 	no	       = _no;
 	nodeo      = _nodeo;
-	Satellite::modelInit( whichconst, _jdsatepoch, _bstar, _inclo, _argpo, _ecco,  _nodeo,  _mo,  _no);
+    bstar = _bstar;
+    jdsatepoch = _jdsatepoch;
 
 	/* ------------------------ earth constants ----------------------- */
 	// sgp4fix identify constants and allow alternate values
-	Satellite::getgravconst(whichconst);
+	getgravconst(whichconst);
 	ss     = 78.0 / radius_earth_km + 1.0;
 	qzms2t = pow(((120.0 - 78.0) / radius_earth_km), 4);
 
@@ -204,6 +211,50 @@ int SatModel::modelInit(int whichconst, double _jdsatepoch, double _bstar, doubl
 //        init = 'n';
 
 	return error;
+}
+
+void SatModel::getgravconst(int whichconst) {
+
+    switch (whichconst) {
+    // -- wgs-72 low precision str#3 constants --
+        case WGS72OLD:
+            mu     = 398600.79964;        // in km3 / s2
+            radius_earth_km = 6378.135;     // km
+            radius_earth = 6378135.0;    //m
+            xke    = 0.0743669161;
+            tumin  = 1.0 / xke;
+            j2     =   0.001082616;
+            j3     =  -0.00000253881;
+            j4     =  -0.00000165597;
+            j3oj2  =  j3 / j2;
+        break;
+    // ------------ wgs-72 constants ------------
+        case WGS72:
+            mu     = 398600.8;            // in km3 / s2
+            radius_earth_km = 6378.135;     // km
+            radius_earth = 6378135.0;     // m
+            xke    = 60.0 / sqrt(radius_earth_km*radius_earth_km*radius_earth_km/mu);
+            tumin  = 1.0 / xke;
+            j2     =   0.001082616;
+            j3     =  -0.00000253881;
+            j4     =  -0.00000165597;
+            j3oj2  =  j3 / j2;
+        break;
+        // ------------ wgs-84 constants ------------
+        case WGS84: default:
+
+            mu     = 398600.5;            // in km3 / s2
+            radius_earth_km = 6378.137;     // km
+            radius_earth = 6378137.0;     // m
+            xke    = 60.0 / sqrt(radius_earth_km*radius_earth_km*radius_earth_km/mu);
+            tumin  = 1.0 / xke;
+            j2     =   0.00108262998905;
+            j3     =  -0.00000253215306;
+            j4     =  -0.00000161098761;
+            j3oj2  =  j3 / j2;
+        break;
+    }
+
 }
 
 int SatModel::model(double tsince) {

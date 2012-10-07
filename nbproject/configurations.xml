@@ -57,12 +57,9 @@
           </df>
           <in>SatModel.cpp</in>
           <in>SatModel.h</in>
+          <in>sgp_struct.h</in>
         </df>
         <df name="sun">
-          <df name="debug">
-          </df>
-          <df name="release">
-          </df>
           <in>SatModel.cpp</in>
           <in>SatModel.h</in>
         </df>

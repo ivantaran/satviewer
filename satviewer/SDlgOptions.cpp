@@ -118,9 +118,9 @@ void SDlgOptions::saveListViewSat() {
 						"'time', 'name', 'zrv', 'icon', 'show_label', 'show_track', "
 						"'show_zrv', 'show_lines', 'active_zone', 'color_track', "
 						"'color_label', 'color_zrv', 'color_lines', 'track', 'font', "
-						"'name_x', 'name_y', 'lines_width', 'model_index') "
+						"'name_x', 'name_y', 'lines_width', 'model_index', 'model_state') "
 						"VALUES(%0, %1, %2, %3, %4, %5, %6, %7, '%8', %9, '%10', %11, %12, "
-						"%13, %14, %15, %16, %17, %18, %19, %20, '%21', %22, %23, %24, %25);")
+						"%13, %14, %15, %16, %17, %18, %19, %20, '%21', %22, %23, %24, %25, :model_state);")
 						.arg(sat->inclination()/deg2rad, 0, 'g', 16)
 						.arg(sat->argLatPerigee()/deg2rad, 0, 'g', 16)
 						.arg(sat->eccentricity(), 0, 'g', 16)
@@ -147,7 +147,16 @@ void SDlgOptions::saveListViewSat() {
 						.arg(sat->nameY(), 0, 'g', 16)
 						.arg(sat->linesWidth(), 0, 'g', 16)
 						.arg(sat->modelIndex());
-		db.exec(query);
+                QSqlQuery q(db);
+                q.prepare(query);
+                printf("state length %d\n", sat->getStateSize());
+                QByteArray bytes(sat->getState(), sat->getStateSize());
+//                QByteArray bytes("qfqwerfgqergq");
+                printf("bytes length %d\n", bytes.length());
+                puts(bytes.toHex().data());
+                q.bindValue(":model_state", bytes);
+                q.exec();
+//		db.exec(query);
 	}
 	db.exec("COMMIT;");
 }
@@ -227,7 +236,7 @@ void SDlgOptions::loadListViewSat() {
 		sat->setNameX(modelSatTemp.record(i).field("name_x").value().toDouble());
 		sat->setNameY(modelSatTemp.record(i).field("name_y").value().toDouble());
 		sat->setLinesWidth(modelSatTemp.record(i).field("lines_width").value().toDouble());
-                satWidget->addSat(sat);
+        satWidget->addSat(sat);
 	}
 	modelSatTemp.clear();
 
@@ -335,16 +344,17 @@ void SDlgOptions::setDb() {
 
 void SDlgOptions::setSat(Satellite *sat, QSqlRecord record) {
     if (sat == 0 || record.isEmpty()) return;
-    double const deg2rad = M_PI/180.0;
-    double const xpdotp = 1440.0/(2.0*M_PI);
-    double i         = record.field("i"    ).value().toDouble()*deg2rad;
-    double omg       = record.field("omg"  ).value().toDouble()*deg2rad;
-    double e         = record.field("e"    ).value().toDouble();
-    double w         = record.field("w"    ).value().toDouble()*deg2rad;
-    double mo        = record.field("m0"   ).value().toDouble()*deg2rad;
-    double no        = record.field("n"    ).value().toDouble()/xpdotp;
-    double bstar     = record.field("bstar").value().toDouble();
-    double jdsaepoch = record.field("time" ).value().toDouble();
+//    double const deg2rad = M_PI/180.0;
+//    double const xpdotp = 1440.0/(2.0*M_PI);
+//    double i         = record.field("i"    ).value().toDouble()*deg2rad;
+//    double omg       = record.field("omg"  ).value().toDouble()*deg2rad;
+//    double e         = record.field("e"    ).value().toDouble();
+//    double w         = record.field("w"    ).value().toDouble()*deg2rad;
+//    double mo        = record.field("m0"   ).value().toDouble()*deg2rad;
+//    double no        = record.field("n"    ).value().toDouble()/xpdotp;
+//    double bstar     = record.field("bstar").value().toDouble();
+//    double jdsaepoch = record.field("time" ).value().toDouble();
+    QByteArray model_state = record.field("model_state").value().toByteArray();
     QString icon     = record.field("icon" ).value().toString();
     if (icon.isEmpty() || !QFile::exists(icon)) {
         QDir dir = QDir::home();
@@ -354,7 +364,8 @@ void SDlgOptions::setSat(Satellite *sat, QSqlRecord record) {
     satWidget->setIcon(sat, icon);
 
     sat->setName(record.field("name").value().toString());
-    sat->modelInit(WGS84, jdsaepoch, bstar, i, omg, e, w, mo, no);
+    sat->modelInit(model_state.data(), model_state.size());
+//    sat->modelInit(WGS84, jdsaepoch, bstar, i, omg, e, w, mo, no);
 }
 
 void SDlgOptions::setLoc(Location *loc, QSqlRecord record) {
