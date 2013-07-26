@@ -10,25 +10,21 @@
 #include <QFileInfo>
 
 SUpdater::SUpdater(QString fileName) {
-	// TODO Auto-generated constructor stub
-	this->setupUi(this);
-	http = new QHttp(this);
-	file = 0;
-	listFile = 0;
-	httpGetId = -1;
+    // TODO Auto-generated constructor stub
+    this->setupUi(this);
+    file = 0;
+    listFile = 0;
+    httpGetId = -1;
     urlIndex = -1;
     httpRequestAborted = false;
-	urlIndex = 0;
+    urlIndex = 0;
 
-    connect(http, SIGNAL(dataReadProgress(int, int)), this, SLOT(updateDataReadProgress(int, int)));
-    connect(http, SIGNAL(responseHeaderReceived(QHttpResponseHeader)), this, SLOT(readResponseHeader(QHttpResponseHeader)));
-    connect(http, SIGNAL(done(bool)), this, SLOT(doneGet(bool)));
-	connect(btnUpdate, SIGNAL(clicked()), this, SLOT(updateTle()));
-    connect(btnSave, SIGNAL(clicked()), this, SLOT(save()));
-    connect(btnAdd, SIGNAL(clicked()), this, SLOT(addLine()));
+    connect(btnUpdate, SIGNAL(clicked()), this, SLOT(updateTle()) );
+    connect(btnSave  , SIGNAL(clicked()), this, SLOT(save())      );
+    connect(btnAdd   , SIGNAL(clicked()), this, SLOT(addLine())   );
     connect(btnRemove, SIGNAL(clicked()), this, SLOT(removeLine()));
-    connect(btnClear, SIGNAL(clicked()), this, SLOT(clear()));
-    connect(btnAbort, SIGNAL(clicked()), this, SLOT(abort()));
+    connect(btnClear , SIGNAL(clicked()), this, SLOT(clear())     );
+    connect(btnAbort , SIGNAL(clicked()), this, SLOT(abort())     );
     load(fileName);
 
 }
@@ -39,13 +35,16 @@ SUpdater::~SUpdater() {
 
 void SUpdater::updateTle() {
     QStandardItemModel *model = (QStandardItemModel *)listView->model();
+    
     while ( (urlIndex < model->rowCount()) &&
     		(model->item(urlIndex)->checkState() == Qt::Unchecked) )
         urlIndex++;
+    
 	if (urlIndex >= model->rowCount()) {
 		urlIndex = 0;
 		return;
 	}
+    
 	progressBar->setValue(0);
 
 	if (file) {
@@ -74,18 +73,18 @@ void SUpdater::updateTle() {
         return;
     }
 
-    QHttp::ConnectionMode mode = url.scheme().toLower() == "https" ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp;
-    http->setHost(url.host(), mode, url.port() == -1 ? 0 : url.port());
-
-    if (!url.userName().isEmpty()) http->setUser(url.userName(), url.password());
-
     httpRequestAborted = false;
     QByteArray path = QUrl::toPercentEncoding(url.path(), "!$&'()*+,;=:@/");
     if (path.isEmpty()) path = "/";
-    httpGetId = http->get(path, file);
+    
+    reply = nam.get(QNetworkRequest(QUrl(path)));
+    
+    connect(reply, SIGNAL(finished()) , this, SLOT(httpFinished()) );
+    connect(reply, SIGNAL(readyRead()), this, SLOT(httpReadyRead()));
+    connect(reply, SIGNAL(downloadProgress(qint64, qint64)), this, SLOT(updateDataReadProgress(qint64, qint64)));
 }
 
-void SUpdater::updateDataReadProgress(int bytesRead, int totalBytes)
+void SUpdater::updateDataReadProgress(qint64 bytesRead, qint64 totalBytes)
 {
 	if (httpRequestAborted) return;
 
@@ -93,36 +92,28 @@ void SUpdater::updateDataReadProgress(int bytesRead, int totalBytes)
 	progressBar->setValue(bytesRead);
 }
 
-void SUpdater::readResponseHeader(const QHttpResponseHeader &responseHeader)
-{
-    switch (responseHeader.statusCode()) {
-    case 200:                   // Ok
-    case 301:                   // Moved Permanently
-    case 302:                   // Found
-    case 303:                   // See Other
-    case 307:                   // Temporary Redirect
-        // these are not error conditions
-        break;
-
-    default:
-    	textStatus->appendPlainText(QString("[%0]: %1").arg(file->fileName()).arg(responseHeader.reasonPhrase()));
-        http->abort();
-    }
-}
-
-void SUpdater::doneGet(bool error) {
+void SUpdater::httpFinished() {
 	QStandardItemModel *model = (QStandardItemModel *)listView->model();
-	file->close();
-	if (error) {
-		http->abort();
+    
+	if (reply->error()) {
 		file->remove();
 		model->item(urlIndex)->setIcon(QIcon(":/status/no.png"));
-		textStatus->appendPlainText(QString("[%0]: %1").arg(file->fileName()).arg(http->errorString()));
+		textStatus->appendPlainText(QString("[%0]: %1").arg(file->fileName()).arg(reply->errorString()));
 	}
 	else {
 		model->item(urlIndex)->setIcon(QIcon(":/status/ok.png"));
+        if (file->isWritable()) 
+            file->write(reply->readAll());
+        else
+            puts("Error: SUpdater file write");
 	}
+    
+	file->close();
+    reply->deleteLater();
+    reply = 0;
+    
 	if (httpRequestAborted) return;
+    
 	urlIndex++;
 	updateTle();
 }
@@ -199,7 +190,6 @@ void SUpdater::addLine() {
 }
 
 void SUpdater::removeLine() {
-	//QStandardItemModel *model = (QStandardItemModel *)listView->model();
 	listView->model()->removeRow(listView->currentIndex().row());
 }
 
@@ -210,5 +200,5 @@ void SUpdater::clear() {
 
 void SUpdater::abort() {
 	httpRequestAborted = true;
-	http->abort();
+	if (reply) reply->deleteLater();
 }

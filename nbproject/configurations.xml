@@ -1,40 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="84">
+<configurationDescriptor version="89">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df name="SatViewer" root=".">
-      <df name="bin">
-        <df name="dialogs">
-        </df>
-        <df name="plugins">
-        </df>
-        <df name="profile">
-          <df name="3d">
-          </df>
-          <df name="icons">
-          </df>
-          <df name="jsprm">
-          </df>
-          <df name="loc">
-          </df>
-          <df name="tle">
-          </df>
-          <df name="translations">
-          </df>
-          <df name="widgets">
-          </df>
-        </df>
-        <df name="sqldrivers">
-        </df>
-      </df>
+    <df root="." name="SatViewer">
       <df name="dialogs">
         <df name="sgp4">
           <df name="debug">
             <in>moc_GLSatAbstractWidget.cpp</in>
             <in>moc_SObjDialog.cpp</in>
-          </df>
-          <df name="release">
-          </df>
-          <df name="ui">
           </df>
           <in>SObjDialog.cpp</in>
           <in>SObjDialog.h</in>
@@ -43,18 +15,10 @@
       </df>
       <df name="models">
         <df name="kepler">
-          <df name="debug">
-          </df>
-          <df name="release">
-          </df>
           <in>SatModel.cpp</in>
           <in>SatModel.h</in>
         </df>
         <df name="sgp">
-          <df name="debug">
-          </df>
-          <df name="release">
-          </df>
           <in>SatModel.cpp</in>
           <in>SatModel.h</in>
           <in>sgp_struct.h</in>
@@ -140,8 +104,6 @@
           <in>UCheck.cpp</in>
           <in>UCheck.h</in>
         </df>
-        <df name="ui">
-        </df>
         <df name="zrvutils">
           <in>ZrvIoList.cpp</in>
           <in>ZrvIoList.h</in>
@@ -185,6 +147,8 @@
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <codeAssistance>
       </codeAssistance>
@@ -235,6 +199,22 @@
           </ccTool>
         </makeTool>
       </makefileType>
+      <item path="dialogs/sgp4/SObjDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="dialogs/sgp4/SObjDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="dialogs/sgp4/debug/moc_GLSatAbstractWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="dialogs/sgp4/debug/moc_SObjDialog.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="dialogs/sgp4/ui_sat.h" ex="false" tool="3" flavor2="0">
+      </item>
       <folder path="SatViewer/models">
         <ccTool>
           <incDir>
@@ -899,6 +879,24 @@
           </preprocessorList>
         </ccTool>
       </folder>
+      <item path="models/kepler/SatModel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="models/kepler/SatModel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/sgp/SatModel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="models/sgp/SatModel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/sgp/sgp_struct.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/sun/SatModel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="models/sun/SatModel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/SAbstractObjDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/SAbstractObjDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="satviewer/SDlgOptions.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
@@ -982,6 +980,8 @@
           </preprocessorList>
         </ccTool>
       </item>
+      <item path="satviewer/SDlgOptions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="satviewer/SLocDialog.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
@@ -1047,6 +1047,8 @@
             <Elem>QT_SQL_LIB=1</Elem>
           </preprocessorList>
         </ccTool>
+      </item>
+      <item path="satviewer/SLocDialog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="satviewer/SWindow.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
@@ -1132,6 +1134,8 @@
           </preprocessorList>
         </ccTool>
       </item>
+      <item path="satviewer/SWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="satviewer/SatViewer.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
@@ -1216,6 +1220,62 @@
           </preprocessorList>
         </ccTool>
       </item>
+      <item path="satviewer/crd/crd.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/crd/crd.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_GLSatAbstractWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_GLSatWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_GLSatWidget3d.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SDlgOptions.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SLocDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SSatDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SScriptFrame.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SUpdater.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SWidgetList.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_UCheck.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/debug/qrc_SatViewer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/jscalc/SScriptFrame.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/jscalc/SScriptFrame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/jswidgets/SWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/jswidgets/SWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="satviewer/jswidgets/SWidgetList.cpp"
             ex="false"
             tool="1"
@@ -1225,6 +1285,12 @@
             <pElem>satviewer</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="satviewer/jswidgets/SWidgetList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/locutils/Location.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/locutils/Location.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="satviewer/ogl/GLSatAbstractWidget.cpp"
             ex="false"
@@ -1240,6 +1306,11 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="satviewer/ogl/GLSatAbstractWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="satviewer/ogl/GLSatWidget.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
@@ -1251,6 +1322,8 @@
             <pElem>satviewer/ogl</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="satviewer/ogl/GLSatWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="satviewer/ogl/GLSatWidget3d.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
@@ -1264,12 +1337,37 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="satviewer/ogl/GLSatWidget3d.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="satviewer/ogl/SatWidgetObject.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
             <pElem>satviewer/ogl</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="satviewer/ogl/SatWidgetObject.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ogl/globj/GLObjMaterial.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/ogl/globj/GLObjMaterial.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="satviewer/ogl/globj/GLObjecter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/ogl/globj/GLObjecter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ogl/glsprite/GLSprite.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/ogl/glsprite/GLSprite.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="satviewer/ogl/satogl.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
@@ -1281,6 +1379,13 @@
             <pElem>satviewer/ogl</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="satviewer/ogl/satogl.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/release/moc_SSatDialog.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="satviewer/satutils/Satellite.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
@@ -1380,6 +1485,8 @@
           </preprocessorList>
         </ccTool>
       </item>
+      <item path="satviewer/satutils/Satellite.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="satviewer/satutils/TleReader.cpp" ex="false" tool="1" flavor2="4">
         <ccTool>
           <incDir>
@@ -1404,11 +1511,49 @@
           </preprocessorList>
         </ccTool>
       </item>
+      <item path="satviewer/satutils/TleReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/sql/dbsql.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/tleupd/SUpdater.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/tleupd/SUpdater.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/uchecker/UCheck.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/uchecker/UCheck.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_SatViewer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_earthsettings.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_jscalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_jswidgetlist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_loc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_mapsettings.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_options.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_sat.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_settings.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_tleupd.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/zrvutils/ZrvIoList.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/zrvutils/ZrvIoList.h" ex="false" tool="3" flavor2="0">
+      </item>
     </conf>
     <conf name="Debug" type="0">
       <toolsSet>
         <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <codeAssistance>
       </codeAssistance>
@@ -1432,14 +1577,14 @@
           </cTool>
           <ccTool>
             <incDir>
-              <pElem>../../../usr/qt/include</pElem>
-              <pElem>../../../usr/qt/include/Qt</pElem>
-              <pElem>../../../usr/qt/include/QtCore</pElem>
-              <pElem>../../../usr/qt/include/QtGui</pElem>
-              <pElem>../../../usr/qt/include/QtNetwork</pElem>
-              <pElem>../../../usr/qt/include/QtOpenGL</pElem>
-              <pElem>../../../usr/qt/include/QtSql</pElem>
-              <pElem>../../../usr/qt/include/QtScript</pElem>
+              <pElem>../../../usr/qt5/5.1.0/mingw48_32/include</pElem>
+              <pElem>../../../usr/qt5/5.1.0/mingw48_32/include/QtCore</pElem>
+              <pElem>../../../usr/qt5/5.1.0/mingw48_32/include/QtGui</pElem>
+              <pElem>../../../usr/qt5/5.1.0/mingw48_32/include/QtNetwork</pElem>
+              <pElem>../../../usr/qt5/5.1.0/mingw48_32/include/QtOpenGL</pElem>
+              <pElem>../../../usr/qt5/5.1.0/mingw48_32/include/QtScript</pElem>
+              <pElem>../../../usr/qt5/5.1.0/mingw48_32/include/QtSql</pElem>
+              <pElem>../../../usr/qt5/5.1.0/mingw48_32/include/QtWidgets</pElem>
             </incDir>
             <preprocessorList>
               <Elem>QT_CORE_LIB=1</Elem>
@@ -1459,6 +1604,22 @@
           </ccTool>
         </makeTool>
       </makefileType>
+      <item path="dialogs/sgp4/SObjDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="dialogs/sgp4/SObjDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="dialogs/sgp4/debug/moc_GLSatAbstractWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="dialogs/sgp4/debug/moc_SObjDialog.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="dialogs/sgp4/ui_sat.h" ex="false" tool="3" flavor2="0">
+      </item>
       <folder path="SatViewer/models">
         <ccTool>
           <incDir>
@@ -2123,6 +2284,24 @@
           </preprocessorList>
         </ccTool>
       </folder>
+      <item path="models/kepler/SatModel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="models/kepler/SatModel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/sgp/SatModel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="models/sgp/SatModel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/sgp/sgp_struct.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/sun/SatModel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="models/sun/SatModel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/SAbstractObjDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/SAbstractObjDialog.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="satviewer/SDlgOptions.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
           <incDir>
@@ -2206,6 +2385,8 @@
           </preprocessorList>
         </ccTool>
       </item>
+      <item path="satviewer/SDlgOptions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="satviewer/SLocDialog.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
           <incDir>
@@ -2271,6 +2452,8 @@
             <Elem>QT_SQL_LIB=1</Elem>
           </preprocessorList>
         </ccTool>
+      </item>
+      <item path="satviewer/SLocDialog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="satviewer/SWindow.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
@@ -2356,6 +2539,8 @@
           </preprocessorList>
         </ccTool>
       </item>
+      <item path="satviewer/SWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="satviewer/SatViewer.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
           <incDir>
@@ -2440,6 +2625,62 @@
           </preprocessorList>
         </ccTool>
       </item>
+      <item path="satviewer/crd/crd.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/crd/crd.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_GLSatAbstractWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_GLSatWidget.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_GLSatWidget3d.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SDlgOptions.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SLocDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SSatDialog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SScriptFrame.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SUpdater.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SWidgetList.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_SWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/debug/moc_UCheck.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/debug/qrc_SatViewer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/jscalc/SScriptFrame.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/jscalc/SScriptFrame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/jswidgets/SWidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/jswidgets/SWidget.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="satviewer/jswidgets/SWidgetList.cpp"
             ex="false"
             tool="1"
@@ -2449,6 +2690,12 @@
             <pElem>satviewer</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="satviewer/jswidgets/SWidgetList.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/locutils/Location.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/locutils/Location.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="satviewer/ogl/GLSatAbstractWidget.cpp"
             ex="false"
@@ -2464,6 +2711,11 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="satviewer/ogl/GLSatAbstractWidget.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="satviewer/ogl/GLSatWidget.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
           <incDir>
@@ -2475,6 +2727,8 @@
             <pElem>satviewer/ogl</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="satviewer/ogl/GLSatWidget.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="satviewer/ogl/GLSatWidget3d.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
@@ -2488,12 +2742,37 @@
           </incDir>
         </ccTool>
       </item>
+      <item path="satviewer/ogl/GLSatWidget3d.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="satviewer/ogl/SatWidgetObject.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
           <incDir>
             <pElem>satviewer/ogl</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="satviewer/ogl/SatWidgetObject.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ogl/globj/GLObjMaterial.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/ogl/globj/GLObjMaterial.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="satviewer/ogl/globj/GLObjecter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/ogl/globj/GLObjecter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ogl/glsprite/GLSprite.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="satviewer/ogl/glsprite/GLSprite.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="satviewer/ogl/satogl.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
@@ -2505,6 +2784,13 @@
             <pElem>satviewer/ogl</pElem>
           </incDir>
         </ccTool>
+      </item>
+      <item path="satviewer/ogl/satogl.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/release/moc_SSatDialog.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="satviewer/satutils/Satellite.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
@@ -2604,6 +2890,8 @@
           </preprocessorList>
         </ccTool>
       </item>
+      <item path="satviewer/satutils/Satellite.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="satviewer/satutils/TleReader.cpp" ex="false" tool="1" flavor2="0">
         <ccTool>
           <incDir>
@@ -2627,6 +2915,42 @@
             <Elem>QT_SQL_LIB=1</Elem>
           </preprocessorList>
         </ccTool>
+      </item>
+      <item path="satviewer/satutils/TleReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/sql/dbsql.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/tleupd/SUpdater.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/tleupd/SUpdater.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/uchecker/UCheck.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/uchecker/UCheck.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_SatViewer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_earthsettings.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_jscalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_jswidgetlist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_loc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_mapsettings.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_options.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_sat.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_settings.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/ui_tleupd.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="satviewer/zrvutils/ZrvIoList.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="satviewer/zrvutils/ZrvIoList.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

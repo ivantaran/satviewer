@@ -10,8 +10,10 @@
 
 #include "GLSatAbstractWidget.h"
 //#include "GL/gl.h"
-#include "GL/glu.h"
 //#include "GL/glext.h"
+#include "GL/glu.h"
+#undef GLdouble
+#undef GLfloat
 #include <QtOpenGL>
 #include "../ui_earthsettings.h"
 #include "globj/GLObjecter.h"

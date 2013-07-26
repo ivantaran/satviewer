@@ -229,13 +229,13 @@ void GLSatWidget3d::renderText(float x, float y, const QString& text, int color,
 	QPixmap pixmap(rect.size());
 
 	pixmap.fill(QColor((uint8_t)(color), (uint8_t)(color >> 8), (uint8_t)(color >> 16), 254));
-	QPixmap apx = pixmap.alphaChannel();
+	QPixmap apx = pixmap.mask();
 	apx.fill(Qt::black);
 	QPainter painter(&apx);
 	painter.setPen(Qt::white);
 	painter.setFont(font);
 	painter.drawText(-rect.left(), -rect.top(), text);
-	pixmap.setAlphaChannel(apx);
+	pixmap.setMask(apx);
 
 	QImage img = pixmap.toImage();
 

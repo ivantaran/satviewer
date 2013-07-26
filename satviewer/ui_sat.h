@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'sat.ui'
 **
-** Created: Sun 7. Oct 19:10:51 2012
-**      by: Qt User Interface Compiler version 4.8.2
+** Created by: Qt User Interface Compiler version 5.1.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,26 +11,26 @@
 
 #include <QtCore/QLocale>
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QCheckBox>
-#include <QtGui/QComboBox>
-#include <QtGui/QDateTimeEdit>
-#include <QtGui/QDialog>
-#include <QtGui/QDialogButtonBox>
-#include <QtGui/QDoubleSpinBox>
-#include <QtGui/QFormLayout>
-#include <QtGui/QGridLayout>
-#include <QtGui/QGroupBox>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QPushButton>
-#include <QtGui/QScrollArea>
-#include <QtGui/QSpinBox>
-#include <QtGui/QToolButton>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QDateTimeEdit>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
+#include <QtWidgets/QSpinBox>
+#include <QtWidgets/QToolButton>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -95,7 +94,7 @@ public:
     void setupUi(QDialog *SatDialog)
     {
         if (SatDialog->objectName().isEmpty())
-            SatDialog->setObjectName(QString::fromUtf8("SatDialog"));
+            SatDialog->setObjectName(QStringLiteral("SatDialog"));
         SatDialog->resize(320, 400);
         SatDialog->setLocale(QLocale(QLocale::C, QLocale::AnyCountry));
         gridLayout = new QGridLayout(SatDialog);
@@ -103,30 +102,30 @@ public:
         gridLayout->setSpacing(6);
 #endif
         gridLayout->setContentsMargins(0, 0, 0, 0);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
         buttonBox = new QDialogButtonBox(SatDialog);
-        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setObjectName(QStringLiteral("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
         gridLayout->addWidget(buttonBox, 8, 2, 1, 1);
 
         btnDefault = new QPushButton(SatDialog);
-        btnDefault->setObjectName(QString::fromUtf8("btnDefault"));
+        btnDefault->setObjectName(QStringLiteral("btnDefault"));
 
         gridLayout->addWidget(btnDefault, 8, 0, 1, 2);
 
         scrollArea = new QScrollArea(SatDialog);
-        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+        scrollArea->setObjectName(QStringLiteral("scrollArea"));
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
-        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
         scrollAreaWidgetContents->setGeometry(QRect(0, -256, 300, 865));
         formLayout = new QFormLayout(scrollAreaWidgetContents);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        formLayout->setObjectName(QStringLiteral("formLayout"));
         btnIcon = new QToolButton(scrollAreaWidgetContents);
-        btnIcon->setObjectName(QString::fromUtf8("btnIcon"));
+        btnIcon->setObjectName(QStringLiteral("btnIcon"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -141,24 +140,24 @@ public:
         formLayout->setWidget(0, QFormLayout::LabelRole, btnIcon);
 
         checkName = new QGroupBox(scrollAreaWidgetContents);
-        checkName->setObjectName(QString::fromUtf8("checkName"));
+        checkName->setObjectName(QStringLiteral("checkName"));
         checkName->setCheckable(true);
         formLayout_2 = new QFormLayout(checkName);
-        formLayout_2->setObjectName(QString::fromUtf8("formLayout_2"));
+        formLayout_2->setObjectName(QStringLiteral("formLayout_2"));
         labelNameX = new QLabel(checkName);
-        labelNameX->setObjectName(QString::fromUtf8("labelNameX"));
+        labelNameX->setObjectName(QStringLiteral("labelNameX"));
         labelNameX->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_2->setWidget(1, QFormLayout::LabelRole, labelNameX);
 
         labelNameY = new QLabel(checkName);
-        labelNameY->setObjectName(QString::fromUtf8("labelNameY"));
+        labelNameY->setObjectName(QStringLiteral("labelNameY"));
         labelNameY->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_2->setWidget(3, QFormLayout::LabelRole, labelNameY);
 
         spinNameY = new QSpinBox(checkName);
-        spinNameY->setObjectName(QString::fromUtf8("spinNameY"));
+        spinNameY->setObjectName(QStringLiteral("spinNameY"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -171,7 +170,7 @@ public:
         formLayout_2->setWidget(3, QFormLayout::FieldRole, spinNameY);
 
         spinNameX = new QSpinBox(checkName);
-        spinNameX->setObjectName(QString::fromUtf8("spinNameX"));
+        spinNameX->setObjectName(QStringLiteral("spinNameX"));
         sizePolicy1.setHeightForWidth(spinNameX->sizePolicy().hasHeightForWidth());
         spinNameX->setSizePolicy(sizePolicy1);
         spinNameX->setMinimum(-9999);
@@ -181,12 +180,12 @@ public:
         formLayout_2->setWidget(1, QFormLayout::FieldRole, spinNameX);
 
         lineEditName = new QLineEdit(checkName);
-        lineEditName->setObjectName(QString::fromUtf8("lineEditName"));
+        lineEditName->setObjectName(QStringLiteral("lineEditName"));
 
         formLayout_2->setWidget(0, QFormLayout::SpanningRole, lineEditName);
 
         btnFont = new QToolButton(checkName);
-        btnFont->setObjectName(QString::fromUtf8("btnFont"));
+        btnFont->setObjectName(QStringLiteral("btnFont"));
         sizePolicy1.setHeightForWidth(btnFont->sizePolicy().hasHeightForWidth());
         btnFont->setSizePolicy(sizePolicy1);
         btnFont->setAutoRaise(true);
@@ -194,7 +193,7 @@ public:
         formLayout_2->setWidget(4, QFormLayout::SpanningRole, btnFont);
 
         btnColorName = new QToolButton(checkName);
-        btnColorName->setObjectName(QString::fromUtf8("btnColorName"));
+        btnColorName->setObjectName(QStringLiteral("btnColorName"));
         sizePolicy1.setHeightForWidth(btnColorName->sizePolicy().hasHeightForWidth());
         btnColorName->setSizePolicy(sizePolicy1);
         btnColorName->setAutoFillBackground(true);
@@ -207,12 +206,12 @@ public:
         formLayout->setWidget(2, QFormLayout::SpanningRole, checkName);
 
         groupCoords = new QGroupBox(scrollAreaWidgetContents);
-        groupCoords->setObjectName(QString::fromUtf8("groupCoords"));
+        groupCoords->setObjectName(QStringLiteral("groupCoords"));
         groupCoords->setCheckable(false);
         formLayout_3 = new QFormLayout(groupCoords);
-        formLayout_3->setObjectName(QString::fromUtf8("formLayout_3"));
+        formLayout_3->setObjectName(QStringLiteral("formLayout_3"));
         label_5 = new QLabel(groupCoords);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
+        label_5->setObjectName(QStringLiteral("label_5"));
         sizePolicy.setHeightForWidth(label_5->sizePolicy().hasHeightForWidth());
         label_5->setSizePolicy(sizePolicy);
         label_5->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
@@ -220,29 +219,29 @@ public:
         formLayout_3->setWidget(0, QFormLayout::LabelRole, label_5);
 
         lineEditOmg = new QLineEdit(groupCoords);
-        lineEditOmg->setObjectName(QString::fromUtf8("lineEditOmg"));
+        lineEditOmg->setObjectName(QStringLiteral("lineEditOmg"));
 
         formLayout_3->setWidget(1, QFormLayout::FieldRole, lineEditOmg);
 
         label_6 = new QLabel(groupCoords);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
+        label_6->setObjectName(QStringLiteral("label_6"));
         label_6->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_3->setWidget(1, QFormLayout::LabelRole, label_6);
 
         lineEditE = new QLineEdit(groupCoords);
-        lineEditE->setObjectName(QString::fromUtf8("lineEditE"));
+        lineEditE->setObjectName(QStringLiteral("lineEditE"));
 
         formLayout_3->setWidget(2, QFormLayout::FieldRole, lineEditE);
 
         label_9 = new QLabel(groupCoords);
-        label_9->setObjectName(QString::fromUtf8("label_9"));
+        label_9->setObjectName(QStringLiteral("label_9"));
         label_9->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_3->setWidget(2, QFormLayout::LabelRole, label_9);
 
         lineEditI = new QLineEdit(groupCoords);
-        lineEditI->setObjectName(QString::fromUtf8("lineEditI"));
+        lineEditI->setObjectName(QStringLiteral("lineEditI"));
         QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
@@ -252,62 +251,62 @@ public:
         formLayout_3->setWidget(0, QFormLayout::FieldRole, lineEditI);
 
         lineEditW = new QLineEdit(groupCoords);
-        lineEditW->setObjectName(QString::fromUtf8("lineEditW"));
+        lineEditW->setObjectName(QStringLiteral("lineEditW"));
 
         formLayout_3->setWidget(3, QFormLayout::FieldRole, lineEditW);
 
         label_7 = new QLabel(groupCoords);
-        label_7->setObjectName(QString::fromUtf8("label_7"));
+        label_7->setObjectName(QStringLiteral("label_7"));
         label_7->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_3->setWidget(3, QFormLayout::LabelRole, label_7);
 
         lineEditM0 = new QLineEdit(groupCoords);
-        lineEditM0->setObjectName(QString::fromUtf8("lineEditM0"));
+        lineEditM0->setObjectName(QStringLiteral("lineEditM0"));
 
         formLayout_3->setWidget(4, QFormLayout::FieldRole, lineEditM0);
 
         label_8 = new QLabel(groupCoords);
-        label_8->setObjectName(QString::fromUtf8("label_8"));
+        label_8->setObjectName(QStringLiteral("label_8"));
         label_8->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_3->setWidget(4, QFormLayout::LabelRole, label_8);
 
         lineEditN = new QLineEdit(groupCoords);
-        lineEditN->setObjectName(QString::fromUtf8("lineEditN"));
+        lineEditN->setObjectName(QStringLiteral("lineEditN"));
 
         formLayout_3->setWidget(5, QFormLayout::FieldRole, lineEditN);
 
         label_10 = new QLabel(groupCoords);
-        label_10->setObjectName(QString::fromUtf8("label_10"));
+        label_10->setObjectName(QStringLiteral("label_10"));
         label_10->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_3->setWidget(5, QFormLayout::LabelRole, label_10);
 
         lineEditBStar = new QLineEdit(groupCoords);
-        lineEditBStar->setObjectName(QString::fromUtf8("lineEditBStar"));
+        lineEditBStar->setObjectName(QStringLiteral("lineEditBStar"));
 
         formLayout_3->setWidget(6, QFormLayout::FieldRole, lineEditBStar);
 
         label_11 = new QLabel(groupCoords);
-        label_11->setObjectName(QString::fromUtf8("label_11"));
+        label_11->setObjectName(QStringLiteral("label_11"));
         label_11->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_3->setWidget(6, QFormLayout::LabelRole, label_11);
 
         lineEditTime = new QLineEdit(groupCoords);
-        lineEditTime->setObjectName(QString::fromUtf8("lineEditTime"));
+        lineEditTime->setObjectName(QStringLiteral("lineEditTime"));
 
         formLayout_3->setWidget(7, QFormLayout::FieldRole, lineEditTime);
 
         label_12 = new QLabel(groupCoords);
-        label_12->setObjectName(QString::fromUtf8("label_12"));
+        label_12->setObjectName(QStringLiteral("label_12"));
         label_12->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_3->setWidget(7, QFormLayout::LabelRole, label_12);
 
         dateTimeEdit = new QDateTimeEdit(groupCoords);
-        dateTimeEdit->setObjectName(QString::fromUtf8("dateTimeEdit"));
+        dateTimeEdit->setObjectName(QStringLiteral("dateTimeEdit"));
         dateTimeEdit->setFrame(true);
         dateTimeEdit->setReadOnly(true);
         dateTimeEdit->setButtonSymbols(QAbstractSpinBox::NoButtons);
@@ -319,19 +318,19 @@ public:
         formLayout->setWidget(3, QFormLayout::SpanningRole, groupCoords);
 
         checkZrv = new QGroupBox(scrollAreaWidgetContents);
-        checkZrv->setObjectName(QString::fromUtf8("checkZrv"));
+        checkZrv->setObjectName(QStringLiteral("checkZrv"));
         checkZrv->setFlat(false);
         checkZrv->setCheckable(true);
         formLayout_4 = new QFormLayout(checkZrv);
-        formLayout_4->setObjectName(QString::fromUtf8("formLayout_4"));
+        formLayout_4->setObjectName(QStringLiteral("formLayout_4"));
         checkZrvEnable = new QCheckBox(checkZrv);
-        checkZrvEnable->setObjectName(QString::fromUtf8("checkZrvEnable"));
+        checkZrvEnable->setObjectName(QStringLiteral("checkZrvEnable"));
         checkZrvEnable->setChecked(true);
 
         formLayout_4->setWidget(0, QFormLayout::SpanningRole, checkZrvEnable);
 
         btnColorZrv = new QToolButton(checkZrv);
-        btnColorZrv->setObjectName(QString::fromUtf8("btnColorZrv"));
+        btnColorZrv->setObjectName(QStringLiteral("btnColorZrv"));
         sizePolicy1.setHeightForWidth(btnColorZrv->sizePolicy().hasHeightForWidth());
         btnColorZrv->setSizePolicy(sizePolicy1);
         btnColorZrv->setAutoFillBackground(true);
@@ -341,13 +340,13 @@ public:
         formLayout_4->setWidget(3, QFormLayout::SpanningRole, btnColorZrv);
 
         label_3 = new QLabel(checkZrv);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_3->setObjectName(QStringLiteral("label_3"));
         label_3->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_4->setWidget(1, QFormLayout::LabelRole, label_3);
 
         spinZRV = new QDoubleSpinBox(checkZrv);
-        spinZRV->setObjectName(QString::fromUtf8("spinZRV"));
+        spinZRV->setObjectName(QStringLiteral("spinZRV"));
         sizePolicy2.setHeightForWidth(spinZRV->sizePolicy().hasHeightForWidth());
         spinZRV->setSizePolicy(sizePolicy2);
         spinZRV->setDecimals(3);
@@ -361,18 +360,18 @@ public:
         formLayout->setWidget(4, QFormLayout::SpanningRole, checkZrv);
 
         checkZrvLines = new QGroupBox(scrollAreaWidgetContents);
-        checkZrvLines->setObjectName(QString::fromUtf8("checkZrvLines"));
+        checkZrvLines->setObjectName(QStringLiteral("checkZrvLines"));
         checkZrvLines->setCheckable(true);
         formLayout_5 = new QFormLayout(checkZrvLines);
-        formLayout_5->setObjectName(QString::fromUtf8("formLayout_5"));
+        formLayout_5->setObjectName(QStringLiteral("formLayout_5"));
         labelWidth = new QLabel(checkZrvLines);
-        labelWidth->setObjectName(QString::fromUtf8("labelWidth"));
+        labelWidth->setObjectName(QStringLiteral("labelWidth"));
         labelWidth->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_5->setWidget(0, QFormLayout::LabelRole, labelWidth);
 
         spinLines = new QDoubleSpinBox(checkZrvLines);
-        spinLines->setObjectName(QString::fromUtf8("spinLines"));
+        spinLines->setObjectName(QStringLiteral("spinLines"));
         sizePolicy2.setHeightForWidth(spinLines->sizePolicy().hasHeightForWidth());
         spinLines->setSizePolicy(sizePolicy2);
         spinLines->setDecimals(1);
@@ -382,7 +381,7 @@ public:
         formLayout_5->setWidget(0, QFormLayout::FieldRole, spinLines);
 
         btnColorLines = new QToolButton(checkZrvLines);
-        btnColorLines->setObjectName(QString::fromUtf8("btnColorLines"));
+        btnColorLines->setObjectName(QStringLiteral("btnColorLines"));
         sizePolicy1.setHeightForWidth(btnColorLines->sizePolicy().hasHeightForWidth());
         btnColorLines->setSizePolicy(sizePolicy1);
         btnColorLines->setAutoFillBackground(true);
@@ -395,12 +394,12 @@ public:
         formLayout->setWidget(5, QFormLayout::SpanningRole, checkZrvLines);
 
         checkTrack = new QGroupBox(scrollAreaWidgetContents);
-        checkTrack->setObjectName(QString::fromUtf8("checkTrack"));
+        checkTrack->setObjectName(QStringLiteral("checkTrack"));
         checkTrack->setCheckable(true);
         formLayout_6 = new QFormLayout(checkTrack);
-        formLayout_6->setObjectName(QString::fromUtf8("formLayout_6"));
+        formLayout_6->setObjectName(QStringLiteral("formLayout_6"));
         spinTrack = new QDoubleSpinBox(checkTrack);
-        spinTrack->setObjectName(QString::fromUtf8("spinTrack"));
+        spinTrack->setObjectName(QStringLiteral("spinTrack"));
         sizePolicy2.setHeightForWidth(spinTrack->sizePolicy().hasHeightForWidth());
         spinTrack->setSizePolicy(sizePolicy2);
         spinTrack->setSingleStep(0.5);
@@ -409,13 +408,13 @@ public:
         formLayout_6->setWidget(0, QFormLayout::FieldRole, spinTrack);
 
         labelLength = new QLabel(checkTrack);
-        labelLength->setObjectName(QString::fromUtf8("labelLength"));
+        labelLength->setObjectName(QStringLiteral("labelLength"));
         labelLength->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_6->setWidget(0, QFormLayout::LabelRole, labelLength);
 
         btnColorTrack = new QToolButton(checkTrack);
-        btnColorTrack->setObjectName(QString::fromUtf8("btnColorTrack"));
+        btnColorTrack->setObjectName(QStringLiteral("btnColorTrack"));
         sizePolicy1.setHeightForWidth(btnColorTrack->sizePolicy().hasHeightForWidth());
         btnColorTrack->setSizePolicy(sizePolicy1);
         btnColorTrack->setAutoFillBackground(true);
@@ -428,12 +427,12 @@ public:
         formLayout->setWidget(6, QFormLayout::SpanningRole, checkTrack);
 
         comboModel = new QComboBox(scrollAreaWidgetContents);
-        comboModel->setObjectName(QString::fromUtf8("comboModel"));
+        comboModel->setObjectName(QStringLiteral("comboModel"));
 
         formLayout->setWidget(8, QFormLayout::SpanningRole, comboModel);
 
         labelModel = new QLabel(scrollAreaWidgetContents);
-        labelModel->setObjectName(QString::fromUtf8("labelModel"));
+        labelModel->setObjectName(QStringLiteral("labelModel"));
 
         formLayout->setWidget(7, QFormLayout::LabelRole, labelModel);
 
@@ -486,35 +485,35 @@ public:
 
     void retranslateUi(QDialog *SatDialog)
     {
-        SatDialog->setWindowTitle(QApplication::translate("SatDialog", "Satellite", 0, QApplication::UnicodeUTF8));
-        btnDefault->setText(QApplication::translate("SatDialog", "Default", 0, QApplication::UnicodeUTF8));
+        SatDialog->setWindowTitle(QApplication::translate("SatDialog", "Satellite", 0));
+        btnDefault->setText(QApplication::translate("SatDialog", "Default", 0));
         btnIcon->setText(QString());
-        checkName->setTitle(QApplication::translate("SatDialog", "Name", 0, QApplication::UnicodeUTF8));
-        labelNameX->setText(QApplication::translate("SatDialog", "X", 0, QApplication::UnicodeUTF8));
-        labelNameY->setText(QApplication::translate("SatDialog", "Y", 0, QApplication::UnicodeUTF8));
-        btnFont->setText(QApplication::translate("SatDialog", "Font", 0, QApplication::UnicodeUTF8));
-        btnColorName->setText(QApplication::translate("SatDialog", "Color", 0, QApplication::UnicodeUTF8));
-        groupCoords->setTitle(QApplication::translate("SatDialog", "Coords", 0, QApplication::UnicodeUTF8));
-        label_5->setText(QApplication::translate("SatDialog", "Inclination", 0, QApplication::UnicodeUTF8));
-        label_6->setText(QApplication::translate("SatDialog", "Ascending node", 0, QApplication::UnicodeUTF8));
-        label_9->setText(QApplication::translate("SatDialog", "Eccentricity", 0, QApplication::UnicodeUTF8));
-        label_7->setText(QApplication::translate("SatDialog", "Arg. perigee lat.", 0, QApplication::UnicodeUTF8));
-        label_8->setText(QApplication::translate("SatDialog", "Mean anomaly", 0, QApplication::UnicodeUTF8));
-        label_10->setText(QApplication::translate("SatDialog", "Mean motion", 0, QApplication::UnicodeUTF8));
-        label_11->setText(QApplication::translate("SatDialog", "Ballistic coeff.", 0, QApplication::UnicodeUTF8));
-        label_12->setText(QApplication::translate("SatDialog", "Timestamp", 0, QApplication::UnicodeUTF8));
-        dateTimeEdit->setDisplayFormat(QApplication::translate("SatDialog", "dd.MM.yyyy H:mm:ss.zzz", 0, QApplication::UnicodeUTF8));
-        checkZrv->setTitle(QApplication::translate("SatDialog", "Zone", 0, QApplication::UnicodeUTF8));
-        checkZrvEnable->setText(QApplication::translate("SatDialog", "Enabled", 0, QApplication::UnicodeUTF8));
-        btnColorZrv->setText(QApplication::translate("SatDialog", "Color", 0, QApplication::UnicodeUTF8));
-        label_3->setText(QApplication::translate("SatDialog", "Width", 0, QApplication::UnicodeUTF8));
-        checkZrvLines->setTitle(QApplication::translate("SatDialog", "Zone contour", 0, QApplication::UnicodeUTF8));
-        labelWidth->setText(QApplication::translate("SatDialog", "Width", 0, QApplication::UnicodeUTF8));
-        btnColorLines->setText(QApplication::translate("SatDialog", "Color", 0, QApplication::UnicodeUTF8));
-        checkTrack->setTitle(QApplication::translate("SatDialog", "Track", 0, QApplication::UnicodeUTF8));
-        labelLength->setText(QApplication::translate("SatDialog", "Length", 0, QApplication::UnicodeUTF8));
-        btnColorTrack->setText(QApplication::translate("SatDialog", "Color", 0, QApplication::UnicodeUTF8));
-        labelModel->setText(QApplication::translate("SatDialog", "Model", 0, QApplication::UnicodeUTF8));
+        checkName->setTitle(QApplication::translate("SatDialog", "Name", 0));
+        labelNameX->setText(QApplication::translate("SatDialog", "X", 0));
+        labelNameY->setText(QApplication::translate("SatDialog", "Y", 0));
+        btnFont->setText(QApplication::translate("SatDialog", "Font", 0));
+        btnColorName->setText(QApplication::translate("SatDialog", "Color", 0));
+        groupCoords->setTitle(QApplication::translate("SatDialog", "Coords", 0));
+        label_5->setText(QApplication::translate("SatDialog", "Inclination", 0));
+        label_6->setText(QApplication::translate("SatDialog", "Ascending node", 0));
+        label_9->setText(QApplication::translate("SatDialog", "Eccentricity", 0));
+        label_7->setText(QApplication::translate("SatDialog", "Arg. perigee lat.", 0));
+        label_8->setText(QApplication::translate("SatDialog", "Mean anomaly", 0));
+        label_10->setText(QApplication::translate("SatDialog", "Mean motion", 0));
+        label_11->setText(QApplication::translate("SatDialog", "Ballistic coeff.", 0));
+        label_12->setText(QApplication::translate("SatDialog", "Timestamp", 0));
+        dateTimeEdit->setDisplayFormat(QApplication::translate("SatDialog", "dd.MM.yyyy H:mm:ss.zzz", 0));
+        checkZrv->setTitle(QApplication::translate("SatDialog", "Zone", 0));
+        checkZrvEnable->setText(QApplication::translate("SatDialog", "Enabled", 0));
+        btnColorZrv->setText(QApplication::translate("SatDialog", "Color", 0));
+        label_3->setText(QApplication::translate("SatDialog", "Width", 0));
+        checkZrvLines->setTitle(QApplication::translate("SatDialog", "Zone contour", 0));
+        labelWidth->setText(QApplication::translate("SatDialog", "Width", 0));
+        btnColorLines->setText(QApplication::translate("SatDialog", "Color", 0));
+        checkTrack->setTitle(QApplication::translate("SatDialog", "Track", 0));
+        labelLength->setText(QApplication::translate("SatDialog", "Length", 0));
+        btnColorTrack->setText(QApplication::translate("SatDialog", "Color", 0));
+        labelModel->setText(QApplication::translate("SatDialog", "Model", 0));
     } // retranslateUi
 
 };

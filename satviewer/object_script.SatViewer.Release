@@ -22,6 +22,7 @@ INPUT(
 ./release/GLSprite.o
 ./release/SatWidgetObject.o
 ./release/SAbstractObjDialog.o
+./release/qrc_SatViewer.o
 ./release/moc_SWindow.o
 ./release/moc_SDlgOptions.o
 ./release/moc_SLocDialog.o
@@ -33,5 +34,4 @@ INPUT(
 ./release/moc_SWidget.o
 ./release/moc_SWidgetList.o
 ./release/moc_UCheck.o
-./release/qrc_SatViewer.o
 );

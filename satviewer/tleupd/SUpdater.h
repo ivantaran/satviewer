@@ -21,16 +21,17 @@ public:
 	virtual ~SUpdater();
 	void load(QString fileName);
 private:
-	QHttp *http;
+//	QHttp *http;
+        QNetworkAccessManager nam;
+        QNetworkReply *reply;
 	QFile *file, *listFile;
 	int httpGetId;
     bool httpRequestAborted;
     int urlIndex;
 private slots:
 	void updateTle();
-	void updateDataReadProgress(int bytesRead, int totalBytes);
-	void readResponseHeader(const QHttpResponseHeader &responseHeader);
-	void doneGet(bool error);
+	void updateDataReadProgress(qint64 bytesRead, qint64 totalBytes);
+	void httpFinished();
 	void save();
 	void addLine();
 	void removeLine();

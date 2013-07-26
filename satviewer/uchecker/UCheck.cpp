@@ -10,13 +10,10 @@
 #include <QSettings>
 #include <QMessageBox>
 
-UCheck::UCheck(QWidget * parent, int versionId, QString host, QString request) : QHttp(parent) {
+UCheck::UCheck(QWidget * parent, int versionId, QString request) : QNetworkAccessManager(parent) {
 	m_id = versionId;
-	m_host = host;			//"satviewer.net"
 	m_request = request;	//"/version/current.txt"
-	setHost(m_host);
 	m_file.setFileName(QDir::temp().filePath("satviewer.ver"));
-	connect(this, SIGNAL(done(bool)), this, SLOT(verify(bool)));
 }
 
 UCheck::~UCheck() {
@@ -26,12 +23,15 @@ UCheck::~UCheck() {
 void UCheck::check() {
 	if (!m_file.open(QFile::ReadWrite | QFile::Text | QFile::Truncate))
 		puts("error: can't create 'satviewer.ver' file in the temp");
-//		QMessageBox::information((QWidget *)parent(), "Error", "No access temp", QMessageBox::Ok);
-	get(m_request, &m_file);
+        reply = get(QNetworkRequest(m_request));
+        
+        connect(reply, SIGNAL(finished()) , this, SLOT(httpFinished ()));
+        connect(reply, SIGNAL(readyRead()), this, SLOT(httpReadyRead()));
+        
 }
 
-void UCheck::verify(bool error) {
-	if ((!error) && (m_file.isOpen()) && (m_file.reset()) && (m_file.isReadable())) {
+void UCheck::httpFinished() {
+	if ((!reply->error()) && (m_file.isOpen()) && (m_file.reset()) && (m_file.isReadable())) {
 		QSettings settings(m_file.fileName(), QSettings::IniFormat);
 		int id = settings.value("id", -1).toInt();
 		QString name = settings.value("name", "").toString();
@@ -43,12 +43,13 @@ void UCheck::verify(bool error) {
 		m_file.close();
 		m_file.remove();
 	}
-//	else {
-//		this->abort();
-//		QMessageBox::information((QWidget *)parent(), tr("Update is error"), this->errorString(), QMessageBox::Ok);
-//		puts("Error check for update:");
-//		puts(this->errorString().toLocal8Bit().data());
-//	}
-//	m_file.close();
-//	m_file.remove();
+        reply->deleteLater();
+        reply = 0;
+}
+
+void UCheck::httpReadyRead() {
+    if (m_file.isOpen() && m_file.isWritable())
+        m_file.write(reply->readAll());
+    else 
+        puts("error: can't write 'satviewer.ver' file in the temp");
 }

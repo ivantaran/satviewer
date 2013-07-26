@@ -243,10 +243,11 @@ void gluZone(float lat) {
 	gluTessProperty(tess, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_ODD);
 	gluTessProperty(tess, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
 	gluTessProperty(tess, GLU_TESS_TOLERANCE, 0);
-
-	gluTessCallback(tess, GLU_TESS_BEGIN , (_GLUfuncptr)glBegin    );
-	gluTessCallback(tess, GLU_TESS_END   ,              glEnd      );
-	gluTessCallback(tess, GLU_TESS_VERTEX, (_GLUfuncptr)glVertex2dv);
+    
+    /* GLUtessEndProc - |>--+ it's shit */
+	gluTessCallback(tess, GLU_TESS_BEGIN , (GLUtessEndProc)glBegin    );
+	gluTessCallback(tess, GLU_TESS_END   , (GLUtessEndProc)glEnd      );
+	gluTessCallback(tess, GLU_TESS_VERTEX, (GLUtessEndProc)glVertex2dv);
 
 	gluTessBeginPolygon(tess, 0);
 	gluTessBeginContour(tess);

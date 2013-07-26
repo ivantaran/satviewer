@@ -7,15 +7,16 @@
 
 #ifndef UCHECK_H_
 #define UCHECK_H_
-#include <QHttp>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <QFile>
 #include <QString>
 #include <QWidget>
 
-class UCheck : private QHttp {
+class UCheck : private QNetworkAccessManager {
 	Q_OBJECT
 public:
-	UCheck(QWidget * parent = 0, int versionId = -1, QString host = "", QString request = "");
+	UCheck(QWidget * parent = 0, int versionId = -1, QString request = "");
 	virtual ~UCheck();
 	void check();
 private:
@@ -23,8 +24,10 @@ private:
 	int m_id;
 	QString m_host;
 	QString m_request;
+        QNetworkReply *reply;
 private slots:
-	void verify(bool error);
+	void httpFinished();
+        void httpReadyRead();
 };
 
 #endif /* UCHECK_H_ */

@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mapsettings.ui'
 **
-** Created: Sun 7. Oct 19:10:52 2012
-**      by: Qt User Interface Compiler version 4.8.2
+** Created by: Qt User Interface Compiler version 5.1.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,19 +11,19 @@
 
 #include <QtCore/QLocale>
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QCheckBox>
-#include <QtGui/QComboBox>
-#include <QtGui/QDoubleSpinBox>
-#include <QtGui/QFormLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QToolButton>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QToolButton>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -50,17 +49,17 @@ public:
     void setupUi(QWidget *MapWidgetSettings)
     {
         if (MapWidgetSettings->objectName().isEmpty())
-            MapWidgetSettings->setObjectName(QString::fromUtf8("MapWidgetSettings"));
+            MapWidgetSettings->setObjectName(QStringLiteral("MapWidgetSettings"));
         MapWidgetSettings->resize(320, 268);
         MapWidgetSettings->setLocale(QLocale(QLocale::C, QLocale::AnyCountry));
         formLayout = new QFormLayout(MapWidgetSettings);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        formLayout->setObjectName(QStringLiteral("formLayout"));
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         formLayout->setItem(10, QFormLayout::LabelRole, verticalSpacer);
 
         btnMapFile = new QToolButton(MapWidgetSettings);
-        btnMapFile->setObjectName(QString::fromUtf8("btnMapFile"));
+        btnMapFile->setObjectName(QStringLiteral("btnMapFile"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -72,19 +71,19 @@ public:
         formLayout->setWidget(1, QFormLayout::SpanningRole, btnMapFile);
 
         labelMap = new QLabel(MapWidgetSettings);
-        labelMap->setObjectName(QString::fromUtf8("labelMap"));
+        labelMap->setObjectName(QStringLiteral("labelMap"));
 
         formLayout->setWidget(0, QFormLayout::SpanningRole, labelMap);
 
         comboBoxColor = new QComboBox(MapWidgetSettings);
-        comboBoxColor->setObjectName(QString::fromUtf8("comboBoxColor"));
+        comboBoxColor->setObjectName(QStringLiteral("comboBoxColor"));
         sizePolicy.setHeightForWidth(comboBoxColor->sizePolicy().hasHeightForWidth());
         comboBoxColor->setSizePolicy(sizePolicy);
 
         formLayout->setWidget(2, QFormLayout::SpanningRole, comboBoxColor);
 
         btnColor = new QToolButton(MapWidgetSettings);
-        btnColor->setObjectName(QString::fromUtf8("btnColor"));
+        btnColor->setObjectName(QStringLiteral("btnColor"));
         sizePolicy.setHeightForWidth(btnColor->sizePolicy().hasHeightForWidth());
         btnColor->setSizePolicy(sizePolicy);
         btnColor->setAutoFillBackground(true);
@@ -93,20 +92,20 @@ public:
         formLayout->setWidget(3, QFormLayout::SpanningRole, btnColor);
 
         btnFontNet = new QPushButton(MapWidgetSettings);
-        btnFontNet->setObjectName(QString::fromUtf8("btnFontNet"));
+        btnFontNet->setObjectName(QStringLiteral("btnFontNet"));
         sizePolicy.setHeightForWidth(btnFontNet->sizePolicy().hasHeightForWidth());
         btnFontNet->setSizePolicy(sizePolicy);
 
         formLayout->setWidget(4, QFormLayout::SpanningRole, btnFontNet);
 
         spinZoom = new QDoubleSpinBox(MapWidgetSettings);
-        spinZoom->setObjectName(QString::fromUtf8("spinZoom"));
+        spinZoom->setObjectName(QStringLiteral("spinZoom"));
         spinZoom->setMinimum(1);
 
         formLayout->setWidget(5, QFormLayout::FieldRole, spinZoom);
 
         spinX = new QDoubleSpinBox(MapWidgetSettings);
-        spinX->setObjectName(QString::fromUtf8("spinX"));
+        spinX->setObjectName(QStringLiteral("spinX"));
         spinX->setMinimum(-99.99);
         spinX->setMaximum(99.99);
         spinX->setSingleStep(0.05);
@@ -114,7 +113,7 @@ public:
         formLayout->setWidget(6, QFormLayout::FieldRole, spinX);
 
         spinY = new QDoubleSpinBox(MapWidgetSettings);
-        spinY->setObjectName(QString::fromUtf8("spinY"));
+        spinY->setObjectName(QStringLiteral("spinY"));
         spinY->setMinimum(-99.99);
         spinY->setMaximum(99.99);
         spinY->setSingleStep(0.05);
@@ -123,31 +122,31 @@ public:
         formLayout->setWidget(7, QFormLayout::FieldRole, spinY);
 
         checkSun = new QCheckBox(MapWidgetSettings);
-        checkSun->setObjectName(QString::fromUtf8("checkSun"));
+        checkSun->setObjectName(QStringLiteral("checkSun"));
         checkSun->setChecked(true);
 
         formLayout->setWidget(8, QFormLayout::SpanningRole, checkSun);
 
         checkNight = new QCheckBox(MapWidgetSettings);
-        checkNight->setObjectName(QString::fromUtf8("checkNight"));
+        checkNight->setObjectName(QStringLiteral("checkNight"));
         checkNight->setChecked(true);
 
         formLayout->setWidget(9, QFormLayout::SpanningRole, checkNight);
 
         labelZoom = new QLabel(MapWidgetSettings);
-        labelZoom->setObjectName(QString::fromUtf8("labelZoom"));
+        labelZoom->setObjectName(QStringLiteral("labelZoom"));
         labelZoom->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout->setWidget(5, QFormLayout::LabelRole, labelZoom);
 
         labelX = new QLabel(MapWidgetSettings);
-        labelX->setObjectName(QString::fromUtf8("labelX"));
+        labelX->setObjectName(QStringLiteral("labelX"));
         labelX->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout->setWidget(6, QFormLayout::LabelRole, labelX);
 
         labelY = new QLabel(MapWidgetSettings);
-        labelY->setObjectName(QString::fromUtf8("labelY"));
+        labelY->setObjectName(QStringLiteral("labelY"));
         labelY->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout->setWidget(7, QFormLayout::LabelRole, labelY);
@@ -174,25 +173,25 @@ public:
 
     void retranslateUi(QWidget *MapWidgetSettings)
     {
-        MapWidgetSettings->setWindowTitle(QApplication::translate("MapWidgetSettings", "Map Settings", 0, QApplication::UnicodeUTF8));
+        MapWidgetSettings->setWindowTitle(QApplication::translate("MapWidgetSettings", "Map Settings", 0));
 #ifndef QT_NO_TOOLTIP
-        btnMapFile->setToolTip(QApplication::translate("MapWidgetSettings", "Map", 0, QApplication::UnicodeUTF8));
+        btnMapFile->setToolTip(QApplication::translate("MapWidgetSettings", "Map", 0));
 #endif // QT_NO_TOOLTIP
         btnMapFile->setText(QString());
-        labelMap->setText(QApplication::translate("MapWidgetSettings", "Map", 0, QApplication::UnicodeUTF8));
+        labelMap->setText(QApplication::translate("MapWidgetSettings", "Map", 0));
         comboBoxColor->clear();
         comboBoxColor->insertItems(0, QStringList()
-         << QApplication::translate("MapWidgetSettings", "Net", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MapWidgetSettings", "Fontnet", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MapWidgetSettings", "Night", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MapWidgetSettings", "Net", 0)
+         << QApplication::translate("MapWidgetSettings", "Fontnet", 0)
+         << QApplication::translate("MapWidgetSettings", "Night", 0)
         );
-        btnColor->setText(QApplication::translate("MapWidgetSettings", "Color", 0, QApplication::UnicodeUTF8));
-        btnFontNet->setText(QApplication::translate("MapWidgetSettings", "Netfont", 0, QApplication::UnicodeUTF8));
-        checkSun->setText(QApplication::translate("MapWidgetSettings", "Sun", 0, QApplication::UnicodeUTF8));
-        checkNight->setText(QApplication::translate("MapWidgetSettings", "Night", 0, QApplication::UnicodeUTF8));
-        labelZoom->setText(QApplication::translate("MapWidgetSettings", "Zoom", 0, QApplication::UnicodeUTF8));
-        labelX->setText(QApplication::translate("MapWidgetSettings", "X", 0, QApplication::UnicodeUTF8));
-        labelY->setText(QApplication::translate("MapWidgetSettings", "Y", 0, QApplication::UnicodeUTF8));
+        btnColor->setText(QApplication::translate("MapWidgetSettings", "Color", 0));
+        btnFontNet->setText(QApplication::translate("MapWidgetSettings", "Netfont", 0));
+        checkSun->setText(QApplication::translate("MapWidgetSettings", "Sun", 0));
+        checkNight->setText(QApplication::translate("MapWidgetSettings", "Night", 0));
+        labelZoom->setText(QApplication::translate("MapWidgetSettings", "Zoom", 0));
+        labelX->setText(QApplication::translate("MapWidgetSettings", "X", 0));
+        labelY->setText(QApplication::translate("MapWidgetSettings", "Y", 0));
     } // retranslateUi
 
 };

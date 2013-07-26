@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'tleupd.ui'
 **
-** Created: Sun 7. Oct 19:10:51 2012
-**      by: Qt User Interface Compiler version 4.8.2
+** Created by: Qt User Interface Compiler version 5.1.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,19 +11,19 @@
 
 #include <QtCore/QLocale>
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QFrame>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QListView>
-#include <QtGui/QPlainTextEdit>
-#include <QtGui/QProgressBar>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QToolButton>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QFrame>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QListView>
+#include <QtWidgets/QPlainTextEdit>
+#include <QtWidgets/QProgressBar>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QToolButton>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -49,20 +48,20 @@ public:
     void setupUi(QWidget *Updater)
     {
         if (Updater->objectName().isEmpty())
-            Updater->setObjectName(QString::fromUtf8("Updater"));
+            Updater->setObjectName(QStringLiteral("Updater"));
         Updater->resize(320, 240);
         Updater->setLocale(QLocale(QLocale::C, QLocale::AnyCountry));
         verticalLayout = new QVBoxLayout(Updater);
         verticalLayout->setSpacing(0);
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         listView = new QListView(Updater);
-        listView->setObjectName(QString::fromUtf8("listView"));
+        listView->setObjectName(QStringLiteral("listView"));
 
         verticalLayout->addWidget(listView);
 
         textStatus = new QPlainTextEdit(Updater);
-        textStatus->setObjectName(QString::fromUtf8("textStatus"));
+        textStatus->setObjectName(QStringLiteral("textStatus"));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -76,67 +75,67 @@ public:
         verticalLayout->addWidget(textStatus);
 
         widget = new QWidget(Updater);
-        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setObjectName(QStringLiteral("widget"));
         horizontalLayout = new QHBoxLayout(widget);
         horizontalLayout->setSpacing(0);
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         btnUpdate = new QToolButton(widget);
-        btnUpdate->setObjectName(QString::fromUtf8("btnUpdate"));
+        btnUpdate->setObjectName(QStringLiteral("btnUpdate"));
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/actions/reload.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/actions/reload.png"), QSize(), QIcon::Normal, QIcon::Off);
         btnUpdate->setIcon(icon);
         btnUpdate->setAutoRaise(true);
 
         horizontalLayout->addWidget(btnUpdate);
 
         btnAbort = new QToolButton(widget);
-        btnAbort->setObjectName(QString::fromUtf8("btnAbort"));
+        btnAbort->setObjectName(QStringLiteral("btnAbort"));
         QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/actions/cancel.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QStringLiteral(":/actions/cancel.png"), QSize(), QIcon::Normal, QIcon::Off);
         btnAbort->setIcon(icon1);
         btnAbort->setAutoRaise(true);
 
         horizontalLayout->addWidget(btnAbort);
 
         line_2 = new QFrame(widget);
-        line_2->setObjectName(QString::fromUtf8("line_2"));
+        line_2->setObjectName(QStringLiteral("line_2"));
         line_2->setFrameShape(QFrame::VLine);
         line_2->setFrameShadow(QFrame::Sunken);
 
         horizontalLayout->addWidget(line_2);
 
         btnSave = new QToolButton(widget);
-        btnSave->setObjectName(QString::fromUtf8("btnSave"));
+        btnSave->setObjectName(QStringLiteral("btnSave"));
         QIcon icon2;
-        icon2.addFile(QString::fromUtf8(":/actions/filesave.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QStringLiteral(":/actions/filesave.png"), QSize(), QIcon::Normal, QIcon::Off);
         btnSave->setIcon(icon2);
         btnSave->setAutoRaise(true);
 
         horizontalLayout->addWidget(btnSave);
 
         btnAdd = new QToolButton(widget);
-        btnAdd->setObjectName(QString::fromUtf8("btnAdd"));
+        btnAdd->setObjectName(QStringLiteral("btnAdd"));
         QIcon icon3;
-        icon3.addFile(QString::fromUtf8(":/actions/add.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon3.addFile(QStringLiteral(":/actions/add.png"), QSize(), QIcon::Normal, QIcon::Off);
         btnAdd->setIcon(icon3);
         btnAdd->setAutoRaise(true);
 
         horizontalLayout->addWidget(btnAdd);
 
         btnRemove = new QToolButton(widget);
-        btnRemove->setObjectName(QString::fromUtf8("btnRemove"));
+        btnRemove->setObjectName(QStringLiteral("btnRemove"));
         QIcon icon4;
-        icon4.addFile(QString::fromUtf8(":/actions/remove.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon4.addFile(QStringLiteral(":/actions/remove.png"), QSize(), QIcon::Normal, QIcon::Off);
         btnRemove->setIcon(icon4);
         btnRemove->setAutoRaise(true);
 
         horizontalLayout->addWidget(btnRemove);
 
         btnClear = new QToolButton(widget);
-        btnClear->setObjectName(QString::fromUtf8("btnClear"));
+        btnClear->setObjectName(QStringLiteral("btnClear"));
         QIcon icon5;
-        icon5.addFile(QString::fromUtf8(":/actions/clear.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon5.addFile(QStringLiteral(":/actions/clear.png"), QSize(), QIcon::Normal, QIcon::Off);
         btnClear->setIcon(icon5);
         btnClear->setAutoRaise(true);
 
@@ -150,7 +149,7 @@ public:
         verticalLayout->addWidget(widget);
 
         progressBar = new QProgressBar(Updater);
-        progressBar->setObjectName(QString::fromUtf8("progressBar"));
+        progressBar->setObjectName(QStringLiteral("progressBar"));
         progressBar->setValue(0);
 
         verticalLayout->addWidget(progressBar);
@@ -168,29 +167,29 @@ public:
 
     void retranslateUi(QWidget *Updater)
     {
-        Updater->setWindowTitle(QApplication::translate("Updater", "TLE Updater", 0, QApplication::UnicodeUTF8));
+        Updater->setWindowTitle(QApplication::translate("Updater", "TLE Updater", 0));
 #ifndef QT_NO_TOOLTIP
-        btnUpdate->setToolTip(QApplication::translate("Updater", "Download", 0, QApplication::UnicodeUTF8));
+        btnUpdate->setToolTip(QApplication::translate("Updater", "Download", 0));
 #endif // QT_NO_TOOLTIP
         btnUpdate->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        btnAbort->setToolTip(QApplication::translate("Updater", "Abort", 0, QApplication::UnicodeUTF8));
+        btnAbort->setToolTip(QApplication::translate("Updater", "Abort", 0));
 #endif // QT_NO_TOOLTIP
         btnAbort->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        btnSave->setToolTip(QApplication::translate("Updater", "Save", 0, QApplication::UnicodeUTF8));
+        btnSave->setToolTip(QApplication::translate("Updater", "Save", 0));
 #endif // QT_NO_TOOLTIP
         btnSave->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        btnAdd->setToolTip(QApplication::translate("Updater", "Add", 0, QApplication::UnicodeUTF8));
+        btnAdd->setToolTip(QApplication::translate("Updater", "Add", 0));
 #endif // QT_NO_TOOLTIP
         btnAdd->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        btnRemove->setToolTip(QApplication::translate("Updater", "Remove", 0, QApplication::UnicodeUTF8));
+        btnRemove->setToolTip(QApplication::translate("Updater", "Remove", 0));
 #endif // QT_NO_TOOLTIP
         btnRemove->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        btnClear->setToolTip(QApplication::translate("Updater", "Remove All", 0, QApplication::UnicodeUTF8));
+        btnClear->setToolTip(QApplication::translate("Updater", "Remove All", 0));
 #endif // QT_NO_TOOLTIP
         btnClear->setText(QString());
     } // retranslateUi

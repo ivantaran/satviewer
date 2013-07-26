@@ -1,5 +1,169 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="84">
+<configurationDescriptor version="89">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="SatViewer">
+      <df name="bin">
+        <df name="dialogs">
+        </df>
+        <df name="plugins">
+        </df>
+        <df name="profile">
+          <df name="3d">
+          </df>
+          <df name="icons">
+          </df>
+          <df name="jsprm">
+          </df>
+          <df name="loc">
+          </df>
+          <df name="tle">
+          </df>
+          <df name="translations">
+          </df>
+          <df name="widgets">
+          </df>
+        </df>
+        <df name="sqldrivers">
+        </df>
+      </df>
+      <df name="dialogs">
+        <df name="sgp4">
+          <df name="debug">
+            <in>moc_GLSatAbstractWidget.cpp</in>
+            <in>moc_SObjDialog.cpp</in>
+          </df>
+          <df name="release">
+          </df>
+          <df name="ui">
+          </df>
+          <in>SObjDialog.cpp</in>
+          <in>SObjDialog.h</in>
+          <in>ui_sat.h</in>
+        </df>
+      </df>
+      <df name="models">
+        <df name="kepler">
+          <in>SatModel.cpp</in>
+          <in>SatModel.h</in>
+        </df>
+        <df name="sgp">
+          <df name="debug">
+          </df>
+          <df name="release">
+          </df>
+          <in>SatModel.cpp</in>
+          <in>SatModel.h</in>
+          <in>sgp_struct.h</in>
+        </df>
+        <df name="sun">
+          <in>SatModel.cpp</in>
+          <in>SatModel.h</in>
+        </df>
+      </df>
+      <df name="satviewer">
+        <df name="crd">
+          <in>crd.cpp</in>
+          <in>crd.h</in>
+        </df>
+        <df name="debug">
+          <in>moc_GLSatAbstractWidget.cpp</in>
+          <in>moc_GLSatWidget.cpp</in>
+          <in>moc_GLSatWidget3d.cpp</in>
+          <in>moc_SDlgOptions.cpp</in>
+          <in>moc_SLocDialog.cpp</in>
+          <in>moc_SSatDialog.cpp</in>
+          <in>moc_SScriptFrame.cpp</in>
+          <in>moc_SUpdater.cpp</in>
+          <in>moc_SWidget.cpp</in>
+          <in>moc_SWidgetList.cpp</in>
+          <in>moc_SWindow.cpp</in>
+          <in>moc_UCheck.cpp</in>
+          <in>qrc_SatViewer.cpp</in>
+        </df>
+        <df name="jscalc">
+          <in>SScriptFrame.cpp</in>
+          <in>SScriptFrame.h</in>
+        </df>
+        <df name="jswidgets">
+          <in>SWidget.cpp</in>
+          <in>SWidget.h</in>
+          <in>SWidgetList.cpp</in>
+          <in>SWidgetList.h</in>
+        </df>
+        <df name="locutils">
+          <in>Location.cpp</in>
+          <in>Location.h</in>
+        </df>
+        <df name="ogl">
+          <df name="globj">
+            <in>GLObjMaterial.cpp</in>
+            <in>GLObjMaterial.h</in>
+            <in>GLObjecter.cpp</in>
+            <in>GLObjecter.h</in>
+          </df>
+          <df name="glsprite">
+            <in>GLSprite.cpp</in>
+            <in>GLSprite.h</in>
+          </df>
+          <in>GLSatAbstractWidget.cpp</in>
+          <in>GLSatAbstractWidget.h</in>
+          <in>GLSatWidget.cpp</in>
+          <in>GLSatWidget.h</in>
+          <in>GLSatWidget3d.cpp</in>
+          <in>GLSatWidget3d.h</in>
+          <in>SatWidgetObject.cpp</in>
+          <in>SatWidgetObject.h</in>
+          <in>satogl.cpp</in>
+          <in>satogl.h</in>
+        </df>
+        <df name="release">
+          <in>moc_SSatDialog.cpp</in>
+        </df>
+        <df name="satutils">
+          <in>Satellite.cpp</in>
+          <in>Satellite.h</in>
+          <in>TleReader.cpp</in>
+          <in>TleReader.h</in>
+        </df>
+        <df name="sql">
+          <in>dbsql.h</in>
+        </df>
+        <df name="tleupd">
+          <in>SUpdater.cpp</in>
+          <in>SUpdater.h</in>
+        </df>
+        <df name="uchecker">
+          <in>UCheck.cpp</in>
+          <in>UCheck.h</in>
+        </df>
+        <df name="ui">
+        </df>
+        <df name="zrvutils">
+          <in>ZrvIoList.cpp</in>
+          <in>ZrvIoList.h</in>
+        </df>
+        <in>SAbstractObjDialog.cpp</in>
+        <in>SAbstractObjDialog.h</in>
+        <in>SDlgOptions.cpp</in>
+        <in>SDlgOptions.h</in>
+        <in>SLocDialog.cpp</in>
+        <in>SLocDialog.h</in>
+        <in>SWindow.cpp</in>
+        <in>SWindow.h</in>
+        <in>SatViewer.cpp</in>
+        <in>ui_SatViewer.h</in>
+        <in>ui_earthsettings.h</in>
+        <in>ui_jscalc.h</in>
+        <in>ui_jswidgetlist.h</in>
+        <in>ui_loc.h</in>
+        <in>ui_mapsettings.h</in>
+        <in>ui_options.h</in>
+        <in>ui_sat.h</in>
+        <in>ui_settings.h</in>
+        <in>ui_tleupd.h</in>
+      </df>
+    </df>
+  </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Release" type="0">
@@ -7,6 +171,18 @@
         <developmentServer>localhost</developmentServer>
         <platform>3</platform>
       </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
       <dbx_gdbdebugger version="1">
         <gdb_pathmaps>
         </gdb_pathmaps>
@@ -40,6 +216,18 @@
         <developmentServer>localhost</developmentServer>
         <platform>3</platform>
       </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
       <dbx_gdbdebugger version="1">
         <gdb_pathmaps>
         </gdb_pathmaps>

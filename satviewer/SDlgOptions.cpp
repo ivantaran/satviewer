@@ -156,6 +156,7 @@ void SDlgOptions::saveListViewSat() {
                 puts(bytes.toHex().data());
                 q.bindValue(":model_state", bytes);
                 q.exec();
+                puts(q.executedQuery().toLocal8Bit().data());
 //		db.exec(query);
 	}
 	db.exec("COMMIT;");
@@ -355,6 +356,8 @@ void SDlgOptions::setSat(Satellite *sat, QSqlRecord record) {
 //    double bstar     = record.field("bstar").value().toDouble();
 //    double jdsaepoch = record.field("time" ).value().toDouble();
     QByteArray model_state = record.field("model_state").value().toByteArray();
+    printf("bytes length %d\n", model_state.length());
+    puts(model_state.toHex().data());
     QString icon     = record.field("icon" ).value().toString();
     if (icon.isEmpty() || !QFile::exists(icon)) {
         QDir dir = QDir::home();

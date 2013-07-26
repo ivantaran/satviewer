@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'settings.ui'
 **
-** Created: Sun 7. Oct 19:10:50 2012
-**      by: Qt User Interface Compiler version 4.8.2
+** Created by: Qt User Interface Compiler version 5.1.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,17 +11,17 @@
 
 #include <QtCore/QLocale>
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QCheckBox>
-#include <QtGui/QComboBox>
-#include <QtGui/QFormLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QPushButton>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -46,63 +45,63 @@ public:
     void setupUi(QWidget *SettingsWidget)
     {
         if (SettingsWidget->objectName().isEmpty())
-            SettingsWidget->setObjectName(QString::fromUtf8("SettingsWidget"));
+            SettingsWidget->setObjectName(QStringLiteral("SettingsWidget"));
         SettingsWidget->resize(400, 300);
         SettingsWidget->setLocale(QLocale(QLocale::C, QLocale::AnyCountry));
         formLayout = new QFormLayout(SettingsWidget);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        formLayout->setObjectName(QStringLiteral("formLayout"));
         formLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
         labelLanguage = new QLabel(SettingsWidget);
-        labelLanguage->setObjectName(QString::fromUtf8("labelLanguage"));
+        labelLanguage->setObjectName(QStringLiteral("labelLanguage"));
         labelLanguage->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout->setWidget(0, QFormLayout::LabelRole, labelLanguage);
 
         comboLanguage = new QComboBox(SettingsWidget);
-        comboLanguage->setObjectName(QString::fromUtf8("comboLanguage"));
+        comboLanguage->setObjectName(QStringLiteral("comboLanguage"));
 
         formLayout->setWidget(0, QFormLayout::FieldRole, comboLanguage);
 
         labelGlWidget = new QLabel(SettingsWidget);
-        labelGlWidget->setObjectName(QString::fromUtf8("labelGlWidget"));
+        labelGlWidget->setObjectName(QStringLiteral("labelGlWidget"));
 
         formLayout->setWidget(1, QFormLayout::LabelRole, labelGlWidget);
 
         comboGlWidget = new QComboBox(SettingsWidget);
-        comboGlWidget->setObjectName(QString::fromUtf8("comboGlWidget"));
+        comboGlWidget->setObjectName(QStringLiteral("comboGlWidget"));
 
         formLayout->setWidget(1, QFormLayout::FieldRole, comboGlWidget);
 
         labelStyle = new QLabel(SettingsWidget);
-        labelStyle->setObjectName(QString::fromUtf8("labelStyle"));
+        labelStyle->setObjectName(QStringLiteral("labelStyle"));
         labelStyle->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout->setWidget(2, QFormLayout::LabelRole, labelStyle);
 
         comboStyle = new QComboBox(SettingsWidget);
-        comboStyle->setObjectName(QString::fromUtf8("comboStyle"));
+        comboStyle->setObjectName(QStringLiteral("comboStyle"));
 
         formLayout->setWidget(2, QFormLayout::FieldRole, comboStyle);
 
         checkPalette = new QCheckBox(SettingsWidget);
-        checkPalette->setObjectName(QString::fromUtf8("checkPalette"));
+        checkPalette->setObjectName(QStringLiteral("checkPalette"));
 
         formLayout->setWidget(3, QFormLayout::LabelRole, checkPalette);
 
         checkUpdates = new QCheckBox(SettingsWidget);
-        checkUpdates->setObjectName(QString::fromUtf8("checkUpdates"));
+        checkUpdates->setObjectName(QStringLiteral("checkUpdates"));
         checkUpdates->setEnabled(true);
 
         formLayout->setWidget(4, QFormLayout::LabelRole, checkUpdates);
 
         checkSave = new QCheckBox(SettingsWidget);
-        checkSave->setObjectName(QString::fromUtf8("checkSave"));
+        checkSave->setObjectName(QStringLiteral("checkSave"));
         checkSave->setChecked(true);
 
         formLayout->setWidget(5, QFormLayout::LabelRole, checkSave);
 
         btnPrintScr = new QPushButton(SettingsWidget);
-        btnPrintScr->setObjectName(QString::fromUtf8("btnPrintScr"));
+        btnPrintScr->setObjectName(QStringLiteral("btnPrintScr"));
 
         formLayout->setWidget(7, QFormLayout::SpanningRole, btnPrintScr);
 
@@ -111,7 +110,7 @@ public:
         formLayout->setItem(8, QFormLayout::SpanningRole, verticalSpacer_2);
 
         btnReset = new QPushButton(SettingsWidget);
-        btnReset->setObjectName(QString::fromUtf8("btnReset"));
+        btnReset->setObjectName(QStringLiteral("btnReset"));
         btnReset->setEnabled(true);
 
         formLayout->setWidget(6, QFormLayout::SpanningRole, btnReset);
@@ -136,20 +135,20 @@ public:
 
     void retranslateUi(QWidget *SettingsWidget)
     {
-        SettingsWidget->setWindowTitle(QApplication::translate("SettingsWidget", "Settings", 0, QApplication::UnicodeUTF8));
-        labelLanguage->setText(QApplication::translate("SettingsWidget", "Language", 0, QApplication::UnicodeUTF8));
-        labelGlWidget->setText(QApplication::translate("SettingsWidget", "Type of map", 0, QApplication::UnicodeUTF8));
+        SettingsWidget->setWindowTitle(QApplication::translate("SettingsWidget", "Settings", 0));
+        labelLanguage->setText(QApplication::translate("SettingsWidget", "Language", 0));
+        labelGlWidget->setText(QApplication::translate("SettingsWidget", "Type of map", 0));
         comboGlWidget->clear();
         comboGlWidget->insertItems(0, QStringList()
-         << QApplication::translate("SettingsWidget", "2d - Cylindrical projection", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("SettingsWidget", "3d - Earth", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("SettingsWidget", "2d - Cylindrical projection", 0)
+         << QApplication::translate("SettingsWidget", "3d - Earth", 0)
         );
-        labelStyle->setText(QApplication::translate("SettingsWidget", "Style", 0, QApplication::UnicodeUTF8));
-        checkPalette->setText(QApplication::translate("SettingsWidget", "Use standart palette", 0, QApplication::UnicodeUTF8));
-        checkUpdates->setText(QApplication::translate("SettingsWidget", "Check for updates", 0, QApplication::UnicodeUTF8));
-        checkSave->setText(QApplication::translate("SettingsWidget", "Save settings", 0, QApplication::UnicodeUTF8));
-        btnPrintScr->setText(QApplication::translate("SettingsWidget", "Snapshot", 0, QApplication::UnicodeUTF8));
-        btnReset->setText(QApplication::translate("SettingsWidget", "Reset to default", 0, QApplication::UnicodeUTF8));
+        labelStyle->setText(QApplication::translate("SettingsWidget", "Style", 0));
+        checkPalette->setText(QApplication::translate("SettingsWidget", "Use standart palette", 0));
+        checkUpdates->setText(QApplication::translate("SettingsWidget", "Check for updates", 0));
+        checkSave->setText(QApplication::translate("SettingsWidget", "Save settings", 0));
+        btnPrintScr->setText(QApplication::translate("SettingsWidget", "Snapshot", 0));
+        btnReset->setText(QApplication::translate("SettingsWidget", "Reset to default", 0));
     } // retranslateUi
 
 };

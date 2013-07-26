@@ -74,7 +74,7 @@ void SWidget::onTimer() {
 	if (!isVisible()) show();
 	setVars();
 	QScriptValue sVal =  engine.evaluate(script);
-    if (sVal.isError()) puts(sVal.toString().toAscii().data());
+    if (sVal.isError()) puts(sVal.toString().toLocal8Bit().data());
     this->repaint();
 }
 

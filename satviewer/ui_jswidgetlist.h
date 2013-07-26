@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'jswidgetlist.ui'
 **
-** Created: Sun 7. Oct 19:10:51 2012
-**      by: Qt User Interface Compiler version 4.8.2
+** Created by: Qt User Interface Compiler version 5.1.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,16 +11,16 @@
 
 #include <QtCore/QLocale>
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QListView>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QToolButton>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QListView>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QToolButton>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -39,40 +38,40 @@ public:
     void setupUi(QWidget *JsWidgetList)
     {
         if (JsWidgetList->objectName().isEmpty())
-            JsWidgetList->setObjectName(QString::fromUtf8("JsWidgetList"));
+            JsWidgetList->setObjectName(QStringLiteral("JsWidgetList"));
         JsWidgetList->resize(320, 240);
         JsWidgetList->setLocale(QLocale(QLocale::C, QLocale::AnyCountry));
         verticalLayout = new QVBoxLayout(JsWidgetList);
         verticalLayout->setSpacing(0);
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         listView = new QListView(JsWidgetList);
-        listView->setObjectName(QString::fromUtf8("listView"));
+        listView->setObjectName(QStringLiteral("listView"));
         listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
         verticalLayout->addWidget(listView);
 
         widget = new QWidget(JsWidgetList);
-        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setObjectName(QStringLiteral("widget"));
         horizontalLayout = new QHBoxLayout(widget);
         horizontalLayout->setSpacing(0);
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         btnSave = new QToolButton(widget);
-        btnSave->setObjectName(QString::fromUtf8("btnSave"));
+        btnSave->setObjectName(QStringLiteral("btnSave"));
         btnSave->setEnabled(true);
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/actions/filesave.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/actions/filesave.png"), QSize(), QIcon::Normal, QIcon::Off);
         btnSave->setIcon(icon);
         btnSave->setAutoRaise(true);
 
         horizontalLayout->addWidget(btnSave);
 
         btnEdit = new QToolButton(widget);
-        btnEdit->setObjectName(QString::fromUtf8("btnEdit"));
+        btnEdit->setObjectName(QStringLiteral("btnEdit"));
         btnEdit->setEnabled(false);
         QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/actions/edit.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QStringLiteral(":/actions/edit.png"), QSize(), QIcon::Normal, QIcon::Off);
         btnEdit->setIcon(icon1);
         btnEdit->setAutoRaise(true);
 
@@ -93,9 +92,9 @@ public:
 
     void retranslateUi(QWidget *JsWidgetList)
     {
-        JsWidgetList->setWindowTitle(QApplication::translate("JsWidgetList", "Widgets", 0, QApplication::UnicodeUTF8));
+        JsWidgetList->setWindowTitle(QApplication::translate("JsWidgetList", "Widgets", 0));
 #ifndef QT_NO_TOOLTIP
-        btnSave->setToolTip(QApplication::translate("JsWidgetList", "Save", 0, QApplication::UnicodeUTF8));
+        btnSave->setToolTip(QApplication::translate("JsWidgetList", "Save", 0));
 #endif // QT_NO_TOOLTIP
         btnSave->setText(QString());
         btnSave->setShortcut(QString());

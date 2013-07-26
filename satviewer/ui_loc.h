@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'loc.ui'
 **
-** Created: Sun 7. Oct 19:10:51 2012
-**      by: Qt User Interface Compiler version 4.8.2
+** Created by: Qt User Interface Compiler version 5.1.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,24 +11,24 @@
 
 #include <QtCore/QLocale>
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QCheckBox>
-#include <QtGui/QDialog>
-#include <QtGui/QDialogButtonBox>
-#include <QtGui/QDoubleSpinBox>
-#include <QtGui/QFormLayout>
-#include <QtGui/QGridLayout>
-#include <QtGui/QGroupBox>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QPushButton>
-#include <QtGui/QScrollArea>
-#include <QtGui/QSpinBox>
-#include <QtGui/QToolButton>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QDialog>
+#include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
+#include <QtWidgets/QSpinBox>
+#include <QtWidgets/QToolButton>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -79,16 +78,16 @@ public:
     void setupUi(QDialog *LocDialog)
     {
         if (LocDialog->objectName().isEmpty())
-            LocDialog->setObjectName(QString::fromUtf8("LocDialog"));
+            LocDialog->setObjectName(QStringLiteral("LocDialog"));
         LocDialog->resize(320, 400);
         LocDialog->setLocale(QLocale(QLocale::C, QLocale::AnyCountry));
         gridLayout = new QGridLayout(LocDialog);
         gridLayout->setContentsMargins(0, 0, 0, 0);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setHorizontalSpacing(0);
         gridLayout->setVerticalSpacing(6);
         buttonBox = new QDialogButtonBox(LocDialog);
-        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setObjectName(QStringLiteral("buttonBox"));
         buttonBox->setLocale(QLocale(QLocale::C, QLocale::AnyCountry));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
@@ -96,16 +95,16 @@ public:
         gridLayout->addWidget(buttonBox, 27, 1, 1, 1);
 
         scrollArea = new QScrollArea(LocDialog);
-        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+        scrollArea->setObjectName(QStringLiteral("scrollArea"));
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
-        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
         scrollAreaWidgetContents->setGeometry(QRect(0, 0, 300, 590));
         formLayout_3 = new QFormLayout(scrollAreaWidgetContents);
-        formLayout_3->setObjectName(QString::fromUtf8("formLayout_3"));
+        formLayout_3->setObjectName(QStringLiteral("formLayout_3"));
         formLayout_3->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
         btnIcon = new QToolButton(scrollAreaWidgetContents);
-        btnIcon->setObjectName(QString::fromUtf8("btnIcon"));
+        btnIcon->setObjectName(QStringLiteral("btnIcon"));
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -121,13 +120,13 @@ public:
         formLayout_3->setWidget(0, QFormLayout::LabelRole, btnIcon);
 
         checkName = new QGroupBox(scrollAreaWidgetContents);
-        checkName->setObjectName(QString::fromUtf8("checkName"));
+        checkName->setObjectName(QStringLiteral("checkName"));
         checkName->setFlat(false);
         checkName->setCheckable(true);
         formLayout = new QFormLayout(checkName);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        formLayout->setObjectName(QStringLiteral("formLayout"));
         spinNameX = new QSpinBox(checkName);
-        spinNameX->setObjectName(QString::fromUtf8("spinNameX"));
+        spinNameX->setObjectName(QStringLiteral("spinNameX"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -140,7 +139,7 @@ public:
         formLayout->setWidget(3, QFormLayout::FieldRole, spinNameX);
 
         spinNameY = new QSpinBox(checkName);
-        spinNameY->setObjectName(QString::fromUtf8("spinNameY"));
+        spinNameY->setObjectName(QStringLiteral("spinNameY"));
         sizePolicy1.setHeightForWidth(spinNameY->sizePolicy().hasHeightForWidth());
         spinNameY->setSizePolicy(sizePolicy1);
         spinNameY->setMinimum(-9999);
@@ -150,19 +149,19 @@ public:
         formLayout->setWidget(4, QFormLayout::FieldRole, spinNameY);
 
         labelNameX = new QLabel(checkName);
-        labelNameX->setObjectName(QString::fromUtf8("labelNameX"));
+        labelNameX->setObjectName(QStringLiteral("labelNameX"));
         labelNameX->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout->setWidget(3, QFormLayout::LabelRole, labelNameX);
 
         labelNameY = new QLabel(checkName);
-        labelNameY->setObjectName(QString::fromUtf8("labelNameY"));
+        labelNameY->setObjectName(QStringLiteral("labelNameY"));
         labelNameY->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout->setWidget(4, QFormLayout::LabelRole, labelNameY);
 
         btnColorName = new QToolButton(checkName);
-        btnColorName->setObjectName(QString::fromUtf8("btnColorName"));
+        btnColorName->setObjectName(QStringLiteral("btnColorName"));
         sizePolicy1.setHeightForWidth(btnColorName->sizePolicy().hasHeightForWidth());
         btnColorName->setSizePolicy(sizePolicy1);
         btnColorName->setAutoFillBackground(true);
@@ -173,7 +172,7 @@ public:
         formLayout->setWidget(6, QFormLayout::SpanningRole, btnColorName);
 
         btnFont = new QToolButton(checkName);
-        btnFont->setObjectName(QString::fromUtf8("btnFont"));
+        btnFont->setObjectName(QStringLiteral("btnFont"));
         sizePolicy1.setHeightForWidth(btnFont->sizePolicy().hasHeightForWidth());
         btnFont->setSizePolicy(sizePolicy1);
         btnFont->setLocale(QLocale(QLocale::C, QLocale::AnyCountry));
@@ -182,7 +181,7 @@ public:
         formLayout->setWidget(5, QFormLayout::SpanningRole, btnFont);
 
         lineEditName = new QLineEdit(checkName);
-        lineEditName->setObjectName(QString::fromUtf8("lineEditName"));
+        lineEditName->setObjectName(QStringLiteral("lineEditName"));
         sizePolicy1.setHeightForWidth(lineEditName->sizePolicy().hasHeightForWidth());
         lineEditName->setSizePolicy(sizePolicy1);
         lineEditName->setLocale(QLocale(QLocale::C, QLocale::AnyCountry));
@@ -193,18 +192,18 @@ public:
         formLayout_3->setWidget(1, QFormLayout::SpanningRole, checkName);
 
         checkZrv = new QGroupBox(scrollAreaWidgetContents);
-        checkZrv->setObjectName(QString::fromUtf8("checkZrv"));
+        checkZrv->setObjectName(QStringLiteral("checkZrv"));
         checkZrv->setCheckable(true);
         formLayout_2 = new QFormLayout(checkZrv);
-        formLayout_2->setObjectName(QString::fromUtf8("formLayout_2"));
+        formLayout_2->setObjectName(QStringLiteral("formLayout_2"));
         formLayout_2->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
         lineEditWidth = new QLineEdit(checkZrv);
-        lineEditWidth->setObjectName(QString::fromUtf8("lineEditWidth"));
+        lineEditWidth->setObjectName(QStringLiteral("lineEditWidth"));
 
         formLayout_2->setWidget(2, QFormLayout::FieldRole, lineEditWidth);
 
         btnColorZrv = new QToolButton(checkZrv);
-        btnColorZrv->setObjectName(QString::fromUtf8("btnColorZrv"));
+        btnColorZrv->setObjectName(QStringLiteral("btnColorZrv"));
         sizePolicy1.setHeightForWidth(btnColorZrv->sizePolicy().hasHeightForWidth());
         btnColorZrv->setSizePolicy(sizePolicy1);
         btnColorZrv->setAutoFillBackground(true);
@@ -215,36 +214,36 @@ public:
         formLayout_2->setWidget(7, QFormLayout::SpanningRole, btnColorZrv);
 
         label_21 = new QLabel(checkZrv);
-        label_21->setObjectName(QString::fromUtf8("label_21"));
+        label_21->setObjectName(QStringLiteral("label_21"));
         label_21->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_2->setWidget(2, QFormLayout::LabelRole, label_21);
 
         checkZrvEnable = new QCheckBox(checkZrv);
-        checkZrvEnable->setObjectName(QString::fromUtf8("checkZrvEnable"));
+        checkZrvEnable->setObjectName(QStringLiteral("checkZrvEnable"));
         checkZrvEnable->setChecked(true);
 
         formLayout_2->setWidget(0, QFormLayout::SpanningRole, checkZrvEnable);
 
         lineEditAzimuth = new QLineEdit(checkZrv);
-        lineEditAzimuth->setObjectName(QString::fromUtf8("lineEditAzimuth"));
+        lineEditAzimuth->setObjectName(QStringLiteral("lineEditAzimuth"));
 
         formLayout_2->setWidget(1, QFormLayout::FieldRole, lineEditAzimuth);
 
         label_17 = new QLabel(checkZrv);
-        label_17->setObjectName(QString::fromUtf8("label_17"));
+        label_17->setObjectName(QStringLiteral("label_17"));
         label_17->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_2->setWidget(1, QFormLayout::LabelRole, label_17);
 
         label_22 = new QLabel(checkZrv);
-        label_22->setObjectName(QString::fromUtf8("label_22"));
+        label_22->setObjectName(QStringLiteral("label_22"));
         label_22->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_2->setWidget(3, QFormLayout::LabelRole, label_22);
 
         lineEditRange = new QLineEdit(checkZrv);
-        lineEditRange->setObjectName(QString::fromUtf8("lineEditRange"));
+        lineEditRange->setObjectName(QStringLiteral("lineEditRange"));
 
         formLayout_2->setWidget(3, QFormLayout::FieldRole, lineEditRange);
 
@@ -252,12 +251,12 @@ public:
         formLayout_3->setWidget(5, QFormLayout::SpanningRole, checkZrv);
 
         checkZrvLines = new QGroupBox(scrollAreaWidgetContents);
-        checkZrvLines->setObjectName(QString::fromUtf8("checkZrvLines"));
+        checkZrvLines->setObjectName(QStringLiteral("checkZrvLines"));
         checkZrvLines->setCheckable(true);
         formLayout_4 = new QFormLayout(checkZrvLines);
-        formLayout_4->setObjectName(QString::fromUtf8("formLayout_4"));
+        formLayout_4->setObjectName(QStringLiteral("formLayout_4"));
         spinLines = new QDoubleSpinBox(checkZrvLines);
-        spinLines->setObjectName(QString::fromUtf8("spinLines"));
+        spinLines->setObjectName(QStringLiteral("spinLines"));
         QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
@@ -270,13 +269,13 @@ public:
         formLayout_4->setWidget(1, QFormLayout::FieldRole, spinLines);
 
         labelWidth = new QLabel(checkZrvLines);
-        labelWidth->setObjectName(QString::fromUtf8("labelWidth"));
+        labelWidth->setObjectName(QStringLiteral("labelWidth"));
         labelWidth->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_4->setWidget(1, QFormLayout::LabelRole, labelWidth);
 
         btnColorLines = new QToolButton(checkZrvLines);
-        btnColorLines->setObjectName(QString::fromUtf8("btnColorLines"));
+        btnColorLines->setObjectName(QStringLiteral("btnColorLines"));
         sizePolicy1.setHeightForWidth(btnColorLines->sizePolicy().hasHeightForWidth());
         btnColorLines->setSizePolicy(sizePolicy1);
         btnColorLines->setAutoFillBackground(true);
@@ -290,39 +289,39 @@ public:
         formLayout_3->setWidget(6, QFormLayout::SpanningRole, checkZrvLines);
 
         groupCoords = new QGroupBox(scrollAreaWidgetContents);
-        groupCoords->setObjectName(QString::fromUtf8("groupCoords"));
+        groupCoords->setObjectName(QStringLiteral("groupCoords"));
         formLayout_5 = new QFormLayout(groupCoords);
-        formLayout_5->setObjectName(QString::fromUtf8("formLayout_5"));
+        formLayout_5->setObjectName(QStringLiteral("formLayout_5"));
         label_18 = new QLabel(groupCoords);
-        label_18->setObjectName(QString::fromUtf8("label_18"));
+        label_18->setObjectName(QStringLiteral("label_18"));
         label_18->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_5->setWidget(0, QFormLayout::LabelRole, label_18);
 
         lineEditLat = new QLineEdit(groupCoords);
-        lineEditLat->setObjectName(QString::fromUtf8("lineEditLat"));
+        lineEditLat->setObjectName(QStringLiteral("lineEditLat"));
 
         formLayout_5->setWidget(0, QFormLayout::FieldRole, lineEditLat);
 
         label_19 = new QLabel(groupCoords);
-        label_19->setObjectName(QString::fromUtf8("label_19"));
+        label_19->setObjectName(QStringLiteral("label_19"));
         label_19->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_5->setWidget(1, QFormLayout::LabelRole, label_19);
 
         lineEditLon = new QLineEdit(groupCoords);
-        lineEditLon->setObjectName(QString::fromUtf8("lineEditLon"));
+        lineEditLon->setObjectName(QStringLiteral("lineEditLon"));
 
         formLayout_5->setWidget(1, QFormLayout::FieldRole, lineEditLon);
 
         label_20 = new QLabel(groupCoords);
-        label_20->setObjectName(QString::fromUtf8("label_20"));
+        label_20->setObjectName(QStringLiteral("label_20"));
         label_20->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_5->setWidget(2, QFormLayout::LabelRole, label_20);
 
         lineEditHeight = new QLineEdit(groupCoords);
-        lineEditHeight->setObjectName(QString::fromUtf8("lineEditHeight"));
+        lineEditHeight->setObjectName(QStringLiteral("lineEditHeight"));
 
         formLayout_5->setWidget(2, QFormLayout::FieldRole, lineEditHeight);
 
@@ -334,7 +333,7 @@ public:
         gridLayout->addWidget(scrollArea, 7, 0, 1, 2);
 
         btnDefault = new QPushButton(LocDialog);
-        btnDefault->setObjectName(QString::fromUtf8("btnDefault"));
+        btnDefault->setObjectName(QStringLiteral("btnDefault"));
 
         gridLayout->addWidget(btnDefault, 27, 0, 1, 1);
 
@@ -359,27 +358,27 @@ public:
 
     void retranslateUi(QDialog *LocDialog)
     {
-        LocDialog->setWindowTitle(QApplication::translate("LocDialog", "Location", 0, QApplication::UnicodeUTF8));
+        LocDialog->setWindowTitle(QApplication::translate("LocDialog", "Location", 0));
         btnIcon->setText(QString());
-        checkName->setTitle(QApplication::translate("LocDialog", "Name", 0, QApplication::UnicodeUTF8));
-        labelNameX->setText(QApplication::translate("LocDialog", "X", 0, QApplication::UnicodeUTF8));
-        labelNameY->setText(QApplication::translate("LocDialog", "Y", 0, QApplication::UnicodeUTF8));
-        btnColorName->setText(QApplication::translate("LocDialog", "Color", 0, QApplication::UnicodeUTF8));
-        btnFont->setText(QApplication::translate("LocDialog", "Font", 0, QApplication::UnicodeUTF8));
-        checkZrv->setTitle(QApplication::translate("LocDialog", "Zone", 0, QApplication::UnicodeUTF8));
-        btnColorZrv->setText(QApplication::translate("LocDialog", "Color", 0, QApplication::UnicodeUTF8));
-        label_21->setText(QApplication::translate("LocDialog", "Width", 0, QApplication::UnicodeUTF8));
-        checkZrvEnable->setText(QApplication::translate("LocDialog", "Enabled", 0, QApplication::UnicodeUTF8));
-        label_17->setText(QApplication::translate("LocDialog", "Azimuth", 0, QApplication::UnicodeUTF8));
-        label_22->setText(QApplication::translate("LocDialog", "Range", 0, QApplication::UnicodeUTF8));
-        checkZrvLines->setTitle(QApplication::translate("LocDialog", "Zone contour", 0, QApplication::UnicodeUTF8));
-        labelWidth->setText(QApplication::translate("LocDialog", "Width", 0, QApplication::UnicodeUTF8));
-        btnColorLines->setText(QApplication::translate("LocDialog", "Color", 0, QApplication::UnicodeUTF8));
-        groupCoords->setTitle(QApplication::translate("LocDialog", "Coords", 0, QApplication::UnicodeUTF8));
-        label_18->setText(QApplication::translate("LocDialog", "Latitude", 0, QApplication::UnicodeUTF8));
-        label_19->setText(QApplication::translate("LocDialog", "Longitude", 0, QApplication::UnicodeUTF8));
-        label_20->setText(QApplication::translate("LocDialog", "Altitude", 0, QApplication::UnicodeUTF8));
-        btnDefault->setText(QApplication::translate("LocDialog", "Default", 0, QApplication::UnicodeUTF8));
+        checkName->setTitle(QApplication::translate("LocDialog", "Name", 0));
+        labelNameX->setText(QApplication::translate("LocDialog", "X", 0));
+        labelNameY->setText(QApplication::translate("LocDialog", "Y", 0));
+        btnColorName->setText(QApplication::translate("LocDialog", "Color", 0));
+        btnFont->setText(QApplication::translate("LocDialog", "Font", 0));
+        checkZrv->setTitle(QApplication::translate("LocDialog", "Zone", 0));
+        btnColorZrv->setText(QApplication::translate("LocDialog", "Color", 0));
+        label_21->setText(QApplication::translate("LocDialog", "Width", 0));
+        checkZrvEnable->setText(QApplication::translate("LocDialog", "Enabled", 0));
+        label_17->setText(QApplication::translate("LocDialog", "Azimuth", 0));
+        label_22->setText(QApplication::translate("LocDialog", "Range", 0));
+        checkZrvLines->setTitle(QApplication::translate("LocDialog", "Zone contour", 0));
+        labelWidth->setText(QApplication::translate("LocDialog", "Width", 0));
+        btnColorLines->setText(QApplication::translate("LocDialog", "Color", 0));
+        groupCoords->setTitle(QApplication::translate("LocDialog", "Coords", 0));
+        label_18->setText(QApplication::translate("LocDialog", "Latitude", 0));
+        label_19->setText(QApplication::translate("LocDialog", "Longitude", 0));
+        label_20->setText(QApplication::translate("LocDialog", "Altitude", 0));
+        btnDefault->setText(QApplication::translate("LocDialog", "Default", 0));
     } // retranslateUi
 
 };

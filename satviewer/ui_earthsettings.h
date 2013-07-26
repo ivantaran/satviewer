@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'earthsettings.ui'
 **
-** Created: Sun 7. Oct 19:10:52 2012
-**      by: Qt User Interface Compiler version 4.8.2
+** Created by: Qt User Interface Compiler version 5.1.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,20 +11,20 @@
 
 #include <QtCore/QLocale>
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QCheckBox>
-#include <QtGui/QDoubleSpinBox>
-#include <QtGui/QFormLayout>
-#include <QtGui/QGroupBox>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QScrollArea>
-#include <QtGui/QSpacerItem>
-#include <QtGui/QToolButton>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QScrollArea>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QToolButton>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -61,36 +60,36 @@ public:
     void setupUi(QWidget *EarthWidgetSettings)
     {
         if (EarthWidgetSettings->objectName().isEmpty())
-            EarthWidgetSettings->setObjectName(QString::fromUtf8("EarthWidgetSettings"));
+            EarthWidgetSettings->setObjectName(QStringLiteral("EarthWidgetSettings"));
         EarthWidgetSettings->setEnabled(true);
         EarthWidgetSettings->resize(320, 268);
         EarthWidgetSettings->setLocale(QLocale(QLocale::C, QLocale::AnyCountry));
         verticalLayout_2 = new QVBoxLayout(EarthWidgetSettings);
         verticalLayout_2->setSpacing(0);
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         scrollArea = new QScrollArea(EarthWidgetSettings);
-        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+        scrollArea->setObjectName(QStringLiteral("scrollArea"));
         scrollArea->setFrameShape(QFrame::NoFrame);
         scrollArea->setFrameShadow(QFrame::Plain);
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
-        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
         scrollAreaWidgetContents->setGeometry(QRect(0, -74, 304, 342));
         verticalLayout = new QVBoxLayout(scrollAreaWidgetContents);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         groupPosition = new QGroupBox(scrollAreaWidgetContents);
-        groupPosition->setObjectName(QString::fromUtf8("groupPosition"));
+        groupPosition->setObjectName(QStringLiteral("groupPosition"));
         formLayout_2 = new QFormLayout(groupPosition);
-        formLayout_2->setObjectName(QString::fromUtf8("formLayout_2"));
+        formLayout_2->setObjectName(QStringLiteral("formLayout_2"));
         labelZoom = new QLabel(groupPosition);
-        labelZoom->setObjectName(QString::fromUtf8("labelZoom"));
+        labelZoom->setObjectName(QStringLiteral("labelZoom"));
         labelZoom->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_2->setWidget(0, QFormLayout::LabelRole, labelZoom);
 
         spinZoom = new QDoubleSpinBox(groupPosition);
-        spinZoom->setObjectName(QString::fromUtf8("spinZoom"));
+        spinZoom->setObjectName(QStringLiteral("spinZoom"));
         spinZoom->setMinimum(1);
         spinZoom->setMaximum(15);
         spinZoom->setSingleStep(0.5);
@@ -98,13 +97,13 @@ public:
         formLayout_2->setWidget(0, QFormLayout::FieldRole, spinZoom);
 
         labelX = new QLabel(groupPosition);
-        labelX->setObjectName(QString::fromUtf8("labelX"));
+        labelX->setObjectName(QStringLiteral("labelX"));
         labelX->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_2->setWidget(1, QFormLayout::LabelRole, labelX);
 
         spinX = new QDoubleSpinBox(groupPosition);
-        spinX->setObjectName(QString::fromUtf8("spinX"));
+        spinX->setObjectName(QStringLiteral("spinX"));
         spinX->setMaximum(5);
         spinX->setSingleStep(0.05);
         spinX->setValue(0);
@@ -112,13 +111,13 @@ public:
         formLayout_2->setWidget(1, QFormLayout::FieldRole, spinX);
 
         labelY = new QLabel(groupPosition);
-        labelY->setObjectName(QString::fromUtf8("labelY"));
+        labelY->setObjectName(QStringLiteral("labelY"));
         labelY->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         formLayout_2->setWidget(2, QFormLayout::LabelRole, labelY);
 
         spinY = new QDoubleSpinBox(groupPosition);
-        spinY->setObjectName(QString::fromUtf8("spinY"));
+        spinY->setObjectName(QStringLiteral("spinY"));
         spinY->setMinimum(-5);
         spinY->setMaximum(5);
         spinY->setSingleStep(0.05);
@@ -129,11 +128,11 @@ public:
         verticalLayout->addWidget(groupPosition);
 
         groupRotation = new QGroupBox(scrollAreaWidgetContents);
-        groupRotation->setObjectName(QString::fromUtf8("groupRotation"));
+        groupRotation->setObjectName(QStringLiteral("groupRotation"));
         formLayout = new QFormLayout(groupRotation);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        formLayout->setObjectName(QStringLiteral("formLayout"));
         spinRotX = new QDoubleSpinBox(groupRotation);
-        spinRotX->setObjectName(QString::fromUtf8("spinRotX"));
+        spinRotX->setObjectName(QStringLiteral("spinRotX"));
         spinRotX->setMinimum(-180);
         spinRotX->setMaximum(180);
         spinRotX->setSingleStep(5);
@@ -141,7 +140,7 @@ public:
         formLayout->setWidget(1, QFormLayout::FieldRole, spinRotX);
 
         spinRotY = new QDoubleSpinBox(groupRotation);
-        spinRotY->setObjectName(QString::fromUtf8("spinRotY"));
+        spinRotY->setObjectName(QStringLiteral("spinRotY"));
         spinRotY->setMinimum(-180);
         spinRotY->setMaximum(180);
         spinRotY->setSingleStep(5);
@@ -149,7 +148,7 @@ public:
         formLayout->setWidget(2, QFormLayout::FieldRole, spinRotY);
 
         spinRotZ = new QDoubleSpinBox(groupRotation);
-        spinRotZ->setObjectName(QString::fromUtf8("spinRotZ"));
+        spinRotZ->setObjectName(QStringLiteral("spinRotZ"));
         spinRotZ->setMinimum(-180);
         spinRotZ->setMaximum(180);
         spinRotZ->setSingleStep(5);
@@ -157,17 +156,17 @@ public:
         formLayout->setWidget(3, QFormLayout::FieldRole, spinRotZ);
 
         labelRotX = new QLabel(groupRotation);
-        labelRotX->setObjectName(QString::fromUtf8("labelRotX"));
+        labelRotX->setObjectName(QStringLiteral("labelRotX"));
 
         formLayout->setWidget(1, QFormLayout::LabelRole, labelRotX);
 
         labelRotY = new QLabel(groupRotation);
-        labelRotY->setObjectName(QString::fromUtf8("labelRotY"));
+        labelRotY->setObjectName(QStringLiteral("labelRotY"));
 
         formLayout->setWidget(2, QFormLayout::LabelRole, labelRotY);
 
         labelRotZ = new QLabel(groupRotation);
-        labelRotZ->setObjectName(QString::fromUtf8("labelRotZ"));
+        labelRotZ->setObjectName(QStringLiteral("labelRotZ"));
 
         formLayout->setWidget(3, QFormLayout::LabelRole, labelRotZ);
 
@@ -175,13 +174,13 @@ public:
         verticalLayout->addWidget(groupRotation);
 
         labelMap = new QLabel(scrollAreaWidgetContents);
-        labelMap->setObjectName(QString::fromUtf8("labelMap"));
+        labelMap->setObjectName(QStringLiteral("labelMap"));
         labelMap->setEnabled(false);
 
         verticalLayout->addWidget(labelMap);
 
         btnMapFile = new QToolButton(scrollAreaWidgetContents);
-        btnMapFile->setObjectName(QString::fromUtf8("btnMapFile"));
+        btnMapFile->setObjectName(QStringLiteral("btnMapFile"));
         btnMapFile->setEnabled(false);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
@@ -194,14 +193,14 @@ public:
         verticalLayout->addWidget(btnMapFile);
 
         checkSun = new QCheckBox(scrollAreaWidgetContents);
-        checkSun->setObjectName(QString::fromUtf8("checkSun"));
+        checkSun->setObjectName(QStringLiteral("checkSun"));
         checkSun->setEnabled(false);
         checkSun->setChecked(true);
 
         verticalLayout->addWidget(checkSun);
 
         checkNight = new QCheckBox(scrollAreaWidgetContents);
-        checkNight->setObjectName(QString::fromUtf8("checkNight"));
+        checkNight->setObjectName(QStringLiteral("checkNight"));
         checkNight->setEnabled(false);
         checkNight->setChecked(true);
 
@@ -229,22 +228,22 @@ public:
 
     void retranslateUi(QWidget *EarthWidgetSettings)
     {
-        EarthWidgetSettings->setWindowTitle(QApplication::translate("EarthWidgetSettings", "Earth Settings", 0, QApplication::UnicodeUTF8));
-        groupPosition->setTitle(QApplication::translate("EarthWidgetSettings", "Position", 0, QApplication::UnicodeUTF8));
-        labelZoom->setText(QApplication::translate("EarthWidgetSettings", "Zoom", 0, QApplication::UnicodeUTF8));
-        labelX->setText(QApplication::translate("EarthWidgetSettings", "X", 0, QApplication::UnicodeUTF8));
-        labelY->setText(QApplication::translate("EarthWidgetSettings", "Y", 0, QApplication::UnicodeUTF8));
-        groupRotation->setTitle(QApplication::translate("EarthWidgetSettings", "Rotation", 0, QApplication::UnicodeUTF8));
-        labelRotX->setText(QApplication::translate("EarthWidgetSettings", "X", 0, QApplication::UnicodeUTF8));
-        labelRotY->setText(QApplication::translate("EarthWidgetSettings", "Y", 0, QApplication::UnicodeUTF8));
-        labelRotZ->setText(QApplication::translate("EarthWidgetSettings", "Z", 0, QApplication::UnicodeUTF8));
-        labelMap->setText(QApplication::translate("EarthWidgetSettings", "Map", 0, QApplication::UnicodeUTF8));
+        EarthWidgetSettings->setWindowTitle(QApplication::translate("EarthWidgetSettings", "Earth Settings", 0));
+        groupPosition->setTitle(QApplication::translate("EarthWidgetSettings", "Position", 0));
+        labelZoom->setText(QApplication::translate("EarthWidgetSettings", "Zoom", 0));
+        labelX->setText(QApplication::translate("EarthWidgetSettings", "X", 0));
+        labelY->setText(QApplication::translate("EarthWidgetSettings", "Y", 0));
+        groupRotation->setTitle(QApplication::translate("EarthWidgetSettings", "Rotation", 0));
+        labelRotX->setText(QApplication::translate("EarthWidgetSettings", "X", 0));
+        labelRotY->setText(QApplication::translate("EarthWidgetSettings", "Y", 0));
+        labelRotZ->setText(QApplication::translate("EarthWidgetSettings", "Z", 0));
+        labelMap->setText(QApplication::translate("EarthWidgetSettings", "Map", 0));
 #ifndef QT_NO_TOOLTIP
-        btnMapFile->setToolTip(QApplication::translate("EarthWidgetSettings", "Map", 0, QApplication::UnicodeUTF8));
+        btnMapFile->setToolTip(QApplication::translate("EarthWidgetSettings", "Map", 0));
 #endif // QT_NO_TOOLTIP
         btnMapFile->setText(QString());
-        checkSun->setText(QApplication::translate("EarthWidgetSettings", "Sun", 0, QApplication::UnicodeUTF8));
-        checkNight->setText(QApplication::translate("EarthWidgetSettings", "Night", 0, QApplication::UnicodeUTF8));
+        checkSun->setText(QApplication::translate("EarthWidgetSettings", "Sun", 0));
+        checkNight->setText(QApplication::translate("EarthWidgetSettings", "Night", 0));
     } // retranslateUi
 
 };

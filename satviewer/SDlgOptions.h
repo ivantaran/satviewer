@@ -33,8 +33,8 @@ class SDlgOptions: public QDialog, public Ui::Dialog {
 	Q_OBJECT
 public:
 	typedef SAbstractObjDialog * (*CustomObjDialog)(GLSatAbstractWidget *satWidget);
-        CustomObjDialog getSObjDialog;
-        SAbstractObjDialog *satDialog;
+    CustomObjDialog getSObjDialog;
+    SAbstractObjDialog *satDialog;
 	SLocDialog *locDialog;
 	SScriptFrame *scriptFrame;
 	SUpdater *tleFrame;
@@ -82,13 +82,13 @@ private slots:
 	void selectTlePage();
 	void selectWidgetsPage();
 	void selectMapPage();
-        void selectAboutPage();
+    void selectAboutPage();
 	void selectDbSat(const QModelIndex &current, const QModelIndex &previous);
 	void selectDbLoc(const QModelIndex &current, const QModelIndex &previous);
 	void selectSat(const QModelIndex &current, const QModelIndex &previous);
 	void selectLoc(const QModelIndex &current, const QModelIndex &previous);
-        void clearSatList();
-        void clearLocList();
+    void clearSatList();
+    void clearLocList();
 	void setFilterSatName(const QString &line);
 	void setFilterLocName(const QString &line);
 	void setFilterSat();
