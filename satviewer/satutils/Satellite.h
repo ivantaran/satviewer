@@ -26,10 +26,10 @@ public:
     Satellite(void);
     virtual ~Satellite(void);
     SatWidgetObject *satWObject;
-    virtual int model(double) {return 0;}
-    virtual int modelInit(char *state, int size) {return 0;}
-    virtual char *getState() {return 0;}
-    virtual int getStateSize() {return 0;}
+    virtual int model(double) { return 0; }
+    virtual int modelInit(char *state, int size) { return 0; }
+    virtual char *getState() { return 0; }
+    virtual int getStateSize() { return 0; }
     
 //    virtual int modelInit(int consttype, double jdsatepoch, double bstar, double inclo, double argpo, double ecco, double nodeo, double mo, double no) {
 //        this->ecc0 		 = ecco;
@@ -45,7 +45,7 @@ public:
 
     void copy(Satellite *src);
     void setName(QString name);
-    void setZRV(double value);
+    void setZrv(double value);
     void setFont ( QFont  font  );
     void setTrack( double value );
     void setNameX( double value );
@@ -92,7 +92,7 @@ public:
     void setColorLines(uint32_t color) { color_lines = color; }
     void setColorTrackShadow(uint32_t color) { color_track_shadow = color; }
 
-    inline double track() { return _track; }
+    double track() const { return _track; }
 
     void visibleLabel(bool value = true) { show_label  = value; }
     void visibleTrack(bool value = true) { show_track  = value; }
@@ -111,7 +111,7 @@ public:
     double* xyz_g ();
     double* vxyz_g();
 
-    inline int modelIndex() { return model_index; }
+    int modelIndex() const { return model_index; }
     void setModelIndex(int index) { model_index = index; }
     void setLocation(bool location);
     bool isLocation() const;

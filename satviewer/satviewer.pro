@@ -9,6 +9,7 @@ CONFIG += 	warn_on \
 			opengl \
 			thread \
 			rtti \
+            console \
 			qt \
 			debug
 

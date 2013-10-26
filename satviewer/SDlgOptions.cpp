@@ -63,15 +63,16 @@ SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
     connect( btnToolTle     , SIGNAL(clicked()), this, SLOT(selectTlePage     ()) );
     connect( btnToolWidgets , SIGNAL(clicked()), this, SLOT(selectWidgetsPage ()) );
     connect( btnToolMap     , SIGNAL(clicked()), this, SLOT(selectMapPage     ()) );
+    connect( btnAboutQt     , SIGNAL(clicked()), this, SLOT(aboutQt           ()) );
     
-    connect(btnAboutQt, SIGNAL(clicked()), this, SLOT(aboutQt()));
     setDb();
+    
     connect(lineEditSatNameFilter, SIGNAL(textChanged(const QString &)), this, SLOT(setFilterSatName(const QString &)));
     connect(lineEditLocNameFilter, SIGNAL(textChanged(const QString &)), this, SLOT(setFilterLocName(const QString &)));
-    connect(btnSatSqlHelp, SIGNAL(clicked()), this, SLOT(helpSatSql()));
-    connect(btnLocSqlHelp, SIGNAL(clicked()), this, SLOT(helpLocSql()));
-    connect(btnSatFilter, SIGNAL(clicked()), this, SLOT(setFilterSat()));
-    connect(btnLocFilter, SIGNAL(clicked()), this, SLOT(setFilterLoc()));
+    connect(btnSatSqlHelp, SIGNAL(clicked()), this, SLOT(helpSatSql  ()));
+    connect(btnLocSqlHelp, SIGNAL(clicked()), this, SLOT(helpLocSql  ()));
+    connect(btnSatFilter , SIGNAL(clicked()), this, SLOT(setFilterSat()));
+    connect(btnLocFilter , SIGNAL(clicked()), this, SLOT(setFilterLoc()));
 
     connect(btnOpenTle    , SIGNAL(clicked()), this, SLOT(loadDbFromTle()));
     connect(btnOpenLoc    , SIGNAL(clicked()), this, SLOT(loadDbLoc    ()));
@@ -89,12 +90,12 @@ SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
     connect(scriptFrame->btnRefresh, SIGNAL(clicked()), this, SLOT(scriptParameters()));
     connect(btnDeleteSatList, SIGNAL(clicked()), this, SLOT(deleteSatList()));
     connect(btnDeleteLocList, SIGNAL(clicked()), this, SLOT(deleteLocList()));
-    connect(btnAddToSatList, SIGNAL(clicked()), this, SLOT(addToSatList()));
-    connect(btnAddToLocList, SIGNAL(clicked()), this, SLOT(addToLocList()));
-    connect(btnClearSatList, SIGNAL(clicked()), this, SLOT(clearSatList()));
-    connect(btnClearLocList, SIGNAL(clicked()), this, SLOT(clearLocList()));
-    connect(btnChangeDbSat, SIGNAL(clicked()), this, SLOT(changeDbSat()));
-    connect(btnChangeDbLoc, SIGNAL(clicked()), this, SLOT(changeDbLoc()));
+    connect(btnAddToSatList , SIGNAL(clicked()), this, SLOT(addToSatList ()));
+    connect(btnAddToLocList , SIGNAL(clicked()), this, SLOT(addToLocList ()));
+    connect(btnClearSatList , SIGNAL(clicked()), this, SLOT(clearSatList ()));
+    connect(btnClearLocList , SIGNAL(clicked()), this, SLOT(clearLocList ()));
+    connect(btnChangeDbSat  , SIGNAL(clicked()), this, SLOT(changeDbSat  ()));
+    connect(btnChangeDbLoc  , SIGNAL(clicked()), this, SLOT(changeDbLoc  ()));
 }
 
 SDlgOptions::~SDlgOptions() {
@@ -147,16 +148,15 @@ void SDlgOptions::saveListViewSat() {
 						.arg(sat->nameY(), 0, 'g', 16)
 						.arg(sat->linesWidth(), 0, 'g', 16)
 						.arg(sat->modelIndex());
-                QSqlQuery q(db);
-                q.prepare(query);
-                printf("state length %d\n", sat->getStateSize());
-                QByteArray bytes(sat->getState(), sat->getStateSize());
-//                QByteArray bytes("qfqwerfgqergq");
-                printf("bytes length %d\n", bytes.length());
-                puts(bytes.toHex().data());
-                q.bindValue(":model_state", bytes);
-                q.exec();
-                puts(q.executedQuery().toLocal8Bit().data());
+        QSqlQuery q(db);
+        q.prepare(query);
+        printf("state length %d\n", sat->getStateSize());
+        QByteArray bytes(sat->getState(), sat->getStateSize());
+        printf("bytes length %d\n", bytes.length());
+        puts(bytes.toHex().data());
+        q.bindValue(":model_state", bytes);
+        q.exec();
+        puts(q.executedQuery().toLocal8Bit().data());
 //		db.exec(query);
 	}
 	db.exec("COMMIT;");
@@ -273,7 +273,7 @@ void SDlgOptions::loadListViewLoc() {
 		loc->setNameX     (modelLocTemp.record(i).field("name_x"     ).value().toDouble());
 		loc->setNameY     (modelLocTemp.record(i).field("name_y"     ).value().toDouble());
 		loc->setLinesWidth(modelLocTemp.record(i).field("lines_width").value().toDouble());
-                satWidget->addLoc(loc);
+        satWidget->addLoc(loc);
 	}
 	modelLocTemp.clear();
 
@@ -304,7 +304,11 @@ void SDlgOptions::setDb() {
     }
 
     listViewDBSat->setModel(modelDbSat);
-    connect(listViewDBSat->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(selectDbSat(const QModelIndex &, const QModelIndex &)));
+    connect(listViewDBSat->selectionModel(), 
+            SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), 
+            this, 
+            SLOT(selectDbSat(const QModelIndex &, const QModelIndex &))
+            );
     listViewDBSat->setModelColumn(modelDbSat->fieldIndex("name"));
 
     mapperSat.setModel(modelDbSat);
@@ -356,6 +360,11 @@ void SDlgOptions::setSat(Satellite *sat, QSqlRecord record) {
 //    double bstar     = record.field("bstar").value().toDouble();
 //    double jdsaepoch = record.field("time" ).value().toDouble();
     QByteArray model_state = record.field("model_state").value().toByteArray();
+    if (model_state.size() < 1) {
+        puts("empty model");
+        return;
+    }
+    
     printf("bytes length %d\n", model_state.length());
     puts(model_state.toHex().data());
     QString icon     = record.field("icon" ).value().toString();
@@ -396,7 +405,12 @@ void SDlgOptions::updateListViewSat() {
     for (int i = 0; i < satWidget->satList.count(); i++)
             model->setItem(i, new QStandardItem(satWidget->satList.at(i)->name()));
     listViewSat->setModel(model);
-    connect(listViewSat->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(selectSat(const QModelIndex &, const QModelIndex &)));
+    connect(
+            listViewSat->selectionModel(), 
+            SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), 
+            this, 
+            SLOT(selectSat(const QModelIndex &, const QModelIndex &))
+            );
 }
 
 void SDlgOptions::updateListViewLoc() {
@@ -406,7 +420,12 @@ void SDlgOptions::updateListViewLoc() {
     for (int i = 0; i < satWidget->locList.count(); i++)
             model->setItem(i, new QStandardItem(satWidget->locList.at(i)->name()));
     listViewLoc->setModel(model);
-    connect(listViewLoc->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(selectLoc(const QModelIndex &, const QModelIndex &)));
+    connect(
+            listViewLoc->selectionModel(), 
+            SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), 
+            this, 
+            SLOT(selectLoc(const QModelIndex &, const QModelIndex &))
+            );
 }
 
 void SDlgOptions::setBtnColor(QWidget *widget) {
@@ -565,7 +584,7 @@ void SDlgOptions::loadDbFromTle() {
 		tle.init(filePath.toLocal8Bit().data());
 		for (int i = 0; i < tle.count(); i++) {
 			tle.item(i);
-			query = QString("INSERT INTO sat ('groupname', 'name', 'i', 'omg', 'e', 'w', 'm0', 'n', 'bstar', 'time') VALUES('%0', '%1', %2, %3, %4, %5, %6, %7, %8, %9);")
+			query = QString("INSERT INTO sat ('groupname', 'name', 'i', 'omg', 'e', 'w', 'm0', 'n', 'bstar', 'time', 'model_state') VALUES('%0', '%1', %2, %3, %4, %5, %6, %7, %8, %9, :model_state);")
 								.arg(QFileInfo(filePath).baseName())
 								.arg(QString(tle.name()).trimmed())
 								.arg(tle.inclination()*rad2deg  , 0, 'g', 16)
@@ -577,7 +596,16 @@ void SDlgOptions::loadDbFromTle() {
 								.arg(tle.bStar()                , 0, 'g', 16)
 								.arg(tle.jEpoch()               , 0, 'g', 16);
 
-			db.exec(query);
+            QSqlQuery q(db);
+            q.prepare(query);
+            printf("tle state length %d\n", tle.sizeState());
+            QByteArray bytes(tle.state(), tle.sizeState());
+            printf("tle bytes length %d\n", bytes.length());
+            puts(bytes.toHex().data());
+            q.bindValue(":model_state", bytes);
+            q.exec();
+            puts(q.executedQuery().toLocal8Bit().data());
+//			db.exec(query);
 //			puts(db.lastError().text().toLocal8Bit().data());
 		}
 	}
@@ -722,9 +750,10 @@ void SDlgOptions::delFromLocList(const QModelIndex &index) {
     uint32_t *tmp = new uint32_t[count];
 
     for (int i = 0; i < count; i++)
-            tmp[i] = (uint32_t)satWidget->locList.at(indexList.value(i).row());
+        tmp[i] = (uint32_t)satWidget->locList.at(indexList.value(i).row());
 
-    for (int i = 0; i < count; i++) satWidget->removeLoc((Location *)tmp[i]);
+    for (int i = 0; i < count; i++)
+        satWidget->removeLoc((Location *)tmp[i]);
 
     delete tmp;
     updateListViewLoc();
@@ -797,7 +826,6 @@ void SDlgOptions::setSatWidget(GLSatAbstractWidget *satWidget) {
         stackedWidget->insertWidget(7, satWidget->settingsWidget);
         satDialog->setSatWidget(satWidget);
         locDialog->setSatWidget(satWidget);
-//	connect(satWidget, SIGNAL(doublClicked()), this, SLOT(onBtnChangeDBSatClicked()));
 }
 
 void SDlgOptions::aboutQt() {

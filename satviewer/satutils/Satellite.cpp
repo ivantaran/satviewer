@@ -120,7 +120,7 @@ void Satellite::copy(Satellite *src) {
 
     setFont (src->font    ());
     setTrack(src->track   ());
-    setZRV  (src->zrvWidth());
+    setZrv  (src->zrvWidth());
 
     setName (src->name ());
     setNameX(src->nameX());
@@ -154,7 +154,7 @@ double* Satellite::vxyz_g() {
     return v_g;
 }
 
-void Satellite::setZRV(double value) {
+void Satellite::setZrv(double value) {
     if (value > 0.5*PI) value = 0.5*PI;
     else if (value < 0) value = 0;
     this->zrv = value;

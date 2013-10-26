@@ -150,7 +150,7 @@ void SWindow::readSettings() {
 	font.fromString(settings.value( "defaultSat/font", QFont().toString()).toString() );
 	dlgOptions->satDialog->defaultSat.setFont(font);
 	dlgOptions->satDialog->defaultSat.setTrack( settings.value("defaultSat/track"   , 0.5).toDouble() );
-	dlgOptions->satDialog->defaultSat.setZRV  ( settings.value("defaultSat/zrvWidth", 0.0).toDouble() );
+	dlgOptions->satDialog->defaultSat.setZrv  ( settings.value("defaultSat/zrvWidth", 0.0).toDouble() );
 	dlgOptions->satDialog->defaultSat.setNameX( settings.value("defaultSat/nameX"   , 0.0).toDouble() );
 	dlgOptions->satDialog->defaultSat.setNameY( settings.value("defaultSat/nameY"   , 0.0).toDouble() );
 	dlgOptions->satDialog->defaultSat.setLinesWidth( settings.value("defaultSat/linesWidth"   , 1.0).toDouble() );

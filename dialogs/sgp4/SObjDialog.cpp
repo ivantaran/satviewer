@@ -157,7 +157,7 @@ void SObjDialog::makeSat(Satellite *sat, bool fromlist) {
 //	return;
 	m_sat->modelInit((char *)&state, sizeof(state));
 	m_sat->setName(name);
-	m_sat->setZRV(zrv);
+	m_sat->setZrv(zrv);
 	m_sat->setTrack(spinTrack->value());
 	m_sat->setFont(btnFont->font());
 

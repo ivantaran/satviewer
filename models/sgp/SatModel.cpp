@@ -38,15 +38,15 @@ int SatModel::modelInit(char *state, int size) {
 
     Satellite::modelInit(state, sizeof(struct ms));
     
-    this->state.argpo = s->argpo;
-    this->state.bstar = s->bstar;
-    this->state.consttype = s->consttype;
-    this->state.ecco = s->ecco;
-    this->state.inclo = s->inclo;
+    this->state.argpo      = s->argpo;
+    this->state.bstar      = s->bstar;
+    this->state.consttype  = s->consttype;
+    this->state.ecco       = s->ecco;
+    this->state.inclo      = s->inclo;
     this->state.jdsatepoch = s->jdsatepoch;
-    this->state.mo = s->mo;
-    this->state.no = s->no;
-    this->state.nodeo = s->nodeo;
+    this->state.mo         = s->mo;
+    this->state.no         = s->no;
+    this->state.nodeo      = s->nodeo;
     
     modelInit(this->state.consttype, this->state.jdsatepoch, this->state.bstar, 
             this->state.inclo, this->state.argpo, this->state.ecco, 

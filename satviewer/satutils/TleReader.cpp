@@ -81,20 +81,24 @@ void TleReader::item(int index) {
 	int bexp;
 	char tmp[TLE_LINE_LEN];
 	setlocale(LC_NUMERIC, "C");
+    
 	sscanf(lines[0][index],"%[^\r\n]", m_name);
-	sscanf(lines[1][index], "%s %s %s %lf %s %s %7lf %2d", tmp, tmp, tmp, &epochdays, tmp, tmp, &bstar, &bexp);
-	sscanf(lines[2][index], "%s %s %lf %lf %lf %lf %lf %11lf", tmp, tmp, &inclo, &nodeo, &ecco, &argpo, &mo, &no);
-	bstar *= pow(10.0, bexp - 5);
-	ecco *= 1e-7;
-	inclo *= deg2rad;
-	nodeo *= deg2rad;
-	argpo *= deg2rad;
-	mo *= deg2rad;
-	no	/= xpdotp;
+	sscanf(lines[1][index], "%s %s %s %lf %s %s %7lf %2d", tmp, tmp, tmp, &epochdays, tmp, tmp, &m_state.bstar, &bexp);
+	sscanf(lines[2][index], "%s %s %lf %lf %lf %lf %lf %11lf", tmp, tmp, &m_state.inclo, &m_state.nodeo, &m_state.ecco, &m_state.argpo, &m_state.mo, &m_state.no);
+    
+	m_state.bstar *= pow(10.0, bexp - 5.0);
+	m_state.ecco  *= 1e-7;
+	m_state.inclo *= deg2rad;
+	m_state.nodeo *= deg2rad;
+	m_state.argpo *= deg2rad;
+	m_state.mo    *= deg2rad;
+	m_state.no	  /= xpdotp;
 
 	epochyr = (int)(epochdays/1000);
 	epochdays -= epochyr*1000;
-	jdsatepoch = jday(epochyr, epochdays);
+	m_state.jdsatepoch = jday(epochyr, epochdays);
+    
+    m_state.consttype  = 2;
 }
 
 void TleReader::days2mdhms(int xyear, double xdays) {
