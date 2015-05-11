@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="89">
+<configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <df root="." name="SatViewer">
+    <df root="." name="0">
       <df name="dialogs">
         <df name="sgp4">
           <df name="debug">
@@ -145,7 +145,6 @@
   <confs>
     <conf name="Release" type="0">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
         <dependencyChecking>false</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
@@ -215,7 +214,7 @@
       </item>
       <item path="dialogs/sgp4/ui_sat.h" ex="false" tool="3" flavor2="0">
       </item>
-      <folder path="SatViewer/models">
+      <folder path="0/models">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/src/corelib/animation</pElem>
@@ -263,7 +262,7 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/models/kepler">
+      <folder path="0/models/kepler">
         <ccTool>
           <incDir>
             <pElem>d:/env/satviewer/SatViewer/models/kepler/d:/usr/qt/src/corelib/global</pElem>
@@ -315,7 +314,7 @@
           </incDir>
         </ccTool>
       </folder>
-      <folder path="SatViewer/models/sgp">
+      <folder path="0/models/sgp">
         <ccTool>
           <incDir>
             <pElem>d:/env/satviewer/SatViewer/models/sgp/d:/usr/mingw/lib/gcc/mingw32/4.5.2/include/c++/mingw32/bits</pElem>
@@ -367,7 +366,7 @@
           </incDir>
         </ccTool>
       </folder>
-      <folder path="SatViewer/models/sun">
+      <folder path="0/models/sun">
         <ccTool>
           <incDir>
             <pElem>d:/env/satviewer/SatViewer/models/sun/d:/usr/qt/include/QtGui</pElem>
@@ -419,7 +418,7 @@
           </incDir>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/crd">
+      <folder path="0/satviewer/crd">
         <ccTool>
           <incDir>
             <pElem>satviewer/crd</pElem>
@@ -436,7 +435,7 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/jscalc">
+      <folder path="0/satviewer/jscalc">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/src/corelib/animation</pElem>
@@ -504,7 +503,7 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/jswidgets">
+      <folder path="0/satviewer/jswidgets">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/src/corelib/animation</pElem>
@@ -571,7 +570,7 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/locutils">
+      <folder path="0/satviewer/locutils">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/src/corelib/animation</pElem>
@@ -634,7 +633,7 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/ogl">
+      <folder path="0/satviewer/ogl">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/src/corelib/animation</pElem>
@@ -695,14 +694,14 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/ogl/globj">
+      <folder path="0/satviewer/ogl/globj">
         <ccTool>
           <incDir>
             <pElem>satviewer/ogl/globj</pElem>
           </incDir>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/ogl/glsprite">
+      <folder path="0/satviewer/ogl/glsprite">
         <ccTool>
           <incDir>
             <pElem>satviewer/ogl/glsprite</pElem>
@@ -710,14 +709,14 @@
           </incDir>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/satutils">
+      <folder path="0/satviewer/satutils">
         <ccTool>
           <incDir>
             <pElem>satviewer/satutils</pElem>
           </incDir>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/tleupd">
+      <folder path="0/satviewer/tleupd">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/src/corelib/animation</pElem>
@@ -772,7 +771,7 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/uchecker">
+      <folder path="0/satviewer/uchecker">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/include</pElem>
@@ -813,7 +812,7 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/zrvutils">
+      <folder path="0/satviewer/zrvutils">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/src/corelib/animation</pElem>
@@ -1550,8 +1549,7 @@
     </conf>
     <conf name="Debug" type="0">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
-        <compilerSet>MinGW|MinGW</compilerSet>
+        <compilerSet>MinGW_1|MinGW</compilerSet>
         <dependencyChecking>false</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -1620,7 +1618,7 @@
       </item>
       <item path="dialogs/sgp4/ui_sat.h" ex="false" tool="3" flavor2="0">
       </item>
-      <folder path="SatViewer/models">
+      <folder path="0/models">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/src/corelib/animation</pElem>
@@ -1668,7 +1666,7 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/models/kepler">
+      <folder path="0/models/kepler">
         <ccTool>
           <incDir>
             <pElem>d:/env/satviewer/SatViewer/models/kepler/d:/usr/qt/src/corelib/global</pElem>
@@ -1720,7 +1718,7 @@
           </incDir>
         </ccTool>
       </folder>
-      <folder path="SatViewer/models/sgp">
+      <folder path="0/models/sgp">
         <ccTool>
           <incDir>
             <pElem>d:/env/satviewer/SatViewer/models/sgp/d:/usr/mingw/lib/gcc/mingw32/4.5.2/include/c++/mingw32/bits</pElem>
@@ -1772,7 +1770,7 @@
           </incDir>
         </ccTool>
       </folder>
-      <folder path="SatViewer/models/sun">
+      <folder path="0/models/sun">
         <ccTool>
           <incDir>
             <pElem>d:/env/satviewer/SatViewer/models/sun/d:/usr/qt/include/QtGui</pElem>
@@ -1824,7 +1822,7 @@
           </incDir>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/crd">
+      <folder path="0/satviewer/crd">
         <ccTool>
           <incDir>
             <pElem>satviewer/crd</pElem>
@@ -1841,7 +1839,7 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/jscalc">
+      <folder path="0/satviewer/jscalc">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/src/corelib/animation</pElem>
@@ -1909,7 +1907,7 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/jswidgets">
+      <folder path="0/satviewer/jswidgets">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/src/corelib/animation</pElem>
@@ -1976,7 +1974,7 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/locutils">
+      <folder path="0/satviewer/locutils">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/src/corelib/animation</pElem>
@@ -2039,7 +2037,7 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/ogl">
+      <folder path="0/satviewer/ogl">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/src/corelib/animation</pElem>
@@ -2100,14 +2098,14 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/ogl/globj">
+      <folder path="0/satviewer/ogl/globj">
         <ccTool>
           <incDir>
             <pElem>satviewer/ogl/globj</pElem>
           </incDir>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/ogl/glsprite">
+      <folder path="0/satviewer/ogl/glsprite">
         <ccTool>
           <incDir>
             <pElem>satviewer/ogl/glsprite</pElem>
@@ -2115,14 +2113,14 @@
           </incDir>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/satutils">
+      <folder path="0/satviewer/satutils">
         <ccTool>
           <incDir>
             <pElem>satviewer/satutils</pElem>
           </incDir>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/tleupd">
+      <folder path="0/satviewer/tleupd">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/src/corelib/animation</pElem>
@@ -2177,7 +2175,7 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/uchecker">
+      <folder path="0/satviewer/uchecker">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/include</pElem>
@@ -2218,7 +2216,7 @@
           </preprocessorList>
         </ccTool>
       </folder>
-      <folder path="SatViewer/satviewer/zrvutils">
+      <folder path="0/satviewer/zrvutils">
         <ccTool>
           <incDir>
             <pElem>../../../usr/qt/src/corelib/animation</pElem>
