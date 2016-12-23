@@ -89,13 +89,13 @@ void GLSatAbstractWidget::paintGL() {
     glScalef(m_zoom, m_zoom, 0.0);
 
     glCallList(list_map); // map
-    glCallList(list_net); //net
-    glCallList(list_sun); //sun
-    glCallList(list_events); //locList events
-    glCallList(list_loc); //locList zrl names
-    glCallList(list_sat); //satList
-    glCallList(list_labels); // net labels
-    this->swapBuffers();
+//    glCallList(list_net); //net
+//    glCallList(list_sun); //sun
+//    glCallList(list_events); //locList events
+//    glCallList(list_loc); //locList zrl names
+//    glCallList(list_sat); //satList
+//    glCallList(list_labels); // net labels
+//    this->swapBuffers();
 }
 
 void GLSatAbstractWidget::resizeGL(int width, int height) {
@@ -104,11 +104,11 @@ void GLSatAbstractWidget::resizeGL(int width, int height) {
 }
 
 void GLSatAbstractWidget::refreshAll() {
-    compileMapList();
-    compileSatList();
-    compileLocList();
-    compileEventsList();
-    compileSunList();
+//    compileMapList();
+//    compileSatList();
+//    compileLocList();
+//    compileEventsList();
+//    compileSunList();
     paintGL();
 }
 

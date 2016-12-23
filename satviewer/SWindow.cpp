@@ -55,7 +55,7 @@ SWindow::SWindow() {
     path.cd("satviewer/widgets");
     shcFullScreen = new QShortcut(QKeySequence("Ctrl+F"), this);
     shcEscFullScreen = new QShortcut(QKeySequence("Esc"), this);
-    dlgOptions->jswList->init(this->frameMap, path.path());
+//    dlgOptions->jswList->init(this->frameMap, path.path());
 
     uCheck = new UCheck(this, 20112, "http://satviewer.net/version/current.txt");
 
@@ -380,9 +380,9 @@ void SWindow::selectLanguage(int value) {
 	dlgOptions->retranslateUi(dlgOptions);
 	dlgOptions->satDialog->retranslateUi(dlgOptions->satDialog);
 	dlgOptions->locDialog->retranslateUi(dlgOptions->locDialog);
-	dlgOptions->scriptFrame->retranslateUi(dlgOptions->scriptFrame);
+//	dlgOptions->scriptFrame->retranslateUi(dlgOptions->scriptFrame);
 	dlgOptions->tleFrame->retranslateUi(dlgOptions->tleFrame);
-	dlgOptions->jswList->retranslateUi();
+//	dlgOptions->jswList->retranslateUi();
 	satWidget->retranslateUi();
 	uiSettings.comboLanguage->blockSignals(true);
 	uiSettings.comboGlWidget->blockSignals(true);
@@ -396,11 +396,11 @@ void SWindow::selectLanguage(int value) {
 }
 
 void SWindow::setSwlVars(Satellite *sat, Location *loc, double *secs) {
-	dlgOptions->jswList->setVars(sat, loc, secs);
-	if (loc != 0) labelLoc.setText(loc->name());
-	else labelLoc.setText("");
-	if (sat != 0) labelSat.setText(sat->name());
-	else labelSat.setText("");
+//	dlgOptions->jswList->setVars(sat, loc, secs);
+//	if (loc != 0) labelLoc.setText(loc->name());
+//	else labelLoc.setText("");
+//	if (sat != 0) labelSat.setText(sat->name());
+//	else labelSat.setText("");
 }
 
 void SWindow::fullScreen() {

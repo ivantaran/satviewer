@@ -1,2 +1,9 @@
-/satviewer/debug/
-/satviewer/release/
+bin/
+satviewer/debug/
+satviewer/release/
+nbproject/
+Makefile*
+moc_*
+ui_*.h
+*.o
+qrc_*

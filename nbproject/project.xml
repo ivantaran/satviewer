@@ -3,7 +3,7 @@
     <type>org.netbeans.modules.cnd.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>SatViewer</name>
+            <name>satviewer</name>
             <c-extensions/>
             <cpp-extensions>cpp</cpp-extensions>
             <header-extensions>h</header-extensions>
@@ -14,11 +14,7 @@
             </sourceRootList>
             <confList>
                 <confElem>
-                    <name>Release</name>
-                    <type>0</type>
-                </confElem>
-                <confElem>
-                    <name>Debug</name>
+                    <name>Default</name>
                     <type>0</type>
                 </confElem>
             </confList>

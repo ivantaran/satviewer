@@ -36,14 +36,14 @@ SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
     locDialog->setWindowModality(Qt::WindowModal);
 
     QDir dir = QDir::home();
-    dir.cd("satviewer/jsprm");
-    scriptFrame = new SScriptFrame(dir.filePath("prmlist.js"));
-    scriptFrame->setParent(tabWidget);
-    stackedWidget->insertWidget(4, scriptFrame);
-
-    jswList = new SWidgetList();
-    jswList->setParent(tabWidget);
-    stackedWidget->insertWidget(5, jswList);
+//    dir.cd("satviewer/jsprm");
+//    scriptFrame = new SScriptFrame(dir.filePath("prmlist.js"));
+//    scriptFrame->setParent(tabWidget);
+//    stackedWidget->insertWidget(4, scriptFrame);
+//
+//    jswList = new SWidgetList();
+//    jswList->setParent(tabWidget);
+//    stackedWidget->insertWidget(5, jswList);
 
     dir = QDir::home();
     dir.cd("satviewer/tle");
@@ -87,7 +87,7 @@ SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
     connect(listViewDBLoc, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(addToLocList(const QModelIndex &)));
     connect(listViewSat, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(changeDbSat()));
     connect(listViewLoc, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(changeDbLoc()));
-    connect(scriptFrame->btnRefresh, SIGNAL(clicked()), this, SLOT(scriptParameters()));
+//    connect(scriptFrame->btnRefresh, SIGNAL(clicked()), this, SLOT(scriptParameters()));
     connect(btnDeleteSatList, SIGNAL(clicked()), this, SLOT(deleteSatList()));
     connect(btnDeleteLocList, SIGNAL(clicked()), this, SLOT(deleteLocList()));
     connect(btnAddToSatList , SIGNAL(clicked()), this, SLOT(addToSatList ()));
@@ -725,12 +725,12 @@ void SDlgOptions::delFromSatList(const QModelIndex &index) {
     QModelIndexList indexList = listViewSat->selectionModel()->selectedIndexes();
     int count = indexList.count();
     if (count < 1) return;
-    uint32_t *tmp = new uint32_t[count];
+    Satellite **tmp = new Satellite*[count];
 
     for (int i = 0; i < count; i++)
-        tmp[i] = (uint32_t)satWidget->satList.at(indexList.value(i).row());
+        tmp[i] = satWidget->satList.at(indexList.value(i).row());
 
-    for (int i = 0; i < count; i++) satWidget->removeSat((Satellite *)tmp[i]);
+    for (int i = 0; i < count; i++) satWidget->removeSat(tmp[i]);
 
     delete tmp;
     updateListViewSat();
@@ -747,13 +747,13 @@ void SDlgOptions::delFromLocList(const QModelIndex &index) {
     QModelIndexList indexList = listViewLoc->selectionModel()->selectedIndexes();
     int count = indexList.count();
     if (count < 1) return;
-    uint32_t *tmp = new uint32_t[count];
+    Location **tmp = new Location*[count];
 
     for (int i = 0; i < count; i++)
-        tmp[i] = (uint32_t)satWidget->locList.at(indexList.value(i).row());
+        tmp[i] = satWidget->locList.at(indexList.value(i).row());
 
     for (int i = 0; i < count; i++)
-        satWidget->removeLoc((Location *)tmp[i]);
+        satWidget->removeLoc(tmp[i]);
 
     delete tmp;
     updateListViewLoc();
@@ -764,10 +764,10 @@ void SDlgOptions::delFromLocList(const QModelIndex &index) {
 }
 
 void SDlgOptions::scriptParameters() {
-    Satellite *sat = satWidget->currentSat();
-    Location *loc = satWidget->currentLoc();
-    if (sat == 0 || loc == 0) return;
-    scriptFrame->exec(sat, loc, satWidget->time());
+//    Satellite *sat = satWidget->currentSat();
+//    Location *loc = satWidget->currentLoc();
+//    if (sat == 0 || loc == 0) return;
+//    scriptFrame->exec(sat, loc, satWidget->time());
 }
 
 void SDlgOptions::addDbLoc() {
@@ -821,7 +821,7 @@ void SDlgOptions::helpLocSql() {
 void SDlgOptions::setSatWidget(GLSatAbstractWidget *satWidget) {
     this->satWidget = satWidget;
     satWidget->settingsWidget->setParent(tabWidget);
-    jswList->setDesktop(satWidget);
+//    jswList->setDesktop(satWidget);
     if (stackedWidget->widget(7) != NULL) stackedWidget->removeWidget(stackedWidget->widget(7));
         stackedWidget->insertWidget(7, satWidget->settingsWidget);
         satDialog->setSatWidget(satWidget);

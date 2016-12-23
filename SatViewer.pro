@@ -1,2 +1,2 @@
 TEMPLATE = subdirs
-SUBDIRS += satviewer models dialogs
+SUBDIRS += satviewer

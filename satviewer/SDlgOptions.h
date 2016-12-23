@@ -13,11 +13,11 @@
 #include "SLocDialog.h"
 #include "satutils/Satellite.h"
 #include "zrvutils/ZrvIoList.h"
-#include "jscalc/SScriptFrame.h"
+//#include "jscalc/SScriptFrame.h"
 #include "ogl/GLSatWidget.h"
 #include "crd/crd.h"
 #include "tleupd/SUpdater.h"
-#include "jswidgets/SWidgetList.h"
+//#include "jswidgets/SWidgetList.h"
 
 #include <QtSql>
 #include <QDialog>
@@ -36,9 +36,9 @@ public:
     CustomObjDialog getSObjDialog;
     SAbstractObjDialog *satDialog;
     SLocDialog *locDialog;
-    SScriptFrame *scriptFrame;
+//    SScriptFrame *scriptFrame;
     SUpdater *tleFrame;
-    SWidgetList *jswList;
+//    SWidgetList *jswList;
 
     QSqlDatabase db;
 
