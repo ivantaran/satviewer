@@ -7,7 +7,7 @@
 
 #include "SatWidgetObject.h"
 
-SatWidgetObject::SatWidgetObject(QString fileName, QGLWidget *parentWidget) {
+SatWidgetObject::SatWidgetObject(QString fileName, QOpenGLWidget *parentWidget) {
     file_name =  fileName;
 }
 

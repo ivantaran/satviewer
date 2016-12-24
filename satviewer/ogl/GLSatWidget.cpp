@@ -196,7 +196,10 @@ void GLSatWidget::onCheckNight(bool value) {
 
 void GLSatWidget::compileMapList() {
     glNewList(list_map, GL_COMPILE);
-        glBindTexture(GL_TEXTURE_2D, textureID);
+    if (textureID) {
+        textureID->bind();
+    }
+//        glBindTexture(GL_TEXTURE_2D, textureID);
         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         glEnable(GL_TEXTURE_2D);
         glBegin(GL_QUADS);
@@ -207,7 +210,7 @@ void GLSatWidget::compileMapList() {
         glEnd();
         glDisable(GL_TEXTURE_2D);
     glEndList();
-
+    return;
     glNewList(list_net, GL_COMPILE);
         glLineWidth(1.0);
         glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);

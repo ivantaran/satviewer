@@ -21,7 +21,7 @@ using namespace std;
 
 class GLObjecter {
 public:
-	GLObjecter(QGLWidget *parent, int index, char *path, char *fileName);
+	GLObjecter(QOpenGLWidget *parent, int index, char *path, char *fileName);
 	virtual ~GLObjecter();
 	void move(float x, float y, float z);
 	void moveX(float value);
@@ -42,7 +42,7 @@ private:
 	char line[BUF_SIZE];
 	char type[BUF_SIZE];
 	GLObjMaterial *mtlLib;
-	QGLWidget *m_parent;
+	QOpenGLWidget *m_parent;
 	void init();
 	void addVertex();
 	void addTexVertex();

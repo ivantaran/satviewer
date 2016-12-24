@@ -3,10 +3,6 @@
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
       <df name="bin">
-        <df name="dialogs">
-        </df>
-        <df name="plugins">
-        </df>
         <df name="profile">
           <df name="3d">
           </df>
@@ -48,6 +44,17 @@
         </df>
       </df>
       <df name="satviewer">
+        <df name="build">
+          <in>moc_GLSatAbstractWidget.cpp</in>
+          <in>moc_GLSatWidget.cpp</in>
+          <in>moc_GLSatWidget3d.cpp</in>
+          <in>moc_SDlgOptions.cpp</in>
+          <in>moc_SLocDialog.cpp</in>
+          <in>moc_SUpdater.cpp</in>
+          <in>moc_SWindow.cpp</in>
+          <in>moc_Sgp4Dialog.cpp</in>
+          <in>moc_UCheck.cpp</in>
+        </df>
         <df name="crd">
           <in>crd.cpp</in>
           <in>crd.h</in>
@@ -134,17 +141,6 @@
         <in>SWindow.cpp</in>
         <in>SWindow.h</in>
         <in>SatViewer.cpp</in>
-        <in>moc_GLSatAbstractWidget.cpp</in>
-        <in>moc_GLSatWidget.cpp</in>
-        <in>moc_GLSatWidget3d.cpp</in>
-        <in>moc_SDlgOptions.cpp</in>
-        <in>moc_SLocDialog.cpp</in>
-        <in>moc_SScriptFrame.cpp</in>
-        <in>moc_SUpdater.cpp</in>
-        <in>moc_SWidget.cpp</in>
-        <in>moc_SWidgetList.cpp</in>
-        <in>moc_SWindow.cpp</in>
-        <in>moc_UCheck.cpp</in>
         <in>qrc_SatViewer.cpp</in>
         <in>ui_SatViewer.h</in>
         <in>ui_earthsettings.h</in>

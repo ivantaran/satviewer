@@ -29,6 +29,7 @@ struct ms {
 class Sgp4Model : public Satellite {
 public:
     Sgp4Model();
+    static Sgp4Model *getSatModel();
     virtual ~Sgp4Model();
     int modelInit(char *state, int size);
     int model(double time);
@@ -84,10 +85,6 @@ private:
 	void dsinit();
 	void dspace();
 };
-extern "C" Sgp4Model *getSatModel() {
-		puts("sgp model sat added");
-		return new Sgp4Model();
-	}
 
 #endif /* SGP4MODEL_H_ */
 

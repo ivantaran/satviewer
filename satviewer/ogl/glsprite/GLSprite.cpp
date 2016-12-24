@@ -7,7 +7,7 @@
 
 #include "GLSprite.h"
 
-GLSprite::GLSprite(QString fileName, QGLWidget *parentWidget) : SatWidgetObject(fileName, parentWidget) {
+GLSprite::GLSprite(QString fileName, QOpenGLWidget *parentWidget) : SatWidgetObject(fileName, parentWidget) {
     widget = 0;
     m_list_index = 0;
     texture_id = 0;
@@ -21,7 +21,7 @@ GLSprite::~GLSprite() {
     puts("sprite is removed");
 }
 
-void GLSprite::load(QString fileName, QGLWidget *parentWidget) {
+void GLSprite::load(QString fileName, QOpenGLWidget *parentWidget) {
     if ((parentWidget == 0) || (!parentWidget->isValid())) {
         puts("QGLWidget is not valid");
         return;
@@ -41,7 +41,7 @@ void GLSprite::load(QString fileName, QGLWidget *parentWidget) {
         m_width = pixmap.width();
         m_height = pixmap.height();
         m_angle = 0;
-        texture_id = widget->bindTexture(pixmap);
+//        texture_id = widget->bindTexture(pixmap); //TODO
     }
     if (glIsList(m_list_index)) glDeleteLists(m_list_index, 1);
     m_list_index = glGenLists(1);

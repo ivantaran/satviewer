@@ -6,14 +6,13 @@
  */
 #include "satogl.h"
 #include "math.h"
-//#include "GL/gl.h"
 #include "GL/glu.h"
 #include <QtOpenGL>
 #include "locutils/Location.h"
 #include "satutils/Satellite.h"
 
 //---------------------------------------------------------------------------
-float vertex[VRTX_COUNT][2]; //�������� ����� ��������� ���, ���
+float vertex[VRTX_COUNT][2];
 
 //---------------------------------------------------------------------------
 void initSatOgl() {

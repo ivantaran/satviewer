@@ -7,7 +7,7 @@
 
 #include "GLObjecter.h"
 
-GLObjecter::GLObjecter(QGLWidget *parent, int index, char *path, char *fileName) {
+GLObjecter::GLObjecter(QOpenGLWidget *parent, int index, char *path, char *fileName) {
 	m_xyz[0] = 0;
 	m_xyz[1] = 0;
 	m_xyz[2] = 0;

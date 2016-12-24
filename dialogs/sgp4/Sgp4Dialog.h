@@ -1,12 +1,12 @@
 /*
- * SSatDialog.h
+ * Sgp4Dialog.h
  *
  *  Created on: 09.12.2009
  *      Author: Yan Coduemat
  */
 
-#ifndef KEPDIALOG_H_
-#define KEPDIALOG_H_
+#ifndef SGP4DIALOG_H_
+#define SGP4DIALOG_H_
 
 #include <inttypes.h>
 #include "ui_sgp4.h"
@@ -19,12 +19,12 @@
 #include "../../satviewer/ogl/GLSatAbstractWidget.h"
 #include "../../satviewer/SAbstractObjDialog.h"
 
-class KepDialog: public SAbstractObjDialog, public Ui::SatDialog {
+class Sgp4Dialog: public SAbstractObjDialog, public Ui::SatDialog {
     Q_OBJECT
 public:
     Satellite defaultSat;
-    KepDialog(GLSatAbstractWidget *satWidget);
-    virtual ~KepDialog();
+    Sgp4Dialog(GLSatAbstractWidget *satWidget);
+    virtual ~Sgp4Dialog();
 
     inline Satellite *sat() { return m_sat; }
     void makeSat(Satellite *sat, bool fromlist = true);
@@ -51,4 +51,4 @@ private slots:
     void setIcon();
 };
 
-#endif /* KEPDIALOG_H_ */
+#endif /* SGP4DIALOG_H_ */

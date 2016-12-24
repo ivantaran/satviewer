@@ -14,8 +14,9 @@
 #include <QCoreApplication>
 #include "math.h"
 #include "satogl.h"
+#include "../../models/sgp4/Sgp4Model.h"
 
-GLSatAbstractWidget::GLSatAbstractWidget(QWidget *parent) : QGLWidget(parent) {
+GLSatAbstractWidget::GLSatAbstractWidget(QWidget *parent) : QOpenGLWidget(parent) {
 //    initSatOgl();
     satList.clear();
     locList.clear();
@@ -36,7 +37,7 @@ GLSatAbstractWidget::GLSatAbstractWidget(QWidget *parent) : QGLWidget(parent) {
     m_dy = 0.0;
     m_dz = 0.0;
 
-    textureID = 0;
+    textureID = NULL;
     m_time = 0;
     shwSun = true;
     shwNight = true;
@@ -57,9 +58,10 @@ GLSatAbstractWidget::~GLSatAbstractWidget() {
 }
 
 void GLSatAbstractWidget::initializeGL() {
-	makeCurrent();
-	setAutoBufferSwap(false);
-	glClearColor(0.1, 0.1, 0.1, 0.0);
+    
+    makeCurrent();
+//    setAutoBufferSwap(false); //TODO
+    glClearColor(0.1, 0.1, 0.1, 0.0);
     //glShadeModel(GL_FLAT);
     glShadeModel(GL_SMOOTH);
     glMatrixMode(GL_PROJECTION);
@@ -73,7 +75,7 @@ void GLSatAbstractWidget::initializeGL() {
 //    glBlendFunc(GL_DST_COLOR, GL_SRC_COLOR);
     //loadTexture();
     list_map    = glGenLists(7);
-    printf("list_map %d\n", list_map);
+    printf("list_map %d\n", (int)list_map);
     list_net    = list_map + 1;
     list_labels = list_map + 2;
     list_sat    = list_map + 3;
@@ -95,7 +97,7 @@ void GLSatAbstractWidget::paintGL() {
 //    glCallList(list_loc); //locList zrl names
 //    glCallList(list_sat); //satList
 //    glCallList(list_labels); // net labels
-//    this->swapBuffers();
+//    swapBuffers(); //TODO
 }
 
 void GLSatAbstractWidget::resizeGL(int width, int height) {
@@ -104,7 +106,7 @@ void GLSatAbstractWidget::resizeGL(int width, int height) {
 }
 
 void GLSatAbstractWidget::refreshAll() {
-//    compileMapList();
+    compileMapList();
 //    compileSatList();
 //    compileLocList();
 //    compileEventsList();
@@ -120,8 +122,9 @@ void GLSatAbstractWidget::loadTexture(QString filePath) {
     }
     //	puts(filePath.toLocal8Bit().data());
     makeCurrent();
-    deleteTexture(textureID);
-    textureID = bindTexture(QPixmap(filePath), GL_TEXTURE_2D);
+    if (textureID) delete textureID;
+
+    textureID = new QOpenGLTexture(QImage(filePath), QOpenGLTexture::GenerateMipMaps);
 }
 
 void GLSatAbstractWidget::setTime(double secs) {
@@ -182,26 +185,7 @@ void GLSatAbstractWidget::enumSatModelList() {
 }
 
 void GLSatAbstractWidget::setSatModel(int index) {
-    QString fileName;
-    QString path = qApp->applicationDirPath() + "/plugins/";
-    QRegExp re("*sgp*");
-    re.setPatternSyntax(QRegExp::Wildcard);
-    int def = m_satModelList.indexOf(re);
-    if (def == -1) {
-        puts("Error: basic sgp model not found");
-        exit(-1);
-    }
-    if ((index >= m_satModelList.count()) || (index < 0)) fileName = path + m_satModelList.at(def);
-    else
-        if (m_satModelList.at(index) == "default") fileName = path + m_satModelList.at(def);
-        else fileName = path + m_satModelList.at(index);
-
-    lib.setFileName(fileName);
-    if (!lib.load()) {
-        printf("%s lib not loaded\n", lib.fileName().toLocal8Bit().data());
-        exit(-1);
-    }
-    getSatModel = (CustomSat)lib.resolve(fileName, "getSatModel");
+    getSatModel = (CustomSat)Sgp4Model::getSatModel;
     printf("%s [getSatModel %x]\n", lib.fileName().toLocal8Bit().data(), getSatModel);
     if (getSatModel == 0) exit(-1);
 }

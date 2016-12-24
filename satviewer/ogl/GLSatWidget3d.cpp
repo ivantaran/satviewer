@@ -65,7 +65,7 @@ void GLSatWidget3d::writeSettings(QSettings *settings) {
 
 void GLSatWidget3d::initializeGL() {
 	makeCurrent();
-	setAutoBufferSwap(false);
+//	setAutoBufferSwap(false);
 	glClearColor(0.3, 0.3, 0.3, 0.0);
     //glShadeModel(GL_FLAT);
     glShadeModel(GL_SMOOTH);
@@ -137,7 +137,7 @@ void GLSatWidget3d::paintGL() {
 
 	globjEarth->exec();
     glCallList(4); //satList
-    this->swapBuffers();
+//    this->swapBuffers();
 }
 
 void GLSatWidget3d::resizeGL(int width, int height) {

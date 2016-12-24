@@ -9,7 +9,7 @@
 #include <QPixmap>
 #include <string>
 
-GLObjMaterial::GLObjMaterial(QGLWidget *parent,  const char *path, const char *fileName) {
+GLObjMaterial::GLObjMaterial(QOpenGLWidget *parent,  const char *path, const char *fileName) {
 	m_path = path;
 	m_parent = parent;
 	m_parent->makeCurrent();
@@ -80,9 +80,11 @@ void GLObjMaterial::init() {
 				puts("texture not loaded:");
 				puts(fullname.c_str());
 			}
-
+                        //TODO two lines
+/*
 			uint32_t tex = m_parent->bindTexture(img, GL_TEXTURE_2D, GL_RGBA, QGLContext::InvertedYBindOption | QGLContext::LinearFilteringBindOption);
 			material->setMapKd(tex);
+  */                      
 //			img = img.rgbSwapped();
 //			img = img.mirrored(true, false);
 //			img = m_parent->convertToGLFormat(img);

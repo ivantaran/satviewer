@@ -1,8 +1,11 @@
-LIBS += -Lbin
+
 INCLUDEPATH += .
 TARGET = SatViewer
 DESTDIR = ../bin
 LIBS += -lGLU
+
+MOC_DIR = build
+OBJECTS_DIR = build
 
 CONFIG += console debug
 
@@ -24,17 +27,11 @@ QT      +=  gui \
 TEMPLATE = app
 
 HEADERS    +=	\
-#                ui_SatViewer.h \ 
-#                ui_Options.h \
-#                ui_sat.h \
-#                ui_tleupd.h \
-#                ui_jswidgetlist.h \
-#                ui_mapsettings.h \
-#                ui_earthsettings.h \
-#                ui_settings.h \
                 SWindow.h \
                 SDlgOptions.h \
                 SLocDialog.h \
+                ../dialogs/sgp4/Sgp4Dialog.h \
+                ../models/sgp4/Sgp4Model.h \
 #                jscalc/SScriptFrame.h \
                 ogl/GLSatWidget.h \
                 ogl/GLSatAbstractWidget.h \
@@ -60,6 +57,8 @@ SOURCES    +=	SatViewer.cpp \
                 SWindow.cpp \
                 SDlgOptions.cpp \
                 SLocDialog.cpp \
+                ../dialogs/sgp4/Sgp4Dialog.cpp \
+                ../models/sgp4/Sgp4Model.cpp \
 #                jscalc/SScriptFrame.cpp \
                 ogl/GLSatWidget.cpp \
                 ogl/GLSatAbstractWidget.cpp \

@@ -7,27 +7,14 @@
 #include "SDlgOptions.h"
 #include "sql/dbsql.h"
 #include <fstream>
+#include "../dialogs/sgp4/Sgp4Dialog.h"
 
 SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
     this->setupUi(this);
 
-    QDir ddir = QCoreApplication::applicationDirPath();
-    ddir.cd("dialogs");
-    
-    QLibrary lib_dlg(ddir.path() + "/sgp4_dialog");
-    if (!lib_dlg.load()) {
-        puts("dlg not load");
-        puts(ddir.path().toLocal8Bit().data());
-        exit(-1);
-    }
-    getSObjDialog = (CustomObjDialog)lib_dlg.resolve("getSObjDialog");
-    if (getSObjDialog == 0) {
-        puts("not resolved dlg");
-        exit(-1);
-    }
-//    getSObjDialog(satWidget)->show();
-    satDialog = getSObjDialog(satWidget);
-//    satDialog = new SSatDialog(satWidget);
+////    getSObjDialog(satWidget)->show();
+//    satDialog = getSObjDialog(satWidget);
+    satDialog = new Sgp4Dialog(satWidget);
     satDialog->setParent(this, Qt::Dialog | Qt::WindowTitleHint);
     satDialog->setWindowModality(Qt::WindowModal);
 

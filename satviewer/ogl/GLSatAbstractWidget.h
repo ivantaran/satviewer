@@ -9,7 +9,7 @@
 #define GLSATABSTRACTWIDGET_H_
 
 #include <inttypes.h>
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <QLibrary>
 #include <QSettings>
 #include <QtOpenGL>
@@ -18,7 +18,7 @@
 
 typedef Satellite * (*CustomSat)();
 
-class GLSatAbstractWidget : public QGLWidget {
+class GLSatAbstractWidget : public QOpenGLWidget {
 	Q_OBJECT
 public:
     QList<Satellite *> satList;
@@ -98,9 +98,9 @@ signals:
 protected:
 	Satellite *sun;
 	uint32_t clrNet, clrNetFont, clrNight;
-        uint32_t list_map, list_net, list_events, list_sun, list_loc, list_sat, list_labels;
+        GLuint list_map, list_net, list_events, list_sun, list_loc, list_sat, list_labels;
 	double m_time;
-	uint32_t textureID;
+	QOpenGLTexture *textureID;
 	QFont fntNet;
 	bool shwSun, shwNight;
     float m_zoom, m_dx, m_dy, m_dz;

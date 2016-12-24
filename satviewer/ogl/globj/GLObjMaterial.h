@@ -105,7 +105,7 @@ private:
 
 class GLObjMaterial {
 public:
-	GLObjMaterial(QGLWidget *parent, const char *path, const char *fileName = "");
+	GLObjMaterial(QOpenGLWidget *parent, const char *path, const char *fileName = "");
 	virtual ~GLObjMaterial();
 	void set(char *mtlName);
 	bool mapKaOn();
@@ -123,7 +123,7 @@ private:
 	char line[BUF_SIZE];
 	char type[BUF_SIZE];
 	char name[BUF_SIZE];
-	QGLWidget *m_parent;
+	QOpenGLWidget *m_parent;
 	void init();
 	void addMaterial();
 };

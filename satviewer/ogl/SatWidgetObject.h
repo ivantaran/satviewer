@@ -13,7 +13,7 @@
 
 class SatWidgetObject {
 public:
-    SatWidgetObject(QString fileName = QString(), QGLWidget *parentWidget = 0);
+    SatWidgetObject(QString fileName = QString(), QOpenGLWidget *parentWidget = 0);
     virtual ~SatWidgetObject();
     inline QString fileName() { return file_name; }
     virtual void exec(float x = 0, float y = 0, float z = 0) {}

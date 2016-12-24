@@ -1,15 +1,15 @@
 /*
- * SObjDialog.cpp
+ * Sgp4Dialog.cpp
  *
  *  Created on: 28.12.2009
  *      Author: Yan Coduemat
  */
 
 #include "Sgp4Dialog.h"
-#include "../../models/sgp/sgp_struct.h"
+#include "../../models/sgp4/sgp_struct.h"
 #include "math.h"
 
-SObjDialog::SObjDialog(GLSatAbstractWidget *satWidget) : SAbstractObjDialog(satWidget) {
+Sgp4Dialog::Sgp4Dialog(GLSatAbstractWidget *satWidget) : SAbstractObjDialog(satWidget) {
 	this->setupUi(this);
 	lineEditBStar->setValidator(new QDoubleValidator());
 	lineEditE->setValidator    (new QDoubleValidator());
@@ -34,11 +34,11 @@ SObjDialog::SObjDialog(GLSatAbstractWidget *satWidget) : SAbstractObjDialog(satW
 	connect(comboModel, SIGNAL(currentIndexChanged(int)), this, SLOT(selectModel(int)));
 }
 
-SObjDialog::~SObjDialog() {
+Sgp4Dialog::~Sgp4Dialog() {
 
 }
 
-uint32_t SObjDialog::flipRgb(uint32_t rgb) {
+uint32_t Sgp4Dialog::flipRgb(uint32_t rgb) {
 	//OpenGL 0xAABBGGRR //Qt 0xAARRGGBB
 	uint8_t a, r, g, b;
 	b = rgb;
@@ -49,7 +49,7 @@ uint32_t SObjDialog::flipRgb(uint32_t rgb) {
 	return rgb;
 }
 
-void SObjDialog::showEvent(QShowEvent * event) {
+void Sgp4Dialog::showEvent(QShowEvent * event) {
 	if (m_sat == 0) return;
 
 	double const rad2deg = 180.0/M_PI;
@@ -115,7 +115,7 @@ void SObjDialog::showEvent(QShowEvent * event) {
 	comboModel->blockSignals(false);
 }
 
-void SObjDialog::makeSat(Satellite *sat, bool fromlist) {
+void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
 
 	double const deg2rad = M_PI/180.0;
 	double const xpdotp  = 1440.0/(2.0*M_PI);
@@ -191,7 +191,7 @@ void SObjDialog::makeSat(Satellite *sat, bool fromlist) {
 	m_sat->setModelIndex(comboModel->currentIndex());
 }
 
-void SObjDialog::setBtnColor(QWidget *widget) {
+void Sgp4Dialog::setBtnColor(QWidget *widget) {
 	QPalette pal = widget->palette();
 	QColor color = QColorDialog::getColor(pal.color(QPalette::Button), this, 0, QColorDialog::ShowAlphaChannel);
 	if (!color.isValid()) return;
@@ -199,35 +199,35 @@ void SObjDialog::setBtnColor(QWidget *widget) {
 	widget->setPalette(pal);
 }
 
-void SObjDialog::setColorSatName() {
+void Sgp4Dialog::setColorSatName() {
 	setBtnColor(btnColorName);
 }
 
-void SObjDialog::setColorSatZrv() {
+void Sgp4Dialog::setColorSatZrv() {
 	setBtnColor(btnColorZrv);
 }
 
-void SObjDialog::setColorSatLines() {
+void Sgp4Dialog::setColorSatLines() {
 	setBtnColor(btnColorLines);
 }
 
-void SObjDialog::setColorSatTrack() {
+void Sgp4Dialog::setColorSatTrack() {
 	setBtnColor(btnColorTrack);
 }
 
-void SObjDialog::setSatFont() {
+void Sgp4Dialog::setSatFont() {
 	bool ok;
 	QFont font = QFontDialog::getFont(&ok, btnFont->font(), this);
 	if (ok) btnFont->setFont(font);
 }
 
-void SObjDialog::setDefault() {
+void Sgp4Dialog::setDefault() {
 	Satellite *sat = m_sat;
 	makeSat(&defaultSat, 0);
 	m_sat = sat;
 }
 
-void SObjDialog::selectModel(int index) {
+void Sgp4Dialog::selectModel(int index) {
     if (index < 0) return;
     puts("selectModel");
     if (satWidget->satList.count() < 1) return;
@@ -243,7 +243,7 @@ void SObjDialog::selectModel(int index) {
     else m_sat->setModelIndex(index);
 }
 
-void SObjDialog::setIcon() {
+void Sgp4Dialog::setIcon() {
     QDir dir = QDir::home();
     dir.cd("satviewer/icons");
     QString filePath = QFileDialog::getOpenFileName(this, "Open PNG Image", dir.path(), "PNG Images (*.png)");
@@ -252,13 +252,8 @@ void SObjDialog::setIcon() {
     satWidget->setIcon(m_sat, filePath);
 }
 
-void SObjDialog::setSatWidget(GLSatAbstractWidget *satWidget) { 
+void Sgp4Dialog::setSatWidget(GLSatAbstractWidget *satWidget) { 
     this->satWidget = satWidget; 
     comboModel->clear();
     comboModel->addItems(satWidget->satModelList());
-}
-
-extern "C" SObjDialog * getSObjDialog(GLSatAbstractWidget *satWidget) {
-    puts("sgp4 dialog creating...");
-    return new SObjDialog(satWidget);
 }

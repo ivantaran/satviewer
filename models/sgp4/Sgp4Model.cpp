@@ -16,6 +16,10 @@
 #define twopi 2.0*PI
 #define x2o3 2.0/3.0
 
+Sgp4Model *Sgp4Model::getSatModel() {
+    puts("sgp model sat added");
+    return new Sgp4Model();
+}
 
 Sgp4Model::Sgp4Model() {
 
