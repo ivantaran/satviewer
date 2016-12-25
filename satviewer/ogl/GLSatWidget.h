@@ -19,7 +19,7 @@ public:
 	GLSatWidget(QWidget *parent = 0);
 	virtual ~GLSatWidget();
 
-	void readSettings(QSettings *settings);
+	void readSettings();
 	void writeSettings(QSettings *settings);
 	inline void retranslateUi() { ui.retranslateUi(this); }
         void addSat(Satellite *sat);
@@ -30,6 +30,7 @@ private:
 	Ui::MapWidgetSettings ui;
 	GLSprite sprite_current, sprite_active;
         
+        void initializeGL();
 	void compileMapList();
 	void compileSatList();
 	void compileLocList();

@@ -36,7 +36,7 @@ GLSatAbstractWidget::GLSatAbstractWidget(QWidget *parent) : QOpenGLWidget(parent
     m_dx = 0.0;
     m_dy = 0.0;
     m_dz = 0.0;
-
+    
     textureID = NULL;
     m_time = 0;
     shwSun = true;
@@ -47,19 +47,21 @@ GLSatAbstractWidget::GLSatAbstractWidget(QWidget *parent) : QOpenGLWidget(parent
 //    sun->modelInit(WGS84, 0, 0, 0, 0, 0, 0, 0, 0);
 //    sun->modelInit(0, 0);
 //    sun->setName("Sun");
-    makeCurrent();
+//    makeCurrent();
 }
 
 GLSatAbstractWidget::~GLSatAbstractWidget() {
+    makeCurrent();
     satList.clear();
     locList.clear();
     ioList.clear();
-    makeCurrent();
+    // TODO delete tex
+    doneCurrent();
 }
 
 void GLSatAbstractWidget::initializeGL() {
-    
-    makeCurrent();
+//    makeCurrent();
+    initializeOpenGLFunctions();
 //    setAutoBufferSwap(false); //TODO
     glClearColor(0.1, 0.1, 0.1, 0.0);
     //glShadeModel(GL_FLAT);
@@ -82,6 +84,7 @@ void GLSatAbstractWidget::initializeGL() {
     list_loc    = list_map + 4;
     list_sun    = list_map + 5;
     list_events = list_map + 6;
+    readSettings();
 }
 
 void GLSatAbstractWidget::paintGL() {
@@ -106,11 +109,14 @@ void GLSatAbstractWidget::resizeGL(int width, int height) {
 }
 
 void GLSatAbstractWidget::refreshAll() {
+    if (!isValid()) {
+        return;
+    }
     compileMapList();
-//    compileSatList();
-//    compileLocList();
-//    compileEventsList();
-//    compileSunList();
+    compileSatList();
+    compileLocList();
+    compileEventsList();
+    compileSunList();
     paintGL();
 }
 
@@ -121,9 +127,8 @@ void GLSatAbstractWidget::loadTexture(QString filePath) {
         filePath = dir.filePath("map.png");
     }
     //	puts(filePath.toLocal8Bit().data());
-    makeCurrent();
+//    makeCurrent();
     if (textureID) delete textureID;
-
     textureID = new QOpenGLTexture(QImage(filePath), QOpenGLTexture::GenerateMipMaps);
 }
 
@@ -133,6 +138,9 @@ void GLSatAbstractWidget::setTime(double secs) {
 }
 
 void GLSatAbstractWidget::refresh() {
+    if (!isValid()) {
+        return;
+    }
 //	compileMapList();
 	compileSatList();
 	compileEventsList();

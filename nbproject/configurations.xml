@@ -96,6 +96,8 @@
       <flagsDictionary>
         <element flagsID="0" commonFlags="-fPIC"/>
         <element flagsID="1" commonFlags="-m64 -O2"/>
+        <element flagsID="2"
+                 commonFlags="-mtune=generic -march=x86-64 -fPIC -fstack-protector-strong"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
@@ -105,16 +107,6 @@
           <buildCommand>${MAKE} -f Makefile</buildCommand>
           <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
           <executablePath>bin/SatViewer</executablePath>
-          <ccTool>
-            <preprocessorList>
-              <Elem>QT_CORE_LIB</Elem>
-              <Elem>QT_GUI_LIB</Elem>
-              <Elem>QT_NETWORK_LIB</Elem>
-              <Elem>QT_OPENGL_LIB</Elem>
-              <Elem>QT_SQL_LIB</Elem>
-              <Elem>_REENTRANT</Elem>
-            </preprocessorList>
-          </ccTool>
         </makeTool>
         <preBuild>
           <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
@@ -122,82 +114,95 @@
         </preBuild>
       </makefileType>
       <item path="dialogs/sgp4/Sgp4Dialog.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
         </ccTool>
       </item>
       <folder path="0/dialogs">
         <ccTool>
           <incDir>
-            <pElem>satviewer</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
-            <pElem>satviewer/build</pElem>
-            <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>satviewer</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>dialogs/sgp4</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>models/sgp4</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>QT_WIDGETS_LIB</Elem>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
           </preprocessorList>
         </ccTool>
       </folder>
       <folder path="0/models">
         <ccTool>
           <incDir>
-            <pElem>satviewer</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>models/sgp4</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
-            <pElem>satviewer/build</pElem>
-            <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+            <pElem>satviewer</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>QT_WIDGETS_LIB</Elem>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
           </preprocessorList>
         </ccTool>
       </folder>
       <folder path="0/satviewer/build">
         <ccTool>
           <incDir>
-            <pElem>satviewer</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
-            <pElem>satviewer/build</pElem>
-            <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
           </incDir>
-          <preprocessorList>
-            <Elem>QT_WIDGETS_LIB</Elem>
-          </preprocessorList>
         </ccTool>
       </folder>
       <folder path="0/satviewer/crd">
         <ccTool>
           <incDir>
+            <pElem>satviewer/crd</pElem>
             <pElem>satviewer</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
-            <pElem>satviewer/build</pElem>
-            <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>QT_WIDGETS_LIB</Elem>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
           </preprocessorList>
         </ccTool>
       </folder>
@@ -216,9 +221,15 @@
             <pElem>/usr/X11R6/include</pElem>
           </incDir>
           <preprocessorList>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NETWORK_LIB</Elem>
             <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
             <Elem>QT_SCRIPT_LIB</Elem>
             <Elem>QT_SHARED</Elem>
+            <Elem>QT_SQL_LIB</Elem>
+            <Elem>_REENTRANT</Elem>
           </preprocessorList>
         </ccTool>
       </folder>
@@ -237,184 +248,275 @@
             <pElem>/usr/X11R6/include</pElem>
           </incDir>
           <preprocessorList>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NETWORK_LIB</Elem>
             <Elem>QT_NO_DEBUG</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
             <Elem>QT_SCRIPT_LIB</Elem>
             <Elem>QT_SHARED</Elem>
+            <Elem>QT_SQL_LIB</Elem>
+            <Elem>_REENTRANT</Elem>
           </preprocessorList>
         </ccTool>
       </folder>
       <folder path="0/satviewer/locutils">
         <ccTool>
           <incDir>
-            <pElem>satviewer</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
-            <pElem>satviewer/build</pElem>
-            <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+            <pElem>satviewer</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>QT_WIDGETS_LIB</Elem>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
           </preprocessorList>
         </ccTool>
       </folder>
       <folder path="0/satviewer/ogl">
         <ccTool>
-          <incDir>
-            <pElem>satviewer</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
-            <pElem>satviewer/build</pElem>
-            <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
-          </incDir>
           <preprocessorList>
-            <Elem>QT_WIDGETS_LIB</Elem>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
           </preprocessorList>
+        </ccTool>
+      </folder>
+      <folder path="0/satviewer/ogl/glsprite">
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>satviewer/ogl/glsprite</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+            <pElem>satviewer</pElem>
+          </incDir>
         </ccTool>
       </folder>
       <folder path="0/satviewer/satutils">
         <ccTool>
-          <incDir>
-            <pElem>satviewer</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
-            <pElem>satviewer/build</pElem>
-            <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
-          </incDir>
           <preprocessorList>
-            <Elem>QT_WIDGETS_LIB</Elem>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
           </preprocessorList>
         </ccTool>
       </folder>
       <folder path="0/satviewer/tleupd">
         <ccTool>
           <incDir>
-            <pElem>satviewer</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
-            <pElem>satviewer/build</pElem>
-            <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>satviewer</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>satviewer/tleupd</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>QT_WIDGETS_LIB</Elem>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
           </preprocessorList>
         </ccTool>
       </folder>
       <folder path="0/satviewer/uchecker">
         <ccTool>
           <incDir>
-            <pElem>satviewer</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
-            <pElem>satviewer/build</pElem>
-            <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
+            <pElem>satviewer/uchecker</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+            <pElem>satviewer</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>QT_WIDGETS_LIB</Elem>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
           </preprocessorList>
         </ccTool>
       </folder>
       <folder path="0/satviewer/zrvutils">
         <ccTool>
           <incDir>
-            <pElem>satviewer</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
+            <pElem>satviewer/zrvutils</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
-            <pElem>satviewer/build</pElem>
-            <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+            <pElem>satviewer</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>QT_WIDGETS_LIB</Elem>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
           </preprocessorList>
         </ccTool>
       </folder>
       <item path="models/sgp4/Sgp4Model.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
         </ccTool>
       </item>
       <item path="satviewer/SAbstractObjDialog.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
           <incDir>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>satviewer/locutils</pElem>
             <pElem>satviewer</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
-            <pElem>satviewer/build</pElem>
-            <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>QT_WIDGETS_LIB</Elem>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
           </preprocessorList>
         </ccTool>
       </item>
       <item path="satviewer/SDlgOptions.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
           <incDir>
-            <pElem>satviewer</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
-            <pElem>satviewer/build</pElem>
-            <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
+            <pElem>satviewer/sql</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>satviewer</pElem>
+            <pElem>satviewer/ogl/glsprite</pElem>
+            <pElem>satviewer/crd</pElem>
+            <pElem>satviewer/tleupd</pElem>
+            <pElem>dialogs/sgp4</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>QT_WIDGETS_LIB</Elem>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
           </preprocessorList>
         </ccTool>
       </item>
       <item path="satviewer/SLocDialog.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
           <incDir>
-            <pElem>satviewer</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
-            <pElem>satviewer/build</pElem>
-            <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+            <pElem>satviewer</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>QT_WIDGETS_LIB</Elem>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
           </preprocessorList>
         </ccTool>
       </item>
@@ -433,26 +535,50 @@
             <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
           </incDir>
           <preprocessorList>
+            <Elem>QT_CORE_LIB</Elem>
+            <Elem>QT_GUI_LIB</Elem>
+            <Elem>QT_NETWORK_LIB</Elem>
+            <Elem>QT_OPENGL_LIB</Elem>
+            <Elem>QT_SQL_LIB</Elem>
             <Elem>QT_WIDGETS_LIB</Elem>
+            <Elem>_REENTRANT</Elem>
           </preprocessorList>
         </ccTool>
       </item>
       <item path="satviewer/SatViewer.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
           <incDir>
-            <pElem>satviewer</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
             <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
-            <pElem>satviewer/build</pElem>
-            <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
+            <pElem>satviewer/ogl/globj</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>satviewer</pElem>
+            <pElem>satviewer/ogl/glsprite</pElem>
+            <pElem>satviewer/crd</pElem>
+            <pElem>satviewer/tleupd</pElem>
+            <pElem>satviewer/uchecker</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>QT_WIDGETS_LIB</Elem>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
           </preprocessorList>
         </ccTool>
       </item>
@@ -460,52 +586,241 @@
             ex="false"
             tool="1"
             flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>satviewer/build</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+            <pElem>satviewer</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="satviewer/build/moc_GLSatWidget.cpp"
             ex="false"
             tool="1"
             flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>satviewer</pElem>
+            <pElem>satviewer/build</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>satviewer/ogl/glsprite</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="satviewer/build/moc_GLSatWidget3d.cpp"
             ex="false"
             tool="1"
             flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>satviewer/build</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>satviewer</pElem>
+            <pElem>satviewer/ogl/globj</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="satviewer/build/moc_SDlgOptions.cpp"
             ex="false"
             tool="1"
             flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>satviewer/build</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>satviewer</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
+            <pElem>satviewer/tleupd</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>satviewer/ogl/glsprite</pElem>
+            <pElem>satviewer/crd</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="satviewer/build/moc_SLocDialog.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>satviewer/build</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>satviewer</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/build/moc_SUpdater.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>satviewer/build</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>satviewer</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
+            <pElem>satviewer/tleupd</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/build/moc_SWindow.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>satviewer/build</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>satviewer</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
+            <pElem>satviewer/uchecker</pElem>
+            <pElem>satviewer/ogl/globj</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>satviewer/ogl/glsprite</pElem>
+            <pElem>satviewer/crd</pElem>
+            <pElem>satviewer/tleupd</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
+          </preprocessorList>
         </ccTool>
       </item>
       <item path="satviewer/build/moc_Sgp4Dialog.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>satviewer</pElem>
+            <pElem>dialogs/sgp4</pElem>
+            <pElem>satviewer/build</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/build/moc_UCheck.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>satviewer/build</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>satviewer/uchecker</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+            <pElem>satviewer</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/crd/crd.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
         </ccTool>
       </item>
       <item path="satviewer/jscalc/SScriptFrame.cpp" ex="false" tool="1" flavor2="4">
@@ -524,87 +839,188 @@
         </ccTool>
       </item>
       <item path="satviewer/locutils/Location.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
         </ccTool>
       </item>
       <item path="satviewer/ogl/GLSatAbstractWidget.cpp"
             ex="false"
             tool="1"
             flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>models/sgp4</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+            <pElem>satviewer</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/ogl/GLSatWidget.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>satviewer</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>satviewer/ogl/glsprite</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/ogl/GLSatWidget3d.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>satviewer</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>satviewer/ogl/globj</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/ogl/SatWidgetObject.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+            <pElem>satviewer</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/ogl/globj/GLObjMaterial.cpp"
             ex="false"
             tool="1"
             flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
+            <pElem>satviewer/ogl/globj</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+            <pElem>satviewer</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/ogl/globj/GLObjecter.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>satviewer/ogl/globj</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+            <pElem>satviewer</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/ogl/glsprite/GLSprite.cpp"
             ex="false"
             tool="1"
             flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
         </ccTool>
       </item>
       <item path="satviewer/ogl/satogl.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>satviewer/locutils</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/zrvutils</pElem>
+            <pElem>satviewer</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/qrc_SatViewer.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
           <incDir>
             <pElem>satviewer</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtSql</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtNetwork</pElem>
-            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
-            <pElem>satviewer/build</pElem>
-            <pElem>/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>QT_WIDGETS_LIB</Elem>
+            <Elem>QT_CORE_LIB=1</Elem>
+            <Elem>QT_GUI_LIB=1</Elem>
+            <Elem>QT_NETWORK_LIB=1</Elem>
+            <Elem>QT_OPENGL_LIB=1</Elem>
+            <Elem>QT_SQL_LIB=1</Elem>
+            <Elem>QT_WIDGETS_LIB=1</Elem>
+            <Elem>_REENTRANT=1</Elem>
+            <Elem>__PIC__=2</Elem>
+            <Elem>__REGISTER_PREFIX__=</Elem>
+            <Elem>__USER_LABEL_PREFIX__=</Elem>
+            <Elem>__pic__=2</Elem>
           </preprocessorList>
         </ccTool>
       </item>
       <item path="satviewer/satutils/Satellite.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtCore</pElem>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtGui</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtWidgets</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5/QtOpenGL</pElem>
+            <pElem>satviewer/ogl</pElem>
+            <pElem>/usr/include/GL</pElem>
+            <pElem>/usr/include/x86_64-linux-gnu/qt5</pElem>
+            <pElem>satviewer</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/satutils/TleReader.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
+          <incDir>
+            <pElem>satviewer/satutils</pElem>
+            <pElem>satviewer</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/tleupd/SUpdater.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
         </ccTool>
       </item>
       <item path="satviewer/uchecker/UCheck.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
         </ccTool>
       </item>
       <item path="satviewer/zrvutils/ZrvIoList.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="0">
+        <ccTool flags="2">
         </ccTool>
       </item>
     </conf>

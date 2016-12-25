@@ -33,42 +33,45 @@ GLSatWidget::GLSatWidget(QWidget *parent) : GLSatAbstractWidget(parent) {
     connect(ui.spinZoom, SIGNAL(valueChanged(double)), this, SLOT(changeZoom(double)));
     connect(ui.spinX   , SIGNAL(valueChanged(double)), this, SLOT(changeX   (double)));
     connect(ui.spinY   , SIGNAL(valueChanged(double)), this, SLOT(changeY   (double)));
-
-    QDir dir = QDir::home();
-    dir.cd("satviewer/icons");
-    sprite_current.load(dir.filePath("current.png"), this);
-    sprite_active.load(dir.filePath("active.png"), this);
-//    sun->satWObject = new GLSprite(dir.filePath("sun.png"), this);
 }
 
 GLSatWidget::~GLSatWidget() {
-//    delete sun->satWObject;
-    makeCurrent();
+
 }
 
-void GLSatWidget::readSettings(QSettings *settings) {
+void GLSatWidget::readSettings() {
+
+    QDir dir = QDir::home();
+    QSettings::setUserIniPath(dir.path());
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "satviewer", "satviewer");
+    settings.setIniCodec("UTF-8");
+
+    if (!isValid()) {
+        return;
+    }
+    
     QFont font;
-    font.fromString( settings->value("cylindrical/fontNet", QFont().toString()).toString() );
+    font.fromString( settings.value("cylindrical/fontNet", QFont().toString()).toString() );
     ui.btnFontNet->setFont(font);
     setFontNet(font);
 
-    setColorNet    (settings->value("cylindrical/colorNet"    , 0x20606060).toUInt());
-    setColorNetFont(settings->value("cylindrical/colorNetFont", 0x0       ).toUInt());
-    setColorNight  (settings->value("cylindrical/colorNight"  , 0x40000000).toUInt());
+    setColorNet    (settings.value("cylindrical/colorNet"    , 0x20606060).toUInt());
+    setColorNetFont(settings.value("cylindrical/colorNetFont", 0x0       ).toUInt());
+    setColorNight  (settings.value("cylindrical/colorNight"  , 0x40000000).toUInt());
     ui.comboBoxColor->setCurrentIndex(1);
     ui.comboBoxColor->setCurrentIndex(0);
-    QString filePath = settings->value("cylindrical/mapFile", "").toString();
+    QString filePath = settings.value("cylindrical/mapFile", "").toString();
     loadTexture(filePath);
     ui.btnMapFile->setText(filePath);
 
-    ui.checkSun->setChecked(settings->value("cylindrical/checkSun", true).toBool());
+    ui.checkSun->setChecked(settings.value("cylindrical/checkSun", true).toBool());
     showSun(ui.checkSun->isChecked());
-    ui.checkNight->setChecked(settings->value("cylindrical/checkNight", true).toBool());
+    ui.checkNight->setChecked(settings.value("cylindrical/checkNight", true).toBool());
     showNight(ui.checkNight->isChecked());
 
-    ui.spinZoom->setValue(settings->value("cylindrical/mapZoom", 1).toDouble());
-    ui.spinX->setValue   (settings->value("cylindrical/mapX"   , 0).toDouble());
-    ui.spinY->setValue   (settings->value("cylindrical/mapY"   , 0).toDouble());
+    ui.spinZoom->setValue(settings.value("cylindrical/mapZoom", 1).toDouble());
+    ui.spinX->setValue   (settings.value("cylindrical/mapX"   , 0).toDouble());
+    ui.spinY->setValue   (settings.value("cylindrical/mapY"   , 0).toDouble());
 }
 
 void GLSatWidget::writeSettings(QSettings *settings) {
@@ -194,7 +197,17 @@ void GLSatWidget::onCheckNight(bool value) {
     showNight(value);
 }
 
+void GLSatWidget::initializeGL() {
+    GLSatAbstractWidget::initializeGL();
+    QDir dir = QDir::home();
+    dir.cd("satviewer/icons");
+    sprite_current.load(dir.filePath("current.png"), this);
+    sprite_active.load(dir.filePath("active.png"), this);
+//    sun->satWObject = new GLSprite(dir.filePath("sun.png"), this);
+}
+
 void GLSatWidget::compileMapList() {
+    return;
     glNewList(list_map, GL_COMPILE);
     if (textureID) {
         textureID->bind();
@@ -270,6 +283,7 @@ void GLSatWidget::compileMapList() {
 }
 
 void GLSatWidget::compileSatList() {
+    return;
     float px, py, tmpx, tmpy, tper = 0;
     float trackBegin, trackEnd;
     uint8_t shadow_state, shadow_tmp;
@@ -376,6 +390,7 @@ void GLSatWidget::compileSatList() {
 }
 
 void GLSatWidget::compileLocList() {
+    return;
     float px, py;
     Location *loc;
 
@@ -405,6 +420,7 @@ void GLSatWidget::compileLocList() {
 }
 
 void GLSatWidget::compileEventsList() {
+    return;
     float px, py;
     Location *loc;
     Satellite *sat;
@@ -463,6 +479,7 @@ void GLSatWidget::compileEventsList() {
 }
 
 void GLSatWidget::compileSunList() {
+    return;
     glNewList(list_sun, GL_COMPILE);
 //        sun->model(m_time);
 //        float px =  sun->longitude()/M_PI;
