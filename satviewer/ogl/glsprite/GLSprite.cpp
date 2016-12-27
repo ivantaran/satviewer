@@ -8,22 +8,24 @@
 #include "GLSprite.h"
 
 GLSprite::GLSprite(QString fileName, QOpenGLWidget *parentWidget) : SatWidgetObject(fileName, parentWidget) {
-    widget = 0;
+    widget = NULL;
+    texture = NULL;
     m_list_index = 0;
-    texture_id = 0;
     if (parentWidget == 0) return;
     load(fileName, parentWidget);
 }
 
 GLSprite::~GLSprite() {
-//    widget->deleteTexture(texture_id);
+    if (texture) {
+        delete texture;
+    }
     glDeleteLists(m_list_index, 1);
-    puts("sprite is removed");
+    qInfo("GLSprite is removed");
 }
 
 void GLSprite::load(QString fileName, QOpenGLWidget *parentWidget) {
     if ((parentWidget == 0) || (!parentWidget->isValid())) {
-        puts("QGLWidget is not valid");
+        qWarning("QOpenGLWidget is not valid");
         return;
     }
     widget = parentWidget;
@@ -31,17 +33,20 @@ void GLSprite::load(QString fileName, QOpenGLWidget *parentWidget) {
     wgt_height = widget->height();
     widget->makeCurrent();
 
-    if (!pixmap.load(fileName)) {
-        puts(QString("pixmap not loaded: %0").arg(fileName).toLocal8Bit().data());
+    if (!image.load(fileName)) {
+        qWarning(QString("pixmap not loaded: %0").arg(fileName).toLocal8Bit().data());
         m_width = 0;
         m_height = 0;
         m_angle = 0;
     }
     else {
-        m_width = pixmap.width();
-        m_height = pixmap.height();
+        m_width = image.width();
+        m_height = image.height();
         m_angle = 0;
-//        texture_id = widget->bindTexture(pixmap); //TODO
+        if (texture) {
+            delete texture;
+        }
+        texture = new QOpenGLTexture(image);
     }
     if (glIsList(m_list_index)) glDeleteLists(m_list_index, 1);
     m_list_index = glGenLists(1);
@@ -68,7 +73,7 @@ void GLSprite::make() {
 
     glNewList(m_list_index, GL_COMPILE);
             glPushAttrib(GL_ENABLE_BIT);
-            glBindTexture(GL_TEXTURE_2D, texture_id);
+            texture->bind();
             glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
             glEnable(GL_TEXTURE_2D);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

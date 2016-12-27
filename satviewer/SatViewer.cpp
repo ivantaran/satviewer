@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <QApplication>
+#include <qt4/QtCore/qglobal.h>
 #include "SWindow.h"
 
 void copyDefault() {
@@ -44,9 +45,16 @@ void copyDefault() {
 }
 
 int main(int argc, char *argv[]) {
-	QApplication app(argc, argv);
-	copyDefault();
-	SWindow wndMain;
-	wndMain.show();
-	return app.exec();
+    QApplication app(argc, argv);
+
+//    QSurfaceFormat format;
+//    format.setDepthBufferSize(24);
+//    format.setVersion(1, 2);
+//    qWarning("%d.%d", format.majorVersion(), format.minorVersion());
+//    QSurfaceFormat::setDefaultFormat(format);
+
+    copyDefault();
+    SWindow wndMain;
+    wndMain.show();
+    return app.exec();
 }

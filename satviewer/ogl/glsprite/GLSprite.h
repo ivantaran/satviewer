@@ -9,7 +9,7 @@
 #define GLSPRITE_H_
 #include <inttypes.h>
 #include <QtOpenGL>
-#include <QPixmap>
+#include <QImage>
 #include <QtCore>
 #include "../SatWidgetObject.h"
 
@@ -27,12 +27,12 @@ public:
 	void exec(float x = 0, float y = 0, float z = 0);
 
 private:
-	QPixmap pixmap;
+	QImage image;
 	int32_t m_width, m_height, wgt_width, wgt_height;
 	float m_x, m_y;
 	uint32_t m_list_index;
 	float m_angle;
-	uint32_t texture_id;
+	QOpenGLTexture *texture;
 	QOpenGLWidget *widget;
 };
 

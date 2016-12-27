@@ -60,7 +60,7 @@ GLSatAbstractWidget::~GLSatAbstractWidget() {
 }
 
 void GLSatAbstractWidget::initializeGL() {
-//    makeCurrent();
+    makeCurrent();
     initializeOpenGLFunctions();
 //    setAutoBufferSwap(false); //TODO
     glClearColor(0.1, 0.1, 0.1, 0.0);
@@ -75,7 +75,7 @@ void GLSatAbstractWidget::initializeGL() {
 //    glTranslatef(0.0, 0.0, 0.0);
     glBlendFunc(GL_SRC_COLOR, GL_DST_COLOR);
 //    glBlendFunc(GL_DST_COLOR, GL_SRC_COLOR);
-    //loadTexture();
+//    loadTexture();
     list_map    = glGenLists(7);
     printf("list_map %d\n", (int)list_map);
     list_net    = list_map + 1;
@@ -94,12 +94,12 @@ void GLSatAbstractWidget::paintGL() {
     glScalef(m_zoom, m_zoom, 0.0);
 
     glCallList(list_map); // map
-//    glCallList(list_net); //net
-//    glCallList(list_sun); //sun
-//    glCallList(list_events); //locList events
-//    glCallList(list_loc); //locList zrl names
-//    glCallList(list_sat); //satList
-//    glCallList(list_labels); // net labels
+    glCallList(list_net); //net
+    glCallList(list_sun); //sun
+    glCallList(list_events); //locList events
+    glCallList(list_loc); //locList zrl names
+    glCallList(list_sat); //satList
+    glCallList(list_labels); // net labels
 //    swapBuffers(); //TODO
 }
 
@@ -126,8 +126,6 @@ void GLSatAbstractWidget::loadTexture(QString filePath) {
         dir.cd("satviewer");
         filePath = dir.filePath("map.png");
     }
-    //	puts(filePath.toLocal8Bit().data());
-//    makeCurrent();
     if (textureID) delete textureID;
     textureID = new QOpenGLTexture(QImage(filePath), QOpenGLTexture::GenerateMipMaps);
 }

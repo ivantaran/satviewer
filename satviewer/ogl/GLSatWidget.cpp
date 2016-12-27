@@ -207,23 +207,23 @@ void GLSatWidget::initializeGL() {
 }
 
 void GLSatWidget::compileMapList() {
-    return;
+    
     glNewList(list_map, GL_COMPILE);
-    if (textureID) {
-        textureID->bind();
-    }
-//        glBindTexture(GL_TEXTURE_2D, textureID);
+        if (textureID) {
+            textureID->bind();
+        }
+
         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
         glEnable(GL_TEXTURE_2D);
         glBegin(GL_QUADS);
-            glTexCoord2f(0.0, 1.0); glVertex2f(-1.0, -1.0);
-            glTexCoord2f(1.0, 1.0); glVertex2f( 1.0, -1.0);
-            glTexCoord2f(1.0, 0.0); glVertex2f( 1.0,  1.0);
-            glTexCoord2f(0.0, 0.0); glVertex2f(-1.0,  1.0);
+            glTexCoord2f(0.0, 0.0); glVertex2f(-1.0, -1.0);
+            glTexCoord2f(0.0, 1.0); glVertex2f(-1.0,  1.0);
+            glTexCoord2f(1.0, 1.0); glVertex2f( 1.0,  1.0);
+            glTexCoord2f(1.0, 0.0); glVertex2f( 1.0, -1.0);
         glEnd();
         glDisable(GL_TEXTURE_2D);
     glEndList();
-    return;
+
     glNewList(list_net, GL_COMPILE);
         glLineWidth(1.0);
         glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
@@ -283,7 +283,6 @@ void GLSatWidget::compileMapList() {
 }
 
 void GLSatWidget::compileSatList() {
-    return;
     float px, py, tmpx, tmpy, tper = 0;
     float trackBegin, trackEnd;
     uint8_t shadow_state, shadow_tmp;
@@ -390,7 +389,6 @@ void GLSatWidget::compileSatList() {
 }
 
 void GLSatWidget::compileLocList() {
-    return;
     float px, py;
     Location *loc;
 
@@ -509,19 +507,14 @@ void GLSatWidget::renderText(float x, float y, const QString& text, int color, c
     QRect rect = fontMetrics.boundingRect(text);
     rect.setWidth(rect.width() + fontMetrics.averageCharWidth());
     QPixmap pixmap(rect.size());
-
-    pixmap.fill(QColor((uint8_t)(color), (uint8_t)(color >> 8), (uint8_t)(color >> 16), 254));
-    QPixmap apx = pixmap.mask();
-    apx.fill(Qt::black);
-    QPainter painter(&apx);
-    painter.setPen(Qt::white);
+    pixmap.fill(QColor(0, 0, 0, 0));
+    QPainter painter(&pixmap);
+    painter.setPen(color);
     painter.setFont(font);
     painter.drawText(-rect.left(), -rect.top(), text);
-    pixmap.setMask(apx);
 
     QImage img = pixmap.toImage();
-
-    img = QGLWidget::convertToGLFormat(img);
+    img = img.mirrored(false, true);
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);

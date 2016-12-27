@@ -7,4 +7,15 @@
         <activeConfTypeElem>0</activeConfTypeElem>
         <activeConfIndexElem>0</activeConfIndexElem>
     </data>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/taran/work/satviewer/satviewer/SatViewer.cpp</file>
+            <file>file:/home/taran/work/satviewer/satviewer/ogl/GLSatWidget.h</file>
+            <file>file:/home/taran/work/satviewer/satviewer/ogl/GLSatWidget.cpp</file>
+            <file>file:/home/taran/work/satviewer/satviewer/ogl/GLSatAbstractWidget.cpp</file>
+            <file>file:/home/taran/work/satviewer/satviewer/SWindow.cpp</file>
+            <file>file:/home/taran/work/satviewer/satviewer/ogl/GLSatAbstractWidget.h</file>
+        </group>
+    </open-files>
 </project-private>
