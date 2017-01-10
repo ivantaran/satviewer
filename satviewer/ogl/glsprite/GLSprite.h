@@ -8,7 +8,7 @@
 #ifndef GLSPRITE_H_
 #define GLSPRITE_H_
 #include <inttypes.h>
-#include <QtOpenGL>
+#include <QOpenGLTexture>
 #include <QImage>
 #include <QtCore>
 #include "../SatWidgetObject.h"

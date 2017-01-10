@@ -7,7 +7,7 @@
 #include "satogl.h"
 #include "math.h"
 #include "GL/glu.h"
-#include <QtOpenGL>
+//#include <QtOpenGL>
 #include "locutils/Location.h"
 #include "satutils/Satellite.h"
 
@@ -244,9 +244,9 @@ void gluZone(float lat) {
 	gluTessProperty(tess, GLU_TESS_TOLERANCE, 0);
     
     /* GLUtessEndProc - |>--+ it's shit */
-	gluTessCallback(tess, GLU_TESS_BEGIN , (_GLUfuncptr)glBegin    );
-	gluTessCallback(tess, GLU_TESS_END   , (_GLUfuncptr)glEnd      );
-	gluTessCallback(tess, GLU_TESS_VERTEX, (_GLUfuncptr)glVertex2dv);
+	gluTessCallback(tess, GLU_TESS_BEGIN , (GLvoid (CALLBACK *)())glBegin    );
+	gluTessCallback(tess, GLU_TESS_END   , (GLvoid (CALLBACK *)())glEnd      );
+	gluTessCallback(tess, GLU_TESS_VERTEX, (GLvoid (CALLBACK *)())glVertex2dv);
 
 	gluTessBeginPolygon(tess, 0);
 	gluTessBeginContour(tess);

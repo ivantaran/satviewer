@@ -228,22 +228,22 @@ void GLSatWidget3d::renderText(float x, float y, const QString& text, int color,
 
 	QPixmap pixmap(rect.size());
 
-	pixmap.fill(QColor((uint8_t)(color), (uint8_t)(color >> 8), (uint8_t)(color >> 16), 254));
-	QPixmap apx = pixmap.mask();
-	apx.fill(Qt::black);
-	QPainter painter(&apx);
-	painter.setPen(Qt::white);
-	painter.setFont(font);
-	painter.drawText(-rect.left(), -rect.top(), text);
-	pixmap.setMask(apx);
+//	pixmap.fill(QColor((uint8_t)(color), (uint8_t)(color >> 8), (uint8_t)(color >> 16), 254));
+//	QPixmap apx = pixmap.mask();
+//	apx.fill(Qt::black);
+//	QPainter painter(&apx);
+//	painter.setPen(Qt::white);
+//	painter.setFont(font);
+//	painter.drawText(-rect.left(), -rect.top(), text);
+//	pixmap.setMask(apx);
 
-	QImage img = pixmap.toImage();
-
-	img = QGLWidget::convertToGLFormat(img);
+//	QImage img = pixmap.toImage();
+//
+//	img = QGLWidget::convertToGLFormat(img);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 	glRasterPos3f(x, 0, y);
-	glDrawPixels(rect.width(), rect.height(), GL_RGBA, GL_UNSIGNED_BYTE, img.bits());
+//	glDrawPixels(rect.width(), rect.height(), GL_RGBA, GL_UNSIGNED_BYTE, img.bits());
 	glDisable(GL_BLEND);
     glBlendFunc(GL_SRC_COLOR, GL_DST_COLOR);
 }

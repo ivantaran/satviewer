@@ -12,11 +12,12 @@
 //#include "GL/glu.h"
 //#include "GL/glext.h"
 #include <inttypes.h>
-#include <QtOpenGL>
+//#include <QtOpenGL>
 #include <QImage>
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <QOpenGLWidget>
 
 #define BUF_SIZE 256
 using namespace std;

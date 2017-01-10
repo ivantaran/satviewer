@@ -14,7 +14,7 @@
 #include <QFontDialog>
 #include <QFileDialog>
 #include <QColorDialog>
-#include <QtOpenGL>
+//#include <QtOpenGL>
 #include <QFont>
 
 #include "math.h"
@@ -208,7 +208,7 @@ void GLSatWidget::initializeGL() {
 
 void GLSatWidget::compileMapList() {
     
-    glNewList(list_map, GL_COMPILE);
+    this->glNewList(list_map, GL_COMPILE);
         if (textureID) {
             textureID->bind();
         }

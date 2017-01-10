@@ -48,7 +48,7 @@ void GLObjecter::clear() {
 	tex_vertex.clear();
 	normals.clear();
 	file->clear();
-	if (mtlLib != 0) delete mtlLib; //как бы там еще и текстуры надо бы удалять
+	if (mtlLib != 0) delete mtlLib; //TODO add remove tex как бы там еще и текстуры надо бы удалять
 }
 
 GLObjecter::~GLObjecter() {

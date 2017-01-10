@@ -9,7 +9,8 @@
 #define	SATWIDGETOBJECT_H
 
 #include <QtCore>
-#include <QtOpenGL/QtOpenGL>
+#include <QOpenGLWidget>
+//#include <QtOpenGL/QtOpenGL>
 
 class SatWidgetObject {
 public:
@@ -17,7 +18,7 @@ public:
     virtual ~SatWidgetObject();
     inline QString fileName() { return file_name; }
     virtual void exec(float x = 0, float y = 0, float z = 0) {}
-    virtual void load(QString fileName, QGLWidget *parentWidget) {}
+    virtual void load(QString fileName, QOpenGLWidget *parentWidget) {}
 private:
     QString file_name;
 protected:

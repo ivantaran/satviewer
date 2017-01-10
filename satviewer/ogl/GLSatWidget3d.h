@@ -14,7 +14,7 @@
 #include "GL/glu.h"
 #undef GLdouble
 #undef GLfloat
-#include <QtOpenGL>
+//#include <QtOpenGL>
 #include "../ui_earthsettings.h"
 #include "globj/GLObjecter.h"
 

@@ -9,7 +9,7 @@
 #define GLOBJECTER_H_
 
 #include <inttypes.h>
-#include <QtOpenGL>
+//#include <QtOpenGL>
 #include <fstream>
 #include <iostream>
 #include <vector>

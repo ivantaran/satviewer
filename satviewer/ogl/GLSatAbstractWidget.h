@@ -10,16 +10,16 @@
 
 #include <inttypes.h>
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions>
+#include <QOpenGLFunctions_3_3_Compatibility>
 #include <QLibrary>
 #include <QSettings>
-#include <QtOpenGL>
+#include <QOpenGLTexture>
 
 #include "../zrvutils/ZrvIoList.h"
 
 typedef Satellite * (*CustomSat)();
 
-class GLSatAbstractWidget : public QOpenGLWidget, protected QOpenGLFunctions { // TODO QOpenGLWidget - to protected
+class GLSatAbstractWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Compatibility { // TODO QOpenGLWidget - to protected
 	Q_OBJECT
 public:
     QList<Satellite *> satList;

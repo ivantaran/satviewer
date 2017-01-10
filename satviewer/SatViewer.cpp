@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <QApplication>
-#include <qt4/QtCore/qglobal.h>
 #include "SWindow.h"
 
 void copyDefault() {

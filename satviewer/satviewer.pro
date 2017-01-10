@@ -2,27 +2,12 @@
 INCLUDEPATH += .
 TARGET = SatViewer
 DESTDIR = ../bin
-LIBS += -lGLU
 
 MOC_DIR = build
 OBJECTS_DIR = build
 
-CONFIG += console debug
-
-#CONFIG +=   warn_on \
-#            opengl \
-#            thread \
-#            rtti \
-#            console \
-#            qt \
-#            debug
-
-QT      +=  gui \
-            core \
-#            script \
-            sql \
-            opengl \
-            network
+CONFIG  += console debug
+QT      += gui core sql widgets network
 
 TEMPLATE = app
 
@@ -101,6 +86,6 @@ TRANSLATIONS = satviewer_fr.ts \
 
 CODECFORTR = UTF-8
 
-win32:{
-	RC_FILE = satviewer.rc
-}
+#win32:{
+#	RC_FILE = satviewer.rc
+#}
