@@ -10,9 +10,9 @@
 
 #include <QtCore>
 #include <QOpenGLWidget>
-//#include <QtOpenGL/QtOpenGL>
+#include <QOpenGLFunctions_3_3_Compatibility>
 
-class SatWidgetObject {
+class SatWidgetObject : protected QOpenGLFunctions_3_3_Compatibility {
 public:
     SatWidgetObject(QString fileName = QString(), QOpenGLWidget *parentWidget = 0);
     virtual ~SatWidgetObject();

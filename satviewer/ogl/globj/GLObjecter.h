@@ -14,12 +14,13 @@
 #include <iostream>
 #include <vector>
 #include "GLObjMaterial.h"
+#include <QOpenGLFunctions_3_3_Compatibility>
 
 #define BUF_SIZE 256
 
 using namespace std;
 
-class GLObjecter {
+class GLObjecter : protected QOpenGLFunctions_3_3_Compatibility {
 public:
 	GLObjecter(QOpenGLWidget *parent, int index, char *path, char *fileName);
 	virtual ~GLObjecter();

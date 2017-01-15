@@ -27,24 +27,37 @@ public:
         void setIcon(Satellite *sat, QString  fileName = QString());
         void setIcon(Location *loc, QString  fileName = QString());
 private:
-	Ui::MapWidgetSettings ui;
-	GLSprite sprite_current, sprite_active;
-        
-        void initializeGL();
-	void compileMapList();
-	void compileSatList();
-	void compileLocList();
-	void compileSunList();
-	void compileEventsList();
-	void renderText(float x, float y, const QString& text, int color = 0, const QFont &font = QFont());
-	void mouseMoveEvent(QMouseEvent *event);
-	void mousePressEvent(QMouseEvent *event);
-	void mouseDoubleClickEvent(QMouseEvent *event);
-	void wheelEvent(QWheelEvent *event);
-	float zoom(float value = 0);
-	float moveX(float value = 0);
-	float moveY(float value = 0);
+    static const int VertexCount = 128;
 
+    Ui::MapWidgetSettings ui;
+    GLSprite sprite_current, sprite_active;
+
+    void initializeGL();
+    void compileMapList();
+    void compileSatList();
+    void compileLocList();
+    void compileSunList();
+    void compileEventsList();
+    void renderText(float x, float y, const QString& text, int color = 0, const QFont &font = QFont());
+    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
+    void wheelEvent(QWheelEvent *event);
+    float zoom(float value = 0);
+    float moveX(float value = 0);
+    float moveY(float value = 0);
+    float vertex[VertexCount][2];
+    void initSatOgl();
+    void glZoneLines(float lat);
+    void glZoneNight(float lat);
+    void compileZRV(Satellite *sat, bool poly, bool lines, uint32_t colorPoly, uint32_t colorLines);
+    void lfi_ort(double fi, double lam, double* xyz);
+    bool testZRV(double* crd1, double* crd2, double fiz);
+    int testIOZRV(Satellite *sat, Location *loc, ZrvIoList *list, double &time);
+    void gluZone(float lat);
+    void compileZrl(Location *loc);
+    bool testShadow(Satellite *sat, Satellite *sun);
+    
 private slots:
 	void btnColorClicked();
 	void onBtnMapFileClicked();

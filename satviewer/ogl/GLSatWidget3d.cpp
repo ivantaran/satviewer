@@ -12,7 +12,7 @@
 GLSatWidget3d::GLSatWidget3d(QWidget *parent) : GLSatAbstractWidget(parent) {
 
 	ui.setupUi(settingsWidget);
-	gluObj = gluNewQuadric();
+//	gluObj = gluNewQuadric();
 
 	m_angle[0] = 0;
 	m_angle[1] = 0;

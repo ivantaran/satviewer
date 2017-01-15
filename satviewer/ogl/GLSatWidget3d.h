@@ -11,16 +11,15 @@
 #include "GLSatAbstractWidget.h"
 //#include "GL/gl.h"
 //#include "GL/glext.h"
-#include "GL/glu.h"
-#undef GLdouble
-#undef GLfloat
+//#include "GL/glu.h"
+//#undef GLdouble
+//#undef GLfloat
 //#include <QtOpenGL>
 #include "../ui_earthsettings.h"
 #include "globj/GLObjecter.h"
 
-class GLSatWidget3d : public GLSatAbstractWidget
-{
-	Q_OBJECT
+class GLSatWidget3d : public GLSatAbstractWidget {
+    Q_OBJECT
 
 public:
 	GLSatWidget3d(QWidget *parent = 0);
@@ -35,7 +34,7 @@ protected:
 	void renderText(float x, float y, const QString& text, int color = 0, const QFont &font = QFont());
 private:
 	Ui::EarthWidgetSettings ui;
-	GLUquadric *gluObj;
+//	GLUquadric *gluObj;
 	GLObjecter *globjEarth;
 	GLObjecter *globjSat;
 	float m_angle[3];

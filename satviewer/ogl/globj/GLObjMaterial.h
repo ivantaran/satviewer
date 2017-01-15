@@ -8,16 +8,13 @@
 #ifndef GLOBJMATERIAL_H_
 #define GLOBJMATERIAL_H_
 
-//#include "GL/gl.h"
-//#include "GL/glu.h"
-//#include "GL/glext.h"
 #include <inttypes.h>
-//#include <QtOpenGL>
 #include <QImage>
 #include <fstream>
 #include <iostream>
 #include <vector>
 #include <QOpenGLWidget>
+#include <QOpenGLFunctions_3_3_Compatibility>
 
 #define BUF_SIZE 256
 using namespace std;
@@ -104,7 +101,7 @@ private:
 };
 
 
-class GLObjMaterial {
+class GLObjMaterial : protected QOpenGLFunctions_3_3_Compatibility {
 public:
 	GLObjMaterial(QOpenGLWidget *parent, const char *path, const char *fileName = "");
 	virtual ~GLObjMaterial();
