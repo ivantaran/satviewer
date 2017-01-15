@@ -315,27 +315,27 @@ void SWindow::onPlayClick() {
 }
 
 void SWindow::onTimeClick() {
-	tlBtnPlay->setEnabled(tlBtnTime->isChecked());
-	tlBtnBackward->setEnabled(tlBtnTime->isChecked());
-	tlBtnForward->setEnabled(tlBtnTime->isChecked());
-	//if (!tlBtnTime->isChecked()) timer->start((int)timeX);
-	onPlayClick();
+    tlBtnPlay->setEnabled(tlBtnTime->isChecked());
+    tlBtnBackward->setEnabled(tlBtnTime->isChecked());
+    tlBtnForward->setEnabled(tlBtnTime->isChecked());
+    //if (!tlBtnTime->isChecked()) timer->start((int)timeX);
+    onPlayClick();
 }
 
 void SWindow::onBackwardClick() {
-	tlBtnForward->setChecked(!tlBtnBackward->isChecked());
-	if (tlBtnBackward->isChecked()) spinBoxStep->setValue(-abs(spinBoxStep->value()));
-	else spinBoxStep->setValue(+abs(spinBoxStep->value()));
-	tlBtnPlay->setChecked(true);
-	onPlayClick();
+    tlBtnForward->setChecked(!tlBtnBackward->isChecked());
+    if (tlBtnBackward->isChecked()) spinBoxStep->setValue(-abs(spinBoxStep->value()));
+    else spinBoxStep->setValue(+abs(spinBoxStep->value()));
+    tlBtnPlay->setChecked(true);
+    onPlayClick();
 }
 
 void SWindow::onForwardClick() {
-	tlBtnBackward->setChecked(!tlBtnForward->isChecked());
-	if (tlBtnForward->isChecked()) spinBoxStep->setValue(+abs(spinBoxStep->value()));
-	else spinBoxStep->setValue(-abs(spinBoxStep->value()));
-	tlBtnPlay->setChecked(true);
-	onPlayClick();
+    tlBtnBackward->setChecked(!tlBtnForward->isChecked());
+    if (tlBtnForward->isChecked()) spinBoxStep->setValue(+abs(spinBoxStep->value()));
+    else spinBoxStep->setValue(-abs(spinBoxStep->value()));
+    tlBtnPlay->setChecked(true);
+    onPlayClick();
 }
 
 void SWindow::onStepChanged(int value) {
