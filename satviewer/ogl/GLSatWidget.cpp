@@ -595,7 +595,7 @@ void GLSatWidget::initializeGL() {
 
 void GLSatWidget::compileMapList() {
     
-    this->glNewList(list_map, GL_COMPILE);
+    glNewList(list_map, GL_COMPILE);
         if (textureID) {
             textureID->bind();
         }

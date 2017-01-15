@@ -60,8 +60,13 @@ GLSatAbstractWidget::~GLSatAbstractWidget() {
 }
 
 void GLSatAbstractWidget::initializeGL() {
+    
     makeCurrent();
-    initializeOpenGLFunctions();
+    if (!initializeOpenGLFunctions()) {
+        qWarning("initializeOpenGLFunctions error");
+        exit(-1);
+    }
+    
 //    setAutoBufferSwap(false); //TODO
     glClearColor(0.1, 0.1, 0.1, 0.0);
     //glShadeModel(GL_FLAT);
@@ -88,6 +93,7 @@ void GLSatAbstractWidget::initializeGL() {
 }
 
 void GLSatAbstractWidget::paintGL() {
+//    makeCurrent(); //TODO
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     glTranslatef(m_dx, m_dy, m_dz);

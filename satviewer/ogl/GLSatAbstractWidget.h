@@ -10,7 +10,7 @@
 
 #include <inttypes.h>
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions_3_3_Compatibility>
+#include <QOpenGLFunctions_2_0>
 #include <QLibrary>
 #include <QSettings>
 #include <QOpenGLTexture>
@@ -19,7 +19,7 @@
 
 typedef Satellite * (*CustomSat)();
 
-class GLSatAbstractWidget : public QOpenGLWidget, protected QOpenGLFunctions_3_3_Compatibility { // TODO QOpenGLWidget - to protected
+class GLSatAbstractWidget : public QOpenGLWidget, protected QOpenGLFunctions_2_0 { // TODO QOpenGLWidget - to protected
 	Q_OBJECT
 public:
     QList<Satellite *> satList;

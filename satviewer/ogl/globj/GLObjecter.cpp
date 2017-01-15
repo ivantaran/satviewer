@@ -8,6 +8,11 @@
 #include "GLObjecter.h"
 
 GLObjecter::GLObjecter(QOpenGLWidget *parent, int index, char *path, char *fileName) {
+    parent->makeCurrent();
+    if (!initializeOpenGLFunctions()) {
+        qWarning("error: GLObjecter initializeOpenGLFunctions");
+        exit(-1);
+    }
 	m_xyz[0] = 0;
 	m_xyz[1] = 0;
 	m_xyz[2] = 0;
@@ -52,7 +57,7 @@ void GLObjecter::clear() {
 }
 
 GLObjecter::~GLObjecter() {
-	clear();
+    clear();
 }
 
 void GLObjecter::init() {
@@ -163,44 +168,44 @@ void GLObjecter::addFace() {
 }
 
 void GLObjecter::exec() {
-	glPushAttrib(GL_ENABLE_BIT);
-	glDisable(GL_COLOR_MATERIAL);
-	glPushMatrix();
-	glTranslatef(m_xyz[0], m_xyz[1], m_xyz[2]);
-	glRotatef(m_angle[0], 1, 0, 0);
-	glRotatef(m_angle[1], 0, 1, 0);
-	glRotatef(m_angle[2], 0, 0, 1);
-	glCallList(m_index);
-	glPopMatrix();
-	glPopAttrib();
+    glPushAttrib(GL_ENABLE_BIT);
+    glDisable(GL_COLOR_MATERIAL);
+    glPushMatrix();
+    glTranslatef(m_xyz[0], m_xyz[1], m_xyz[2]);
+    glRotatef(m_angle[0], 1, 0, 0);
+    glRotatef(m_angle[1], 0, 1, 0);
+    glRotatef(m_angle[2], 0, 0, 1);
+    glCallList(m_index);
+    glPopMatrix();
+    glPopAttrib();
 }
 
 void GLObjecter::move(float x, float y, float z) {
-	m_xyz[0] = x;
-	m_xyz[1] = y;
-	m_xyz[2] = z;
+    m_xyz[0] = x;
+    m_xyz[1] = y;
+    m_xyz[2] = z;
 }
 
 void GLObjecter::moveX(float value) {
-	m_xyz[0] = value;
+    m_xyz[0] = value;
 }
 
 void GLObjecter::moveY(float value) {
-	m_xyz[1] = value;
+    m_xyz[1] = value;
 }
 
 void GLObjecter::moveZ(float value) {
-	m_xyz[2] = value;
+    m_xyz[2] = value;
 }
 
 void GLObjecter::rotateX(float value) {
-	m_angle[0] = value;
+    m_angle[0] = value;
 }
 
 void GLObjecter::rotateY(float value) {
-	m_angle[1] = value;
+    m_angle[1] = value;
 }
 
 void GLObjecter::rotateZ(float value) {
-	m_angle[2] = value;
+    m_angle[2] = value;
 }

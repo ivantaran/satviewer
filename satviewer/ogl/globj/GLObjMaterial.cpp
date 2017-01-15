@@ -10,6 +10,11 @@
 #include <string>
 
 GLObjMaterial::GLObjMaterial(QOpenGLWidget *parent,  const char *path, const char *fileName) {
+    parent->makeCurrent();
+    if (!initializeOpenGLFunctions()) {
+        qWarning("error: GLObjMaterial initializeOpenGLFunctions");
+        exit(-1);
+    }
 	m_path = path;
 	m_parent = parent;
 	m_parent->makeCurrent();

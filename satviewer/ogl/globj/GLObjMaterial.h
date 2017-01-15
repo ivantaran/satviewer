@@ -14,7 +14,7 @@
 #include <iostream>
 #include <vector>
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions_3_3_Compatibility>
+#include <QOpenGLFunctions_2_0>
 
 #define BUF_SIZE 256
 using namespace std;
@@ -101,7 +101,7 @@ private:
 };
 
 
-class GLObjMaterial : protected QOpenGLFunctions_3_3_Compatibility {
+class GLObjMaterial : protected QOpenGLFunctions_2_0 {
 public:
 	GLObjMaterial(QOpenGLWidget *parent, const char *path, const char *fileName = "");
 	virtual ~GLObjMaterial();

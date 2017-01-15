@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
 
 //    QSurfaceFormat format;
 //    format.setDepthBufferSize(24);
-//    format.setVersion(1, 2);
+//    format.setVersion(3, 3);
 //    qWarning("%d.%d", format.majorVersion(), format.minorVersion());
 //    QSurfaceFormat::setDefaultFormat(format);
 

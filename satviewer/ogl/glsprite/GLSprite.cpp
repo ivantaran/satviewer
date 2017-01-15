@@ -28,6 +28,13 @@ void GLSprite::load(QString fileName, QOpenGLWidget *parentWidget) {
         qWarning("QOpenGLWidget is not valid");
         return;
     }
+
+    parentWidget->makeCurrent();
+    if (!initializeOpenGLFunctions()) {
+        qWarning("error: SatWidgetObject initializeOpenGLFunctions");
+        exit(-1);
+    }
+    
     widget = parentWidget;
     wgt_width = widget->width();
     wgt_height = widget->height();

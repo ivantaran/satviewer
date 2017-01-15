@@ -98,7 +98,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE} -f Makefile</buildCommand>
           <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
-          <executablePath></executablePath>
+          <executablePath>bin\SatViewer.exe</executablePath>
           <ccTool>
             <incDir>
               <pElem>satviewer</pElem>
@@ -131,6 +131,76 @@
         <ccTool flags="0">
         </ccTool>
       </item>
+      <folder path="0/dialogs">
+        <ccTool>
+          <incDir>
+            <pElem>dialogs/sgp4</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/models">
+        <ccTool>
+          <incDir>
+            <pElem>models/sgp4</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/satviewer/crd">
+        <ccTool>
+          <incDir>
+            <pElem>satviewer/crd</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/satviewer/debug">
+        <ccTool>
+          <incDir>
+            <pElem>satviewer/debug</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/satviewer/locutils">
+        <ccTool>
+          <incDir>
+            <pElem>satviewer/locutils</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/satviewer/ogl/globj">
+        <ccTool>
+          <incDir>
+            <pElem>satviewer/ogl/globj</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/satviewer/satutils">
+        <ccTool>
+          <incDir>
+            <pElem>satviewer/satutils</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/satviewer/tleupd">
+        <ccTool>
+          <incDir>
+            <pElem>satviewer/tleupd</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/satviewer/uchecker">
+        <ccTool>
+          <incDir>
+            <pElem>satviewer/uchecker</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
+      <folder path="0/satviewer/zrvutils">
+        <ccTool>
+          <incDir>
+            <pElem>satviewer/zrvutils</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
       <item path="models/sgp4/Sgp4Model.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
         </ccTool>
@@ -220,14 +290,23 @@
             tool="1"
             flavor2="8">
         <ccTool flags="0">
+          <incDir>
+            <pElem>satviewer/ogl</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/ogl/GLSatWidget.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
+          <incDir>
+            <pElem>satviewer/ogl</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/ogl/GLSatWidget3d.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
+          <incDir>
+            <pElem>satviewer/ogl</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/ogl/SatWidgetObject.cpp" ex="false" tool="1" flavor2="8">
@@ -254,6 +333,9 @@
       </item>
       <item path="satviewer/ogl/satogl.cpp" ex="false" tool="1" flavor2="8">
         <ccTool flags="0">
+          <incDir>
+            <pElem>satviewer/ogl</pElem>
+          </incDir>
         </ccTool>
       </item>
       <item path="satviewer/satutils/Satellite.cpp" ex="false" tool="1" flavor2="8">
