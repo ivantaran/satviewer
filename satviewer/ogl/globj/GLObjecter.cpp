@@ -8,21 +8,25 @@
 #include "GLObjecter.h"
 
 GLObjecter::GLObjecter(QOpenGLWidget *parent, int index, char *path, char *fileName) {
-    parent->makeCurrent();
+    if (!parent || !parent->isValid()) {
+        qWarning("error: GLObjecter, invalid QOpenGLWidget");
+        return;
+    }
+    m_xyz[0] = 0;
+    m_xyz[1] = 0;
+    m_xyz[2] = 0;
+    m_angle[0] = 0;
+    m_angle[1] = 0;
+    m_angle[2] = 0;
+    m_path = path;
+    m_index = index;
+    m_parent = parent;
+    m_parent->makeCurrent();
+
     if (!initializeOpenGLFunctions()) {
         qWarning("error: GLObjecter initializeOpenGLFunctions");
         exit(-1);
     }
-	m_xyz[0] = 0;
-	m_xyz[1] = 0;
-	m_xyz[2] = 0;
-	m_angle[0] = 0;
-	m_angle[1] = 0;
-	m_angle[2] = 0;
-	m_path = path;
-	m_index = index;
-	m_parent = parent;
-	m_parent->makeCurrent();
 	string fullname = path;
 	fullname.append("/").append(fileName);
 	filebuf fbuf;

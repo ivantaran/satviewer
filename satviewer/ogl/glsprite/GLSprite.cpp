@@ -25,21 +25,20 @@ GLSprite::~GLSprite() {
 
 void GLSprite::load(QString fileName, QOpenGLWidget *parentWidget) {
     if ((parentWidget == 0) || (!parentWidget->isValid())) {
-        qWarning("QOpenGLWidget is not valid");
+        qWarning("GLSprite::load: QOpenGLWidget is not valid");
         return;
     }
 
-    parentWidget->makeCurrent();
-    if (!initializeOpenGLFunctions()) {
-        qWarning("error: SatWidgetObject initializeOpenGLFunctions");
-        exit(-1);
-    }
-    
     widget = parentWidget;
     wgt_width = widget->width();
     wgt_height = widget->height();
     widget->makeCurrent();
 
+    if (!initializeOpenGLFunctions()) {
+        qWarning("error: SatWidgetObject initializeOpenGLFunctions");
+        exit(-1);
+    }
+    
     if (!image.load(fileName)) {
         qWarning(QString("pixmap not loaded: %0").arg(fileName).toLocal8Bit().data());
         m_width = 0;
@@ -68,15 +67,16 @@ void GLSprite::resize(uint32_t w, uint32_t h) {
 
 void GLSprite::make() {
     if ((m_width == 0) || (m_height == 0) || (wgt_width == 0) || (wgt_height == 0)) {
-            glNewList(m_list_index, GL_COMPILE);
-            glEndList();
-            return;
+        qWarning("GLSprite::make: invalid QOpenGLWidget");
+        glNewList(m_list_index, GL_COMPILE);
+        glEndList();
+        return;
     }
     float w = (float)m_width/wgt_width;
     float h = (float)m_height/wgt_height;
 
-    glNewList(m_list_index, GL_COMPILE);
-    glEndList();
+//    glNewList(m_list_index, GL_COMPILE);
+//    glEndList();
 
     glNewList(m_list_index, GL_COMPILE);
             glPushAttrib(GL_ENABLE_BIT);
@@ -96,7 +96,12 @@ void GLSprite::make() {
 }
 
 void GLSprite::exec(float x, float y, float z) {
-    if ((widget == 0) || (!widget->isValid())) return;
+    
+    if ((widget == 0) || (!widget->isValid())) {
+        qWarning("GLSprite::exec: invalid QOpenGLWidget");
+        return;
+    }
+    
     if ((wgt_width != widget->width()) || (wgt_height != widget->height())) {
         wgt_width = widget->width();
         wgt_height = widget->height();

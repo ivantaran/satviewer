@@ -106,6 +106,7 @@ void GLSatAbstractWidget::paintGL() {
     glCallList(list_loc); //locList zrl names
     glCallList(list_sat); //satList
     glCallList(list_labels); // net labels
+    this->update();
 //    swapBuffers(); //TODO
 }
 
@@ -143,6 +144,7 @@ void GLSatAbstractWidget::setTime(double secs) {
 
 void GLSatAbstractWidget::refresh() {
     if (!isValid()) {
+        qWarning("GLSatAbstractWidget::refresh invalid");
         return;
     }
 //	compileMapList();

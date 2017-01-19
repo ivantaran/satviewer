@@ -674,12 +674,13 @@ void GLSatWidget::compileSatList() {
     float trackBegin, trackEnd;
     uint8_t shadow_state, shadow_tmp;
     uint32_t clr;
+    Satellite *sat = 0;
+    
     if (satList.count() < 1) {
         glNewList(list_sat, GL_COMPILE);
         glEndList();
         return;
     }
-    Satellite *sat = 0;
 
     glNewList(list_sat, GL_COMPILE);
         for (int i = 0; i < satList.count(); i++) {

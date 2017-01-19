@@ -16,16 +16,15 @@
 class GLSatWidget : public GLSatAbstractWidget {
 	Q_OBJECT
 public:
-	GLSatWidget(QWidget *parent = 0);
-	virtual ~GLSatWidget();
-
-	void readSettings();
-	void writeSettings(QSettings *settings);
-	inline void retranslateUi() { ui.retranslateUi(this); }
-        void addSat(Satellite *sat);
-        void addLoc(Location *loc);
-        void setIcon(Satellite *sat, QString  fileName = QString());
-        void setIcon(Location *loc, QString  fileName = QString());
+    GLSatWidget(QWidget *parent = 0);
+    virtual ~GLSatWidget();
+    void readSettings();
+    void writeSettings(QSettings *settings);
+    inline void retranslateUi() { ui.retranslateUi(this); }
+    void addSat(Satellite *sat);
+    void addLoc(Location *loc);
+    void setIcon(Satellite *sat, QString  fileName = QString());
+    void setIcon(Location *loc, QString  fileName = QString());
 private:
     static const int VertexCount = 128;
 
