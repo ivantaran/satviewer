@@ -269,123 +269,108 @@ bool GLSatWidget::testShadow(Satellite *sat, Satellite *sun) {
 }
 
 void GLSatWidget::gluZone(float lat) {
-//    uint8_t type = 0;
-//    int breakpoint[2];
-//    float polar;
-//    double point[5][3];
+    uint8_t type = 0;
+    int breakpoint[2];
+    float polar;
+    double point[5][3];
+
+    if (fabs(vertex[0][0] - vertex[VertexCount - 1][0]) > 1) {
+        breakpoint[type] = 0;
+        type++;
+    }
+    
+    for (int i = 0; i < VertexCount - 1; i++) {
+        if (fabs(vertex[i][0] - vertex[i + 1][0]) > 1) {
+            breakpoint[type] = i + 1;
+            type++;
+        }
+    }
+    
+    polar = (lat < 0) ? 1.0f : 1.0f;
+
+    GLdouble dvertex[VertexCount][3];
+    for (int i = 0; i < VertexCount; i++) {
+        dvertex[i][0] = vertex[i][0];
+        dvertex[i][1] = vertex[i][1];
+        dvertex[i][2] = 0;
+    }
+
+    switch (type) {
+
+    case 0:
+        glBegin(GL_POLYGON);
+        for (int i = 0; i < VertexCount; i++) {
+            glVertex2fv(vertex[i]);
+        }
+        glEnd();
+        break;
+
+        case 1:
+//            point[0][0] = -polar;
+//            point[0][1] = vertex[breakpoint[0]][1];
+//            point[0][2] = 0;
+//            point[1][0] = -polar;
+//            point[1][1] = polar;
+//            point[1][2] = 0;
 //
-//    if (fabs(vertex[0][0] - vertex[VertexCount - 1][0]) > 1) {
-//            breakpoint[type] = 0;
-//            type++;
-//    }
-//    for (int i = 0; i < VertexCount - 1; i++) {
-//            if (fabs(vertex[i][0] - vertex[i + 1][0]) > 1) {
-//                    breakpoint[type] = i + 1;
-//                    type++;
+//            point[2][0] = polar;
+//            point[2][1] = polar;
+//            point[2][2] = 0;
+//            point[3][0] = polar;
+//            point[3][1] = vertex[breakpoint[0]][1];
+//            point[3][2] = 0;
+//
+//            for (int i = 0; i < 4; i++)
+//                gluTessVertex(tess, point[i], point[i]);
+//
+//            for (int i = breakpoint[0]; i < VertexCount; i++) {
+//                gluTessVertex(tess, dvertex[i], dvertex[i]);
 //            }
-//    }
-//    if (lat < 0) polar = 1.0f;
-//    else polar = -1.0f;
 //
-//    GLUtesselator *tess = gluNewTess();
-//    gluTessProperty(tess, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_ODD);
-//    gluTessProperty(tess, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
-//    gluTessProperty(tess, GLU_TESS_TOLERANCE, 0);
+//            for (int i = 0; i < breakpoint[0]; i++) {
+//                gluTessVertex(tess, dvertex[i], dvertex[i]);
+//            }
+
+            break;
+
+        case 2:
+//            if (vertex[breakpoint[0]][0] < 0) polar = -1;
+//            else polar = 1;
+//            point[0][0] = polar;
+//            point[0][1] = dvertex[breakpoint[0]][1];
+//            point[0][2] = 0;
+//            gluTessVertex(tess, point[0], point[0]);
+//            for (int i = breakpoint[0] + 1; i < breakpoint[1] - 1; i++)
+//                    gluTessVertex(tess, dvertex[i], dvertex[i]);
+//            point[1][0] = polar;
+//            point[1][1] = vertex[breakpoint[1] - 1][1];
+//            point[1][2] = 0;
+//            gluTessVertex(tess, point[1], point[1]);
+//            gluTessEndContour(tess);
+//            gluTessBeginContour(tess);
 //
-//    /* GLUtessEndProc - |>--+ it's shit */
-//    gluTessCallback(tess, GLU_TESS_BEGIN , (GLvoid (CALLBACK *)())glBegin    );
-//    gluTessCallback(tess, GLU_TESS_END   , (GLvoid (CALLBACK *)())glEnd      );
-//    gluTessCallback(tess, GLU_TESS_VERTEX, (GLvoid (CALLBACK *)())glVertex2dv);
-//
-//    gluTessBeginPolygon(tess, 0);
-//    gluTessBeginContour(tess);
-//
-//    GLdouble dvertex[VertexCount][3];
-//    for (int i = 0; i < VertexCount; i++) {
-//            dvertex[i][0] = vertex[i][0];
-//            dvertex[i][1] = vertex[i][1];
-//            dvertex[i][2] = 0;
-//    }
-//
-//    switch (type) {
-//
-//            case 0:
-//    //		glBegin(GL_POLYGON);
-//    //			for (int i = 0; i < VertexCount; i++) glVertex2fv(vertex[i]);
-//    //		glEnd();
-//                    for (int i = 0; i < VertexCount; i++)
+//            if (vertex[breakpoint[1]][0] < 0) polar = -1;
+//            else polar = 1;
+//            point[2][0] = polar;
+//            point[2][1] = dvertex[breakpoint[1]][1];
+//            point[2][2] = 0;
+//            gluTessVertex(tess, point[2], point[2]);
+//            point[3][0] = polar;
+//            point[3][1] = dvertex[breakpoint[0] - 1][1];
+//            point[3][2] = 0;
+//            point[4][0] = polar;
+//            point[4][1] = dvertex[VertexCount - 1][1];
+//            point[4][2] = 0;
+//                    for (int i = breakpoint[1] + 1; i < VertexCount; i++)
 //                            gluTessVertex(tess, dvertex[i], dvertex[i]);
-//            break;
-//
-//            case 1:
-//                    point[0][0] = -polar;
-//                    point[0][1] = vertex[breakpoint[0]][1];
-//                    point[0][2] = 0;
-//                    point[1][0] = -polar;
-//                    point[1][1] = polar;
-//                    point[1][2] = 0;
-//
-//                    point[2][0] = polar;
-//                    point[2][1] = polar;
-//                    point[2][2] = 0;
-//                    point[3][0] = polar;
-//                    point[3][1] = vertex[breakpoint[0]][1];
-//                    point[3][2] = 0;
-//
-//                    for (int i = 0; i < 4; i++)
-//                            gluTessVertex(tess, point[i], point[i]);
-//
-//                    for (int i = breakpoint[0]; i < VertexCount; i++) {
-//                            gluTessVertex(tess, dvertex[i], dvertex[i]);
-//                    }
-//
-//                    for (int i = 0; i < breakpoint[0]; i++) {
-//                            gluTessVertex(tess, dvertex[i], dvertex[i]);
-//                    }
-//
-//            break;
-//
-//            case 2:
-//                    if (vertex[breakpoint[0]][0] < 0) polar = -1;
-//                    else polar = 1;
-//                    point[0][0] = polar;
-//                    point[0][1] = dvertex[breakpoint[0]][1];
-//                    point[0][2] = 0;
-//                    gluTessVertex(tess, point[0], point[0]);
-//                    for (int i = breakpoint[0] + 1; i < breakpoint[1] - 1; i++)
-//                            gluTessVertex(tess, dvertex[i], dvertex[i]);
-//                    point[1][0] = polar;
-//                    point[1][1] = vertex[breakpoint[1] - 1][1];
-//                    point[1][2] = 0;
-//                    gluTessVertex(tess, point[1], point[1]);
-//                    gluTessEndContour(tess);
-//                    gluTessBeginContour(tess);
-//
-//                    if (vertex[breakpoint[1]][0] < 0) polar = -1;
-//                    else polar = 1;
-//                    point[2][0] = polar;
-//                    point[2][1] = dvertex[breakpoint[1]][1];
-//                    point[2][2] = 0;
-//                    gluTessVertex(tess, point[2], point[2]);
-//                    point[3][0] = polar;
-//                    point[3][1] = dvertex[breakpoint[0] - 1][1];
-//                    point[3][2] = 0;
-//                    point[4][0] = polar;
-//                    point[4][1] = dvertex[VertexCount - 1][1];
-//                    point[4][2] = 0;
-//                            for (int i = breakpoint[1] + 1; i < VertexCount; i++)
+//                    if (breakpoint[0] > 0) {
+//                            for (int i = 0; i < breakpoint[0] - 1; i++)
 //                                    gluTessVertex(tess, dvertex[i], dvertex[i]);
-//                            if (breakpoint[0] > 0) {
-//                                    for (int i = 0; i < breakpoint[0] - 1; i++)
-//                                            gluTessVertex(tess, dvertex[i], dvertex[i]);
-//                                    gluTessVertex(tess, point[3], point[3]);
-//                            }
-//                            else gluTessVertex(tess, point[4], point[4]);
-//            break;
-//    }
-//    gluTessEndContour(tess);
-//    gluTessEndPolygon(tess);
-//    gluDeleteTess(tess);
+//                            gluTessVertex(tess, point[3], point[3]);
+//                    }
+//                    else gluTessVertex(tess, point[4], point[4]);
+            break;
+    }
 }
 
 void GLSatWidget::compileZRV(Satellite *sat, bool poly, bool lines, uint32_t colorPoly, uint32_t colorLines) {
@@ -687,11 +672,15 @@ void GLSatWidget::compileSatList() {
             sat = satList.at(i);
             shadow_state = 2;
             sat->model(m_time);
-            if (sat->isVisibleZrv() || sat->isVisibleLines()) compileZRV(sat, sat->isVisibleZrv(), sat->isVisibleLines(), sat->colorZrv(), sat->colorLines());
+            
+            if (sat->isVisibleZrv() || sat->isVisibleLines()) {
+                compileZRV(sat, sat->isVisibleZrv(), sat->isVisibleLines(), sat->colorZrv(), sat->colorLines());
+            }
 
             if (sat->isVisibleTrack()) {
-                //		    	clr = sat->colorTrack();
-                //				glColor4ubv((uint8_t *)&clr);
+//                clr = sat->colorTrack();
+//                glColor4ubv((uint8_t *)&clr);
+                
                 glShadeModel(GL_SMOOTH);
                 glEnable(GL_ALPHA_TEST);
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -710,18 +699,6 @@ void GLSatWidget::compileSatList() {
                         sat->model(i + m_time);
                         if (sat->isVisibleTrackShadow()) {
                             shadow_tmp = shadow_state;
-//                            shadow_state = testShadow(sat, sun);
-                            //							if ((shadow_tmp == 0) && (shadow_state == 1)) {
-                            //								glEnd();
-                            //								glPushMatrix();
-                            //								glTranslated(px, py, 0);
-                            //								glCallList(list_shadow_in);
-                            //								glPopMatrix();
-                            //								glBegin(GL_LINE_STRIP);
-                            //							}
-                            //							if ((shadow_tmp == 1) && (shadow_state == 0)) {
-                            //
-                            //							}
                             if (shadow_state) {
                                 clr = sat->colorTrack();
                                 glColor4ubv((uint8_t *)&clr);
