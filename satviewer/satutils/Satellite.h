@@ -63,12 +63,12 @@ public:
     double longitude    () const { return lon;          }
     double height       () const { return _height;      }
     double radiusEarth  () const { return radius_earth; }
-    double eccentricity () const { return ecc0;         }
-    double inclination  () const { return incl0;        }
-    double meanAnomaly  () const { return m0;           }
-    double meanMotion   () const { return n0;           }
-    double argLatPerigee() const { return argp0;        }
-    double latAscNode   () const { return node0;        }
+    double eccentricity () const { return ecco;         }
+    double inclination  () const { return inclo;        }
+    double meanAnomaly  () const { return mo;           }
+    double meanMotion   () const { return no;           }
+    double argLatPerigee() const { return argpo;        }
+    double latAscNode   () const { return nodeo;        }
     double bStar        () const { return bstar;        }
     double jEpoch       () const { return jdsatepoch;   }
     double zrvWidth     () const { return zrv;          }
@@ -123,7 +123,7 @@ public:
 protected:
     double lon, lat, _height;
     double r[3], v[3], r_g[3], v_g[3];
-    double incl0, node0, ecc0, argp0, m0, n0, jdsatepoch, bstar;
+    double jdsatepoch, bstar, inclo, nodeo, ecco, argpo, mo, ao, no;
     double zrv;
     double gsto; //current sidereal time
     double t;    //current model time in minutes

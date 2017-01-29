@@ -15,15 +15,15 @@
 #define WGS84 2
 
 struct ms {
-        int consttype;
-        double jdsatepoch; 
-        double bstar; 
-        double inclo; 
-        double argpo; 
-        double ecco; 
-        double nodeo; 
-        double mo; 
-        double no;    
+    int consttype;
+    double jdsatepoch; 
+    double bstar; 
+    double incl; 
+    double argp; 
+    double ecc; 
+    double node; 
+    double m; 
+    double n;    
 };
 
 class Sgp4Model : public Satellite {
@@ -31,16 +31,15 @@ public:
     Sgp4Model();
     static Sgp4Model *getSatModel();
     virtual ~Sgp4Model();
-    int modelInit(char *state, int size);
-    int model(double time);
-    char *getState();
-    int getStateSize();
+    int modelInit(char *state, int size) override;
+    int model(double time) override;
+    char *getState() override;
+    int getStateSize() override;
     
 private:
     struct ms state;
     int error;
     char method;
-    double jdsatepoch, bstar, inclo, nodeo, ecco, argpo, mo, ao, no;
     /* Near Earth */
     int isimp;
     double aycof  , con41  , cc1    , cc4      , cc5    , d2      , d3   , d4 ,

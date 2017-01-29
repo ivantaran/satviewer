@@ -37,24 +37,27 @@ int Sgp4Model::getStateSize() {
 }
 
 int Sgp4Model::modelInit(char *state, int size) {
-    if (size != sizeof(struct ms)) return - 1;
+    if (size != sizeof(struct ms)) {
+        qWarning("error Sgp4Model::modelInit");
+        return - 1;
+    }
     struct ms *s = (struct ms *)state;
 
     Satellite::modelInit(state, sizeof(struct ms));
     
-    this->state.argpo      = s->argpo;
-    this->state.bstar      = s->bstar;
-    this->state.consttype  = s->consttype;
-    this->state.ecco       = s->ecco;
-    this->state.inclo      = s->inclo;
-    this->state.jdsatepoch = s->jdsatepoch;
-    this->state.mo         = s->mo;
-    this->state.no         = s->no;
-    this->state.nodeo      = s->nodeo;
+    this->state.argp        = s->argp;
+    this->state.bstar       = s->bstar;
+    this->state.consttype   = s->consttype;
+    this->state.ecc         = s->ecc;
+    this->state.incl        = s->incl;
+    this->state.jdsatepoch  = s->jdsatepoch;
+    this->state.m           = s->m;
+    this->state.n           = s->n;
+    this->state.node        = s->node;
     
     modelInit(this->state.consttype, this->state.jdsatepoch, this->state.bstar, 
-            this->state.inclo, this->state.argpo, this->state.ecco, 
-            this->state.nodeo, this->state.mo, this->state.no
+        this->state.incl, this->state.argp, this->state.ecc, 
+        this->state.node, this->state.m, this->state.n
     );
     
     return 0;
@@ -98,14 +101,14 @@ int Sgp4Model::modelInit(int whichconst, double _jdsatepoch, double _bstar, doub
 	// it is possible to streamline the sgp4init call by deleting the "x"
 	// variables, but the user would need to set the satrec.* values first. we
 	// include the additional assignments in case twoline2rv is not used.
-	ecco       = _ecco;
-	argpo      = _argpo;
-	inclo      = _inclo;
-	mo	       = _mo;
-	no	       = _no;
-	nodeo      = _nodeo;
-    bstar = _bstar;
-    jdsatepoch = _jdsatepoch;
+        ecco        = _ecco;
+        argpo       = _argpo;
+        inclo       = _inclo;
+        mo          = _mo;
+        no          = _no;
+        nodeo       = _nodeo;
+        bstar       = _bstar;
+        jdsatepoch  = _jdsatepoch;
 
 	/* ------------------------ earth constants ----------------------- */
 	// sgp4fix identify constants and allow alternate values
