@@ -36,7 +36,7 @@ SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
     dir.cd("satviewer/tle");
     tleFrame = new SUpdater(dir.filePath("tle_list.lst"));
     tleFrame->setParent(tabWidget);
-    stackedWidget->insertWidget(6, tleFrame);
+    stackedWidget->insertWidget(4, tleFrame);// TODO 6
 
     setSatWidget(satWidget);
 

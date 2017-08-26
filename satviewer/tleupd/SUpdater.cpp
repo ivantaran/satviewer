@@ -10,7 +10,7 @@
 #include <QFileInfo>
 
 SUpdater::SUpdater(QString fileName) {
-    // TODO Auto-generated constructor stub
+
     this->setupUi(this);
     file = 0;
     listFile = 0;
@@ -30,7 +30,7 @@ SUpdater::SUpdater(QString fileName) {
 }
 
 SUpdater::~SUpdater() {
-	// TODO Auto-generated destructor stub
+
 }
 
 void SUpdater::updateTle() {
@@ -80,7 +80,7 @@ void SUpdater::updateTle() {
     reply = nam.get(QNetworkRequest(QUrl(path)));
     
     connect(reply, SIGNAL(finished()) , this, SLOT(httpFinished()) );
-    connect(reply, SIGNAL(readyRead()), this, SLOT(httpReadyRead()));
+//    connect(reply, SIGNAL(readyRead()), this, SLOT(httpReadyRead()));// TODO
     connect(reply, SIGNAL(downloadProgress(qint64, qint64)), this, SLOT(updateDataReadProgress(qint64, qint64)));
 }
 
