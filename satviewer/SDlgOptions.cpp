@@ -555,49 +555,56 @@ void SDlgOptions::setFilterLoc() {
 }
 
 void SDlgOptions::loadDbFromTle() {
-	double const rad2deg = 180.0/M_PI;
-	double const xpdotp = 1440.0/(2.0*M_PI);
-	QDir dir = QDir::home();
-	dir.cd("satviewer/tle");
-	QStringList fileList = QFileDialog::getOpenFileNames(this, "Open TLE File", dir.path(), "Text Files (*.txt);;All Files (*.*)");
-	if (fileList.isEmpty()) return;
-	TleReader tle;
-	QString filePath;
-	QString query;
-	db.exec("BEGIN;");
-	for (int j = 0; j < fileList.count(); j++) {
-		filePath = fileList.at(j);
-		if (filePath.isEmpty()) break;
-		tle.init(filePath.toLocal8Bit().data());
-		for (int i = 0; i < tle.count(); i++) {
-			tle.item(i);
-			query = QString("INSERT INTO sat ('groupname', 'name', 'i', 'omg', 'e', 'w', 'm0', 'n', 'bstar', 'time', 'model_state') VALUES('%0', '%1', %2, %3, %4, %5, %6, %7, %8, %9, :model_state);")
-								.arg(QFileInfo(filePath).baseName())
-								.arg(QString(tle.name()).trimmed())
-								.arg(tle.inclination()*rad2deg  , 0, 'g', 16)
-								.arg(tle.argLatPerigee()*rad2deg, 0, 'g', 16)
-								.arg(tle.eccentricity()         , 0, 'g', 16)
-								.arg(tle.latAscNode()*rad2deg   , 0, 'g', 16)
-								.arg(tle.meanAnomaly()*rad2deg  , 0, 'g', 16)
-								.arg(tle.meanMotion()*xpdotp    , 0, 'g', 16)
-								.arg(tle.bStar()                , 0, 'g', 16)
-								.arg(tle.jEpoch()               , 0, 'g', 16);
+    double const rad2deg = 180.0/M_PI;
+    double const xpdotp = 1440.0/(2.0*M_PI);
+    QDir dir = QDir::home();
+    dir.cd("satviewer/tle");
+    QStringList fileList = QFileDialog::getOpenFileNames(this, 
+            "Open TLE File", dir.path(), 
+            "Text Files (*.txt);;All Files (*.*)", NULL, 
+            QFileDialog::DontUseNativeDialog);
+    if (fileList.isEmpty()) return;
+    TleReader tle;
+    QString filePath;
+    QString query;
+    db.exec("BEGIN;");
+    for (int j = 0; j < fileList.count(); j++) {
+        filePath = fileList.at(j);
+        if (filePath.isEmpty()) break;
+        tle.init(filePath.toLocal8Bit().data());
+        for (int i = 0; i < tle.count(); i++) {
+            tle.item(i);
+            query = QString(
+                    "INSERT INTO sat ('groupname', 'name', 'i', 'omg', 'e', "
+                    "'w', 'm0', 'n', 'bstar', 'time', 'model_state') "
+                    "VALUES('%0', '%1', %2, %3, %4, %5, %6, %7, %8, %9, "
+                    ":model_state);")
+                .arg(QFileInfo(filePath).baseName())
+                .arg(QString(tle.name()).trimmed())
+                .arg(tle.inclination()*rad2deg  , 0, 'g', 16)
+                .arg(tle.argLatPerigee()*rad2deg, 0, 'g', 16)
+                .arg(tle.eccentricity()         , 0, 'g', 16)
+                .arg(tle.latAscNode()*rad2deg   , 0, 'g', 16)
+                .arg(tle.meanAnomaly()*rad2deg  , 0, 'g', 16)
+                .arg(tle.meanMotion()*xpdotp    , 0, 'g', 16)
+                .arg(tle.bStar()                , 0, 'g', 16)
+                .arg(tle.jEpoch()               , 0, 'g', 16);
 
-            QSqlQuery q(db);
-            q.prepare(query);
-            printf("tle state length %d\n", tle.sizeState());
-            QByteArray bytes(tle.state(), tle.sizeState());
-            printf("tle bytes length %d\n", bytes.length());
-            puts(bytes.toHex().data());
-            q.bindValue(":model_state", bytes);
-            q.exec();
-            puts(q.executedQuery().toLocal8Bit().data());
-//			db.exec(query);
-//			puts(db.lastError().text().toLocal8Bit().data());
-		}
-	}
-	db.exec("COMMIT;");
-	modelDbSat->submitAll();
+        QSqlQuery q(db);
+        q.prepare(query);
+        printf("tle state length %d\n", tle.sizeState());
+        QByteArray bytes(tle.state(), tle.sizeState());
+        printf("tle bytes length %d\n", bytes.length());
+        puts(bytes.toHex().data());
+        q.bindValue(":model_state", bytes);
+        q.exec();
+        puts(q.executedQuery().toLocal8Bit().data());
+//        db.exec(query);
+//        puts(db.lastError().text().toLocal8Bit().data());
+        }
+    }
+    db.exec("COMMIT;");
+    modelDbSat->submitAll();
 }
 
 void SDlgOptions::loadDbLoc() {

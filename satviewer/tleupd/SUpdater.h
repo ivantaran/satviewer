@@ -8,7 +8,7 @@
 #ifndef SUPDATER_H_
 #define SUPDATER_H_
 
-#include "../ui_tleupd.h"
+#include "ui_tleupd.h"
 #include <QDialog>
 #include <QtNetwork>
 

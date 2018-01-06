@@ -15,25 +15,25 @@
 
 class GLSprite : public SatWidgetObject {
 public:
-	GLSprite(QString fileName = QString(), QOpenGLWidget *parentWidget = 0);
-	virtual ~GLSprite();
-	inline uint32_t width() { return m_width; }
-	inline uint32_t height() { return m_height; }
-	inline uint32_t angle() { return m_angle; }
+    GLSprite(QString fileName = QString(), QOpenGLWidget *parentWidget = 0);
+    virtual ~GLSprite();
+    inline int width() { return m_width; }
+    inline int height() { return m_height; }
+    inline int angle() { return m_angle; }
 
-	void load(QString fileName, QOpenGLWidget *parentWidget);
-	void resize(uint32_t w, uint32_t h);
-	void make();
-	void exec(float x = 0, float y = 0, float z = 0);
+    void load(QString fileName, QOpenGLWidget *parentWidget);
+    void make();
+    void exec(float x = 0, float y = 0, float z = 0);
 
 private:
-	QImage image;
-	int32_t m_width, m_height, wgt_width, wgt_height;
-	float m_x, m_y;
-	uint32_t m_list_index;
-	float m_angle;
-	QOpenGLTexture *texture;
-	QOpenGLWidget *widget;
+    QImage image;
+    int m_width, m_height, wgt_width, wgt_height;
+    float m_x, m_y;
+    GLuint m_list_index;
+    float m_angle;
+    QOpenGLTexture *texture;
+    QOpenGLWidget *widget;
+    void resize(int w, int h);
 };
 
 #endif /* GLSPRITE_H_ */

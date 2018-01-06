@@ -9,6 +9,7 @@
 #define	SATWIDGETOBJECT_H
 
 #include <QtCore>
+#include <QString>
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions_2_0>
 

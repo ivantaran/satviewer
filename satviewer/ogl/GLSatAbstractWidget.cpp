@@ -61,7 +61,6 @@ GLSatAbstractWidget::~GLSatAbstractWidget() {
 
 void GLSatAbstractWidget::initializeGL() {
     
-    makeCurrent();
     if (!initializeOpenGLFunctions()) {
         qWarning("initializeOpenGLFunctions error");
         exit(-1);
@@ -89,11 +88,14 @@ void GLSatAbstractWidget::initializeGL() {
     list_loc    = list_map + 4;
     list_sun    = list_map + 5;
     list_events = list_map + 6;
+    
+    emit initialized();
+    
     readSettings();
 }
 
 void GLSatAbstractWidget::paintGL() {
-//    makeCurrent(); //TODO
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     glTranslatef(m_dx, m_dy, m_dz);

@@ -10,3 +10,4 @@ qrc_*
 *.Release
 *.Debug
 *.xml
+*.qmake*

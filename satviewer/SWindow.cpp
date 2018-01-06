@@ -82,7 +82,8 @@ SWindow::SWindow() {
     connect(satWidget, SIGNAL(doubleClickedSat()), dlgOptions, SLOT(changeDbSat()));
     connect(satWidget, SIGNAL(doubleClickedLoc()), dlgOptions, SLOT(changeDbLoc()));
     connect(satWidget, SIGNAL(currentChanged(Satellite*, Location*, double*)), this, SLOT(setSwlVars(Satellite*, Location*, double*)));
-    readSettings();
+    connect(satWidget, SIGNAL(initialized()), this, SLOT(readSettings()));
+//    readSettings();
     //	enumSatModelList();
 }
 
@@ -250,8 +251,8 @@ void SWindow::writeSettings() {
 }
 
 void SWindow::closeEvent(QCloseEvent *event) {
-	writeSettings();
-	event->accept();
+    writeSettings();
+    event->accept();
 }
 
 void SWindow::wheelEvent(QWheelEvent *event) {
@@ -309,9 +310,9 @@ void SWindow::onTimer() {
 }
 
 void SWindow::onPlayClick() {
-	//onStepChanged(spinBoxStep->value());
-	if ((tlBtnPlay->isChecked() && tlBtnTime->isChecked()) || !tlBtnTime->isChecked()) timer->start((int)timeX);
-	else timer->stop();
+    //onStepChanged(spinBoxStep->value());
+    if ((tlBtnPlay->isChecked() && tlBtnTime->isChecked()) || !tlBtnTime->isChecked()) timer->start((int)timeX);
+    else timer->stop();
 }
 
 void SWindow::onTimeClick() {
@@ -402,17 +403,16 @@ void SWindow::setSwlVars(Satellite *sat, Location *loc, double *secs) {
 }
 
 void SWindow::fullScreen() {
-	if (isFullScreen()) {
-		showNormal();
-		frameTime->show();
-		statusBar()->show();
-	}
-	else {
-		showFullScreen();
-		frameTime->hide();
-		statusBar()->hide();
-	}
-
+    if (isFullScreen()) {
+        showNormal();
+        frameTime->show();
+        statusBar()->show();
+    }
+    else {
+        showFullScreen();
+        frameTime->hide();
+        statusBar()->hide();
+    }
 }
 
 void SWindow::escFullScreen() {

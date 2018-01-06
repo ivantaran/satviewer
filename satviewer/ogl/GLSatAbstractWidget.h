@@ -96,6 +96,8 @@ signals:
     void zoomed(float value);
     void movedX(float value);
     void movedY(float value);
+    void initialized();
+    
 protected:
     Satellite *sun;
     uint32_t clrNet, clrNetFont, clrNight;
@@ -122,10 +124,10 @@ protected:
 //        virtual void compileSatIcon(Satellite *sat) {}
 //        virtual void compileLocIcon(Location *loc) {}
 private:
-	QStringList m_satModelList;
-	TleReader *tle;
-	QLibrary lib;
-	void enumSatModelList();
+    QStringList m_satModelList;
+    TleReader *tle;
+    QLibrary lib;
+    void enumSatModelList();
 };
 
 #endif /* GLSATABSTRACTWIDGET_H_ */

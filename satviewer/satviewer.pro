@@ -4,6 +4,8 @@ TARGET = SatViewer
 DESTDIR = ../bin
 
 MOC_DIR = build
+UI_DIR = build
+RCC_DIR = build
 OBJECTS_DIR = build
 
 CONFIG  += console debug

@@ -739,7 +739,9 @@ void GLSatWidget::compileSatList() {
             sat->model(m_time);
             px = sat->longitude()/M_PI;
             py = -2*sat->latitude()/M_PI;
-            if (sat->satWObject != 0) sat->satWObject->exec(px, py);
+            if (sat->satWObject) {
+                sat->satWObject->exec(px, py);
+            }
 
             if (sat->isVisibleLabel()) renderText(px + (float)sat->nameX()/width(), py + (float)sat->nameY()/height(), sat->name(), sat->colorLabel(), sat->font());
         }
@@ -749,7 +751,7 @@ void GLSatWidget::compileSatList() {
         sat->model(m_time);
         px = sat->longitude()/M_PI;
         py = -2*sat->latitude()/M_PI;
-        sprite_current.exec(px, py);
+//        sprite_current.exec(px, py);
     glEndList();
 }
 

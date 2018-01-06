@@ -28,7 +28,6 @@ public:
     SWindow();
     virtual ~SWindow();
     void readStrings();
-    void readSettings();
     void writeSettings();
 
 private:
@@ -68,6 +67,7 @@ private slots:
     //	void onSatModelChanged(int index);
     void onBtnPrintScrClicked();
     void resetSettings();
+    void readSettings();
 };
 
 #endif /* SWINDOW_H_ */

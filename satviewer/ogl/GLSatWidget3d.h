@@ -15,7 +15,7 @@
 //#undef GLdouble
 //#undef GLfloat
 //#include <QtOpenGL>
-#include "../ui_earthsettings.h"
+#include "ui_earthsettings.h"
 #include "globj/GLObjecter.h"
 
 class GLSatWidget3d : public GLSatAbstractWidget {
