@@ -115,6 +115,10 @@ void SWindow::readSettings() {
 	QSettings::setUserIniPath(dir.path());
 	QSettings settings(QSettings::IniFormat, QSettings::UserScope, "satviewer", "satviewer");
 	settings.setIniCodec("UTF-8");
+        
+	readStrings();
+	uiSettings.comboLanguage->setCurrentIndex(settings.value("language", 0).toInt());
+        
 //	GLSatAbstractWidget *satWidget = dlgOptions->getSatWidget();
 	dateTimeEdit->setDateTime(QDateTime::fromTime_t(settings.value("time", QDateTime::currentDateTime().toTime_t()).toUInt()));
 	//time = settings.value("time", QDateTime::currentDateTime().toTime_t()).toDouble();
@@ -163,7 +167,6 @@ void SWindow::readSettings() {
 	dlgOptions->locDialog->defaultLoc.setColorLines( settings.value("defaultLoc/colorLines", 0xFF00FFFF).toUInt() );
 	dlgOptions->locDialog->defaultLoc.setColorZrv  ( settings.value("defaultLoc/colorZrv"  , 0x2000FFFF).toUInt() );
 
-
 	font.fromString(settings.value( "defaultLoc/font", QFont().toString()).toString() );
 	dlgOptions->locDialog->defaultLoc.setFont(font);
 
@@ -173,9 +176,6 @@ void SWindow::readSettings() {
 	dlgOptions->locDialog->defaultLoc.setNameX     ( settings.value("defaultLoc/nameX"   , 0.0).toDouble() );
 	dlgOptions->locDialog->defaultLoc.setNameY     ( settings.value("defaultLoc/nameY"   , 0.0).toDouble() );
 	dlgOptions->locDialog->defaultLoc.setLinesWidth( settings.value("defaultLoc/linesWidth"   , 1.0).toDouble() );
-
-	readStrings();
-	uiSettings.comboLanguage->setCurrentIndex(settings.value("language", 0).toInt());
 
 	dlgOptions->loadListViewSat();
 	dlgOptions->loadListViewLoc();

@@ -27,6 +27,7 @@ public:
     void setIcon(Location *loc, QString  fileName = QString());
 private:
     static const int VertexCount = 128;
+    GLfloat vertex[VertexCount][2];
 
     Ui::MapWidgetSettings ui;
     GLSprite sprite_current, sprite_active;
@@ -45,7 +46,6 @@ private:
     float zoom(float value = 0);
     float moveX(float value = 0);
     float moveY(float value = 0);
-    float vertex[VertexCount][2];
     void initSatOgl();
     void glZoneLines(float lat);
     void glZoneNight(float lat);

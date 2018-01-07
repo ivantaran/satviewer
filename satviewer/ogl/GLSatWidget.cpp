@@ -17,7 +17,7 @@
 //#include <QtOpenGL>
 #include <QFont>
 
-#include "math.h"
+#include <math.h>
 #include "satogl.h"
 
 GLSatWidget::GLSatWidget(QWidget *parent) : GLSatAbstractWidget(parent) {
@@ -47,21 +47,21 @@ void GLSatWidget::initSatOgl() {
 }
 
 void GLSatWidget::glZoneLines(float lat) {
-	uint8_t type = 0;
-	int breakpoint[2];
-	float polar;
-	glShadeModel(GL_SMOOTH);
-	glEnable(GL_ALPHA_TEST);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
-	glEnable(GL_LINE_SMOOTH);
+    uint8_t type = 0;
+    int breakpoint[2];
+    float polar;
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_ALPHA_TEST);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+    glEnable(GL_LINE_SMOOTH);
 
-    if (fabs(vertex[0][0] - vertex[VertexCount - 1][0]) > 1) {
+    if (fabsf(vertex[0][0] - vertex[VertexCount - 1][0]) > 1) {
     	breakpoint[type] = 0;
 		type++;
 	}
 	for (int i = 0; i < VertexCount - 1; i++)
-		if (fabs(vertex[i][0] - vertex[i + 1][0]) > 1) {
+		if (fabsf(vertex[i][0] - vertex[i + 1][0]) > 1) {
 			breakpoint[type] = i + 1;
 			type++;
 		}
@@ -269,24 +269,24 @@ bool GLSatWidget::testShadow(Satellite *sat, Satellite *sun) {
 }
 
 void GLSatWidget::gluZone(float lat) {
-    uint8_t type = 0;
-    int breakpoint[2];
-    float polar;
+    int count = 0;
+    int breakpoint[2], bp1;
+    GLfloat polar, y;
     double point[5][3];
 
-    if (fabs(vertex[0][0] - vertex[VertexCount - 1][0]) > 1) {
-        breakpoint[type] = 0;
-        type++;
+    if (fabsf(vertex[0][0] - vertex[VertexCount - 1][0]) > 1.0) {
+        breakpoint[count] = 0;
+        count++;
     }
     
     for (int i = 0; i < VertexCount - 1; i++) {
-        if (fabs(vertex[i][0] - vertex[i + 1][0]) > 1) {
-            breakpoint[type] = i + 1;
-            type++;
+        if (fabsf(vertex[i][0] - vertex[i + 1][0]) > 1.0) {
+            breakpoint[count] = i + 1;
+            count++;
         }
     }
     
-    polar = (lat < 0) ? 1.0f : 1.0f;
+    polar = (lat < 0.0) ? 1.0 : -1.0;
 
     GLdouble dvertex[VertexCount][3];
     for (int i = 0; i < VertexCount; i++) {
@@ -295,7 +295,7 @@ void GLSatWidget::gluZone(float lat) {
         dvertex[i][2] = 0;
     }
 
-    switch (type) {
+    switch (count) {
 
     case 0:
         glBegin(GL_POLYGON);
@@ -305,35 +305,43 @@ void GLSatWidget::gluZone(float lat) {
         glEnd();
         break;
 
-        case 1:
-//            point[0][0] = -polar;
-//            point[0][1] = vertex[breakpoint[0]][1];
-//            point[0][2] = 0;
-//            point[1][0] = -polar;
-//            point[1][1] = polar;
-//            point[1][2] = 0;
-//
-//            point[2][0] = polar;
-//            point[2][1] = polar;
-//            point[2][2] = 0;
-//            point[3][0] = polar;
-//            point[3][1] = vertex[breakpoint[0]][1];
-//            point[3][2] = 0;
-//
-//            for (int i = 0; i < 4; i++)
-//                gluTessVertex(tess, point[i], point[i]);
-//
-//            for (int i = breakpoint[0]; i < VertexCount; i++) {
-//                gluTessVertex(tess, dvertex[i], dvertex[i]);
-//            }
-//
-//            for (int i = 0; i < breakpoint[0]; i++) {
-//                gluTessVertex(tess, dvertex[i], dvertex[i]);
-//            }
+    case 1:
+        bp1 = (breakpoint[0] + VertexCount - 1) % VertexCount;
+        y = 0.5 * (vertex[breakpoint[0]][1] + vertex[bp1][1]);
+        glBegin(GL_TRIANGLE_STRIP);
+//        glVertex2f(polar, vertex[breakpoint[0]][1]);
+        glVertex2f(polar, y);
+        glVertex2f(polar, polar);
+        for (int i = breakpoint[0]; i < VertexCount; i++) {
+            glVertex2fv(vertex[i]);
+            glVertex2f(vertex[i][0], polar);
+        }
+        for (int i = 0; i < breakpoint[0]; i++) {
+            glVertex2fv(vertex[i]);
+            glVertex2f(vertex[i][0], polar);
+        }
+//        glVertex2f(-polar, vertex[breakpoint[0]][1]);
+        glVertex2f(-polar, y);
+        glVertex2f(-polar, polar);
+        glEnd();
+        break;
 
-            break;
+    case 2:
+        glBegin(GL_POLYGON);
+        for (int i = breakpoint[0]; i < breakpoint[1]; i++) {
+            glVertex2fv(vertex[i]);
+        }
+        glEnd();
 
-        case 2:
+        glBegin(GL_POLYGON);
+        for (int i = breakpoint[1]; i < VertexCount; i++) {
+            glVertex2fv(vertex[i]);
+        }
+        for (int i = 0; i < breakpoint[0]; i++) {
+            glVertex2fv(vertex[i]);
+        }
+        glEnd();
+        
 //            if (vertex[breakpoint[0]][0] < 0) polar = -1;
 //            else polar = 1;
 //            point[0][0] = polar;
@@ -369,7 +377,7 @@ void GLSatWidget::gluZone(float lat) {
 //                            gluTessVertex(tess, point[3], point[3]);
 //                    }
 //                    else gluTessVertex(tess, point[4], point[4]);
-            break;
+        break;
     }
 }
 
@@ -747,7 +755,9 @@ void GLSatWidget::compileSatList() {
         }
 
         sat = currentSat();
-        if (sat == 0) sat = satList.first();
+        if (sat == NULL) {
+            sat = satList.first();
+        }
         sat->model(m_time);
         px = sat->longitude()/M_PI;
         py = -2*sat->latitude()/M_PI;

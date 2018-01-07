@@ -192,11 +192,13 @@ void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
 }
 
 void Sgp4Dialog::setBtnColor(QWidget *widget) {
-	QPalette pal = widget->palette();
-	QColor color = QColorDialog::getColor(pal.color(QPalette::Button), this, 0, QColorDialog::ShowAlphaChannel);
-	if (!color.isValid()) return;
-	pal.setColor(QPalette::Button, color);
-	widget->setPalette(pal);
+    QPalette pal = widget->palette();
+    QColor color = QColorDialog::getColor(pal.color(QPalette::Button), this, "",
+            QColorDialog::ShowAlphaChannel | QColorDialog::DontUseNativeDialog);
+    if (color.isValid()) {
+        pal.setColor(QPalette::Button, color);
+        widget->setPalette(pal);
+    }
 }
 
 void Sgp4Dialog::setColorSatName() {
