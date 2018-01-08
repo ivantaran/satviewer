@@ -53,7 +53,7 @@ private:
     void lfi_ort(double fi, double lam, double* xyz);
     bool testZRV(double* crd1, double* crd2, double fiz);
     int testIOZRV(Satellite *sat, Location *loc, ZrvIoList *list, double &time);
-    void gluZone(float lat);
+    void fillFootprint(float lat);
     void compileZrl(Location *loc);
     bool testShadow(Satellite *sat, Satellite *sun);
     
