@@ -365,7 +365,7 @@ void SWindow::onStepChanged(int value) {
 
 void SWindow::onTimeXChanged(int value) {
 	if (value < 1) value = 1;
-	timeX = 1000/value;
+	timeX = 1000.0 / (double)value;
 	onPlayClick();
 }
 

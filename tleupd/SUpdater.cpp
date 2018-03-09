@@ -17,7 +17,6 @@ SUpdater::SUpdater(QString fileName) {
     file = 0;
     listFile = 0;
     httpGetId = -1;
-    urlIndex = -1;
     httpRequestAborted = false;
     urlIndex = 0;
 

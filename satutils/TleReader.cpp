@@ -15,28 +15,25 @@
 
 using namespace std;
 
-#define PI 3.14159265358979323846
-#define deg2rad PI/180.0
-#define xpdotp 1440.0/(2.0*PI)
+#define deg2rad (M_PI / 180.0)
+#define xpdotp (1440.0/(2.0 * M_PI))
 
-TleReader::TleReader(void)
-{
+TleReader::TleReader(void) {
+    
 }
 
-TleReader::TleReader(const char *fileName)
-{
-	init(fileName);
+TleReader::TleReader(const char *fileName) {
+    init(fileName);
 }
 
 
-TleReader::~TleReader(void)
-{
-	delete fName;
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < m_count; j++)
-			delete lines[i][j];
-		delete lines[i];
-	}
+TleReader::~TleReader(void) {
+    delete fName;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < m_count; j++)
+                delete lines[i][j];
+        delete lines[i];
+    }
 }
 
 void TleReader::init(const char *fileName) {
@@ -79,26 +76,25 @@ void TleReader::init(const char *fileName) {
 }
 
 void TleReader::item(int index) {
-	if (index >= m_count) return;
-	int bexp;
-	char tmp[TLE_LINE_LEN];
-	setlocale(LC_NUMERIC, "C");
-    
-	sscanf(lines[0][index],"%[^\r\n]", m_name);
-	sscanf(lines[1][index], "%s %s %s %lf %s %s %7lf %2d", tmp, tmp, tmp, &epochdays, tmp, tmp, &m_state.bstar, &bexp);
-	sscanf(lines[2][index], "%s %s %lf %lf %lf %lf %lf %11lf", tmp, tmp, &m_state.inclo, &m_state.nodeo, &m_state.ecco, &m_state.argpo, &m_state.mo, &m_state.no);
-    
-	m_state.bstar *= pow(10.0, bexp - 5.0);
-	m_state.ecco  *= 1e-7;
-	m_state.inclo *= deg2rad;
-	m_state.nodeo *= deg2rad;
-	m_state.argpo *= deg2rad;
-	m_state.mo    *= deg2rad;
-	m_state.no	  /= xpdotp;
+    if (index >= m_count) return;
+    int bexp;
+    setlocale(LC_NUMERIC, "C");
 
-	epochyr = (int)(epochdays/1000);
-	epochdays -= epochyr*1000;
-	m_state.jdsatepoch = jday(epochyr, epochdays);
+    sscanf(lines[0][index],"%24[^\r\n]", m_name);
+    sscanf(lines[1][index], "%*s %*s %*s %lf %*s %*s %7lf %2d", &epochdays, &m_state.bstar, &bexp);
+    sscanf(lines[2][index], "%*s %*s %lf %lf %lf %lf %lf %11lf", &m_state.inclo, &m_state.nodeo, &m_state.ecco, &m_state.argpo, &m_state.mo, &m_state.no);
+
+    m_state.bstar *= pow(10.0, bexp - 5.0);
+    m_state.ecco  *= 1e-7;
+    m_state.inclo *= deg2rad;
+    m_state.nodeo *= deg2rad;
+    m_state.argpo *= deg2rad;
+    m_state.mo    *= deg2rad;
+    m_state.no	  /= xpdotp;
+
+    epochyr = (int)(epochdays / 1000);
+    epochdays -= epochyr * 1000;
+    m_state.jdsatepoch = jday(epochyr, epochdays);
     
     m_state.consttype  = 2;
 }

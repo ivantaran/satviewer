@@ -41,29 +41,29 @@ void GLObjMaterial::init() {
 	QImage img;
 	while (!file.eof()) {
 		file.getline(line, sizeof(line));
-		sscanf(line, "%s %s", type, name);
+		sscanf(line, "%64s %64s", type, name);
 		if (strcmp(type, "newmtl") == 0) {
 			addMaterial();
 			continue;
 		}
 		if ((strcmp(type, "Ka") == 0) && (material != 0)) {
-			sscanf(line, "%s %f %f %f %f", type, &material->ka()[0], &material->ka()[1], &material->ka()[2], &material->ka()[3]);
+			sscanf(line, "%*s %f %f %f %f", &material->ka()[0], &material->ka()[1], &material->ka()[2], &material->ka()[3]);
 			continue;
 		}
 		if ((strcmp(type, "Kd") == 0) && (material != 0)) {
-			sscanf(line, "%s %f %f %f %f", type, &material->kd()[0], &material->kd()[1], &material->kd()[2], &material->kd()[3]);
+			sscanf(line, "%*s %f %f %f %f", &material->kd()[0], &material->kd()[1], &material->kd()[2], &material->kd()[3]);
 			continue;
 		}
 		if ((strcmp(type, "Ks") == 0) && (material != 0)) {
-			sscanf(line, "%s %f %f %f %f", type, &material->ks()[0], &material->ks()[1], &material->ks()[2], &material->ks()[3]);
+			sscanf(line, "%*s %f %f %f %f", &material->ks()[0], &material->ks()[1], &material->ks()[2], &material->ks()[3]);
 			continue;
 		}
 		if ((strcmp(type, "Ke") == 0) && (material != 0)) {
-			sscanf(line, "%s %f %f %f %f", type, &material->ke()[0], &material->ke()[1], &material->ke()[2], &material->ke()[3]);
+			sscanf(line, "%*s %f %f %f %f", &material->ke()[0], &material->ke()[1], &material->ke()[2], &material->ke()[3]);
 			continue;
 		}
 		if ((strcmp(type, "Ns") == 0) && (material != 0)) {
-			sscanf(line, "%s %f", type, material->ns());
+			sscanf(line, "%*s %f", material->ns());
 			continue;
 		}
 //		if ((strcmp(type, "map_Ka") == 0) && (material != 0)) {
@@ -79,7 +79,7 @@ void GLObjMaterial::init() {
 //		}
 		if ((strcmp(type, "map_Kd") == 0) && (material != 0)) {
 			material->setMapKdOn(true);
-			sscanf(line, "%s %s", type, type);
+			sscanf(line, "%*s %64s", type);
 			string fullname = m_path;
 			fullname.append("/").append(type);
 			m_parent->makeCurrent();

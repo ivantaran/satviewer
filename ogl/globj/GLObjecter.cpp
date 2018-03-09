@@ -26,7 +26,7 @@ GLObjecter::GLObjecter(QOpenGLWidget *parent, int index, char *path, char *fileN
     m_parent->makeCurrent();
 
     if (!initializeOpenGLFunctions()) {
-        qWarning("error: GLObjecter initializeOpenGLFunctions");
+        puts("error: GLObjecter initializeOpenGLFunctions");
         exit(-1);
     }
 	string fullname = path;
@@ -43,8 +43,8 @@ GLObjecter::GLObjecter(QOpenGLWidget *parent, int index, char *path, char *fileN
 		return;
 	}
 
-	iostream strm(&fbuf);
-	file = &strm;
+//	iostream strm(&fbuf);
+	file = new iostream(&fbuf);
 	mtlLib = 0;
 	setlocale(LC_NUMERIC, "C");
 	init();
@@ -52,18 +52,19 @@ GLObjecter::GLObjecter(QOpenGLWidget *parent, int index, char *path, char *fileN
 }
 
 void GLObjecter::clear() {
-	for (vector<float *>::iterator i = vertex.begin(); i != vertex.end(); i++) delete[] *i;
-	for (vector<float *>::iterator i = tex_vertex.begin(); i != tex_vertex.end(); i++) delete[] *i;
-	for (vector<float *>::iterator i = normals.begin(); i != normals.end(); i++) delete[] *i;
-	vertex.clear();
-	tex_vertex.clear();
-	normals.clear();
-	file->clear();
-	if (mtlLib != 0) delete mtlLib; //TODO add remove tex как бы там еще и текстуры надо бы удалять
+    for (vector<float *>::iterator i = vertex.begin(); i != vertex.end(); i++) delete[] *i;
+    for (vector<float *>::iterator i = tex_vertex.begin(); i != tex_vertex.end(); i++) delete[] *i;
+    for (vector<float *>::iterator i = normals.begin(); i != normals.end(); i++) delete[] *i;
+    vertex.clear();
+    tex_vertex.clear();
+    normals.clear();
+    file->clear();
+    if (mtlLib != 0) delete mtlLib; //TODO add remove tex как бы там еще и текстуры надо бы удалять
 }
 
 GLObjecter::~GLObjecter() {
     clear();
+    delete file;
 }
 
 void GLObjecter::init() {
@@ -71,10 +72,11 @@ void GLObjecter::init() {
 	glPushAttrib(GL_ENABLE_BIT | GL_CURRENT_BIT);
 
 	while (!file->eof()) {
-		memset(type, 20, sizeof(type) - 1);
+		memset(type, 20, sizeof(type)); // TODO remove this two lines
+                type[BUF_SIZE - 1] = '\0';
 //		strset(type, 20);
 		file->getline(line, sizeof(line));
-		sscanf(line, "%s", type);
+		sscanf(line, "%64s", type);
 		if (strcmp(type, "v") == 0) {
 			addVertex();
 			continue;
@@ -92,7 +94,7 @@ void GLObjecter::init() {
 			continue;
 		}
 		if (strcmp(type, "mtllib") == 0) {
-			sscanf(line, "%s %s", type, type);
+			sscanf(line, "%*s %64s", type);
 			if (mtlLib != 0) {
 				delete mtlLib;
 				mtlLib = 0;
@@ -101,12 +103,12 @@ void GLObjecter::init() {
 			continue;
 		}
 		if (strcmp(type, "usemtl") == 0) {
-			sscanf(line, "%s %s", type, type);
+			sscanf(line, "%*s %64s", type);
 			if (mtlLib != 0) mtlLib->set(type);
 			continue;
 		}
 		if (strcmp(type, "g") == 0) {
-			sscanf(line, "%s %s", type, type);
+			sscanf(line, "%*s %64s", type);
 			cout << type << endl;
 			continue;
 		}
@@ -117,60 +119,60 @@ void GLObjecter::init() {
 }
 
 void GLObjecter::addVertex() {
-	float *v = new float[3];
-	sscanf(line, "%s %f %f %f", type, &v[0], &v[1], &v[2]);
-	vertex.push_back(v);
+    float *v = new float[3];
+    sscanf(line, "%*s %f %f %f", &v[0], &v[1], &v[2]);
+    vertex.push_back(v);
 }
 
 void GLObjecter::addTexVertex() {
-	float *v = new float[3];
-	sscanf(line, "%s %f %f %f", type, &v[0], &v[1], &v[2]);
-	tex_vertex.push_back(v);
+    float *v = new float[3];
+    sscanf(line, "%*s %f %f %f", &v[0], &v[1], &v[2]);
+    tex_vertex.push_back(v);
 }
 
 void GLObjecter::addNormal() {
-	float *v = new float[3];
-	sscanf(line, "%s %f %f %f", type, &v[0], &v[1], &v[2]);
-	normals.push_back(v);
+    float *v = new float[3];
+    sscanf(line, "%*s %f %f %f", &v[0], &v[1], &v[2]);
+    normals.push_back(v);
 }
 
 void GLObjecter::addFace() {
-	char *token = strtok(line, " ");
-	token = strtok(0, " ");
-	char test = 0;
+    char *token;
+    int tmp[3];
+    
+    strtok(line, " ");
+    token = strtok(NULL, " ");
+    char test = 0;
 
-	glBegin(GL_POLYGON);
-	while (token != 0) {
-//		int *tmp = new int[3];
-		int tmp[3];
-		test = sscanf(token, "%d/%d/%d", &tmp[0], &tmp[1], &tmp[2]);
-		switch (test) {
-			default: case 0:
-				cout << (int)test << " bad face " << token << endl;
-				return;
-			break;
-			break;
-			case 1:
-				if (sscanf(token, "%d//%d", &tmp[0], &tmp[2]) == 2) {
-					glNormal3fv(normals.at(tmp[2] - 1));
-					glVertex3fv(vertex.at(tmp[0] - 1));
-				}
-				else glVertex3fv(vertex.at(tmp[0] - 1));
-			break;
-			case 2:
-				if (mtlLib->mapKdOn()) glTexCoord3fv(tex_vertex.at(tmp[1] - 1));
-				glVertex3fv(vertex.at(tmp[0] - 1));
-			break;
-			case 3:
-				glNormal3fv(normals.at(tmp[2] - 1));
-				if (mtlLib->mapKdOn()) glTexCoord3fv(tex_vertex.at(tmp[1] - 1));
-				glVertex3fv(vertex.at(tmp[0] - 1));
-			break;
-		}
-		token = strtok(0, " ");
-	}
+    glBegin(GL_POLYGON);
+    while (token != 0) {
+        test = sscanf(token, "%d/%d/%d", &tmp[0], &tmp[1], &tmp[2]);
+        switch (test) {
+            default: 
+            case 0:
+                cout << (int)test << " bad face " << token << endl;
+                return;
+            case 1:
+                if (sscanf(token, "%d//%d", &tmp[0], &tmp[2]) == 2) {
+                        glNormal3fv(normals.at(tmp[2] - 1));
+                        glVertex3fv(vertex.at(tmp[0] - 1));
+                }
+                else glVertex3fv(vertex.at(tmp[0] - 1));
+                break;
+            case 2:
+                if (mtlLib->mapKdOn()) glTexCoord3fv(tex_vertex.at(tmp[1] - 1));
+                glVertex3fv(vertex.at(tmp[0] - 1));
+                break;
+            case 3:
+                glNormal3fv(normals.at(tmp[2] - 1));
+                if (mtlLib->mapKdOn()) glTexCoord3fv(tex_vertex.at(tmp[1] - 1));
+                glVertex3fv(vertex.at(tmp[0] - 1));
+                break;
+        }
+        token = strtok(NULL, " ");
+    }
 
-	glEnd();
+    glEnd();
 }
 
 void GLObjecter::exec() {

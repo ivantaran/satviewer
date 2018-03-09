@@ -12,6 +12,8 @@
 GLSprite::GLSprite(QString fileName, QOpenGLWidget *parentWidget) : SatWidgetObject(fileName, parentWidget) {
     widget = NULL;
     texture = NULL;
+    m_x = 0.0;
+    m_y = 0.0;
     m_list_index = 0;
     load(fileName, parentWidget);
 }
@@ -54,9 +56,9 @@ void GLSprite::load(QString fileName, QOpenGLWidget *parentWidget) {
             delete texture;
         }
         texture = new QOpenGLTexture(image);
-        if (!texture) {
-            qWarning("error: GLSprite::load QOpenGLTexture");
-        }
+//        if (!texture) {
+//            qWarning("error: GLSprite::load QOpenGLTexture");
+//        }
     }
     
     if (glIsList(m_list_index)) {

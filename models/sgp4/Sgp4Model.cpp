@@ -1081,7 +1081,7 @@ void Sgp4Model::dspace() {
      //   the following integration works for negative time steps and periods
      //   the specific changes are unknown because the original code was so convoluted
 
-     ft    = 0.0;
+//     ft    = 0.0;
      atime = 0.0;
      if (irez != 0)
        {

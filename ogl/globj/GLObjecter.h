@@ -22,34 +22,34 @@ using namespace std;
 
 class GLObjecter : protected QOpenGLFunctions_2_0 {
 public:
-	GLObjecter(QOpenGLWidget *parent, int index, char *path, char *fileName);
-	virtual ~GLObjecter();
-	void move(float x, float y, float z);
-	void moveX(float value);
-	void moveY(float value);
-	void moveZ(float value);
-	void rotateX(float value);
-	void rotateY(float value);
-	void rotateZ(float value);
-	void exec();
+    GLObjecter(QOpenGLWidget *parent, int index, char *path, char *fileName);
+    virtual ~GLObjecter();
+    void move(float x, float y, float z);
+    void moveX(float value);
+    void moveY(float value);
+    void moveZ(float value);
+    void rotateX(float value);
+    void rotateY(float value);
+    void rotateZ(float value);
+    void exec();
 
 private:
-	iostream *file;
-	std::string m_path;
-	float m_xyz[3];
-	float m_angle[3];
-	uint32_t m_index;
-	vector<float *> vertex, tex_vertex, normals;
-	char line[BUF_SIZE];
-	char type[BUF_SIZE];
-	GLObjMaterial *mtlLib;
-	QOpenGLWidget *m_parent;
-	void init();
-	void addVertex();
-	void addTexVertex();
-	void addNormal();
-	void addFace();
-	void clear();
+    iostream *file;
+    std::string m_path;
+    float m_xyz[3];
+    float m_angle[3];
+    uint32_t m_index;
+    vector<float *> vertex, tex_vertex, normals;
+    char line[BUF_SIZE];
+    char type[BUF_SIZE];
+    GLObjMaterial *mtlLib;
+    QOpenGLWidget *m_parent;
+    void init();
+    void addVertex();
+    void addTexVertex();
+    void addNormal();
+    void addFace();
+    void clear();
 };
 
 #endif /* GLOBJECTER_H_ */

@@ -20,14 +20,14 @@ public:
 	virtual ~UCheck();
 	void check();
 private:
-	QFile m_file;
-	int m_id;
-	QString m_host;
-	QString m_request;
-        QNetworkReply *reply;
+    QFile m_file;
+    int m_id;
+    QString m_host;
+    QString m_request;
+    QNetworkReply *reply;
 private slots:
-	void httpFinished();
-        void httpReadyRead();
+    void httpFinished();
+    void httpReadyRead();
 };
 
 #endif /* UCHECK_H_ */
