@@ -2,7 +2,7 @@
  * GLSatWidget.h
  *
  *  Created on: 15.05.2009
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef GLSATWIDGET_H_

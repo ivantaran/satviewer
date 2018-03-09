@@ -11,3 +11,4 @@ qrc_*
 *.Debug
 *.xml
 *.qmake*
+/build/

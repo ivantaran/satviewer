@@ -1,8 +1,10 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 /*
  * GLSatAbstractWidget.cpp
  *
  *  Created on: 24.03.2010
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #include "GLSatAbstractWidget.h"
@@ -202,7 +204,7 @@ void GLSatAbstractWidget::enumSatModelList() {
 
 void GLSatAbstractWidget::setSatModel(int index) {
     getSatModel = (CustomSat)Sgp4Model::getSatModel;
-    printf("%s [getSatModel %x]\n", lib.fileName().toLocal8Bit().data(), getSatModel);
+    qWarning("%s [getSatModel %p]\n", lib.fileName().toLocal8Bit().data(), getSatModel);
     if (getSatModel == 0) exit(-1);
 }
 
@@ -219,7 +221,7 @@ void GLSatAbstractWidget::setSunModel(QString fileName) {
     else fileName = path + fileName;
     lib.setFileName(fileName);
     getSunModel = (CustomSat)lib.resolve(fileName, "getSatModel");
-    printf("%s [getSunModel %x]\n", lib.fileName().toLocal8Bit().data(), getSunModel);
+    qWarning("%s [getSunModel %p]\n", lib.fileName().toLocal8Bit().data(), getSunModel);
     if (getSunModel == 0) exit(-1);
 }
 

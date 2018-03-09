@@ -1,8 +1,10 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 /*
  * Sgp4Dialog.cpp
  *
  *  Created on: 28.12.2009
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #include "Sgp4Dialog.h"

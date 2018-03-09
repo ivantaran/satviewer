@@ -2,7 +2,7 @@
  * sun model
  *
  *  Created on: 26.10.2009
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef SUNMODEL_H_

@@ -2,7 +2,7 @@
  * ZRVIOList.h
  *
  *  Created on: 16.07.2009
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef ZRVIOLIST_H_

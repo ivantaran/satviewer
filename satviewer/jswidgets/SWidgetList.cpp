@@ -1,8 +1,10 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 /*
  * SWidgetList.cpp
  *
  *  Created on: 21.03.2010
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #include "SWidgetList.h"

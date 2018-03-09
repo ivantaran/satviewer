@@ -2,7 +2,7 @@
  * SLocDialog.h
  *
  *  Created on: 03.01.2010
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef SLOCDIALOG_H_

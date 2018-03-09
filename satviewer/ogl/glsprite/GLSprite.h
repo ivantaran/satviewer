@@ -2,7 +2,7 @@
  * GLSprite.h
  *
  *  Created on: 11.03.2011
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef GLSPRITE_H_

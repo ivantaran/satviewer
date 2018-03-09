@@ -2,7 +2,7 @@
  * SatList.h
  *
  *  Created on: 21.05.2009
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef TLEREADER_H_

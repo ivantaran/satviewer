@@ -2,7 +2,7 @@
  * SWidget.h
  *
  *  Created on: 19.03.2010
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef SWIDGET_H_

@@ -2,7 +2,7 @@
  * SDlgOptions.h
  *
  *  Created on: 29.08.2009
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef SDLGOPTIONS_H_

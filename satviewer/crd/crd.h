@@ -2,7 +2,7 @@
  * crd.h
  *
  *  Created on: 03.09.2009
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef CRD_H_

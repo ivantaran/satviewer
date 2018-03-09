@@ -2,7 +2,7 @@
  * GLSatAbstractWidget.h
  *
  *  Created on: 24.03.2010
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef GLSATABSTRACTWIDGET_H_

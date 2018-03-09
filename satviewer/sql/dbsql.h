@@ -2,7 +2,7 @@
  * dbsql.h
  *
  *  Created on: 14.02.2010
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef DBSQL_H_

@@ -1,6 +1,6 @@
 /* 
  * File:   SatWidgetObject.h
- * Author: Yan Coduemat
+ * Author: Ivan Ryazanov
  *
  * Created on 17 Март 2011 г., 15:16
  */

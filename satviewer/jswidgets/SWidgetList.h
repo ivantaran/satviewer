@@ -2,7 +2,7 @@
  * SWidgetList.h
  *
  *  Created on: 21.03.2010
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef SWIDGETLIST_H_

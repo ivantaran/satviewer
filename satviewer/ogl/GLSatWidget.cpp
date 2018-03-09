@@ -1,8 +1,10 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 /*
  * GLSatWidget.cpp
  *
  *  Created on: 15.05.2009
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #include "GLSatWidget.h"
@@ -192,7 +194,7 @@ int GLSatWidget::testIOZRV(Satellite *sat, Location *loc, ZrvIoList *list, doubl
 }
 
 void GLSatWidget::compileZrl(Location *loc) {
-	if (!(loc->isVisibleZrv() | loc->isVisibleLines())) return;
+	if (!(loc->isVisibleZrv() || loc->isVisibleLines())) return;
 
 	double const deg2rad = M_PI/180;
 	double z = loc->zrlRange()*deg2rad;

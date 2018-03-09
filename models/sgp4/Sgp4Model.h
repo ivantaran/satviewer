@@ -2,7 +2,7 @@
  * Sgp.h
  *
  *  Created on: 26.10.2009
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef SGP4MODEL_H_

@@ -2,7 +2,7 @@
  * GLObjecter.h
  *
  *  Created on: 28.03.2010
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef GLOBJECTER_H_

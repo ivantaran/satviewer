@@ -2,7 +2,7 @@
  * SScriptFrame.h
  *
  *  Created on: 21.02.2010
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef SSCRIPTFRAME_H_

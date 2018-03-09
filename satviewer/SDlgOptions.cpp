@@ -1,8 +1,10 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 /*
  * SDlgOptions.cpp
  *
  *  Created on: 22.12.2009
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 #include "SDlgOptions.h"
 #include "sql/dbsql.h"
@@ -726,7 +728,7 @@ void SDlgOptions::delFromSatList(const QModelIndex &index) {
 
     for (int i = 0; i < count; i++) satWidget->removeSat(tmp[i]);
 
-    delete tmp;
+    delete [] tmp;
     updateListViewSat();
     if (listViewSat->model() == 0) return;
     QModelIndex mIndex = listViewSat->model()->index(iRow, 0);
@@ -749,7 +751,7 @@ void SDlgOptions::delFromLocList(const QModelIndex &index) {
     for (int i = 0; i < count; i++)
         satWidget->removeLoc(tmp[i]);
 
-    delete tmp;
+    delete [] tmp;
     updateListViewLoc();
     if (listViewLoc->model() == 0) return;
     QModelIndex mIndex = listViewLoc->model()->index(iRow, 0);

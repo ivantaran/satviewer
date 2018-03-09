@@ -2,7 +2,7 @@
  * SWindow.h
  *
  *  Created on: 05.05.2009
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef SWINDOW_H_

@@ -2,7 +2,7 @@
  * satogl.h
  *
  *  Created on: 21.05.2009
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef SATOGL_H_

@@ -2,7 +2,7 @@
  * Satellite.h
  *
  *  Created on: 27.06.2009
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 

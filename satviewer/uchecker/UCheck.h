@@ -2,7 +2,7 @@
  * UCheck.h
  *
  *  Created on: 02.10.2010
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef UCHECK_H_

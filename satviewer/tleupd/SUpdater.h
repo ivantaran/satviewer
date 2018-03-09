@@ -2,7 +2,7 @@
  * SUpdater.h
  *
  *  Created on: 14.03.2010
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef SUPDATER_H_

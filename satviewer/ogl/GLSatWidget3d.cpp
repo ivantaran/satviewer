@@ -1,8 +1,10 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 /*
  * GLSatWidget3d.cpp
  *
  *  Created on: 24.03.2010
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #include "GLSatWidget3d.h"
@@ -40,16 +42,16 @@ GLSatWidget3d::~GLSatWidget3d() {
 }
 
 void GLSatWidget3d::readSettings(QSettings *settings) {
-	QString filePath = settings->value("mapFile", "").toString();
-	loadTexture(filePath);
-	ui.btnMapFile->setText(filePath);
+    QString filePath = settings->value("mapFile", "").toString();
+    loadTexture(filePath);
+    ui.btnMapFile->setText(filePath);
 
-	ui.spinZoom->setValue(settings->value("3d/mapZoom", 4).toDouble());
-	ui.spinX->setValue   (settings->value("3d/mapX"   , 0).toDouble());
-	ui.spinY->setValue   (settings->value("3d/mapY"   , 0).toDouble());
-	ui.spinRotX->setValue(settings->value("3d/mapRotX", 0).toDouble());
-	ui.spinRotY->setValue(settings->value("3d/mapRotY", 0).toDouble());
-	ui.spinRotZ->setValue(settings->value("3d/mapRotZ", 0).toDouble());
+    ui.spinZoom->setValue(settings->value("3d/mapZoom", 4).toDouble());
+    ui.spinX->setValue   (settings->value("3d/mapX"   , 0).toDouble());
+    ui.spinY->setValue   (settings->value("3d/mapY"   , 0).toDouble());
+    ui.spinRotX->setValue(settings->value("3d/mapRotX", 0).toDouble());
+    ui.spinRotY->setValue(settings->value("3d/mapRotY", 0).toDouble());
+    ui.spinRotZ->setValue(settings->value("3d/mapRotZ", 0).toDouble());
 }
 
 void GLSatWidget3d::writeSettings(QSettings *settings) {

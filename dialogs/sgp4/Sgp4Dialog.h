@@ -2,7 +2,7 @@
  * Sgp4Dialog.h
  *
  *  Created on: 09.12.2009
- *      Author: Yan Coduemat
+ *      Author: Ivan Ryazanov
  */
 
 #ifndef SGP4DIALOG_H_
