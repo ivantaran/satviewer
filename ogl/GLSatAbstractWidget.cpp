@@ -16,7 +16,7 @@
 #include <QCoreApplication>
 #include "math.h"
 #include "satogl.h"
-#include "../../models/sgp4/Sgp4Model.h"
+#include "../models/sgp4/Sgp4Model.h"
 
 GLSatAbstractWidget::GLSatAbstractWidget(QWidget *parent) : QOpenGLWidget(parent) {
 //    initSatOgl();

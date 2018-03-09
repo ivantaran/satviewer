@@ -12,3 +12,5 @@ qrc_*
 *.xml
 *.qmake*
 /build/
+/PVS-Studio/
+analyze.*

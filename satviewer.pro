@@ -1,7 +1,7 @@
 
-INCLUDEPATH += .
+#INCLUDEPATH += .
 TARGET = SatViewer
-DESTDIR = ../bin
+DESTDIR = bin
 
 MOC_DIR = build
 UI_DIR = build
@@ -11,14 +11,12 @@ OBJECTS_DIR = build
 CONFIG  += console debug
 QT      += gui core sql widgets network
 
-TEMPLATE = app
-
 HEADERS    +=	\
                 SWindow.h \
                 SDlgOptions.h \
                 SLocDialog.h \
-                ../dialogs/sgp4/Sgp4Dialog.h \
-                ../models/sgp4/Sgp4Model.h \
+                dialogs/sgp4/Sgp4Dialog.h \
+                models/sgp4/Sgp4Model.h \
 #                jscalc/SScriptFrame.h \
                 ogl/GLSatWidget.h \
                 ogl/GLSatAbstractWidget.h \
@@ -44,8 +42,8 @@ SOURCES    +=	SatViewer.cpp \
                 SWindow.cpp \
                 SDlgOptions.cpp \
                 SLocDialog.cpp \
-                ../dialogs/sgp4/Sgp4Dialog.cpp \
-                ../models/sgp4/Sgp4Model.cpp \
+                dialogs/sgp4/Sgp4Dialog.cpp \
+                models/sgp4/Sgp4Model.cpp \
 #                jscalc/SScriptFrame.cpp \
                 ogl/GLSatWidget.cpp \
                 ogl/GLSatAbstractWidget.cpp \
@@ -77,9 +75,8 @@ FORMS       +=  ui/SatViewer.ui \
                 ui/tleupd.ui \
                 ui/jswidgetlist.ui \
                 ui/mapsettings.ui \
-                ui/earthsettings.ui
-
-FORMS       += ../dialogs/sgp4/ui/sgp4.ui
+                ui/earthsettings.ui \
+                dialogs/sgp4/ui/sgp4.ui
 
 TRANSLATIONS = satviewer_fr.ts \
                satviewer_de.ts \
