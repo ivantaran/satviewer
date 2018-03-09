@@ -29,7 +29,7 @@
 #include <QStandardItemModel>
 #include "SAbstractObjDialog.h"
 
-class SDlgOptions: public QDialog, public Ui::Dialog {
+class SDlgOptions: public QDialog {
 	Q_OBJECT
 public:
     typedef SAbstractObjDialog * (*CustomObjDialog)(GLSatAbstractWidget *satWidget);
@@ -47,7 +47,8 @@ public:
 
     void setSatWidget(GLSatAbstractWidget *satWidget);
 
-    inline GLSatAbstractWidget* getSatWidget(){ return satWidget; }
+    inline GLSatAbstractWidget* getSatWidget() const { return satWidget; }
+    inline Ui::Dialog* getWidget() { return &widget; }
 
     void saveListViewSat();
     void saveListViewLoc();
@@ -55,6 +56,7 @@ public:
     void loadListViewLoc();
 
 private:
+    Ui::Dialog widget;
     QDataWidgetMapper mapperSat, mapperLoc;
     QSqlTableModel *modelDbSat, *modelDbLoc;
     GLSatAbstractWidget *satWidget;

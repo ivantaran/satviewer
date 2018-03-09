@@ -20,7 +20,7 @@
 #include "ogl/GLSatWidget.h"
 #include "ogl/GLSatAbstractWidget.h"
 
-class SWindow: public QMainWindow, public Ui::MainWindow {
+class SWindow: public QMainWindow {
     Q_OBJECT
 public:
     SDlgOptions *dlgOptions;
@@ -33,6 +33,7 @@ public:
 private:
     QWidget settingsWidget;
     Ui::SettingsWidget uiSettings;
+    Ui::MainWindow widget;
     QPalette originalPalette;
     GLSatAbstractWidget *satWidget;
     double time, timeStep, timeX;

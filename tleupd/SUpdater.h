@@ -12,31 +12,33 @@
 #include <QDialog>
 #include <QtNetwork>
 
-class SUpdater: public QWidget, public Ui::Updater
+class SUpdater: public QWidget
 {
 	Q_OBJECT
 
 public:
-	SUpdater(QString fileName = "");
-	virtual ~SUpdater();
-	void load(QString fileName);
+    SUpdater(QString fileName = "");
+    virtual ~SUpdater();
+    void load(QString fileName);
+    inline Ui::Updater *getWidget() { return &widget; }
 private:
-//	QHttp *http;
-        QNetworkAccessManager nam;
-        QNetworkReply *reply;
-	QFile *file, *listFile;
-	int httpGetId;
+    Ui::Updater widget;
+//    QHttp *http;
+    QNetworkAccessManager nam;
+    QNetworkReply *reply;
+    QFile *file, *listFile;
+    int httpGetId;
     bool httpRequestAborted;
     int urlIndex;
 private slots:
-	void updateTle();
-	void updateDataReadProgress(qint64 bytesRead, qint64 totalBytes);
-	void httpFinished();
-	void save();
-	void addLine();
-	void removeLine();
-	void clear();
-	void abort();
+    void updateTle();
+    void updateDataReadProgress(qint64 bytesRead, qint64 totalBytes);
+    void httpFinished();
+    void save();
+    void addLine();
+    void removeLine();
+    void clear();
+    void abort();
 };
 
 #endif /* SUPDATER_H_ */

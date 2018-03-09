@@ -18,7 +18,7 @@
 #include "locutils/Location.h"
 #include "ogl/GLSatAbstractWidget.h"
 
-class SLocDialog:  public QDialog, public Ui::LocDialog {
+class SLocDialog:  public QDialog {
     Q_OBJECT
 public:
     Location defaultLoc;
@@ -29,11 +29,12 @@ public:
     void setLoc(Location *loc) { m_loc = loc; }
     void makeLoc(Location *loc);
     void setSatWidget(GLSatAbstractWidget *satWidget);
-
+    inline Ui::LocDialog * getWidget() { return &widget; }
 protected:
     void showEvent(QShowEvent *event);
 
 private:
+    Ui::LocDialog widget;
     Location *m_loc;
     GLSatAbstractWidget *satWidget;
     void setBtnColor(QWidget *widget);

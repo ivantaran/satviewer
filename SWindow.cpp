@@ -15,7 +15,7 @@ SWindow::SWindow() {
     dlgOptions = 0;
     language = tr("English");
 
-    this->setupUi(this);
+    widget.setupUi(this);
     originalPalette = qApp->palette();
 
     labelLoc.setMinimumWidth(32);
@@ -36,16 +36,16 @@ SWindow::SWindow() {
     dlgOptions->setParent(this, Qt::Window);
     move((qApp->desktop()->width() - width())/2, (qApp->desktop()->height() - height())/2);
     dlgOptions->move((qApp->desktop()->width() - dlgOptions->width())/2, (qApp->desktop()->height() - dlgOptions->height())/2);
-    connect(tlBtnOptions, SIGNAL(clicked()), dlgOptions, SLOT(show()));
+    connect(widget.tlBtnOptions, SIGNAL(clicked()), dlgOptions, SLOT(show()));
 
     uiSettings.setupUi(&settingsWidget);
-    dlgOptions->stackedWidget->insertWidget(8, &settingsWidget);
+    dlgOptions->getWidget()->stackedWidget->insertWidget(8, &settingsWidget);
     uiSettings.comboStyle->addItem(tr("system (need restart)"));
     uiSettings.comboStyle->addItems(QStyleFactory::keys());
     //	uiSettings.comboSatModel->addItems(satWidget->satModelList());
 
     mapLayout->addWidget(satWidget);
-    frameMap->setLayout(mapLayout);
+    widget.frameMap->setLayout(mapLayout);
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
@@ -69,16 +69,16 @@ SWindow::SWindow() {
     connect(uiSettings.checkUpdates, SIGNAL(clicked(bool)), this, SLOT(checkVersion (bool)));
     connect(shcFullScreen, SIGNAL(activated()), this, SLOT(fullScreen()));
     connect(shcEscFullScreen, SIGNAL(activated()), this, SLOT(escFullScreen()));
-    connect(btnFullScreen, SIGNAL(clicked()), this, SLOT(fullScreen()));
-    connect(tlBtnTime, SIGNAL(clicked()), this, SLOT(onTimeClick()));
-    connect(tlBtnPlay, SIGNAL(clicked()), this, SLOT(onPlayClick()));
-    connect(tlBtnBackward, SIGNAL(clicked()), this, SLOT(onBackwardClick()));
-    connect(tlBtnForward , SIGNAL(clicked()), this, SLOT(onForwardClick ()));
+    connect(widget.btnFullScreen, SIGNAL(clicked()), this, SLOT(fullScreen()));
+    connect(widget.tlBtnTime, SIGNAL(clicked()), this, SLOT(onTimeClick()));
+    connect(widget.tlBtnPlay, SIGNAL(clicked()), this, SLOT(onPlayClick()));
+    connect(widget.tlBtnBackward, SIGNAL(clicked()), this, SLOT(onBackwardClick()));
+    connect(widget.tlBtnForward , SIGNAL(clicked()), this, SLOT(onForwardClick ()));
     connect(uiSettings.btnReset, SIGNAL(clicked()), this, SLOT(resetSettings()));
-    connect(spinBoxTimeX    , SIGNAL(valueChanged       (int)), this, SLOT(onTimeXChanged   (int)));
-    connect(spinBoxStep     , SIGNAL(valueChanged       (int)), this, SLOT(onStepChanged    (int)));
-    connect(comboBoxStep    , SIGNAL(currentIndexChanged(int)), this, SLOT(onStepChanged    (int)));
-    connect(comboBoxTimeType, SIGNAL(currentIndexChanged(int)), this, SLOT(onTimeTypeChanged(int)));
+    connect(widget.spinBoxTimeX    , SIGNAL(valueChanged       (int)), this, SLOT(onTimeXChanged   (int)));
+    connect(widget.spinBoxStep     , SIGNAL(valueChanged       (int)), this, SLOT(onStepChanged    (int)));
+    connect(widget.comboBoxStep    , SIGNAL(currentIndexChanged(int)), this, SLOT(onStepChanged    (int)));
+    connect(widget.comboBoxTimeType, SIGNAL(currentIndexChanged(int)), this, SLOT(onTimeTypeChanged(int)));
     connect(uiSettings.comboLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(selectLanguage(int)));
     connect(satWidget, SIGNAL(statusZRVChanged(QString)), this, SLOT(addZRVMessage(QString)));
     connect(satWidget, SIGNAL(doubleClickedSat()), dlgOptions, SLOT(changeDbSat()));
@@ -122,24 +122,24 @@ void SWindow::readSettings() {
 	uiSettings.comboLanguage->setCurrentIndex(settings.value("language", 0).toInt());
         
 //	GLSatAbstractWidget *satWidget = dlgOptions->getSatWidget();
-	dateTimeEdit->setDateTime(QDateTime::fromTime_t(settings.value("time", QDateTime::currentDateTime().toTime_t()).toUInt()));
+	widget.dateTimeEdit->setDateTime(QDateTime::fromTime_t(settings.value("time", QDateTime::currentDateTime().toTime_t()).toUInt()));
 	//time = settings.value("time", QDateTime::currentDateTime().toTime_t()).toDouble();
 
 	uiSettings.comboStyle->setCurrentIndex( settings.value("style", 0).toInt() );
 	uiSettings.checkPalette->setChecked(false);
 	if (settings.value("checkPalette", false).toBool()) uiSettings.checkPalette->click();
 
-	spinBoxStep->setValue            ( settings.value("timeStep",  1 ).toInt() );
-	comboBoxStep->setCurrentIndex    ( settings.value("timeStepX", 0 ).toInt() );
-	spinBoxTimeX->setValue           ( settings.value("timeX",     25).toInt() );
-	comboBoxTimeType->setCurrentIndex( settings.value("timeType",  0 ).toInt() );
+	widget.spinBoxStep->setValue            ( settings.value("timeStep",  1 ).toInt() );
+	widget.comboBoxStep->setCurrentIndex    ( settings.value("timeStepX", 0 ).toInt() );
+	widget.spinBoxTimeX->setValue           ( settings.value("timeX",     25).toInt() );
+	widget.comboBoxTimeType->setCurrentIndex( settings.value("timeType",  0 ).toInt() );
 
 	uiSettings.checkSave->setChecked   (settings.value("checkSave"   , true ).toBool());
 	uiSettings.checkUpdates->setChecked(false);
 	if (settings.value("checkUpdates", true).toBool()) uiSettings.checkUpdates->click();
 
-	tlBtnTime->setChecked(settings.value("tlBtnTime", false).toBool());
-	tlBtnPlay->setChecked(settings.value("tlBtnPlay", true ).toBool());
+	widget.tlBtnTime->setChecked(settings.value("tlBtnTime", false).toBool());
+	widget.tlBtnPlay->setChecked(settings.value("tlBtnPlay", true ).toBool());
 
 	dlgOptions->satDialog->defaultSat.visibleLabel( settings.value("defaultSat/isVisibleLabel", true).toBool() );
 	dlgOptions->satDialog->defaultSat.visibleLines( settings.value("defaultSat/isVisibleLines", true).toBool() );
@@ -195,17 +195,17 @@ void SWindow::writeSettings() {
 	QSettings settings(QSettings::IniFormat, QSettings::UserScope, "satviewer", "satviewer");
 //	GLSatAbstractWidget *satWidget = dlgOptions->getSatWidget();
 
-	settings.setValue( "time"     , dateTimeEdit->dateTime().toTime_t() );
-	settings.setValue( "timeStep" , spinBoxStep->value()                );
-	settings.setValue( "timeStepX", comboBoxStep->currentIndex()        );
-	settings.setValue( "timeX"    , spinBoxTimeX->value()               );
-	settings.setValue( "timeType" , comboBoxTimeType->currentIndex()    );
+	settings.setValue( "time"     , widget.dateTimeEdit->dateTime().toTime_t() );
+	settings.setValue( "timeStep" , widget.spinBoxStep->value()                );
+	settings.setValue( "timeStepX", widget.comboBoxStep->currentIndex()        );
+	settings.setValue( "timeX"    , widget.spinBoxTimeX->value()               );
+	settings.setValue( "timeType" , widget.comboBoxTimeType->currentIndex()    );
 
 	settings.setValue( "checkSave"   , uiSettings.checkSave->isChecked   () );
 	settings.setValue( "checkUpdates", uiSettings.checkUpdates->isChecked() );
 
-	settings.setValue( "tlBtnTime", tlBtnTime->isChecked() );
-	settings.setValue( "tlBtnPlay", tlBtnPlay->isChecked() );
+	settings.setValue( "tlBtnTime", widget.tlBtnTime->isChecked() );
+	settings.setValue( "tlBtnPlay", widget.tlBtnPlay->isChecked() );
 
 	settings.setValue( "language"    , uiSettings.comboLanguage->currentIndex() );
 	settings.setValue( "style"       , uiSettings.comboStyle->currentIndex()    );
@@ -258,12 +258,12 @@ void SWindow::closeEvent(QCloseEvent *event) {
 }
 
 void SWindow::wheelEvent(QWheelEvent *event) {
-	if (tlBtnTime->isChecked() && !tlBtnPlay->isChecked()) {
+	if (widget.tlBtnTime->isChecked() && !widget.tlBtnPlay->isChecked()) {
 		if (event->delta() > 0) {
-			spinBoxStep->setValue(+abs(spinBoxStep->value()));
+			widget.spinBoxStep->setValue(+abs(widget.spinBoxStep->value()));
 		}
 		if (event->delta() < 0) {
-			spinBoxStep->setValue(-abs(spinBoxStep->value()));
+			widget.spinBoxStep->setValue(-abs(widget.spinBoxStep->value()));
 		}
 		onTimer();
 	}
@@ -272,7 +272,7 @@ void SWindow::wheelEvent(QWheelEvent *event) {
 
 
 void SWindow::onTimeTypeChanged(int index) {
-	timeType = comboBoxTimeType->currentIndex();
+	timeType = widget.comboBoxTimeType->currentIndex();
 }
 
 void SWindow::addZRVMessage(QString text) {
@@ -289,23 +289,23 @@ void SWindow::addZRVMessage(QString text) {
 						"<td width=12%>" + list.at(3) + "</td>"
 						"<td width=18%>" + list.at(4) + " sec.</td>"
 					"</tr></table>";
-	dlgOptions->textZRVList->append(msg);
+	dlgOptions->getWidget()->textZRVList->append(msg);
 }
 
 void SWindow::onTimer() {
-    if (!tlBtnTime->isChecked()) time = QDateTime::currentDateTime().toTime_t();
+    if (!widget.tlBtnTime->isChecked()) time = QDateTime::currentDateTime().toTime_t();
     else {
-            time = dateTimeEdit->dateTime().toTime_t();
+            time = widget.dateTimeEdit->dateTime().toTime_t();
             time += timeStep;
     }
     switch (timeType) {
             case 1:
-                    dateTimeEdit->setTimeSpec(Qt::UTC);
-                    dateTimeEdit->setDateTime(QDateTime::fromTime_t((int)time).toUTC());
+                    widget.dateTimeEdit->setTimeSpec(Qt::UTC);
+                    widget.dateTimeEdit->setDateTime(QDateTime::fromTime_t((int)time).toUTC());
             break;
             case 0:
-                    dateTimeEdit->setTimeSpec(Qt::LocalTime);
-                    dateTimeEdit->setDateTime(QDateTime::fromTime_t((int)time));
+                    widget.dateTimeEdit->setTimeSpec(Qt::LocalTime);
+                    widget.dateTimeEdit->setDateTime(QDateTime::fromTime_t((int)time));
             break;
     }
     satWidget->setTime(time);
@@ -313,36 +313,36 @@ void SWindow::onTimer() {
 
 void SWindow::onPlayClick() {
     //onStepChanged(spinBoxStep->value());
-    if ((tlBtnPlay->isChecked() && tlBtnTime->isChecked()) || !tlBtnTime->isChecked()) timer->start((int)timeX);
+    if ((widget.tlBtnPlay->isChecked() && widget.tlBtnTime->isChecked()) || !widget.tlBtnTime->isChecked()) timer->start((int)timeX);
     else timer->stop();
 }
 
 void SWindow::onTimeClick() {
-    tlBtnPlay->setEnabled(tlBtnTime->isChecked());
-    tlBtnBackward->setEnabled(tlBtnTime->isChecked());
-    tlBtnForward->setEnabled(tlBtnTime->isChecked());
+    widget.tlBtnPlay->setEnabled(widget.tlBtnTime->isChecked());
+    widget.tlBtnBackward->setEnabled(widget.tlBtnTime->isChecked());
+    widget.tlBtnForward->setEnabled(widget.tlBtnTime->isChecked());
     //if (!tlBtnTime->isChecked()) timer->start((int)timeX);
     onPlayClick();
 }
 
 void SWindow::onBackwardClick() {
-    tlBtnForward->setChecked(!tlBtnBackward->isChecked());
-    if (tlBtnBackward->isChecked()) spinBoxStep->setValue(-abs(spinBoxStep->value()));
-    else spinBoxStep->setValue(+abs(spinBoxStep->value()));
-    tlBtnPlay->setChecked(true);
+    widget.tlBtnForward->setChecked(!widget.tlBtnBackward->isChecked());
+    if (widget.tlBtnBackward->isChecked()) widget.spinBoxStep->setValue(-abs(widget.spinBoxStep->value()));
+    else widget.spinBoxStep->setValue(+abs(widget.spinBoxStep->value()));
+    widget.tlBtnPlay->setChecked(true);
     onPlayClick();
 }
 
 void SWindow::onForwardClick() {
-    tlBtnBackward->setChecked(!tlBtnForward->isChecked());
-    if (tlBtnForward->isChecked()) spinBoxStep->setValue(+abs(spinBoxStep->value()));
-    else spinBoxStep->setValue(-abs(spinBoxStep->value()));
-    tlBtnPlay->setChecked(true);
+    widget.tlBtnBackward->setChecked(!widget.tlBtnForward->isChecked());
+    if (widget.tlBtnForward->isChecked()) widget.spinBoxStep->setValue(+abs(widget.spinBoxStep->value()));
+    else widget.spinBoxStep->setValue(-abs(widget.spinBoxStep->value()));
+    widget.tlBtnPlay->setChecked(true);
     onPlayClick();
 }
 
 void SWindow::onStepChanged(int value) {
-	switch (comboBoxStep->currentIndex()) {
+	switch (widget.comboBoxStep->currentIndex()) {
 		case 0:
 			timeStep = 1;
 		break;
@@ -357,9 +357,9 @@ void SWindow::onStepChanged(int value) {
 		break;
 	}
 
-	timeStep *= spinBoxStep->value();
-	tlBtnBackward->setChecked((timeStep < 0));
-	tlBtnForward->setChecked(!tlBtnBackward->isChecked());
+	timeStep *= widget.spinBoxStep->value();
+	widget.tlBtnBackward->setChecked((timeStep < 0));
+	widget.tlBtnForward->setChecked(!widget.tlBtnBackward->isChecked());
 	onPlayClick();
 }
 
@@ -377,12 +377,12 @@ void SWindow::selectLanguage(int value) {
 		m_translator.load(listLang.at(value));
 		qApp->installTranslator(&m_translator);
 	}
-	retranslateUi(this);
-	dlgOptions->retranslateUi(dlgOptions);
+	widget.retranslateUi(this);
+	dlgOptions->getWidget()->retranslateUi(dlgOptions);
 	dlgOptions->satDialog->retranslateUi(dlgOptions->satDialog);
-	dlgOptions->locDialog->retranslateUi(dlgOptions->locDialog);
+	dlgOptions->locDialog->getWidget()->retranslateUi(dlgOptions->locDialog);
 //	dlgOptions->scriptFrame->retranslateUi(dlgOptions->scriptFrame);
-	dlgOptions->tleFrame->retranslateUi(dlgOptions->tleFrame);
+	dlgOptions->tleFrame->getWidget()->retranslateUi(dlgOptions->tleFrame);
 //	dlgOptions->jswList->retranslateUi();
 	satWidget->retranslateUi();
 	uiSettings.comboLanguage->blockSignals(true);
@@ -407,12 +407,12 @@ void SWindow::setSwlVars(Satellite *sat, Location *loc, double *secs) {
 void SWindow::fullScreen() {
     if (isFullScreen()) {
         showNormal();
-        frameTime->show();
+        widget.frameTime->show();
         statusBar()->show();
     }
     else {
         showFullScreen();
-        frameTime->hide();
+        widget.frameTime->hide();
         statusBar()->hide();
     }
 }
@@ -442,10 +442,10 @@ void SWindow::selectPalette(bool value) {
 
 void SWindow::selectGlWidget(int value) {
 	GLSatAbstractWidget *tmp = satWidget;
-	if (satWidget != 0) frameMap->layout()->removeWidget(satWidget);
+	if (satWidget != 0) widget.frameMap->layout()->removeWidget(satWidget);
 	if (value == 0) satWidget = new GLSatWidget();
 	else satWidget = new GLSatWidget3d();
-	frameMap->layout()->addWidget(satWidget);
+	widget.frameMap->layout()->addWidget(satWidget);
 
 	if (dlgOptions != 0) dlgOptions->setSatWidget(satWidget);
 	connect(satWidget, SIGNAL(statusZRVChanged(QString)), this, SLOT(addZRVMessage(QString)));

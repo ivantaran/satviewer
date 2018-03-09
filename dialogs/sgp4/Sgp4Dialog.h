@@ -19,7 +19,7 @@
 #include "../../satviewer/ogl/GLSatAbstractWidget.h"
 #include "../../satviewer/SAbstractObjDialog.h"
 
-class Sgp4Dialog: public SAbstractObjDialog, public Ui::SatDialog {
+class Sgp4Dialog: public SAbstractObjDialog {
     Q_OBJECT
 public:
     Satellite defaultSat;
@@ -34,6 +34,7 @@ protected:
     void showEvent(QShowEvent *event);
 
 private:
+    Ui::SatDialog widget;
     Satellite *m_sat;
     GLSatAbstractWidget *satWidget;
     bool m_fromlist;

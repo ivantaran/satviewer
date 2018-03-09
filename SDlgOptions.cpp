@@ -12,7 +12,7 @@
 #include "../dialogs/sgp4/Sgp4Dialog.h"
 
 SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
-    this->setupUi(this);
+    widget.setupUi(this);
 
 ////    getSObjDialog(satWidget)->show();
 //    satDialog = getSObjDialog(satWidget);
@@ -37,54 +37,54 @@ SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
     dir = QDir::home();
     dir.cd("satviewer/tle");
     tleFrame = new SUpdater(dir.filePath("tle_list.lst"));
-    tleFrame->setParent(tabWidget);
-    stackedWidget->insertWidget(4, tleFrame);// TODO 6
+    tleFrame->setParent(widget.tabWidget);
+    widget.stackedWidget->insertWidget(4, tleFrame);// TODO 6
 
     setSatWidget(satWidget);
 
     //connect(listView->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(selectPage(const QModelIndex &, const QModelIndex &)));
-    connect( btnToolSat     , SIGNAL(clicked()), this, SLOT(selectSatPage     ()) );
-    connect( btnToolLoc     , SIGNAL(clicked()), this, SLOT(selectLocPage     ()) );
-    connect( btnToolZRV     , SIGNAL(clicked()), this, SLOT(selectZrvPage     ()) );
-    connect( btnToolParams  , SIGNAL(clicked()), this, SLOT(selectParamsPage  ()) );
-    connect( btnInfo        , SIGNAL(clicked()), this, SLOT(selectAboutPage   ()) );
-    connect( btnToolSettings, SIGNAL(clicked()), this, SLOT(selectSettingsPage()) );
-    connect( btnToolTle     , SIGNAL(clicked()), this, SLOT(selectTlePage     ()) );
-    connect( btnToolWidgets , SIGNAL(clicked()), this, SLOT(selectWidgetsPage ()) );
-    connect( btnToolMap     , SIGNAL(clicked()), this, SLOT(selectMapPage     ()) );
-    connect( btnAboutQt     , SIGNAL(clicked()), this, SLOT(aboutQt           ()) );
+    connect( widget.btnToolSat     , SIGNAL(clicked()), this, SLOT(selectSatPage     ()) );
+    connect( widget.btnToolLoc     , SIGNAL(clicked()), this, SLOT(selectLocPage     ()) );
+    connect( widget.btnToolZRV     , SIGNAL(clicked()), this, SLOT(selectZrvPage     ()) );
+    connect( widget.btnToolParams  , SIGNAL(clicked()), this, SLOT(selectParamsPage  ()) );
+    connect( widget.btnInfo        , SIGNAL(clicked()), this, SLOT(selectAboutPage   ()) );
+    connect( widget.btnToolSettings, SIGNAL(clicked()), this, SLOT(selectSettingsPage()) );
+    connect( widget.btnToolTle     , SIGNAL(clicked()), this, SLOT(selectTlePage     ()) );
+    connect( widget.btnToolWidgets , SIGNAL(clicked()), this, SLOT(selectWidgetsPage ()) );
+    connect( widget.btnToolMap     , SIGNAL(clicked()), this, SLOT(selectMapPage     ()) );
+    connect( widget.btnAboutQt     , SIGNAL(clicked()), this, SLOT(aboutQt           ()) );
     
     setDb();
     
-    connect(lineEditSatNameFilter, SIGNAL(textChanged(const QString &)), this, SLOT(setFilterSatName(const QString &)));
-    connect(lineEditLocNameFilter, SIGNAL(textChanged(const QString &)), this, SLOT(setFilterLocName(const QString &)));
-    connect(btnSatSqlHelp, SIGNAL(clicked()), this, SLOT(helpSatSql  ()));
-    connect(btnLocSqlHelp, SIGNAL(clicked()), this, SLOT(helpLocSql  ()));
-    connect(btnSatFilter , SIGNAL(clicked()), this, SLOT(setFilterSat()));
-    connect(btnLocFilter , SIGNAL(clicked()), this, SLOT(setFilterLoc()));
+    connect(widget.lineEditSatNameFilter, SIGNAL(textChanged(const QString &)), this, SLOT(setFilterSatName(const QString &)));
+    connect(widget.lineEditLocNameFilter, SIGNAL(textChanged(const QString &)), this, SLOT(setFilterLocName(const QString &)));
+    connect(widget.btnSatSqlHelp, SIGNAL(clicked()), this, SLOT(helpSatSql  ()));
+    connect(widget.btnLocSqlHelp, SIGNAL(clicked()), this, SLOT(helpLocSql  ()));
+    connect(widget.btnSatFilter , SIGNAL(clicked()), this, SLOT(setFilterSat()));
+    connect(widget.btnLocFilter , SIGNAL(clicked()), this, SLOT(setFilterLoc()));
 
-    connect(btnOpenTle    , SIGNAL(clicked()), this, SLOT(loadDbFromTle()));
-    connect(btnOpenLoc    , SIGNAL(clicked()), this, SLOT(loadDbLoc    ()));
-    connect(btnAddDbLoc   , SIGNAL(clicked()), this, SLOT(addDbLoc     ()));
-    connect(btnDeleteDbSat, SIGNAL(clicked()), this, SLOT(deleteDbSat  ()));
-    connect(btnDeleteDbLoc, SIGNAL(clicked()), this, SLOT(deleteDbLoc  ()));
-    connect(btnClearDbSat , SIGNAL(clicked()), this, SLOT(clearDbSat   ()));
-    connect(btnClearDbLoc , SIGNAL(clicked()), this, SLOT(clearDbLoc   ()));
+    connect(widget.btnOpenTle    , SIGNAL(clicked()), this, SLOT(loadDbFromTle()));
+    connect(widget.btnOpenLoc    , SIGNAL(clicked()), this, SLOT(loadDbLoc    ()));
+    connect(widget.btnAddDbLoc   , SIGNAL(clicked()), this, SLOT(addDbLoc     ()));
+    connect(widget.btnDeleteDbSat, SIGNAL(clicked()), this, SLOT(deleteDbSat  ()));
+    connect(widget.btnDeleteDbLoc, SIGNAL(clicked()), this, SLOT(deleteDbLoc  ()));
+    connect(widget.btnClearDbSat , SIGNAL(clicked()), this, SLOT(clearDbSat   ()));
+    connect(widget.btnClearDbLoc , SIGNAL(clicked()), this, SLOT(clearDbLoc   ()));
 
 
-    connect(listViewDBSat, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(addToSatList(const QModelIndex &)));
-    connect(listViewDBLoc, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(addToLocList(const QModelIndex &)));
-    connect(listViewSat, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(changeDbSat()));
-    connect(listViewLoc, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(changeDbLoc()));
-//    connect(scriptFrame->btnRefresh, SIGNAL(clicked()), this, SLOT(scriptParameters()));
-    connect(btnDeleteSatList, SIGNAL(clicked()), this, SLOT(deleteSatList()));
-    connect(btnDeleteLocList, SIGNAL(clicked()), this, SLOT(deleteLocList()));
-    connect(btnAddToSatList , SIGNAL(clicked()), this, SLOT(addToSatList ()));
-    connect(btnAddToLocList , SIGNAL(clicked()), this, SLOT(addToLocList ()));
-    connect(btnClearSatList , SIGNAL(clicked()), this, SLOT(clearSatList ()));
-    connect(btnClearLocList , SIGNAL(clicked()), this, SLOT(clearLocList ()));
-    connect(btnChangeDbSat  , SIGNAL(clicked()), this, SLOT(changeDbSat  ()));
-    connect(btnChangeDbLoc  , SIGNAL(clicked()), this, SLOT(changeDbLoc  ()));
+    connect(widget.listViewDBSat, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(addToSatList(const QModelIndex &)));
+    connect(widget.listViewDBLoc, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(addToLocList(const QModelIndex &)));
+    connect(widget.listViewSat, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(changeDbSat()));
+    connect(widget.listViewLoc, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(changeDbLoc()));
+//    connect(widget.scriptFrame->btnRefresh, SIGNAL(clicked()), this, SLOT(scriptParameters()));
+    connect(widget.btnDeleteSatList, SIGNAL(clicked()), this, SLOT(deleteSatList()));
+    connect(widget.btnDeleteLocList, SIGNAL(clicked()), this, SLOT(deleteLocList()));
+    connect(widget.btnAddToSatList , SIGNAL(clicked()), this, SLOT(addToSatList ()));
+    connect(widget.btnAddToLocList , SIGNAL(clicked()), this, SLOT(addToLocList ()));
+    connect(widget.btnClearSatList , SIGNAL(clicked()), this, SLOT(clearSatList ()));
+    connect(widget.btnClearLocList , SIGNAL(clicked()), this, SLOT(clearLocList ()));
+    connect(widget.btnChangeDbSat  , SIGNAL(clicked()), this, SLOT(changeDbSat  ()));
+    connect(widget.btnChangeDbLoc  , SIGNAL(clicked()), this, SLOT(changeDbLoc  ()));
 }
 
 SDlgOptions::~SDlgOptions() {
@@ -292,24 +292,24 @@ void SDlgOptions::setDb() {
         modelDbSat->fetchMore();
     }
 
-    listViewDBSat->setModel(modelDbSat);
-    connect(listViewDBSat->selectionModel(), 
+    widget.listViewDBSat->setModel(modelDbSat);
+    connect(widget.listViewDBSat->selectionModel(), 
             SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), 
             this, 
             SLOT(selectDbSat(const QModelIndex &, const QModelIndex &))
             );
-    listViewDBSat->setModelColumn(modelDbSat->fieldIndex("name"));
+    widget.listViewDBSat->setModelColumn(modelDbSat->fieldIndex("name"));
 
     mapperSat.setModel(modelDbSat);
-    mapperSat.addMapping(lineEditSatName , modelDbSat->fieldIndex("name")     );
-    mapperSat.addMapping(lineEditSatGroup, modelDbSat->fieldIndex("groupname"));
-    mapperSat.addMapping(lineEditSatI    , modelDbSat->fieldIndex("i")        );
-    mapperSat.addMapping(lineEditSatOmg  , modelDbSat->fieldIndex("omg")      );
-    mapperSat.addMapping(lineEditSatE    , modelDbSat->fieldIndex("e")        );
-    mapperSat.addMapping(lineEditSatW    , modelDbSat->fieldIndex("w")        );
-    mapperSat.addMapping(lineEditSatM0   , modelDbSat->fieldIndex("m0")       );
-    mapperSat.addMapping(lineEditSatN    , modelDbSat->fieldIndex("n")        );
-    mapperSat.addMapping(lineEditSatBStar, modelDbSat->fieldIndex("bstar")    );
+    mapperSat.addMapping(widget.lineEditSatName , modelDbSat->fieldIndex("name")     );
+    mapperSat.addMapping(widget.lineEditSatGroup, modelDbSat->fieldIndex("groupname"));
+    mapperSat.addMapping(widget.lineEditSatI    , modelDbSat->fieldIndex("i")        );
+    mapperSat.addMapping(widget.lineEditSatOmg  , modelDbSat->fieldIndex("omg")      );
+    mapperSat.addMapping(widget.lineEditSatE    , modelDbSat->fieldIndex("e")        );
+    mapperSat.addMapping(widget.lineEditSatW    , modelDbSat->fieldIndex("w")        );
+    mapperSat.addMapping(widget.lineEditSatM0   , modelDbSat->fieldIndex("m0")       );
+    mapperSat.addMapping(widget.lineEditSatN    , modelDbSat->fieldIndex("n")        );
+    mapperSat.addMapping(widget.lineEditSatBStar, modelDbSat->fieldIndex("bstar")    );
     mapperSat.toFirst();
 
     modelDbLoc = new QSqlTableModel(this, db);
@@ -321,18 +321,18 @@ void SDlgOptions::setDb() {
         modelDbLoc->fetchMore();
     }
 
-    listViewDBLoc->setModel(modelDbLoc);
-    connect(listViewDBLoc->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(selectDbLoc(const QModelIndex &, const QModelIndex &)));
-    listViewDBLoc->setModelColumn(modelDbLoc->fieldIndex("name"));
+    widget.listViewDBLoc->setModel(modelDbLoc);
+    connect(widget.listViewDBLoc->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(selectDbLoc(const QModelIndex &, const QModelIndex &)));
+    widget.listViewDBLoc->setModelColumn(modelDbLoc->fieldIndex("name"));
 
     mapperLoc.setModel(modelDbLoc);
-    mapperLoc.addMapping(lineEditLocName   , modelDbLoc->fieldIndex("name")   );
-    mapperLoc.addMapping(lineEditLocLat    , modelDbLoc->fieldIndex("lat")    );
-    mapperLoc.addMapping(lineEditLocLon    , modelDbLoc->fieldIndex("lon")    );
-    mapperLoc.addMapping(lineEditLocHeight , modelDbLoc->fieldIndex("height") );
-    mapperLoc.addMapping(lineEditLocAzimuth, modelDbLoc->fieldIndex("azimuth"));
-    mapperLoc.addMapping(lineEditLocWidth  , modelDbLoc->fieldIndex("sector") );
-    mapperLoc.addMapping(lineEditLocRange  , modelDbLoc->fieldIndex("r")      );
+    mapperLoc.addMapping(widget.lineEditLocName   , modelDbLoc->fieldIndex("name")   );
+    mapperLoc.addMapping(widget.lineEditLocLat    , modelDbLoc->fieldIndex("lat")    );
+    mapperLoc.addMapping(widget.lineEditLocLon    , modelDbLoc->fieldIndex("lon")    );
+    mapperLoc.addMapping(widget.lineEditLocHeight , modelDbLoc->fieldIndex("height") );
+    mapperLoc.addMapping(widget.lineEditLocAzimuth, modelDbLoc->fieldIndex("azimuth"));
+    mapperLoc.addMapping(widget.lineEditLocWidth  , modelDbLoc->fieldIndex("sector") );
+    mapperLoc.addMapping(widget.lineEditLocRange  , modelDbLoc->fieldIndex("r")      );
     mapperLoc.toFirst();
 }
 
@@ -388,14 +388,14 @@ void SDlgOptions::setLoc(Location *loc, QSqlRecord record) {
 }
 
 void SDlgOptions::updateListViewSat() {
-    if (listViewSat->model() != 0) delete listViewSat->model();
+    if (widget.listViewSat->model() != 0) delete widget.listViewSat->model();
     if (satWidget->satList.count() < 1) return;
     QStandardItemModel *model = new QStandardItemModel(satWidget->satList.count(), 0);
     for (int i = 0; i < satWidget->satList.count(); i++)
             model->setItem(i, new QStandardItem(satWidget->satList.at(i)->name()));
-    listViewSat->setModel(model);
+    widget.listViewSat->setModel(model);
     connect(
-            listViewSat->selectionModel(), 
+            widget.listViewSat->selectionModel(), 
             SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), 
             this, 
             SLOT(selectSat(const QModelIndex &, const QModelIndex &))
@@ -403,14 +403,14 @@ void SDlgOptions::updateListViewSat() {
 }
 
 void SDlgOptions::updateListViewLoc() {
-    if (listViewLoc->model() != 0) delete listViewLoc->model();
+    if (widget.listViewLoc->model() != 0) delete widget.listViewLoc->model();
     if (satWidget->locList.count() < 1) return;
     QStandardItemModel *model = new QStandardItemModel(satWidget->locList.count(), 0);
     for (int i = 0; i < satWidget->locList.count(); i++)
             model->setItem(i, new QStandardItem(satWidget->locList.at(i)->name()));
-    listViewLoc->setModel(model);
+    widget.listViewLoc->setModel(model);
     connect(
-            listViewLoc->selectionModel(), 
+            widget.listViewLoc->selectionModel(), 
             SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), 
             this, 
             SLOT(selectLoc(const QModelIndex &, const QModelIndex &))
@@ -439,61 +439,61 @@ uint32_t SDlgOptions::flipRgb(uint32_t rgb) {
 }
 
 void SDlgOptions::addToSatList() {
-    addToSatList(listViewDBSat->currentIndex());
+    addToSatList(widget.listViewDBSat->currentIndex());
 }
 
 void SDlgOptions::deleteSatList() {
-    delFromSatList(listViewSat->currentIndex());
+    delFromSatList(widget.listViewSat->currentIndex());
 }
 
 void SDlgOptions::addToLocList() {
-    addToLocList(listViewDBLoc->currentIndex());
+    addToLocList(widget.listViewDBLoc->currentIndex());
 }
 
 void SDlgOptions::deleteLocList() {
-    delFromLocList(listViewLoc->currentIndex());
+    delFromLocList(widget.listViewLoc->currentIndex());
 }
 
 void SDlgOptions::selectPage(const QModelIndex &current, const QModelIndex &previous) {
     if (!current.isValid()) return;
-    this->stackedWidget->setCurrentIndex(current.row());
+    widget.stackedWidget->setCurrentIndex(current.row());
 }
 
 void SDlgOptions::selectSatPage() {
-    stackedWidget->setCurrentIndex(0);
+    widget.stackedWidget->setCurrentIndex(0);
 }
 
 void SDlgOptions::selectLocPage() {
-    stackedWidget->setCurrentIndex(1);
+    widget.stackedWidget->setCurrentIndex(1);
 }
 
 void SDlgOptions::selectZrvPage() {
-    stackedWidget->setCurrentIndex(2);
+    widget.stackedWidget->setCurrentIndex(2);
 }
 
 void SDlgOptions::selectAboutPage() {
-    stackedWidget->setCurrentIndex(3);
+    widget.stackedWidget->setCurrentIndex(3);
 }
 
 void SDlgOptions::selectParamsPage() {
-    stackedWidget->setCurrentIndex(4);
+    widget.stackedWidget->setCurrentIndex(4);
     scriptParameters();
 }
 
 void SDlgOptions::selectWidgetsPage() {
-    stackedWidget->setCurrentIndex(5);
+    widget.stackedWidget->setCurrentIndex(5);
 }
 
 void SDlgOptions::selectTlePage() {
-    stackedWidget->setCurrentIndex(6);
+    widget.stackedWidget->setCurrentIndex(6);
 }
 
 void SDlgOptions::selectMapPage() {
-    stackedWidget->setCurrentIndex(7);
+    widget.stackedWidget->setCurrentIndex(7);
 }
 
 void SDlgOptions::selectSettingsPage() {
-    stackedWidget->setCurrentIndex(8);
+    widget.stackedWidget->setCurrentIndex(8);
 }
 
 void SDlgOptions::selectDbSat(const QModelIndex &current, const QModelIndex &previous) {
@@ -502,7 +502,7 @@ void SDlgOptions::selectDbSat(const QModelIndex &current, const QModelIndex &pre
     Satellite sat;
     setSat(&sat, modelDbSat->record(current.row()));
     double tm = 86400000.0*(modelDbSat->record(current.row()).value("time").toDouble() - 2440587.5);
-    lineEditSatTime->setText(QDateTime::fromMSecsSinceEpoch((uint64_t)tm).toUTC().toString("dd.MM.yyyy H:mm:ss.zzz"));
+    widget.lineEditSatTime->setText(QDateTime::fromMSecsSinceEpoch((uint64_t)tm).toUTC().toString("dd.MM.yyyy H:mm:ss.zzz"));
 }
 
 void SDlgOptions::selectDbLoc(const QModelIndex &current, const QModelIndex &previous) {
@@ -525,13 +525,13 @@ void SDlgOptions::selectLoc(const QModelIndex &current, const QModelIndex &previ
 void SDlgOptions::setFilterSatName(const QString &line) {
     QString filter = "";
     if (line != "" && line.indexOf('\'') < 0)
-            filter = "name LIKE '" + this->lineEditSatNameFilter->text() + "%'";
+            filter = "name LIKE '" + widget.lineEditSatNameFilter->text() + "%'";
     modelDbSat->setFilter(filter);
 }
 
 void SDlgOptions::setFilterSat() {
-    QString line = lineEditSatFilter->text();
-    if (btnSatFilter->isChecked())
+    QString line = widget.lineEditSatFilter->text();
+    if (widget.btnSatFilter->isChecked())
         modelDbSat->setFilter(line);
     else {
         modelDbSat->setFilter("");
@@ -542,13 +542,13 @@ void SDlgOptions::setFilterSat() {
 void SDlgOptions::setFilterLocName(const QString &line) {
     QString filter = "";
     if (line != "" && line.indexOf('\'') < 0)
-            filter = "name LIKE '" + this->lineEditLocNameFilter->text() + "%'";
+            filter = "name LIKE '" + widget.lineEditLocNameFilter->text() + "%'";
     modelDbLoc->setFilter(filter);
 }
 
 void SDlgOptions::setFilterLoc() {
-    QString line = lineEditLocFilter->text();
-    if (btnLocFilter->isChecked())
+    QString line = widget.lineEditLocFilter->text();
+    if (widget.btnLocFilter->isChecked())
         modelDbLoc->setFilter(line);
     else {
         modelDbLoc->setFilter("");
@@ -654,7 +654,7 @@ void SDlgOptions::clearDbLoc() {
 }
 
 void SDlgOptions::deleteDbSat() {
-    QModelIndexList indexList = listViewDBSat->selectionModel()->selectedIndexes();
+    QModelIndexList indexList = widget.listViewDBSat->selectionModel()->selectedIndexes();
     int count = indexList.count();
     if (count < 1) return;
     for (int i = 0; i < count; i++) modelDbSat->removeRow(indexList.at(i).row());
@@ -662,7 +662,7 @@ void SDlgOptions::deleteDbSat() {
 }
 
 void SDlgOptions::deleteDbLoc() {
-    QModelIndexList indexList = listViewDBLoc->selectionModel()->selectedIndexes();
+    QModelIndexList indexList = widget.listViewDBLoc->selectionModel()->selectedIndexes();
     int count = indexList.count();
     if (count < 1) return;
     for (int i = 0; i < count; i++) modelDbLoc->removeRow(indexList.at(i).row());
@@ -673,7 +673,7 @@ void SDlgOptions::addToSatList(const QModelIndex &index) {
     if (!index.isValid()) return;
     int iRow = index.row();
     Satellite *sat;
-    QModelIndexList indexList = listViewDBSat->selectionModel()->selectedIndexes();
+    QModelIndexList indexList = widget.listViewDBSat->selectionModel()->selectedIndexes();
 
     for (int i = 0; i < indexList.count(); i++) {
         iRow = indexList.value(i).row();
@@ -684,9 +684,9 @@ void SDlgOptions::addToSatList(const QModelIndex &index) {
     }
 
     updateListViewSat();
-    if (listViewDBSat->model() == 0) return;
-    QModelIndex mIndex = listViewDBSat->model()->index(iRow + 1, 0);
-    if (mIndex.isValid()) listViewDBSat->setCurrentIndex(mIndex);
+    if (widget.listViewDBSat->model() == 0) return;
+    QModelIndex mIndex = widget.listViewDBSat->model()->index(iRow + 1, 0);
+    if (mIndex.isValid()) widget.listViewDBSat->setCurrentIndex(mIndex);
     if ((satWidget->indexSat() < 0) && (satWidget->satList.count() > 0)) 
         satWidget->setIndexSat(0);
     satWidget->refreshAll();
@@ -696,7 +696,7 @@ void SDlgOptions::addToLocList(const QModelIndex &index) {
     if (!index.isValid()) return;
     int iRow = index.row();
     Location *loc;
-    QModelIndexList indexList = listViewDBLoc->selectionModel()->selectedIndexes();
+    QModelIndexList indexList = widget.listViewDBLoc->selectionModel()->selectedIndexes();
     for (int i = 0; i < indexList.count(); i++) {
         iRow = indexList.value(i).row();
         loc = new Location();
@@ -706,9 +706,9 @@ void SDlgOptions::addToLocList(const QModelIndex &index) {
     }
 
     updateListViewLoc();
-    if (listViewDBLoc->model() == 0) return;
-    QModelIndex mIndex = listViewDBLoc->model()->index(iRow + 1, 0);
-    if (mIndex.isValid()) listViewDBLoc->setCurrentIndex(mIndex);
+    if (widget.listViewDBLoc->model() == 0) return;
+    QModelIndex mIndex = widget.listViewDBLoc->model()->index(iRow + 1, 0);
+    if (mIndex.isValid()) widget.listViewDBLoc->setCurrentIndex(mIndex);
     if ((satWidget->indexLoc() < 0) && (satWidget->locList.count() > 0)) 
         satWidget->setIndexLoc(0);
     satWidget->refreshAll();
@@ -717,8 +717,8 @@ void SDlgOptions::addToLocList(const QModelIndex &index) {
 void SDlgOptions::delFromSatList(const QModelIndex &index) {
     int iRow = -1;
     if (index.isValid()) iRow = index.row();
-    if (listViewSat->selectionModel() == NULL) return;
-    QModelIndexList indexList = listViewSat->selectionModel()->selectedIndexes();
+    if (widget.listViewSat->selectionModel() == NULL) return;
+    QModelIndexList indexList = widget.listViewSat->selectionModel()->selectedIndexes();
     int count = indexList.count();
     if (count < 1) return;
     Satellite **tmp = new Satellite*[count];
@@ -730,17 +730,17 @@ void SDlgOptions::delFromSatList(const QModelIndex &index) {
 
     delete [] tmp;
     updateListViewSat();
-    if (listViewSat->model() == 0) return;
-    QModelIndex mIndex = listViewSat->model()->index(iRow, 0);
-    if (mIndex.isValid()) listViewSat->setCurrentIndex(mIndex);
+    if (widget.listViewSat->model() == 0) return;
+    QModelIndex mIndex = widget.listViewSat->model()->index(iRow, 0);
+    if (mIndex.isValid()) widget.listViewSat->setCurrentIndex(mIndex);
     satWidget->refreshAll();
 }
 
 void SDlgOptions::delFromLocList(const QModelIndex &index) {
     int iRow = -1;
     if (index.isValid()) iRow = index.row();
-    if (listViewLoc->selectionModel() == NULL) return;
-    QModelIndexList indexList = listViewLoc->selectionModel()->selectedIndexes();
+    if (widget.listViewLoc->selectionModel() == NULL) return;
+    QModelIndexList indexList = widget.listViewLoc->selectionModel()->selectedIndexes();
     int count = indexList.count();
     if (count < 1) return;
     Location **tmp = new Location*[count];
@@ -753,9 +753,9 @@ void SDlgOptions::delFromLocList(const QModelIndex &index) {
 
     delete [] tmp;
     updateListViewLoc();
-    if (listViewLoc->model() == 0) return;
-    QModelIndex mIndex = listViewLoc->model()->index(iRow, 0);
-    if (mIndex.isValid()) listViewLoc->setCurrentIndex(mIndex);
+    if (widget.listViewLoc->model() == 0) return;
+    QModelIndex mIndex = widget.listViewLoc->model()->index(iRow, 0);
+    if (mIndex.isValid()) widget.listViewLoc->setCurrentIndex(mIndex);
     satWidget->refreshAll();
 }
 
@@ -816,10 +816,10 @@ void SDlgOptions::helpLocSql() {
 
 void SDlgOptions::setSatWidget(GLSatAbstractWidget *satWidget) {
     this->satWidget = satWidget;
-    satWidget->settingsWidget->setParent(tabWidget);
+    satWidget->settingsWidget->setParent(widget.tabWidget);
 //    jswList->setDesktop(satWidget);
-    if (stackedWidget->widget(7) != NULL) stackedWidget->removeWidget(stackedWidget->widget(7));
-        stackedWidget->insertWidget(7, satWidget->settingsWidget);
+    if (widget.stackedWidget->widget(7) != NULL) widget.stackedWidget->removeWidget(widget.stackedWidget->widget(7));
+        widget.stackedWidget->insertWidget(7, satWidget->settingsWidget);
         satDialog->setSatWidget(satWidget);
         locDialog->setSatWidget(satWidget);
 }
@@ -829,11 +829,11 @@ void SDlgOptions::aboutQt() {
 }
 
 void SDlgOptions::clearSatList() {
-    listViewSat->selectAll();
-    delFromSatList(listViewSat->currentIndex());
+    widget.listViewSat->selectAll();
+    delFromSatList(widget.listViewSat->currentIndex());
 }
 
 void SDlgOptions::clearLocList() {
-    listViewLoc->selectAll();
-    delFromLocList(listViewLoc->currentIndex());
+    widget.listViewLoc->selectAll();
+    delFromLocList(widget.listViewLoc->currentIndex());
 }

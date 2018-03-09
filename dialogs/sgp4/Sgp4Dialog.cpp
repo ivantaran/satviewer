@@ -12,28 +12,28 @@
 #include "math.h"
 
 Sgp4Dialog::Sgp4Dialog(GLSatAbstractWidget *satWidget) : SAbstractObjDialog(satWidget) {
-    this->setupUi(this);
-    lineEditBStar->setValidator(new QDoubleValidator());
-    lineEditE->setValidator    (new QDoubleValidator());
-    lineEditI->setValidator    (new QDoubleValidator());
-    lineEditM0->setValidator   (new QDoubleValidator());
-    lineEditN->setValidator    (new QDoubleValidator());
-    lineEditOmg->setValidator  (new QDoubleValidator());
-    lineEditTime->setValidator (new QDoubleValidator());
-    lineEditW->setValidator    (new QDoubleValidator());
+    widget.setupUi(this);
+    widget.lineEditBStar->setValidator(new QDoubleValidator());
+    widget.lineEditE->setValidator    (new QDoubleValidator());
+    widget.lineEditI->setValidator    (new QDoubleValidator());
+    widget.lineEditM0->setValidator   (new QDoubleValidator());
+    widget.lineEditN->setValidator    (new QDoubleValidator());
+    widget.lineEditOmg->setValidator  (new QDoubleValidator());
+    widget.lineEditTime->setValidator (new QDoubleValidator());
+    widget.lineEditW->setValidator    (new QDoubleValidator());
     m_sat = 0;
     m_fromlist = true;
     setSatWidget(satWidget);
-    comboModel->addItems(satWidget->satModelList());
+    widget.comboModel->addItems(satWidget->satModelList());
     //connect(btnIcon, SIGNAL(clicked()), this, SLOT(setIcon()));
-    connect(btnColorName , SIGNAL(clicked()), this, SLOT(setColorSatName ()));
-    connect(btnColorZrv  , SIGNAL(clicked()), this, SLOT(setColorSatZrv  ()));
-    connect(btnColorLines, SIGNAL(clicked()), this, SLOT(setColorSatLines()));
-    connect(btnColorTrack, SIGNAL(clicked()), this, SLOT(setColorSatTrack()));
-    connect(btnFont      , SIGNAL(clicked()), this, SLOT(setSatFont      ()));
-    connect(btnDefault   , SIGNAL(clicked()), this, SLOT(setDefault      ()));
-    connect(btnIcon      , SIGNAL(clicked()), this, SLOT(setIcon         ()));
-    connect(comboModel, SIGNAL(currentIndexChanged(int)), this, SLOT(selectModel(int)));
+    connect(widget.btnColorName , SIGNAL(clicked()), this, SLOT(setColorSatName ()));
+    connect(widget.btnColorZrv  , SIGNAL(clicked()), this, SLOT(setColorSatZrv  ()));
+    connect(widget.btnColorLines, SIGNAL(clicked()), this, SLOT(setColorSatLines()));
+    connect(widget.btnColorTrack, SIGNAL(clicked()), this, SLOT(setColorSatTrack()));
+    connect(widget.btnFont      , SIGNAL(clicked()), this, SLOT(setSatFont      ()));
+    connect(widget.btnDefault   , SIGNAL(clicked()), this, SLOT(setDefault      ()));
+    connect(widget.btnIcon      , SIGNAL(clicked()), this, SLOT(setIcon         ()));
+    connect(widget.comboModel, SIGNAL(currentIndexChanged(int)), this, SLOT(selectModel(int)));
 }
 
 Sgp4Dialog::~Sgp4Dialog() {
@@ -60,61 +60,61 @@ void Sgp4Dialog::showEvent(QShowEvent * event) {
     QRgb rgb;
 
     QPixmap pixmap(m_sat->iconName());
-    btnIcon->setIcon(pixmap);
+    widget.btnIcon->setIcon(pixmap);
 
-    spinTrack->setValue(m_sat->track());
-    btnFont->setFont(m_sat->font());
+    widget.spinTrack->setValue(m_sat->track());
+    widget.btnFont->setFont(m_sat->font());
 
-    lineEditName->setText ( m_sat->name() );
-    lineEditI->setText    ( QString::number( m_sat->inclination()*rad2deg,   'g', 16) );
-    lineEditOmg->setText  ( QString::number( m_sat->argLatPerigee()*rad2deg, 'g', 16) );
-    lineEditE->setText    ( QString::number( m_sat->eccentricity(),          'g', 16) );
-    lineEditW->setText    ( QString::number( m_sat->latAscNode()*rad2deg,    'g', 16) );
-    lineEditM0->setText   ( QString::number( m_sat->meanAnomaly()*rad2deg,   'g', 16) );
-    lineEditN->setText    ( QString::number( m_sat->meanMotion()*xpdotp,     'g', 16) );
-    lineEditBStar->setText( QString::number( m_sat->bStar(),                 'g', 16) );
-    spinZRV->setValue     ( m_sat->zrvWidth()*rad2deg );
+    widget.lineEditName->setText ( m_sat->name() );
+    widget.lineEditI->setText    ( QString::number( m_sat->inclination()*rad2deg,   'g', 16) );
+    widget.lineEditOmg->setText  ( QString::number( m_sat->argLatPerigee()*rad2deg, 'g', 16) );
+    widget.lineEditE->setText    ( QString::number( m_sat->eccentricity(),          'g', 16) );
+    widget.lineEditW->setText    ( QString::number( m_sat->latAscNode()*rad2deg,    'g', 16) );
+    widget.lineEditM0->setText   ( QString::number( m_sat->meanAnomaly()*rad2deg,   'g', 16) );
+    widget.lineEditN->setText    ( QString::number( m_sat->meanMotion()*xpdotp,     'g', 16) );
+    widget.lineEditBStar->setText( QString::number( m_sat->bStar(),                 'g', 16) );
+    widget.spinZRV->setValue     ( m_sat->zrvWidth()*rad2deg );
 
-    spinNameX->setValue( (int)m_sat->nameX() );
-    spinNameY->setValue( (int)m_sat->nameY() );
-    spinLines->setValue( m_sat->linesWidth() );
+    widget.spinNameX->setValue( (int)m_sat->nameX() );
+    widget.spinNameY->setValue( (int)m_sat->nameY() );
+    widget.spinLines->setValue( m_sat->linesWidth() );
 
     //		double tm = 86400.0*(m_sat->jEpoch() - 2440587.5);
     //		lineEditSatTime->setText(QDateTime::fromTime_t((int)tm).toString("dd.MM.yyyy H:mm:ss"));
 
     uint64_t tm = (uint64_t)(86400000.0*(m_sat->jEpoch() - 2440587.5));
-    dateTimeEdit->setDateTime(QDateTime::fromMSecsSinceEpoch(tm).toUTC());
-    lineEditTime->setText ( QString::number(m_sat->jEpoch(), 'g', 16) );
+    widget.dateTimeEdit->setDateTime(QDateTime::fromMSecsSinceEpoch(tm).toUTC());
+    widget.lineEditTime->setText ( QString::number(m_sat->jEpoch(), 'g', 16) );
 
-    checkName->setChecked     ( m_sat->isVisibleLabel() );
-    checkTrack->setChecked    ( m_sat->isVisibleTrack() );
-    checkZrv->setChecked      ( m_sat->isVisibleZrv  () );
-    checkZrvLines->setChecked ( m_sat->isVisibleLines() );
-    checkZrvEnable->setChecked( m_sat->isAtctiveZone () );
+    widget.checkName->setChecked     ( m_sat->isVisibleLabel() );
+    widget.checkTrack->setChecked    ( m_sat->isVisibleTrack() );
+    widget.checkZrv->setChecked      ( m_sat->isVisibleZrv  () );
+    widget.checkZrvLines->setChecked ( m_sat->isVisibleLines() );
+    widget.checkZrvEnable->setChecked( m_sat->isAtctiveZone () );
 
     rgb = m_sat->colorLabel();
-    pal = btnColorName->palette();
+    pal = widget.btnColorName->palette();
     pal.setColor(QPalette::Button, QColor::fromRgba(flipRgb(rgb)));
-    btnColorName->setPalette(pal);
+    widget.btnColorName->setPalette(pal);
 
     rgb = m_sat->colorZrv();
-    pal = btnColorZrv->palette();
+    pal = widget.btnColorZrv->palette();
     pal.setColor(QPalette::Button, QColor::fromRgba(flipRgb(rgb)));
-    btnColorZrv->setPalette(pal);
+    widget.btnColorZrv->setPalette(pal);
 
     rgb = m_sat->colorLines();
-    pal = btnColorLines->palette();
+    pal = widget.btnColorLines->palette();
     pal.setColor(QPalette::Button, QColor::fromRgba(flipRgb(rgb)));
-    btnColorLines->setPalette(pal);
+    widget.btnColorLines->setPalette(pal);
 
     rgb = m_sat->colorTrack();
-    pal = btnColorTrack->palette();
+    pal = widget.btnColorTrack->palette();
     pal.setColor(QPalette::Button, QColor::fromRgba(flipRgb(rgb)));
 
-    btnColorTrack->setPalette(pal);
-    comboModel->blockSignals(true);
-    comboModel->setCurrentIndex(m_sat->modelIndex());
-    comboModel->blockSignals(false);
+    widget.btnColorTrack->setPalette(pal);
+    widget.comboModel->blockSignals(true);
+    widget.comboModel->setCurrentIndex(m_sat->modelIndex());
+    widget.comboModel->blockSignals(false);
 }
 
 void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
@@ -131,7 +131,7 @@ void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
 
     if (m_sat == 0) return;
 
-    QString name = lineEditName->text();
+    QString name = widget.lineEditName->text();
     struct ms state;
 //	double i     = lineEditI->text().toDouble()*deg2rad;
 //	double omg   = lineEditOmg->text().toDouble()*deg2rad;
@@ -142,54 +142,54 @@ void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
 //	double bstar = lineEditBStar->text().toDouble();
 //	double epoch = lineEditTime->text().toDouble();
 
-    state.inclo     = lineEditI->text().toDouble()*deg2rad;
-    state.argpo   = lineEditOmg->text().toDouble()*deg2rad;
-    state.ecco     = lineEditE->text().toDouble();
-    state.nodeo     = lineEditW->text().toDouble()*deg2rad;
-    state.mo    = lineEditM0->text().toDouble()*deg2rad;
-    state.no     = lineEditN->text().toDouble()/xpdotp;
-    state.bstar = lineEditBStar->text().toDouble();
-    state.jdsatepoch = lineEditTime->text().toDouble();
+    state.inclo     = widget.lineEditI->text().toDouble()*deg2rad;
+    state.argpo   = widget.lineEditOmg->text().toDouble()*deg2rad;
+    state.ecco     = widget.lineEditE->text().toDouble();
+    state.nodeo     = widget.lineEditW->text().toDouble()*deg2rad;
+    state.mo    = widget.lineEditM0->text().toDouble()*deg2rad;
+    state.no     = widget.lineEditN->text().toDouble()/xpdotp;
+    state.bstar = widget.lineEditBStar->text().toDouble();
+    state.jdsatepoch = widget.lineEditTime->text().toDouble();
     state.consttype = WGS84;
     
 //		double epoch = 	QDateTime::fromString(lineEditSatTime->text(), "dd.MM.yyyy H:mm:ss").toTime_t();
 //		epoch = epoch/86400.0 + 2440587.5;
-    double zrv = spinZRV->value() * deg2rad;
+    double zrv = widget.spinZRV->value() * deg2rad;
 
     m_sat->modelInit((char *)&state, sizeof(state));
     m_sat->setName(name);
     m_sat->setZrv(zrv);
-    m_sat->setTrack(spinTrack->value());
-    m_sat->setFont(btnFont->font());
+    m_sat->setTrack(widget.spinTrack->value());
+    m_sat->setFont(widget.btnFont->font());
 
-    m_sat->setNameX( spinNameX->value() );
-    m_sat->setNameY( spinNameY->value() );
+    m_sat->setNameX( widget.spinNameX->value() );
+    m_sat->setNameY( widget.spinNameY->value() );
 
-    m_sat->setLinesWidth( spinLines->value() );
+    m_sat->setLinesWidth( widget.spinLines->value() );
 
-    m_sat->visibleLabel( checkName->isChecked()      );
-    m_sat->visibleTrack( checkTrack->isChecked()     );
-    m_sat->visibleZrv  ( checkZrv->isChecked()       );
-    m_sat->visibleLines( checkZrvLines->isChecked()  );
-    m_sat->activeZone  ( checkZrvEnable->isChecked() );
+    m_sat->visibleLabel( widget.checkName->isChecked()      );
+    m_sat->visibleTrack( widget.checkTrack->isChecked()     );
+    m_sat->visibleZrv  ( widget.checkZrv->isChecked()       );
+    m_sat->visibleLines( widget.checkZrvLines->isChecked()  );
+    m_sat->activeZone  ( widget.checkZrvEnable->isChecked() );
 
-    pal = btnColorName->palette();
+    pal = widget.btnColorName->palette();
     rgb = pal.color(QPalette::Button).rgba();
     m_sat->setColorLabel(flipRgb(rgb));
 
-    pal = btnColorZrv->palette();
+    pal = widget.btnColorZrv->palette();
     rgb = pal.color(QPalette::Button).rgba();
     m_sat->setColorZrv(flipRgb(rgb));
 
-    pal = btnColorLines->palette();
+    pal = widget.btnColorLines->palette();
     rgb = pal.color(QPalette::Button).rgba();
     m_sat->setColorLines(flipRgb(rgb));
 
-    pal = btnColorTrack->palette();
+    pal = widget.btnColorTrack->palette();
     rgb = pal.color(QPalette::Button).rgba();
     m_sat->setColorTrack(flipRgb(rgb));
 
-    m_sat->setModelIndex(comboModel->currentIndex());
+    m_sat->setModelIndex(widget.comboModel->currentIndex());
 }
 
 void Sgp4Dialog::setBtnColor(QWidget *widget) {
@@ -203,25 +203,25 @@ void Sgp4Dialog::setBtnColor(QWidget *widget) {
 }
 
 void Sgp4Dialog::setColorSatName() {
-    setBtnColor(btnColorName);
+    setBtnColor(widget.btnColorName);
 }
 
 void Sgp4Dialog::setColorSatZrv() {
-    setBtnColor(btnColorZrv);
+    setBtnColor(widget.btnColorZrv);
 }
 
 void Sgp4Dialog::setColorSatLines() {
-    setBtnColor(btnColorLines);
+    setBtnColor(widget.btnColorLines);
 }
 
 void Sgp4Dialog::setColorSatTrack() {
-    setBtnColor(btnColorTrack);
+    setBtnColor(widget.btnColorTrack);
 }
 
 void Sgp4Dialog::setSatFont() {
     bool ok;
-    QFont font = QFontDialog::getFont(&ok, btnFont->font(), this);
-    if (ok) btnFont->setFont(font);
+    QFont font = QFontDialog::getFont(&ok, widget.btnFont->font(), this);
+    if (ok) widget.btnFont->setFont(font);
 }
 
 void Sgp4Dialog::setDefault() {
@@ -251,12 +251,12 @@ void Sgp4Dialog::setIcon() {
     dir.cd("satviewer/icons");
     QString filePath = QFileDialog::getOpenFileName(this, "Open PNG Image", dir.path(), "PNG Images (*.png)");
     if (filePath.isEmpty()) return;
-    btnIcon->setIcon(QPixmap(filePath));
+    widget.btnIcon->setIcon(QPixmap(filePath));
     satWidget->setIcon(m_sat, filePath);
 }
 
 void Sgp4Dialog::setSatWidget(GLSatAbstractWidget *satWidget) { 
     this->satWidget = satWidget; 
-    comboModel->clear();
-    comboModel->addItems(satWidget->satModelList());
+    widget.comboModel->clear();
+    widget.comboModel->addItems(satWidget->satModelList());
 }
