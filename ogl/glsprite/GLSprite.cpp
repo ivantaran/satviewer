@@ -15,6 +15,10 @@ GLSprite::GLSprite(QString fileName, QOpenGLWidget *parentWidget) : SatWidgetObj
     m_x = 0.0;
     m_y = 0.0;
     m_list_index = 0;
+    m_width = 0;
+    m_height = 0;
+    m_angle = 0;
+    
     load(fileName, parentWidget);
 }
 
@@ -33,8 +37,6 @@ void GLSprite::load(QString fileName, QOpenGLWidget *parentWidget) {
     }
 
     widget = parentWidget;
-    wgt_width = 0;
-    wgt_height = 0;
     widget->makeCurrent();
 
     if (!initializeOpenGLFunctions()) {
@@ -43,7 +45,7 @@ void GLSprite::load(QString fileName, QOpenGLWidget *parentWidget) {
     }
     
     if (!image.load(fileName)) {
-        qWarning(QString("pixmap not loaded: %0").arg(fileName).toLocal8Bit().data());
+        qWarning() << QString("pixmap not loaded: %0").arg(fileName);
         m_width = 0;
         m_height = 0;
         m_angle = 0;
@@ -81,23 +83,15 @@ void GLSprite::resize(int w, int h) {
 
 void GLSprite::make() {
     
-    if ((wgt_width != widget->width()) || (wgt_height != widget->height())) {
-        wgt_width = widget->width();
-        wgt_height = widget->height();
-    }
-    else {
-        return;
-    }
-    
-    if ((m_width == 0) || (m_height == 0) || (wgt_width == 0) || (wgt_height == 0)) {
+    if (!m_width || !m_height || !widget->width() || !widget->height()) {
         qWarning("GLSprite::make: invalid QOpenGLWidget");
         glNewList(m_list_index, GL_COMPILE);
         glEndList();
         return;
     }
     
-    GLfloat w = (GLfloat)m_width / wgt_width;
-    GLfloat h = (GLfloat)m_height / wgt_height;
+    GLfloat w = (GLfloat)m_width / widget->width();
+    GLfloat h = (GLfloat)m_height / widget->height();
 
     glNewList(m_list_index, GL_COMPILE);
     glPushAttrib(GL_ENABLE_BIT);
@@ -119,15 +113,14 @@ void GLSprite::make() {
 void GLSprite::exec(float x, float y, float z) {
     Q_UNUSED(z)
 
-    if ((widget == NULL) || (!widget->isValid())) {
+    if (!widget || !widget->isValid()) {
         qWarning("GLSprite::exec: invalid QOpenGLWidget");
         return;
     }
 
-    make();
-    
     m_x = x;
     m_y = y;
+    
     glPushMatrix();
     glTranslatef(m_x, m_y, 0);
     glCallList(m_list_index);

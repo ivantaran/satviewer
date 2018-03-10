@@ -644,7 +644,8 @@ void GLSatWidget::compileSatList() {
             sat->model(m_time);
             
             if (sat->isVisibleZrv() || sat->isVisibleLines()) {
-                compileZRV(sat, sat->isVisibleZrv(), sat->isVisibleLines(), sat->colorZrv(), sat->colorLines());
+                compileZRV(sat, sat->isVisibleZrv(), sat->isVisibleLines(), 
+                        sat->colorZrv(), sat->colorLines());
             }
 
             if (sat->isVisibleTrack()) {
@@ -707,16 +708,16 @@ void GLSatWidget::compileSatList() {
             }
 
             sat->model(m_time);
-            px = sat->longitude()/M_PI;
-            py = -2*sat->latitude()/M_PI;
+            px = sat->longitude() / M_PI;
+            py = -2.0 * sat->latitude() / M_PI;
             if (sat->satWObject) {
-                sat->satWObject->exec(px, py);
+                sat->satWObject->exec(px, py, 0.0);
             }
 
             if (sat->isVisibleLabel()) {
                 renderText(
-                        px + (float)sat->nameX()/width(), 
-                        py + (float)sat->nameY()/height(), 
+                        px + (float)sat->nameX() / width(), 
+                        py + (float)sat->nameY() / height(), 
                         sat->name(), sat->colorLabel(), sat->font());
             }
         }
@@ -726,8 +727,8 @@ void GLSatWidget::compileSatList() {
             sat = satList.first();
         }
         sat->model(m_time);
-        px = sat->longitude()/M_PI;
-        py = -2*sat->latitude()/M_PI;
+        px = sat->longitude() / M_PI;
+        py = -2.0 * sat->latitude() / M_PI;
 //        sprite_current.exec(px, py);
     glEndList();
 }
@@ -747,18 +748,25 @@ void GLSatWidget::compileLocList() {
             loc = locList.at(i);
             compileZrl(loc);
             if (loc->isVisibleLabel()) {
-                px = loc->longitude()/180.0;
-                py = -loc->latitude()/90.0;
-                renderText(px + (float)loc->nameX()/width(), py + (float)loc->nameY()/height(), loc->name(), loc->colorLabel(), loc->font());
+                px = loc->longitude() / 180.0;
+                py = -loc->latitude() / 90.0;
+                renderText(
+                        px + (float)loc->nameX()/width(), 
+                        py + (float)loc->nameY()/height(), 
+                        loc->name(), loc->colorLabel(), loc->font());
             }
         }
 
         loc = currentLoc();
         if (loc == 0) loc = locList.first();
-        px = loc->longitude()/180.0;
-        py = -loc->latitude()/90.0;
-        sprite_current.exec(px, py);
+        px = loc->longitude() / 180.0;
+        py = -loc->latitude() / 90.0;
+        sprite_current.exec(px, py, 0.0);
     glEndList();
+    
+    for (Satellite *sat : satList) {
+        sat->satWObject->make();
+    }
 }
 
 void GLSatWidget::compileEventsList() {
@@ -811,11 +819,11 @@ void GLSatWidget::compileEventsList() {
                 }
             }
 
-            px = loc->longitude()/180.0;
-            py = -loc->latitude()/90.0;
-            loc->satWObject->exec(px, py);
+            px = loc->longitude() / 180.0;
+            py = -loc->latitude() / 90.0;
+            loc->satWObject->exec(px, py, 0.0);
 
-            if (inZRV > 0) sprite_active.exec(px, py);
+            if (inZRV > 0) sprite_active.exec(px, py, 0.0);
         }
     glEndList();
 }

@@ -37,7 +37,7 @@ Satellite::Satellite(void) {
 
     _track = 0.5;
     model_index = 0;
-    satWObject = 0;
+    satWObject = NULL;
     satellite = true;
     location = false;
 //    state = 0;

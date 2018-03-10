@@ -21,13 +21,13 @@ public:
     inline int height() { return m_height; }
     inline int angle() { return m_angle; }
 
-    void load(QString fileName, QOpenGLWidget *parentWidget);
-    void make();
-    void exec(float x = 0, float y = 0, float z = 0);
+    void load(QString fileName, QOpenGLWidget *parentWidget) override;
+    void make() override;
+    void exec(float x, float y, float z) override;
 
 private:
     QImage image;
-    int m_width, m_height, wgt_width, wgt_height;
+    int m_width, m_height;
     float m_x, m_y;
     GLuint m_list_index;
     float m_angle;

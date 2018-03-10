@@ -18,8 +18,10 @@ public:
     SatWidgetObject(QString fileName = QString(), QOpenGLWidget *parentWidget = 0);
     virtual ~SatWidgetObject();
     inline QString fileName() { return file_name; }
-    virtual void exec(float x = 0, float y = 0, float z = 0) {}
+    virtual void exec(float x, float y, float z) {}
     virtual void load(QString fileName, QOpenGLWidget *parentWidget) {}
+    virtual void make() {}
+
 private:
     QString file_name;
 protected:
