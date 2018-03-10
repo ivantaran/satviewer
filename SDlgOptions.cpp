@@ -96,59 +96,46 @@ void SDlgOptions::saveListViewSat() {
     if (satWidget->satList.count() < 1) return;
 
     double const deg2rad = M_PI/180.0;
-    double const xpdotp = 1440.0/(2.0*M_PI);
 
     Satellite *sat;
     QString query;
     db.exec("BEGIN;");
 
-	for (int i = 0; i < satWidget->satList.count(); i++) {
-		sat = satWidget->satList.at(i);
-		query = QString("INSERT INTO sattemp ('i', 'omg', 'e', 'w', 'm0', 'bstar', 'n', "
-						"'time', 'name', 'zrv', 'icon', 'show_label', 'show_track', "
-						"'show_zrv', 'show_lines', 'active_zone', 'color_track', "
-						"'color_label', 'color_zrv', 'color_lines', 'track', 'font', "
-						"'name_x', 'name_y', 'lines_width', 'model_index', 'model_state') "
-						"VALUES(%0, %1, %2, %3, %4, %5, %6, %7, '%8', %9, '%10', %11, %12, "
-						"%13, %14, %15, %16, %17, %18, %19, %20, '%21', %22, %23, %24, %25, :model_state);")
-						.arg(sat->inclination()/deg2rad, 0, 'g', 16)
-						.arg(sat->argLatPerigee()/deg2rad, 0, 'g', 16)
-						.arg(sat->eccentricity(), 0, 'g', 16)
-						.arg(sat->latAscNode()/deg2rad, 0, 'g', 16)
-						.arg(sat->meanAnomaly()/deg2rad, 0, 'g', 16)
-						.arg(sat->bStar(), 0, 'g', 16)
-						.arg(sat->meanMotion()*xpdotp, 0, 'g', 16)
-						.arg(sat->jEpoch(), 0, 'g', 16)
-						.arg(sat->name())
-						.arg(sat->zrvWidth()/deg2rad, 0, 'g', 16)
-						.arg(sat->iconName())
-						.arg(sat->isVisibleLabel())
-						.arg(sat->isVisibleTrack())
-						.arg(sat->isVisibleZrv())
-						.arg(sat->isVisibleLines())
-						.arg(sat->isAtctiveZone())
-						.arg(sat->colorTrack())
-						.arg(sat->colorLabel())
-						.arg(sat->colorZrv())
-						.arg(sat->colorLines())
-						.arg(sat->track(), 0, 'g', 16)
-						.arg(sat->font().toString())
-						.arg(sat->nameX(), 0, 'g', 16)
-						.arg(sat->nameY(), 0, 'g', 16)
-						.arg(sat->linesWidth(), 0, 'g', 16)
-						.arg(sat->modelIndex());
+    for (int i = 0; i < satWidget->satList.count(); i++) {
+        sat = satWidget->satList.at(i);
+        query = QString(
+                "INSERT INTO sattemp ('name', 'zrv', 'icon', 'show_label', "
+                "'show_track', 'show_zrv', 'show_lines', 'active_zone', "
+                "'color_track', 'color_label', 'color_zrv', 'color_lines', "
+                "'track', 'font', 'name_x', 'name_y', 'lines_width', "
+                "'model_index', 'model_state') "
+                "VALUES('%0', %1, '%2', %3, %4, %5, %6, %7, %8, %9, %10, %11, "
+                "%12, '%13', %14, %15, %16, %17, :model_state);")
+                .arg(sat->name())
+                .arg(sat->zrvWidth()/deg2rad, 0, 'g', 16)
+                .arg(sat->iconName())
+                .arg(sat->isVisibleLabel())
+                .arg(sat->isVisibleTrack())
+                .arg(sat->isVisibleZrv())
+                .arg(sat->isVisibleLines())
+                .arg(sat->isAtctiveZone())
+                .arg(sat->colorTrack())
+                .arg(sat->colorLabel())
+                .arg(sat->colorZrv())
+                .arg(sat->colorLines())
+                .arg(sat->track(), 0, 'g', 16)
+                .arg(sat->font().toString())
+                .arg(sat->nameX(), 0, 'g', 16)
+                .arg(sat->nameY(), 0, 'g', 16)
+                .arg(sat->linesWidth(), 0, 'g', 16)
+                .arg(sat->modelIndex());
         QSqlQuery q(db);
         q.prepare(query);
-        printf("state length %d\n", sat->getStateSize());
         QByteArray bytes(sat->getState(), sat->getStateSize());
-        printf("bytes length %d\n", bytes.length());
-        puts(bytes.toHex().data());
         q.bindValue(":model_state", bytes);
         q.exec();
-        puts(q.executedQuery().toLocal8Bit().data());
-//		db.exec(query);
-	}
-	db.exec("COMMIT;");
+    }
+    db.exec("COMMIT;");
 }
 
 void SDlgOptions::saveListViewLoc() {

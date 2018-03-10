@@ -8,8 +8,11 @@
  */
 
 #include "Sgp4Dialog.h"
-#include "../../models/sgp4/sgp_struct.h"
-#include "math.h"
+#include <QPixmapCache>
+#include <QFileDialog>
+#include <QFontDialog>
+#include <QColorDialog>
+#include <QtMath>
 
 Sgp4Dialog::Sgp4Dialog(GLSatAbstractWidget *satWidget) : SAbstractObjDialog(satWidget) {
     widget.setupUi(this);
@@ -54,8 +57,6 @@ uint32_t Sgp4Dialog::flipRgb(uint32_t rgb) {
 void Sgp4Dialog::showEvent(QShowEvent * event) {
     if (m_sat == 0) return;
 
-    double const rad2deg = 180.0/M_PI;
-    double const xpdotp  = 1440.0/(2.0*M_PI);
     QPalette pal;
     QRgb rgb;
 
@@ -64,33 +65,38 @@ void Sgp4Dialog::showEvent(QShowEvent * event) {
 
     widget.spinTrack->setValue(m_sat->track());
     widget.btnFont->setFont(m_sat->font());
+    
+    widget.lineEditName->setText(m_sat->name());
+    widget.lineEditI->setText(QString::number(qRadiansToDegrees(
+        m_sat->inclination()), 'g', 16));
+    widget.lineEditOmg->setText(QString::number(qRadiansToDegrees(
+        m_sat->argLatPerigee()), 'g', 16));
+    widget.lineEditE->setText(QString::number(
+        m_sat->eccentricity(), 'g', 16));
+    widget.lineEditW->setText(QString::number(qRadiansToDegrees(
+        m_sat->latAscNode()), 'g', 16));
+    widget.lineEditM0->setText(QString::number(qRadiansToDegrees(
+        m_sat->meanAnomaly()), 'g', 16));
+    widget.lineEditN->setText(QString::number(qRadiansToDegrees(
+        m_sat->meanMotion()) * 4, 'g', 16));
+    
+    widget.lineEditBStar->setText(QString::number(m_sat->bStar(), 'g', 16));
+    widget.spinZRV->setValue(qRadiansToDegrees(m_sat->zrvWidth()));
 
-    widget.lineEditName->setText ( m_sat->name() );
-    widget.lineEditI->setText    ( QString::number( m_sat->inclination()*rad2deg,   'g', 16) );
-    widget.lineEditOmg->setText  ( QString::number( m_sat->argLatPerigee()*rad2deg, 'g', 16) );
-    widget.lineEditE->setText    ( QString::number( m_sat->eccentricity(),          'g', 16) );
-    widget.lineEditW->setText    ( QString::number( m_sat->latAscNode()*rad2deg,    'g', 16) );
-    widget.lineEditM0->setText   ( QString::number( m_sat->meanAnomaly()*rad2deg,   'g', 16) );
-    widget.lineEditN->setText    ( QString::number( m_sat->meanMotion()*xpdotp,     'g', 16) );
-    widget.lineEditBStar->setText( QString::number( m_sat->bStar(),                 'g', 16) );
-    widget.spinZRV->setValue     ( m_sat->zrvWidth()*rad2deg );
+    widget.spinNameX->setValue((int)m_sat->nameX());
+    widget.spinNameY->setValue((int)m_sat->nameY());
+    widget.spinLines->setValue(m_sat->linesWidth());
 
-    widget.spinNameX->setValue( (int)m_sat->nameX() );
-    widget.spinNameY->setValue( (int)m_sat->nameY() );
-    widget.spinLines->setValue( m_sat->linesWidth() );
+    uint64_t tm = (uint64_t)(86400000.0 * (m_sat->jEpoch() - 2440587.5));
+    widget.dateTimeEdit->setDateTime(
+        QDateTime::fromMSecsSinceEpoch(tm).toUTC());
+    widget.lineEditTime->setText (QString::number(m_sat->jEpoch(), 'g', 16));
 
-    //		double tm = 86400.0*(m_sat->jEpoch() - 2440587.5);
-    //		lineEditSatTime->setText(QDateTime::fromTime_t((int)tm).toString("dd.MM.yyyy H:mm:ss"));
-
-    uint64_t tm = (uint64_t)(86400000.0*(m_sat->jEpoch() - 2440587.5));
-    widget.dateTimeEdit->setDateTime(QDateTime::fromMSecsSinceEpoch(tm).toUTC());
-    widget.lineEditTime->setText ( QString::number(m_sat->jEpoch(), 'g', 16) );
-
-    widget.checkName->setChecked     ( m_sat->isVisibleLabel() );
-    widget.checkTrack->setChecked    ( m_sat->isVisibleTrack() );
-    widget.checkZrv->setChecked      ( m_sat->isVisibleZrv  () );
-    widget.checkZrvLines->setChecked ( m_sat->isVisibleLines() );
-    widget.checkZrvEnable->setChecked( m_sat->isAtctiveZone () );
+    widget.checkName->setChecked(m_sat->isVisibleLabel());
+    widget.checkTrack->setChecked(m_sat->isVisibleTrack());
+    widget.checkZrv->setChecked(m_sat->isVisibleZrv());
+    widget.checkZrvLines->setChecked(m_sat->isVisibleLines());
+    widget.checkZrvEnable->setChecked(m_sat->isAtctiveZone());
 
     rgb = m_sat->colorLabel();
     pal = widget.btnColorName->palette();
@@ -119,42 +125,30 @@ void Sgp4Dialog::showEvent(QShowEvent * event) {
 
 void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
 
-    double const deg2rad = M_PI/180.0;
-    double const xpdotp  = 1440.0/(2.0*M_PI);
     QPalette pal;
     QRgb rgb;
 
     QPixmap pixmap;
     m_fromlist = fromlist;
-    m_sat = sat;
+    m_sat = (Sgp4Model *)sat;
     if (exec() == QDialog::Rejected) return;
 
-    if (m_sat == 0) return;
+    if (m_sat == NULL) return;
 
     QString name = widget.lineEditName->text();
-    struct ms state;
-//	double i     = lineEditI->text().toDouble()*deg2rad;
-//	double omg   = lineEditOmg->text().toDouble()*deg2rad;
-//	double e     = lineEditE->text().toDouble();
-//	double w     = lineEditW->text().toDouble()*deg2rad;
-//	double m0    = lineEditM0->text().toDouble()*deg2rad;
-//	double n     = lineEditN->text().toDouble()/xpdotp;
-//	double bstar = lineEditBStar->text().toDouble();
-//	double epoch = lineEditTime->text().toDouble();
+    sgp4_t state;
 
-    state.inclo     = widget.lineEditI->text().toDouble()*deg2rad;
-    state.argpo   = widget.lineEditOmg->text().toDouble()*deg2rad;
-    state.ecco     = widget.lineEditE->text().toDouble();
-    state.nodeo     = widget.lineEditW->text().toDouble()*deg2rad;
-    state.mo    = widget.lineEditM0->text().toDouble()*deg2rad;
-    state.no     = widget.lineEditN->text().toDouble()/xpdotp;
+    state.incl = qDegreesToRadians(widget.lineEditI->text().toDouble());
+    state.argp = qDegreesToRadians(widget.lineEditOmg->text().toDouble());
+    state.ecc = widget.lineEditE->text().toDouble();
+    state.node = qDegreesToRadians(widget.lineEditW->text().toDouble());
+    state.m = qDegreesToRadians(widget.lineEditM0->text().toDouble());
+    state.n = qDegreesToRadians(widget.lineEditN->text().toDouble() * 0.25);
     state.bstar = widget.lineEditBStar->text().toDouble();
     state.jdsatepoch = widget.lineEditTime->text().toDouble();
     state.consttype = WGS84;
-    
-//		double epoch = 	QDateTime::fromString(lineEditSatTime->text(), "dd.MM.yyyy H:mm:ss").toTime_t();
-//		epoch = epoch/86400.0 + 2440587.5;
-    double zrv = widget.spinZRV->value() * deg2rad;
+
+    double zrv = qDegreesToRadians(widget.spinZRV->value());
 
     m_sat->modelInit((char *)&state, sizeof(state));
     m_sat->setName(name);
@@ -225,7 +219,7 @@ void Sgp4Dialog::setSatFont() {
 }
 
 void Sgp4Dialog::setDefault() {
-    Satellite *sat = m_sat;
+    Sgp4Model *sat = m_sat;
     makeSat(&defaultSat, 0);
     m_sat = sat;
 }
@@ -241,7 +235,7 @@ void Sgp4Dialog::selectModel(int index) {
             return;
         }
         satWidget->selectSatModel(index, pos);
-        m_sat = satWidget->satList.at(pos);
+        m_sat = (Sgp4Model *)satWidget->satList.at(pos);
     }
     else m_sat->setModelIndex(index);
 }

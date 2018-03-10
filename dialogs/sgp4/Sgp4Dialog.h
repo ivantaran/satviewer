@@ -10,19 +10,14 @@
 
 #include <inttypes.h>
 #include "ui_sgp4.h"
-#include <QDialog>
-#include <QPixmapCache>
-#include <QFileDialog>
-#include <QFontDialog>
-#include <QColorDialog>
-#include "../../satviewer/satutils/Satellite.h"
+#include "../../satviewer/models/sgp4/Sgp4Model.h"
 #include "../../satviewer/ogl/GLSatAbstractWidget.h"
 #include "../../satviewer/SAbstractObjDialog.h"
 
 class Sgp4Dialog: public SAbstractObjDialog {
     Q_OBJECT
 public:
-    Satellite defaultSat;
+    Sgp4Model defaultSat;
     Sgp4Dialog(GLSatAbstractWidget *satWidget);
     virtual ~Sgp4Dialog();
 
@@ -35,7 +30,7 @@ protected:
 
 private:
     Ui::SatDialog widget;
-    Satellite *m_sat;
+    Sgp4Model *m_sat;
     GLSatAbstractWidget *satWidget;
     bool m_fromlist;
     void setBtnColor(QWidget *widget);

@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1334</width>
-    <height>722</height>
+    <width>1280</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -92,17 +92,11 @@
        </item>
        <item>
         <widget class="QFrame" name="frameTime">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>32</height>
-          </size>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <property name="spacing">
@@ -136,12 +130,12 @@
             </property>
             <property name="icon">
              <iconset resource="SatViewer.qrc">
-              <normaloff>:/toolbar/utilities.png</normaloff>:/toolbar/utilities.png</iconset>
+              <normaloff>:/toolbar/menu.svg</normaloff>:/toolbar/menu.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>48</width>
+              <height>48</height>
              </size>
             </property>
             <property name="autoRaise">
@@ -197,16 +191,10 @@
              <bool>true</bool>
             </property>
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16777215</height>
-             </size>
             </property>
             <property name="specialValueText">
              <string notr="true"/>
@@ -228,7 +216,7 @@
           <item>
            <widget class="QComboBox" name="comboBoxTimeType">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -281,12 +269,12 @@
             </property>
             <property name="icon">
              <iconset resource="SatViewer.qrc">
-              <normaloff>:/toolbar/player_eject.png</normaloff>:/toolbar/player_eject.png</iconset>
+              <normaloff>:/toolbar/down-arrow.svg</normaloff>:/toolbar/down-arrow.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>48</width>
+              <height>48</height>
              </size>
             </property>
             <property name="checkable">
@@ -313,13 +301,13 @@
             </property>
             <property name="icon">
              <iconset resource="SatViewer.qrc">
-              <normaloff>:/toolbar/player_play.png</normaloff>
-              <normalon>:/toolbar/player_pause.png</normalon>:/toolbar/player_play.png</iconset>
+              <normaloff>:/toolbar/play-button.svg</normaloff>
+              <normalon>:/toolbar/pause.svg</normalon>:/toolbar/play-button.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>48</width>
+              <height>48</height>
              </size>
             </property>
             <property name="checkable">
@@ -346,12 +334,12 @@
             </property>
             <property name="icon">
              <iconset resource="SatViewer.qrc">
-              <normaloff>:/toolbar/player_rew.png</normaloff>:/toolbar/player_rew.png</iconset>
+              <normaloff>:/toolbar/left-arrow-1.svg</normaloff>:/toolbar/left-arrow-1.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>48</width>
+              <height>48</height>
              </size>
             </property>
             <property name="checkable">
@@ -381,12 +369,12 @@
             </property>
             <property name="icon">
              <iconset resource="SatViewer.qrc">
-              <normaloff>:/toolbar/player_fwd.png</normaloff>:/toolbar/player_fwd.png</iconset>
+              <normaloff>:/toolbar/right-arrow-1.svg</normaloff>:/toolbar/right-arrow-1.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>48</width>
+              <height>48</height>
              </size>
             </property>
             <property name="checkable">
@@ -410,7 +398,7 @@
           <item>
            <widget class="QLabel" name="label_2">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -426,7 +414,7 @@
           <item>
            <widget class="QSpinBox" name="spinBoxStep">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -442,7 +430,7 @@
           <item>
            <widget class="QComboBox" name="comboBoxStep">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -471,6 +459,12 @@
           </item>
           <item>
            <widget class="QLabel" name="label_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string> X </string>
             </property>
@@ -479,7 +473,7 @@
           <item>
            <widget class="QSpinBox" name="spinBoxTimeX">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -524,12 +518,12 @@
             </property>
             <property name="icon">
              <iconset resource="SatViewer.qrc">
-              <normaloff>:/toolbar/fullscreen.png</normaloff>:/toolbar/fullscreen.png</iconset>
+              <normaloff>:/toolbar/export.svg</normaloff>:/toolbar/export.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>48</width>
+              <height>48</height>
              </size>
             </property>
             <property name="autoRaise">
@@ -560,12 +554,12 @@
             </property>
             <property name="icon">
              <iconset resource="SatViewer.qrc">
-              <normaloff>:/toolbar/exit.png</normaloff>:/toolbar/exit.png</iconset>
+              <normaloff>:/toolbar/power.svg</normaloff>:/toolbar/power.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>24</width>
-              <height>24</height>
+              <width>48</width>
+              <height>48</height>
              </size>
             </property>
             <property name="autoRaise">

@@ -14,7 +14,7 @@
 #define WGS72 1
 #define WGS84 2
 
-struct ms {
+typedef struct {
     int consttype;
     double jdsatepoch; 
     double bstar; 
@@ -24,7 +24,7 @@ struct ms {
     double node; 
     double m; 
     double n;    
-};
+} sgp4_t;
 
 class Sgp4Model : public Satellite {
 public:
@@ -35,9 +35,17 @@ public:
     int model(double time) override;
     char *getState() override;
     int getStateSize() override;
+    double eccentricity () const { return state.ecc; }
+    double inclination  () const { return state.incl; }
+    double meanAnomaly  () const { return state.m; }
+    double meanMotion   () override { return state.n; }
+    double argLatPerigee() const { return state.argp; }
+    double latAscNode   () const { return state.node; }
+    double bStar        () const { return state.bstar; }
+    double jEpoch       () const { return state.jdsatepoch; }
     
 private:
-    struct ms state;
+    sgp4_t state;
     int error;
     char method;
     /* Near Earth */

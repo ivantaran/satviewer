@@ -713,7 +713,12 @@ void GLSatWidget::compileSatList() {
                 sat->satWObject->exec(px, py);
             }
 
-            if (sat->isVisibleLabel()) renderText(px + (float)sat->nameX()/width(), py + (float)sat->nameY()/height(), sat->name(), sat->colorLabel(), sat->font());
+            if (sat->isVisibleLabel()) {
+                renderText(
+                        px + (float)sat->nameX()/width(), 
+                        py + (float)sat->nameY()/height(), 
+                        sat->name(), sat->colorLabel(), sat->font());
+            }
         }
 
         sat = currentSat();

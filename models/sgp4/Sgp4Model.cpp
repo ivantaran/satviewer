@@ -13,13 +13,14 @@
 #include <string.h>
 #include <math.h>
 
+// TODO !!! remove this defines
 #define PI 3.14159265358979323846
 #define temp4 1.0 + cos(PI-1.0e-9)
 #define twopi 2.0*PI
 #define x2o3 2.0/3.0
 
 Sgp4Model *Sgp4Model::getSatModel() {
-    puts("sgp model sat added");
+    qWarning("sgp model sat added");
     return new Sgp4Model();
 }
 
@@ -39,13 +40,13 @@ int Sgp4Model::getStateSize() {
 }
 
 int Sgp4Model::modelInit(char *state, int size) {
-    if (size != sizeof(struct ms)) {
+    if (size != sizeof(sgp4_t)) {
         qWarning("error Sgp4Model::modelInit");
         return - 1;
     }
-    struct ms *s = (struct ms *)state;
+    sgp4_t *s = (sgp4_t *)state;
 
-    Satellite::modelInit(state, sizeof(struct ms));
+    Satellite::modelInit(state, sizeof(sgp4_t));
     
     this->state.argp        = s->argp;
     this->state.bstar       = s->bstar;
