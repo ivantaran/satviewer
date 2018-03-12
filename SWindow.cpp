@@ -42,7 +42,7 @@ SWindow::SWindow() {
     dlgOptions->getWidget()->stackedWidget->insertWidget(8, &settingsWidget);
     uiSettings.comboStyle->addItem(tr("system (need restart)"));
     uiSettings.comboStyle->addItems(QStyleFactory::keys());
-    //	uiSettings.comboSatModel->addItems(satWidget->satModelList());
+    //    uiSettings.comboSatModel->addItems(satWidget->satModelList());
 
     mapLayout->addWidget(satWidget);
     widget.frameMap->setLayout(mapLayout);
@@ -57,14 +57,14 @@ SWindow::SWindow() {
     path.cd("satviewer/widgets");
     shcFullScreen = new QShortcut(QKeySequence("Ctrl+F"), this);
     shcEscFullScreen = new QShortcut(QKeySequence("Esc"), this);
-//    dlgOptions->jswList->init(this->frameMap, path.path());
+    dlgOptions->jswList->init(widget.frameMap, path.path());
 
     uCheck = new UCheck(this, 20112, "http://satviewer.net/version/current.txt");
 
     connect(uiSettings.comboStyle   , SIGNAL(currentIndexChanged(int)), this, SLOT(selectStyle   (int)));
     connect(uiSettings.comboGlWidget, SIGNAL(currentIndexChanged(int)), this, SLOT(selectGlWidget(int)));
     connect(uiSettings.btnPrintScr,  SIGNAL(clicked()), this, SLOT(onBtnPrintScrClicked()));
-    //	connect(uiSettings.comboSatModel, SIGNAL(currentIndexChanged(int)), this, SLOT(onSatModelChanged(int)));
+    //    connect(uiSettings.comboSatModel, SIGNAL(currentIndexChanged(int)), this, SLOT(onSatModelChanged(int)));
     connect(uiSettings.checkPalette, SIGNAL(clicked(bool)), this, SLOT(selectPalette(bool)));
     connect(uiSettings.checkUpdates, SIGNAL(clicked(bool)), this, SLOT(checkVersion (bool)));
     connect(shcFullScreen, SIGNAL(activated()), this, SLOT(fullScreen()));
@@ -86,7 +86,7 @@ SWindow::SWindow() {
     connect(satWidget, SIGNAL(currentChanged(Satellite*, Location*, double*)), this, SLOT(setSwlVars(Satellite*, Location*, double*)));
     connect(satWidget, SIGNAL(initialized()), this, SLOT(readSettings()));
 //    readSettings();
-    //	enumSatModelList();
+    //    enumSatModelList();
 }
 
 SWindow::~SWindow() {
@@ -97,7 +97,7 @@ void SWindow::readStrings() {
     QDir dir = QDir::home();
     dir.cd(QString("satviewer").append(QDir::separator()).append("translations"));
 
-    //	QString lang;
+    //    QString lang;
     uiSettings.comboLanguage->clear();
     uiSettings.comboLanguage->addItem("English");
     listLang = dir.entryList(QStringList("*.qm"), QDir::Files, QDir::Name);
@@ -113,143 +113,143 @@ void SWindow::readStrings() {
 }
 
 void SWindow::readSettings() {
-	QDir dir = QDir::home();
-	QSettings::setUserIniPath(dir.path());
-	QSettings settings(QSettings::IniFormat, QSettings::UserScope, "satviewer", "satviewer");
-	settings.setIniCodec("UTF-8");
+    QDir dir = QDir::home();
+    QSettings::setUserIniPath(dir.path());
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "satviewer", "satviewer");
+    settings.setIniCodec("UTF-8");
         
-	readStrings();
-	uiSettings.comboLanguage->setCurrentIndex(settings.value("language", 0).toInt());
+    readStrings();
+    uiSettings.comboLanguage->setCurrentIndex(settings.value("language", 0).toInt());
         
-//	GLSatAbstractWidget *satWidget = dlgOptions->getSatWidget();
-	widget.dateTimeEdit->setDateTime(QDateTime::fromTime_t(settings.value("time", QDateTime::currentDateTime().toTime_t()).toUInt()));
-	//time = settings.value("time", QDateTime::currentDateTime().toTime_t()).toDouble();
+//    GLSatAbstractWidget *satWidget = dlgOptions->getSatWidget();
+    widget.dateTimeEdit->setDateTime(QDateTime::fromTime_t(settings.value("time", QDateTime::currentDateTime().toTime_t()).toUInt()));
+    //time = settings.value("time", QDateTime::currentDateTime().toTime_t()).toDouble();
 
-	uiSettings.comboStyle->setCurrentIndex( settings.value("style", 0).toInt() );
-	uiSettings.checkPalette->setChecked(false);
-	if (settings.value("checkPalette", false).toBool()) uiSettings.checkPalette->click();
+    uiSettings.comboStyle->setCurrentIndex( settings.value("style", 0).toInt() );
+    uiSettings.checkPalette->setChecked(false);
+    if (settings.value("checkPalette", false).toBool()) uiSettings.checkPalette->click();
 
-	widget.spinBoxStep->setValue            ( settings.value("timeStep",  1 ).toInt() );
-	widget.comboBoxStep->setCurrentIndex    ( settings.value("timeStepX", 0 ).toInt() );
-	widget.spinBoxTimeX->setValue           ( settings.value("timeX",     25).toInt() );
-	widget.comboBoxTimeType->setCurrentIndex( settings.value("timeType",  0 ).toInt() );
+    widget.spinBoxStep->setValue            ( settings.value("timeStep",  1 ).toInt() );
+    widget.comboBoxStep->setCurrentIndex    ( settings.value("timeStepX", 0 ).toInt() );
+    widget.spinBoxTimeX->setValue           ( settings.value("timeX",     25).toInt() );
+    widget.comboBoxTimeType->setCurrentIndex( settings.value("timeType",  0 ).toInt() );
 
-	uiSettings.checkSave->setChecked   (settings.value("checkSave"   , true ).toBool());
-	uiSettings.checkUpdates->setChecked(false);
-	if (settings.value("checkUpdates", true).toBool()) uiSettings.checkUpdates->click();
+    uiSettings.checkSave->setChecked   (settings.value("checkSave"   , true ).toBool());
+    uiSettings.checkUpdates->setChecked(false);
+    if (settings.value("checkUpdates", true).toBool()) uiSettings.checkUpdates->click();
 
-	widget.tlBtnTime->setChecked(settings.value("tlBtnTime", false).toBool());
-	widget.tlBtnPlay->setChecked(settings.value("tlBtnPlay", true ).toBool());
+    widget.tlBtnTime->setChecked(settings.value("tlBtnTime", false).toBool());
+    widget.tlBtnPlay->setChecked(settings.value("tlBtnPlay", true ).toBool());
 
-	dlgOptions->satDialog->defaultSat.visibleLabel( settings.value("defaultSat/isVisibleLabel", true).toBool() );
-	dlgOptions->satDialog->defaultSat.visibleLines( settings.value("defaultSat/isVisibleLines", true).toBool() );
-	dlgOptions->satDialog->defaultSat.visibleTrack( settings.value("defaultSat/isVisibleTrack", true).toBool() );
-	dlgOptions->satDialog->defaultSat.visibleZrv  ( settings.value("defaultSat/isVisibleZrv"  , true).toBool() );
+    dlgOptions->satDialog->defaultSat.visibleLabel( settings.value("defaultSat/isVisibleLabel", true).toBool() );
+    dlgOptions->satDialog->defaultSat.visibleLines( settings.value("defaultSat/isVisibleLines", true).toBool() );
+    dlgOptions->satDialog->defaultSat.visibleTrack( settings.value("defaultSat/isVisibleTrack", true).toBool() );
+    dlgOptions->satDialog->defaultSat.visibleZrv  ( settings.value("defaultSat/isVisibleZrv"  , true).toBool() );
 
-	dlgOptions->satDialog->defaultSat.setColorLabel( settings.value("defaultSat/colorLabel", 0x0000FFFF).toUInt() );
-	dlgOptions->satDialog->defaultSat.setColorLines( settings.value("defaultSat/colorLines", 0xFF45772D).toUInt() );
-	dlgOptions->satDialog->defaultSat.setColorTrack( settings.value("defaultSat/colorTrack", 0xFF00FF55).toUInt() );
-	dlgOptions->satDialog->defaultSat.setColorZrv  ( settings.value("defaultSat/colorZrv"  , 0x1000AA00).toUInt() );
+    dlgOptions->satDialog->defaultSat.setColorLabel( settings.value("defaultSat/colorLabel", 0x0000FFFF).toUInt() );
+    dlgOptions->satDialog->defaultSat.setColorLines( settings.value("defaultSat/colorLines", 0xFF45772D).toUInt() );
+    dlgOptions->satDialog->defaultSat.setColorTrack( settings.value("defaultSat/colorTrack", 0xFF00FF55).toUInt() );
+    dlgOptions->satDialog->defaultSat.setColorZrv  ( settings.value("defaultSat/colorZrv"  , 0x1000AA00).toUInt() );
 
-	QFont font;
-	font.fromString(settings.value( "defaultSat/font", QFont().toString()).toString() );
-	dlgOptions->satDialog->defaultSat.setFont(font);
-	dlgOptions->satDialog->defaultSat.setTrack( settings.value("defaultSat/track"   , 0.5).toDouble() );
-	dlgOptions->satDialog->defaultSat.setZrv  ( settings.value("defaultSat/zrvWidth", 0.0).toDouble() );
-	dlgOptions->satDialog->defaultSat.setNameX( settings.value("defaultSat/nameX"   , 0.0).toDouble() );
-	dlgOptions->satDialog->defaultSat.setNameY( settings.value("defaultSat/nameY"   , 0.0).toDouble() );
-	dlgOptions->satDialog->defaultSat.setLinesWidth( settings.value("defaultSat/linesWidth"   , 1.0).toDouble() );
-	dlgOptions->satDialog->defaultSat.setModelIndex(settings.value("defaultSat/modelIndex"  , 0).toInt());
+    QFont font;
+    font.fromString(settings.value( "defaultSat/font", QFont().toString()).toString() );
+    dlgOptions->satDialog->defaultSat.setFont(font);
+    dlgOptions->satDialog->defaultSat.setTrack( settings.value("defaultSat/track"   , 0.5).toDouble() );
+    dlgOptions->satDialog->defaultSat.setZrv  ( settings.value("defaultSat/zrvWidth", 0.0).toDouble() );
+    dlgOptions->satDialog->defaultSat.setNameX( settings.value("defaultSat/nameX"   , 0.0).toDouble() );
+    dlgOptions->satDialog->defaultSat.setNameY( settings.value("defaultSat/nameY"   , 0.0).toDouble() );
+    dlgOptions->satDialog->defaultSat.setLinesWidth( settings.value("defaultSat/linesWidth"   , 1.0).toDouble() );
+    dlgOptions->satDialog->defaultSat.setModelIndex(settings.value("defaultSat/modelIndex"  , 0).toInt());
 
-	dlgOptions->locDialog->defaultLoc.visibleLabel( settings.value("defaultLoc/isVisibleLabel", true ).toBool() );
-	dlgOptions->locDialog->defaultLoc.visibleLines( settings.value("defaultLoc/isVisibleLines", false ).toBool() );
-	dlgOptions->locDialog->defaultLoc.visibleZrv  ( settings.value("defaultLoc/isVisibleZrv"  , false).toBool() );
+    dlgOptions->locDialog->defaultLoc.visibleLabel( settings.value("defaultLoc/isVisibleLabel", true ).toBool() );
+    dlgOptions->locDialog->defaultLoc.visibleLines( settings.value("defaultLoc/isVisibleLines", false ).toBool() );
+    dlgOptions->locDialog->defaultLoc.visibleZrv  ( settings.value("defaultLoc/isVisibleZrv"  , false).toBool() );
 
-	dlgOptions->locDialog->defaultLoc.setColorLabel( settings.value("defaultLoc/colorLabel", 0x0000FFFF).toUInt() );
-	dlgOptions->locDialog->defaultLoc.setColorLines( settings.value("defaultLoc/colorLines", 0xFF00FFFF).toUInt() );
-	dlgOptions->locDialog->defaultLoc.setColorZrv  ( settings.value("defaultLoc/colorZrv"  , 0x2000FFFF).toUInt() );
+    dlgOptions->locDialog->defaultLoc.setColorLabel( settings.value("defaultLoc/colorLabel", 0x0000FFFF).toUInt() );
+    dlgOptions->locDialog->defaultLoc.setColorLines( settings.value("defaultLoc/colorLines", 0xFF00FFFF).toUInt() );
+    dlgOptions->locDialog->defaultLoc.setColorZrv  ( settings.value("defaultLoc/colorZrv"  , 0x2000FFFF).toUInt() );
 
-	font.fromString(settings.value( "defaultLoc/font", QFont().toString()).toString() );
-	dlgOptions->locDialog->defaultLoc.setFont(font);
+    font.fromString(settings.value( "defaultLoc/font", QFont().toString()).toString() );
+    dlgOptions->locDialog->defaultLoc.setFont(font);
 
-	dlgOptions->locDialog->defaultLoc.setZrlAzimuth( settings.value("defaultLoc/zrlAzimuth", 0).toDouble() );
-	dlgOptions->locDialog->defaultLoc.setZrlRange  ( settings.value("defaultLoc/zrlRange"  , 0).toDouble() );
-	dlgOptions->locDialog->defaultLoc.setZrlWidth  ( settings.value("defaultLoc/zrlWidth"  , 0).toDouble() );
-	dlgOptions->locDialog->defaultLoc.setNameX     ( settings.value("defaultLoc/nameX"   , 0.0).toDouble() );
-	dlgOptions->locDialog->defaultLoc.setNameY     ( settings.value("defaultLoc/nameY"   , 0.0).toDouble() );
-	dlgOptions->locDialog->defaultLoc.setLinesWidth( settings.value("defaultLoc/linesWidth"   , 1.0).toDouble() );
+    dlgOptions->locDialog->defaultLoc.setZrlAzimuth( settings.value("defaultLoc/zrlAzimuth", 0).toDouble() );
+    dlgOptions->locDialog->defaultLoc.setZrlRange  ( settings.value("defaultLoc/zrlRange"  , 0).toDouble() );
+    dlgOptions->locDialog->defaultLoc.setZrlWidth  ( settings.value("defaultLoc/zrlWidth"  , 0).toDouble() );
+    dlgOptions->locDialog->defaultLoc.setNameX     ( settings.value("defaultLoc/nameX"   , 0.0).toDouble() );
+    dlgOptions->locDialog->defaultLoc.setNameY     ( settings.value("defaultLoc/nameY"   , 0.0).toDouble() );
+    dlgOptions->locDialog->defaultLoc.setLinesWidth( settings.value("defaultLoc/linesWidth"   , 1.0).toDouble() );
 
-	dlgOptions->loadListViewSat();
-	dlgOptions->loadListViewLoc();
-	if (satWidget->satList.count() > 0) satWidget->setIndexSat(0);
-	if (satWidget->locList.count() > 0) satWidget->setIndexLoc(0);
-	onStepChanged(0);
-	onTimeClick();
-	onTimer();
+    dlgOptions->loadListViewSat();
+    dlgOptions->loadListViewLoc();
+    if (satWidget->satList.count() > 0) satWidget->setIndexSat(0);
+    if (satWidget->locList.count() > 0) satWidget->setIndexLoc(0);
+    onStepChanged(0);
+    onTimeClick();
+    onTimer();
 }
 
 void SWindow::writeSettings() {
-	if (!uiSettings.checkSave->isChecked()) return;
+    if (!uiSettings.checkSave->isChecked()) return;
 
-	QSettings::setUserIniPath(QDir::home().path());
-	QSettings settings(QSettings::IniFormat, QSettings::UserScope, "satviewer", "satviewer");
-//	GLSatAbstractWidget *satWidget = dlgOptions->getSatWidget();
+    QSettings::setUserIniPath(QDir::home().path());
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "satviewer", "satviewer");
+//    GLSatAbstractWidget *satWidget = dlgOptions->getSatWidget();
 
-	settings.setValue( "time"     , widget.dateTimeEdit->dateTime().toTime_t() );
-	settings.setValue( "timeStep" , widget.spinBoxStep->value()                );
-	settings.setValue( "timeStepX", widget.comboBoxStep->currentIndex()        );
-	settings.setValue( "timeX"    , widget.spinBoxTimeX->value()               );
-	settings.setValue( "timeType" , widget.comboBoxTimeType->currentIndex()    );
+    settings.setValue( "time"     , widget.dateTimeEdit->dateTime().toTime_t() );
+    settings.setValue( "timeStep" , widget.spinBoxStep->value()                );
+    settings.setValue( "timeStepX", widget.comboBoxStep->currentIndex()        );
+    settings.setValue( "timeX"    , widget.spinBoxTimeX->value()               );
+    settings.setValue( "timeType" , widget.comboBoxTimeType->currentIndex()    );
 
-	settings.setValue( "checkSave"   , uiSettings.checkSave->isChecked   () );
-	settings.setValue( "checkUpdates", uiSettings.checkUpdates->isChecked() );
+    settings.setValue( "checkSave"   , uiSettings.checkSave->isChecked   () );
+    settings.setValue( "checkUpdates", uiSettings.checkUpdates->isChecked() );
 
-	settings.setValue( "tlBtnTime", widget.tlBtnTime->isChecked() );
-	settings.setValue( "tlBtnPlay", widget.tlBtnPlay->isChecked() );
+    settings.setValue( "tlBtnTime", widget.tlBtnTime->isChecked() );
+    settings.setValue( "tlBtnPlay", widget.tlBtnPlay->isChecked() );
 
-	settings.setValue( "language"    , uiSettings.comboLanguage->currentIndex() );
-	settings.setValue( "style"       , uiSettings.comboStyle->currentIndex()    );
-	settings.setValue( "checkPalette", uiSettings.checkPalette->isChecked()     );
+    settings.setValue( "language"    , uiSettings.comboLanguage->currentIndex() );
+    settings.setValue( "style"       , uiSettings.comboStyle->currentIndex()    );
+    settings.setValue( "checkPalette", uiSettings.checkPalette->isChecked()     );
 
-	settings.setValue( "defaultSat/isVisibleLabel", dlgOptions->satDialog->defaultSat.isVisibleLabel() );
-	settings.setValue( "defaultSat/isVisibleLines", dlgOptions->satDialog->defaultSat.isVisibleLines() );
-	settings.setValue( "defaultSat/isVisibleTrack", dlgOptions->satDialog->defaultSat.isVisibleTrack() );
-	settings.setValue( "defaultSat/isVisibleZrv"  , dlgOptions->satDialog->defaultSat.isVisibleZrv()   );
+    settings.setValue( "defaultSat/isVisibleLabel", dlgOptions->satDialog->defaultSat.isVisibleLabel() );
+    settings.setValue( "defaultSat/isVisibleLines", dlgOptions->satDialog->defaultSat.isVisibleLines() );
+    settings.setValue( "defaultSat/isVisibleTrack", dlgOptions->satDialog->defaultSat.isVisibleTrack() );
+    settings.setValue( "defaultSat/isVisibleZrv"  , dlgOptions->satDialog->defaultSat.isVisibleZrv()   );
 
-	settings.setValue( "defaultSat/colorLabel", dlgOptions->satDialog->defaultSat.colorLabel() );
-	settings.setValue( "defaultSat/colorLines", dlgOptions->satDialog->defaultSat.colorLines() );
-	settings.setValue( "defaultSat/colorTrack", dlgOptions->satDialog->defaultSat.colorTrack() );
-	settings.setValue( "defaultSat/colorZrv"  , dlgOptions->satDialog->defaultSat.colorZrv()   );
+    settings.setValue( "defaultSat/colorLabel", dlgOptions->satDialog->defaultSat.colorLabel() );
+    settings.setValue( "defaultSat/colorLines", dlgOptions->satDialog->defaultSat.colorLines() );
+    settings.setValue( "defaultSat/colorTrack", dlgOptions->satDialog->defaultSat.colorTrack() );
+    settings.setValue( "defaultSat/colorZrv"  , dlgOptions->satDialog->defaultSat.colorZrv()   );
 
-	settings.setValue( "defaultSat/font"    , dlgOptions->satDialog->defaultSat.font().toString() );
-	settings.setValue( "defaultSat/track"   , dlgOptions->satDialog->defaultSat.track()           );
-	settings.setValue( "defaultSat/zrvWidth", dlgOptions->satDialog->defaultSat.zrvWidth()        );
-	settings.setValue( "defaultSat/nameX"   , dlgOptions->satDialog->defaultSat.nameX()           );
-	settings.setValue( "defaultSat/nameY"   , dlgOptions->satDialog->defaultSat.nameY()           );
-	settings.setValue( "defaultSat/linesWidth", dlgOptions->satDialog->defaultSat.linesWidth()    );
-	settings.setValue( "defaultSat/modelIndex", dlgOptions->satDialog->defaultSat.modelIndex()    );
+    settings.setValue( "defaultSat/font"    , dlgOptions->satDialog->defaultSat.font().toString() );
+    settings.setValue( "defaultSat/track"   , dlgOptions->satDialog->defaultSat.track()           );
+    settings.setValue( "defaultSat/zrvWidth", dlgOptions->satDialog->defaultSat.zrvWidth()        );
+    settings.setValue( "defaultSat/nameX"   , dlgOptions->satDialog->defaultSat.nameX()           );
+    settings.setValue( "defaultSat/nameY"   , dlgOptions->satDialog->defaultSat.nameY()           );
+    settings.setValue( "defaultSat/linesWidth", dlgOptions->satDialog->defaultSat.linesWidth()    );
+    settings.setValue( "defaultSat/modelIndex", dlgOptions->satDialog->defaultSat.modelIndex()    );
 
-	settings.setValue( "defaultLoc/isVisibleLabel", dlgOptions->locDialog->defaultLoc.isVisibleLabel() );
-	settings.setValue( "defaultLoc/isVisibleLines", dlgOptions->locDialog->defaultLoc.isVisibleLines() );
-	settings.setValue( "defaultLoc/isVisibleZrv"  , dlgOptions->locDialog->defaultLoc.isVisibleZrv()   );
+    settings.setValue( "defaultLoc/isVisibleLabel", dlgOptions->locDialog->defaultLoc.isVisibleLabel() );
+    settings.setValue( "defaultLoc/isVisibleLines", dlgOptions->locDialog->defaultLoc.isVisibleLines() );
+    settings.setValue( "defaultLoc/isVisibleZrv"  , dlgOptions->locDialog->defaultLoc.isVisibleZrv()   );
 
-	settings.setValue( "defaultLoc/colorLabel", dlgOptions->locDialog->defaultLoc.colorLabel() );
-	settings.setValue( "defaultLoc/colorLines", dlgOptions->locDialog->defaultLoc.colorLines() );
-	settings.setValue( "defaultLoc/colorZrv"  , dlgOptions->locDialog->defaultLoc.colorZrv()   );
+    settings.setValue( "defaultLoc/colorLabel", dlgOptions->locDialog->defaultLoc.colorLabel() );
+    settings.setValue( "defaultLoc/colorLines", dlgOptions->locDialog->defaultLoc.colorLines() );
+    settings.setValue( "defaultLoc/colorZrv"  , dlgOptions->locDialog->defaultLoc.colorZrv()   );
 
-	settings.setValue( "defaultLoc/font", dlgOptions->locDialog->defaultLoc.font().toString() );
+    settings.setValue( "defaultLoc/font", dlgOptions->locDialog->defaultLoc.font().toString() );
 
-	settings.setValue( "defaultLoc/zrlAzimuth", dlgOptions->locDialog->defaultLoc.zrlAzimuth() );
-	settings.setValue( "defaultLoc/zrlRange"  , dlgOptions->locDialog->defaultLoc.zrlRange()   );
-	settings.setValue( "defaultLoc/zrlWidth"  , dlgOptions->locDialog->defaultLoc.zrlWidth()   );
-	settings.setValue( "defaultLoc/nameX"     , dlgOptions->locDialog->defaultLoc.nameX()      );
-	settings.setValue( "defaultLoc/nameY"     , dlgOptions->locDialog->defaultLoc.nameY()      );
-	settings.setValue( "defaultLoc/linesWidth", dlgOptions->locDialog->defaultLoc.linesWidth() );
+    settings.setValue( "defaultLoc/zrlAzimuth", dlgOptions->locDialog->defaultLoc.zrlAzimuth() );
+    settings.setValue( "defaultLoc/zrlRange"  , dlgOptions->locDialog->defaultLoc.zrlRange()   );
+    settings.setValue( "defaultLoc/zrlWidth"  , dlgOptions->locDialog->defaultLoc.zrlWidth()   );
+    settings.setValue( "defaultLoc/nameX"     , dlgOptions->locDialog->defaultLoc.nameX()      );
+    settings.setValue( "defaultLoc/nameY"     , dlgOptions->locDialog->defaultLoc.nameY()      );
+    settings.setValue( "defaultLoc/linesWidth", dlgOptions->locDialog->defaultLoc.linesWidth() );
 
-	satWidget->writeSettings(&settings);
+    satWidget->writeSettings(&settings);
 
-	dlgOptions->saveListViewSat();
-	dlgOptions->saveListViewLoc();
+    dlgOptions->saveListViewSat();
+    dlgOptions->saveListViewLoc();
 }
 
 void SWindow::closeEvent(QCloseEvent *event) {
@@ -258,38 +258,38 @@ void SWindow::closeEvent(QCloseEvent *event) {
 }
 
 void SWindow::wheelEvent(QWheelEvent *event) {
-	if (widget.tlBtnTime->isChecked() && !widget.tlBtnPlay->isChecked()) {
-		if (event->delta() > 0) {
-			widget.spinBoxStep->setValue(+abs(widget.spinBoxStep->value()));
-		}
-		if (event->delta() < 0) {
-			widget.spinBoxStep->setValue(-abs(widget.spinBoxStep->value()));
-		}
-		onTimer();
-	}
-	event->accept();
+    if (widget.tlBtnTime->isChecked() && !widget.tlBtnPlay->isChecked()) {
+        if (event->delta() > 0) {
+            widget.spinBoxStep->setValue(+abs(widget.spinBoxStep->value()));
+        }
+        if (event->delta() < 0) {
+            widget.spinBoxStep->setValue(-abs(widget.spinBoxStep->value()));
+        }
+        onTimer();
+    }
+    event->accept();
 }
 
 
 void SWindow::onTimeTypeChanged(int index) {
-	timeType = widget.comboBoxTimeType->currentIndex();
+    timeType = widget.comboBoxTimeType->currentIndex();
 }
 
 void SWindow::addZRVMessage(QString text) {
-	QStringList list = text.split("|");
-	if (list.count() < 4) return;
-	QString color;
-	if (list.at(1) == "in") color ="#DDDDFF";
-	else color ="#EEEEFF";
-	QString msg = 	"<table border=0 valign=middle cellpadding=2 cellspacing=1 width=100%>"
-					"<tr bgcolor=" + color + ">"
-						"<td width=29%>" + list.at(0) + "</td>"
-						"<td width=12%>sign " + list.at(1) + "</td>"
-						"<td width=29%>" + list.at(2) + "</td>"
-						"<td width=12%>" + list.at(3) + "</td>"
-						"<td width=18%>" + list.at(4) + " sec.</td>"
-					"</tr></table>";
-	dlgOptions->getWidget()->textZRVList->append(msg);
+    QStringList list = text.split("|");
+    if (list.count() < 4) return;
+    QString color;
+    if (list.at(1) == "in") color ="#DDDDFF";
+    else color ="#EEEEFF";
+    QString msg =     "<table border=0 valign=middle cellpadding=2 cellspacing=1 width=100%>"
+                    "<tr bgcolor=" + color + ">"
+                        "<td width=29%>" + list.at(0) + "</td>"
+                        "<td width=12%>sign " + list.at(1) + "</td>"
+                        "<td width=29%>" + list.at(2) + "</td>"
+                        "<td width=12%>" + list.at(3) + "</td>"
+                        "<td width=18%>" + list.at(4) + " sec.</td>"
+                    "</tr></table>";
+    dlgOptions->getWidget()->textZRVList->append(msg);
 }
 
 void SWindow::onTimer() {
@@ -342,66 +342,66 @@ void SWindow::onForwardClick() {
 }
 
 void SWindow::onStepChanged(int value) {
-	switch (widget.comboBoxStep->currentIndex()) {
-		case 0:
-			timeStep = 1;
-		break;
-		case 1:
-			timeStep = 60;
-		break;
-		case 2:
-			timeStep = 3600;
-		break;
-		case 3:
-			timeStep = 86400;
-		break;
-	}
+    switch (widget.comboBoxStep->currentIndex()) {
+        case 0:
+            timeStep = 1;
+        break;
+        case 1:
+            timeStep = 60;
+        break;
+        case 2:
+            timeStep = 3600;
+        break;
+        case 3:
+            timeStep = 86400;
+        break;
+    }
 
-	timeStep *= widget.spinBoxStep->value();
-	widget.tlBtnBackward->setChecked((timeStep < 0));
-	widget.tlBtnForward->setChecked(!widget.tlBtnBackward->isChecked());
-	onPlayClick();
+    timeStep *= widget.spinBoxStep->value();
+    widget.tlBtnBackward->setChecked((timeStep < 0));
+    widget.tlBtnForward->setChecked(!widget.tlBtnBackward->isChecked());
+    onPlayClick();
 }
 
 void SWindow::onTimeXChanged(int value) {
-	if (value < 1) value = 1;
-	timeX = 1000.0 / (double)value;
-	onPlayClick();
+    if (value < 1) value = 1;
+    timeX = 1000.0 / (double)value;
+    onPlayClick();
 }
 
 void SWindow::selectLanguage(int value) {
-	if ((value > listLang.count()) || (value < 0)) return;
-	if (value == 0) qApp->removeTranslator(&m_translator);
-	else {
-		value--;
-		m_translator.load(listLang.at(value));
-		qApp->installTranslator(&m_translator);
-	}
-	widget.retranslateUi(this);
-	dlgOptions->getWidget()->retranslateUi(dlgOptions);
-	dlgOptions->satDialog->retranslateUi(dlgOptions->satDialog);
-	dlgOptions->locDialog->getWidget()->retranslateUi(dlgOptions->locDialog);
-//	dlgOptions->scriptFrame->retranslateUi(dlgOptions->scriptFrame);
-	dlgOptions->tleFrame->getWidget()->retranslateUi(dlgOptions->tleFrame);
-//	dlgOptions->jswList->retranslateUi();
-	satWidget->retranslateUi();
-	uiSettings.comboLanguage->blockSignals(true);
-	uiSettings.comboGlWidget->blockSignals(true);
-	satWidget->blockSignals(true);
-	int tmp = uiSettings.comboGlWidget->currentIndex();
-	uiSettings.retranslateUi(&settingsWidget);
-	uiSettings.comboGlWidget->setCurrentIndex(tmp);
-	uiSettings.comboGlWidget->blockSignals(false);
-	uiSettings.comboLanguage->blockSignals(false);
-	satWidget->blockSignals(false);
+    if ((value > listLang.count()) || (value < 0)) return;
+    if (value == 0) qApp->removeTranslator(&m_translator);
+    else {
+        value--;
+        m_translator.load(listLang.at(value));
+        qApp->installTranslator(&m_translator);
+    }
+    widget.retranslateUi(this);
+    dlgOptions->getWidget()->retranslateUi(dlgOptions);
+    dlgOptions->satDialog->retranslateUi(dlgOptions->satDialog);
+    dlgOptions->locDialog->getWidget()->retranslateUi(dlgOptions->locDialog);
+//    dlgOptions->scriptFrame->retranslateUi(dlgOptions->scriptFrame);
+    dlgOptions->tleFrame->getWidget()->retranslateUi(dlgOptions->tleFrame);
+    dlgOptions->jswList->retranslateUi();
+    satWidget->retranslateUi();
+    uiSettings.comboLanguage->blockSignals(true);
+    uiSettings.comboGlWidget->blockSignals(true);
+    satWidget->blockSignals(true);
+    int tmp = uiSettings.comboGlWidget->currentIndex();
+    uiSettings.retranslateUi(&settingsWidget);
+    uiSettings.comboGlWidget->setCurrentIndex(tmp);
+    uiSettings.comboGlWidget->blockSignals(false);
+    uiSettings.comboLanguage->blockSignals(false);
+    satWidget->blockSignals(false);
 }
 
 void SWindow::setSwlVars(Satellite *sat, Location *loc, double *secs) {
-//	dlgOptions->jswList->setVars(sat, loc, secs);
-//	if (loc != 0) labelLoc.setText(loc->name());
-//	else labelLoc.setText("");
-//	if (sat != 0) labelSat.setText(sat->name());
-//	else labelSat.setText("");
+    dlgOptions->jswList->setVars(sat, loc, secs);
+    if (loc != 0) labelLoc.setText(loc->name());
+    else labelLoc.setText("");
+    if (sat != 0) labelSat.setText(sat->name());
+    else labelSat.setText("");
 }
 
 void SWindow::fullScreen() {
@@ -418,45 +418,45 @@ void SWindow::fullScreen() {
 }
 
 void SWindow::escFullScreen() {
-	if (isFullScreen()) {
-		fullScreen();
-	}
+    if (isFullScreen()) {
+        fullScreen();
+    }
 }
 
 void SWindow::selectStyle(int value) {
-	if (uiSettings.comboStyle->itemText(value).isEmpty() || value == 0) return;
-	qApp->setStyle(uiSettings.comboStyle->itemText(value));
-	selectPalette(uiSettings.checkPalette->isChecked());
+    if (uiSettings.comboStyle->itemText(value).isEmpty() || value == 0) return;
+    qApp->setStyle(uiSettings.comboStyle->itemText(value));
+    selectPalette(uiSettings.checkPalette->isChecked());
 }
 
 void SWindow::checkVersion(bool checked) {
-	if (checked) {
-		uCheck->check();
-	}
+    if (checked) {
+        uCheck->check();
+    }
 }
 
 void SWindow::selectPalette(bool value) {
-	if (value) qApp->setPalette(qApp->style()->standardPalette());
-	else qApp->setPalette(originalPalette);
+    if (value) qApp->setPalette(qApp->style()->standardPalette());
+    else qApp->setPalette(originalPalette);
 }
 
 void SWindow::selectGlWidget(int value) {
-	GLSatAbstractWidget *tmp = satWidget;
-	if (satWidget != 0) widget.frameMap->layout()->removeWidget(satWidget);
-	if (value == 0) satWidget = new GLSatWidget();
-	else satWidget = new GLSatWidget3d();
-	widget.frameMap->layout()->addWidget(satWidget);
+    GLSatAbstractWidget *tmp = satWidget;
+    if (satWidget != 0) widget.frameMap->layout()->removeWidget(satWidget);
+    if (value == 0) satWidget = new GLSatWidget();
+    else satWidget = new GLSatWidget3d();
+    widget.frameMap->layout()->addWidget(satWidget);
 
-	if (dlgOptions != 0) dlgOptions->setSatWidget(satWidget);
-	connect(satWidget, SIGNAL(statusZRVChanged(QString)), this, SLOT(addZRVMessage(QString)));
-	connect(satWidget, SIGNAL(doubleClickedSat()), dlgOptions, SLOT(changeDbSat()));
-	connect(satWidget, SIGNAL(doubleClickedLoc()), dlgOptions, SLOT(changeDbLoc()));
-	connect(satWidget, SIGNAL(currentChanged(Satellite*, Location*, double*)), this, SLOT(setSwlVars(Satellite*, Location*, double*)));
-	readSettings();
-	uiSettings.comboGlWidget->blockSignals(true);
-	uiSettings.comboGlWidget->setCurrentIndex(value);
-	uiSettings.comboGlWidget->blockSignals(false);
-	if (tmp != 0) delete tmp;
+    if (dlgOptions != 0) dlgOptions->setSatWidget(satWidget);
+    connect(satWidget, SIGNAL(statusZRVChanged(QString)), this, SLOT(addZRVMessage(QString)));
+    connect(satWidget, SIGNAL(doubleClickedSat()), dlgOptions, SLOT(changeDbSat()));
+    connect(satWidget, SIGNAL(doubleClickedLoc()), dlgOptions, SLOT(changeDbLoc()));
+    connect(satWidget, SIGNAL(currentChanged(Satellite*, Location*, double*)), this, SLOT(setSwlVars(Satellite*, Location*, double*)));
+    readSettings();
+    uiSettings.comboGlWidget->blockSignals(true);
+    uiSettings.comboGlWidget->setCurrentIndex(value);
+    uiSettings.comboGlWidget->blockSignals(false);
+    if (tmp != 0) delete tmp;
 }
 
 void SWindow::onBtnPrintScrClicked() {

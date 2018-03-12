@@ -17,7 +17,7 @@
 #include "ogl/GLSatWidget.h"
 #include "crd/crd.h"
 #include "tleupd/SUpdater.h"
-//#include "jswidgets/SWidgetList.h"
+#include "jswidgets/SWidgetList.h"
 
 #include <QtSql>
 #include <QDialog>
@@ -30,7 +30,7 @@
 #include "SAbstractObjDialog.h"
 
 class SDlgOptions: public QDialog {
-	Q_OBJECT
+    Q_OBJECT
 public:
     typedef SAbstractObjDialog * (*CustomObjDialog)(GLSatAbstractWidget *satWidget);
     CustomObjDialog getSObjDialog;
@@ -38,7 +38,7 @@ public:
     SLocDialog *locDialog;
 //    SScriptFrame *scriptFrame;
     SUpdater *tleFrame;
-//    SWidgetList *jswList;
+    SWidgetList *jswList;
 
     QSqlDatabase db;
 

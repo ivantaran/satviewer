@@ -30,9 +30,9 @@ SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
 //    scriptFrame->setParent(tabWidget);
 //    stackedWidget->insertWidget(4, scriptFrame);
 //
-//    jswList = new SWidgetList();
-//    jswList->setParent(tabWidget);
-//    stackedWidget->insertWidget(5, jswList);
+    jswList = new SWidgetList();
+    jswList->setParent(widget.tabWidget);
+    widget.stackedWidget->insertWidget(5, jswList);
 
     dir = QDir::home();
     dir.cd("satviewer/tle");
@@ -146,116 +146,116 @@ void SDlgOptions::saveListViewLoc() {
     QString query;
     db.exec("BEGIN;");
 
-	for (int i = 0; i < satWidget->locList.count(); i++) {
-		loc = satWidget->locList.at(i);
-		query = QString("INSERT INTO loctemp ('lat', 'lon', 'height', 'azimuth', 'sector', "
-						"'r', 'name', 'icon', 'show_label', 'show_zrv', 'show_lines', "
-						"'active_zone', 'color_label', 'color_zrv', 'color_lines', 'font', "
-						"'name_x', 'name_y', 'lines_width') "
-						"VALUES(%0, %1, %2, %3, %4, %5, '%6', '%7', %8, %9, %10, %11, %12, "
-						"%13, %14, '%15', %16, %17, %18);")
-						.arg(loc->latitude(), 0, 'g', 16)
-						.arg(loc->longitude(), 0, 'g', 16)
-						.arg(loc->height(), 0, 'g', 16)
-						.arg(loc->zrlAzimuth(), 0, 'g', 16)
-						.arg(loc->zrlWidth(), 0, 'g', 16)
-						.arg(loc->zrlRange(), 0, 'g', 16)
-						.arg(loc->name())
-						.arg(loc->iconName())
-						.arg(loc->isVisibleLabel())
-						.arg(loc->isVisibleZrv())
-						.arg(loc->isVisibleLines())
-						.arg(loc->isActiveZone())
-						.arg(loc->colorLabel())
-						.arg(loc->colorZrv())
-						.arg(loc->colorLines())
-						.arg(loc->font().toString())
-						.arg(loc->nameX(), 0, 'g', 16)
-						.arg(loc->nameY(), 0, 'g', 16)
-						.arg(loc->linesWidth(), 0, 'g', 16);
-		db.exec(query);
-	}
-	db.exec("COMMIT;");
+    for (int i = 0; i < satWidget->locList.count(); i++) {
+        loc = satWidget->locList.at(i);
+        query = QString("INSERT INTO loctemp ('lat', 'lon', 'height', 'azimuth', 'sector', "
+                        "'r', 'name', 'icon', 'show_label', 'show_zrv', 'show_lines', "
+                        "'active_zone', 'color_label', 'color_zrv', 'color_lines', 'font', "
+                        "'name_x', 'name_y', 'lines_width') "
+                        "VALUES(%0, %1, %2, %3, %4, %5, '%6', '%7', %8, %9, %10, %11, %12, "
+                        "%13, %14, '%15', %16, %17, %18);")
+                        .arg(loc->latitude(), 0, 'g', 16)
+                        .arg(loc->longitude(), 0, 'g', 16)
+                        .arg(loc->height(), 0, 'g', 16)
+                        .arg(loc->zrlAzimuth(), 0, 'g', 16)
+                        .arg(loc->zrlWidth(), 0, 'g', 16)
+                        .arg(loc->zrlRange(), 0, 'g', 16)
+                        .arg(loc->name())
+                        .arg(loc->iconName())
+                        .arg(loc->isVisibleLabel())
+                        .arg(loc->isVisibleZrv())
+                        .arg(loc->isVisibleLines())
+                        .arg(loc->isActiveZone())
+                        .arg(loc->colorLabel())
+                        .arg(loc->colorZrv())
+                        .arg(loc->colorLines())
+                        .arg(loc->font().toString())
+                        .arg(loc->nameX(), 0, 'g', 16)
+                        .arg(loc->nameY(), 0, 'g', 16)
+                        .arg(loc->linesWidth(), 0, 'g', 16);
+        db.exec(query);
+    }
+    db.exec("COMMIT;");
 }
 
 void SDlgOptions::loadListViewSat() {
-	QSqlTableModel modelSatTemp;
-	modelSatTemp.setTable("sattemp");
-	modelSatTemp.setEditStrategy(QSqlTableModel::OnManualSubmit);
-	modelSatTemp.select();
+    QSqlTableModel modelSatTemp;
+    modelSatTemp.setTable("sattemp");
+    modelSatTemp.setEditStrategy(QSqlTableModel::OnManualSubmit);
+    modelSatTemp.select();
 
-	while (modelSatTemp.canFetchMore()) {
-		modelSatTemp.fetchMore();
-	}
+    while (modelSatTemp.canFetchMore()) {
+        modelSatTemp.fetchMore();
+    }
 
-	Satellite *sat;
-	int model_index;
-	for (int i = 0; i < modelSatTemp.rowCount(); i++) {
-		model_index = modelSatTemp.record(i).field("model_index").value().toInt();
-		satWidget->setSatModel(model_index);
-//		sat = satWidget->satList.add(satWidget->getSatModel());
-		sat = satWidget->getSatModel();
-		sat->setModelIndex(model_index);
-		setSat(sat, modelSatTemp.record(i));
-		sat->visibleLabel (modelSatTemp.record(i).field("show_label" ).value().toBool());
-		sat->visibleTrack (modelSatTemp.record(i).field("show_track" ).value().toBool());
-		sat->visibleZrv   (modelSatTemp.record(i).field("show_zrv"   ).value().toBool());
-		sat->visibleLines (modelSatTemp.record(i).field("show_lines" ).value().toBool());
-		sat->activeZone   (modelSatTemp.record(i).field("active_zone").value().toBool());
-		sat->setColorTrack(modelSatTemp.record(i).field("color_track").value().toUInt());
-		sat->setColorLabel(modelSatTemp.record(i).field("color_label").value().toUInt());
-		sat->setColorZrv  (modelSatTemp.record(i).field("color_zrv"  ).value().toUInt());
-		sat->setColorLines(modelSatTemp.record(i).field("color_lines").value().toUInt());
-		sat->setTrack     (modelSatTemp.record(i).field("track"      ).value().toDouble());
-		QFont font;
-		font.fromString(modelSatTemp.record(i).field("font").value().toString());
-		sat->setFont(font);
-		sat->setNameX(modelSatTemp.record(i).field("name_x").value().toDouble());
-		sat->setNameY(modelSatTemp.record(i).field("name_y").value().toDouble());
-		sat->setLinesWidth(modelSatTemp.record(i).field("lines_width").value().toDouble());
+    Satellite *sat;
+    int model_index;
+    for (int i = 0; i < modelSatTemp.rowCount(); i++) {
+        model_index = modelSatTemp.record(i).field("model_index").value().toInt();
+        satWidget->setSatModel(model_index);
+//        sat = satWidget->satList.add(satWidget->getSatModel());
+        sat = satWidget->getSatModel();
+        sat->setModelIndex(model_index);
+        setSat(sat, modelSatTemp.record(i));
+        sat->visibleLabel (modelSatTemp.record(i).field("show_label" ).value().toBool());
+        sat->visibleTrack (modelSatTemp.record(i).field("show_track" ).value().toBool());
+        sat->visibleZrv   (modelSatTemp.record(i).field("show_zrv"   ).value().toBool());
+        sat->visibleLines (modelSatTemp.record(i).field("show_lines" ).value().toBool());
+        sat->activeZone   (modelSatTemp.record(i).field("active_zone").value().toBool());
+        sat->setColorTrack(modelSatTemp.record(i).field("color_track").value().toUInt());
+        sat->setColorLabel(modelSatTemp.record(i).field("color_label").value().toUInt());
+        sat->setColorZrv  (modelSatTemp.record(i).field("color_zrv"  ).value().toUInt());
+        sat->setColorLines(modelSatTemp.record(i).field("color_lines").value().toUInt());
+        sat->setTrack     (modelSatTemp.record(i).field("track"      ).value().toDouble());
+        QFont font;
+        font.fromString(modelSatTemp.record(i).field("font").value().toString());
+        sat->setFont(font);
+        sat->setNameX(modelSatTemp.record(i).field("name_x").value().toDouble());
+        sat->setNameY(modelSatTemp.record(i).field("name_y").value().toDouble());
+        sat->setLinesWidth(modelSatTemp.record(i).field("lines_width").value().toDouble());
         satWidget->addSat(sat);
-	}
-	modelSatTemp.clear();
+    }
+    modelSatTemp.clear();
 
-	updateListViewSat();
-	if (satWidget->satList.count() == 1) satWidget->setIndexSat(0);
-	satWidget->refreshAll();
+    updateListViewSat();
+    if (satWidget->satList.count() == 1) satWidget->setIndexSat(0);
+    satWidget->refreshAll();
 }
 
 void SDlgOptions::loadListViewLoc() {
-	QSqlTableModel modelLocTemp;
-	modelLocTemp.setTable("loctemp");
-	modelLocTemp.setEditStrategy(QSqlTableModel::OnManualSubmit);
-	modelLocTemp.select();
+    QSqlTableModel modelLocTemp;
+    modelLocTemp.setTable("loctemp");
+    modelLocTemp.setEditStrategy(QSqlTableModel::OnManualSubmit);
+    modelLocTemp.select();
 
-	while (modelLocTemp.canFetchMore()) {
-		modelLocTemp.fetchMore();
-	}
+    while (modelLocTemp.canFetchMore()) {
+        modelLocTemp.fetchMore();
+    }
 
-	Location *loc;
-	for (int i = 0; i < modelLocTemp.rowCount(); i++) {
-		loc = new Location();
-		setLoc(loc, modelLocTemp.record(i));
-		loc->visibleLabel (modelLocTemp.record(i).field("show_label" ).value().toBool());
-		loc->visibleZrv   (modelLocTemp.record(i).field("show_zrv"   ).value().toBool());
-		loc->visibleLines (modelLocTemp.record(i).field("show_lines" ).value().toBool());
-		loc->activeZone   (modelLocTemp.record(i).field("active_zone").value().toBool());
-		loc->setColorLabel(modelLocTemp.record(i).field("color_label").value().toUInt());
-		loc->setColorZrv  (modelLocTemp.record(i).field("color_zrv"  ).value().toUInt());
-		loc->setColorLines(modelLocTemp.record(i).field("color_lines").value().toUInt());
-		QFont font;
-		font.fromString   (modelLocTemp.record(i).field("font"       ).value().toString());
-		loc->setFont(font);
-		loc->setNameX     (modelLocTemp.record(i).field("name_x"     ).value().toDouble());
-		loc->setNameY     (modelLocTemp.record(i).field("name_y"     ).value().toDouble());
-		loc->setLinesWidth(modelLocTemp.record(i).field("lines_width").value().toDouble());
+    Location *loc;
+    for (int i = 0; i < modelLocTemp.rowCount(); i++) {
+        loc = new Location();
+        setLoc(loc, modelLocTemp.record(i));
+        loc->visibleLabel (modelLocTemp.record(i).field("show_label" ).value().toBool());
+        loc->visibleZrv   (modelLocTemp.record(i).field("show_zrv"   ).value().toBool());
+        loc->visibleLines (modelLocTemp.record(i).field("show_lines" ).value().toBool());
+        loc->activeZone   (modelLocTemp.record(i).field("active_zone").value().toBool());
+        loc->setColorLabel(modelLocTemp.record(i).field("color_label").value().toUInt());
+        loc->setColorZrv  (modelLocTemp.record(i).field("color_zrv"  ).value().toUInt());
+        loc->setColorLines(modelLocTemp.record(i).field("color_lines").value().toUInt());
+        QFont font;
+        font.fromString   (modelLocTemp.record(i).field("font"       ).value().toString());
+        loc->setFont(font);
+        loc->setNameX     (modelLocTemp.record(i).field("name_x"     ).value().toDouble());
+        loc->setNameY     (modelLocTemp.record(i).field("name_y"     ).value().toDouble());
+        loc->setLinesWidth(modelLocTemp.record(i).field("lines_width").value().toDouble());
         satWidget->addLoc(loc);
-	}
-	modelLocTemp.clear();
+    }
+    modelLocTemp.clear();
 
-	updateListViewLoc();
-	if (satWidget->locList.count() == 1) satWidget->setIndexLoc(0);
-	satWidget->refreshAll();
+    updateListViewLoc();
+    if (satWidget->locList.count() == 1) satWidget->setIndexLoc(0);
+    satWidget->refreshAll();
 }
 
 void SDlgOptions::setDb() {
@@ -597,32 +597,37 @@ void SDlgOptions::loadDbFromTle() {
 }
 
 void SDlgOptions::loadDbLoc() {
-	QString query;
-	char buf[256];
-	QDir dir = QDir::home();
-	dir.cd("satviewer/loc");
-	QStringList fileList = QFileDialog::getOpenFileNames(this, "Open File", dir.path(), "Text Files (*.txt);;All Files (*.*)");
-	if (fileList.isEmpty()) return;
-	QString filePath;
-	ifstream f;
-	db.exec("BEGIN;");
-	for (int j = 0; j < fileList.count(); j++) {
-		filePath = fileList.at(j);
-		if (filePath.isEmpty()) break;
-		f.open(filePath.toLocal8Bit().data());
-		if (!f.is_open()) return;
-		do {
-			f.getline(buf, 256);
-			if (strlen(buf) > 0) {
-				query = QString("INSERT INTO loc (name, lat, lon, height, azimuth, sector, r) VALUES(%0);").arg(buf);
-				db.exec(query);
-			}
-		} while (!f.eof());
-		f.close();
-		f.clear();
-	}
-	db.exec("COMMIT;");
-	modelDbLoc->submitAll();
+    QString query;
+    char buf[256];
+    QString filePath;
+    ifstream f;
+    QDir dir = QDir::home();
+    dir.cd("satviewer/loc");
+    QStringList fileList = QFileDialog::getOpenFileNames(
+            this, "Open File", dir.path(), 
+            "Text Files (*.txt);;All Files (*.*)", NULL, 
+            QFileDialog::DontUseNativeDialog);
+    if (fileList.isEmpty()) {
+        return;
+    }
+    db.exec("BEGIN;");
+    for (int j = 0; j < fileList.count(); j++) {
+        filePath = fileList.at(j);
+        if (filePath.isEmpty()) break;
+        f.open(filePath.toLocal8Bit().data());
+        if (!f.is_open()) return;
+        do {
+            f.getline(buf, 256);
+            if (strlen(buf) > 0) {
+                query = QString("INSERT INTO loc (name, lat, lon, height, azimuth, sector, r) VALUES(%0);").arg(buf);
+                db.exec(query);
+            }
+        } while (!f.eof());
+        f.close();
+        f.clear();
+    }
+    db.exec("COMMIT;");
+    modelDbLoc->submitAll();
 }
 
 void SDlgOptions::clearDbSat() {
@@ -804,11 +809,13 @@ void SDlgOptions::helpLocSql() {
 void SDlgOptions::setSatWidget(GLSatAbstractWidget *satWidget) {
     this->satWidget = satWidget;
     satWidget->settingsWidget->setParent(widget.tabWidget);
-//    jswList->setDesktop(satWidget);
-    if (widget.stackedWidget->widget(7) != NULL) widget.stackedWidget->removeWidget(widget.stackedWidget->widget(7));
-        widget.stackedWidget->insertWidget(7, satWidget->settingsWidget);
-        satDialog->setSatWidget(satWidget);
-        locDialog->setSatWidget(satWidget);
+    jswList->setDesktop(satWidget);
+    if (widget.stackedWidget->widget(7) != NULL) {
+        widget.stackedWidget->removeWidget(widget.stackedWidget->widget(7));
+    }
+    widget.stackedWidget->insertWidget(7, satWidget->settingsWidget);
+    satDialog->setSatWidget(satWidget);
+    locDialog->setSatWidget(satWidget);
 }
 
 void SDlgOptions::aboutQt() {

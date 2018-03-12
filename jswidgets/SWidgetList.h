@@ -14,21 +14,21 @@
 #include "ui_jswidgetlist.h"
 
 class SWidgetList : public QWidget, private QList <SWidget *> {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	SWidgetList(QWidget *parent = 0);
-	void init(QWidget *desktop = 0, QString path = "");
-	virtual ~SWidgetList();
-	void setVars(Satellite *sat, Location *loc, double *time);
-	inline void retranslateUi() { ui.retranslateUi(this); }
-	void setDesktop(QWidget *desktop);
+    SWidgetList(QWidget *parent = 0);
+    void init(QWidget *desktop = 0, QString path = "");
+    virtual ~SWidgetList();
+    void setVars(Satellite *sat, Location *loc, double *time);
+    inline void retranslateUi() { ui.retranslateUi(this); }
+    void setDesktop(QWidget *desktop);
 private:
-	Ui::JsWidgetList ui;
-	QFile *stateFile;
-	void load();
+    Ui::JsWidgetList ui;
+    QFile *stateFile;
+    void load();
 private slots:
-	void save();
-	void changeState(const QModelIndex &index);
+    void save();
+    void changeState(const QModelIndex &index);
 };
 
 #endif /* SWIDGETLIST_H_ */

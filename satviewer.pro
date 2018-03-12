@@ -1,5 +1,4 @@
 
-#INCLUDEPATH += .
 TARGET = SatViewer
 DESTDIR = bin
 
@@ -9,9 +8,9 @@ RCC_DIR = build
 OBJECTS_DIR = build
 
 CONFIG  += console debug
-QT      += gui core sql widgets network
+QT      += gui core sql widgets network qml
 
-HEADERS    +=	\
+HEADERS    +=    \
                 SWindow.h \
                 SDlgOptions.h \
                 SLocDialog.h \
@@ -29,16 +28,16 @@ HEADERS    +=	\
                 crd/crd.h \
                 tleupd/SUpdater.h \
                 sql/dbsql.h \
-#                jswidgets/SWidget.h \
-#                jswidgets/SWidgetList.h \
+                jswidgets/SWidget.h \
+                jswidgets/SWidgetList.h \
                 uchecker/UCheck.h \
                 ogl/globj/GLObjMaterial.h \
                 ogl/globj/GLObjecter.h \
                 ogl/glsprite/GLSprite.h \
                 ogl/SatWidgetObject.h \
                 SAbstractObjDialog.h    
-								
-SOURCES    +=	SatViewer.cpp \
+
+SOURCES    +=   SatViewer.cpp \
                 SWindow.cpp \
                 SDlgOptions.cpp \
                 SLocDialog.cpp \
@@ -55,16 +54,16 @@ SOURCES    +=	SatViewer.cpp \
                 zrvutils/ZrvIoList.cpp \ 
                 crd/crd.cpp \
                 tleupd/SUpdater.cpp \
-#                jswidgets/SWidget.cpp \
-#                jswidgets/SWidgetList.cpp \
+                jswidgets/SWidget.cpp \
+                jswidgets/SWidgetList.cpp \
                 uchecker/UCheck.cpp \
                 ogl/globj/GLObjMaterial.cpp \
                 ogl/globj/GLObjecter.cpp \
                 ogl/glsprite/GLSprite.cpp \
                 ogl/SatWidgetObject.cpp \
                 SAbstractObjDialog.cpp
-								
-RESOURCES   =	ui/SatViewer.qrc
+                                
+RESOURCES   =    ui/SatViewer.qrc
 
 FORMS       +=  ui/SatViewer.ui \
                 ui/options.ui \
@@ -86,7 +85,7 @@ TRANSLATIONS = satviewer_fr.ts \
 CODECFORTR = UTF-8
 
 #win32:{
-#	RC_FILE = satviewer.rc
+#    RC_FILE = satviewer.rc
 #}
 
 pvs_studio.target = analyze

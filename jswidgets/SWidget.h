@@ -9,31 +9,29 @@
 #define SWIDGET_H_
 
 #include <QWidget>
-#include <QBitmap>
+#include <QJSEngine>
 #include <QPainter>
-#include <QTimer>
-#include <QtScript>
 #include "../satutils/Satellite.h"
 #include "../locutils/Location.h"
 
 class SWidget : public QWidget {
-	Q_OBJECT
+    Q_OBJECT
 public:
-	SWidget(QWidget *parent = 0, QString fileName = "");
-	virtual ~SWidget();
-	void set(Satellite *sat, Location *loc, double *time);
-	inline QString title() { return m_title; }
-	void activate(bool state = true);
+    SWidget(QWidget *parent = 0, QString fileName = "");
+    virtual ~SWidget();
+    void set(Satellite *sat, Location *loc, double *time);
+    inline QString title() { return m_title; }
+    void activate(bool state = true);
 
 public slots:
-	void drawText(int x, int y, QString text);
-	void fill(int value);
-	void setPen(int value);
-	void setFont(QString name, int pointSize, int weight, bool italic);
-	void setSize(int w, int h);
-	void setPos(int x, int y);
-	void setInterval(int value);
-	void setMaskColor(int value);
+    void drawText(int x, int y, QString text);
+    void fill(int value);
+    void setPen(int value);
+    void setFont(QString name, int pointSize, int weight, bool italic);
+    void setSize(int w, int h);
+    void setPos(int x, int y);
+    void setInterval(int value);
+    void setMaskColor(int value);
 
 protected:
     void mouseMoveEvent(QMouseEvent *event);
@@ -48,14 +46,14 @@ private:
     QTimer *timer;
     QString script;
     QString m_title;
-    QScriptEngine engine;
+    QJSEngine engine;
     Satellite *m_sat;
     Location *m_loc;
     double *m_time;
     void setVars();
 
 private slots:
-	void onTimer();
+    void onTimer();
 };
 
 #endif /* SWIDGET_H_ */
