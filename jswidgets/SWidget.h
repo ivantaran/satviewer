@@ -11,6 +11,7 @@
 #include <QWidget>
 #include <QJSEngine>
 #include <QPainter>
+#include <QFontMetrics>
 #include "../satutils/Satellite.h"
 #include "../locutils/Location.h"
 
@@ -32,6 +33,8 @@ public slots:
     void setPos(int x, int y);
     void setInterval(int value);
     void setMaskColor(int value);
+    int textWidth(QString text);
+    int fontHeight();
 
 protected:
     void mouseMoveEvent(QMouseEvent *event);

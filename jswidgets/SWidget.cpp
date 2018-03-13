@@ -35,7 +35,9 @@ SWidget::SWidget(QWidget *parent, QString fileName) {
     this->setParent(parent);
     pixmap = QPixmap(width(), height());
     pixmap.fill(Qt::black);
-    canvas.begin(&pixmap);
+    if (!canvas.begin(&pixmap)) {
+        qWarning("%s: canvas.begin", __func__);
+    }
 
     engine.evaluate(script);
     m_title = engine.globalObject().property("title").toString();
@@ -44,13 +46,13 @@ SWidget::SWidget(QWidget *parent, QString fileName) {
     timer->setInterval(1000);
     timer->start();
     this->onTimer();
-    //this->show();
 }
+
 void SWidget::paintEvent(QPaintEvent *event) {
+    Q_UNUSED(event);
     QPainter painter(this);
     setMask(pixmap.createMaskFromColor(m_maskColor));
     painter.drawPixmap(0, 0, pixmap);
-    painter.end();
 }
 
 SWidget::~SWidget() {
@@ -72,7 +74,7 @@ void SWidget::mousePressEvent(QMouseEvent *event) {
 }
 
 void SWidget::onTimer() {
-    if ((m_sat == 0) || (m_loc == 0) || (m_time == 0)) {
+    if (!m_sat || !m_loc || !m_time) {
         hide();
         return;
     }
@@ -83,11 +85,19 @@ void SWidget::onTimer() {
         qWarning() << value.toString();
         qWarning() << value.property("lineNumber").toInt();
     }
-    this->repaint();
+    repaint();
 }
 
 void SWidget::drawText(int x, int y, QString text) {
     canvas.drawText(x, y, text);
+}
+
+int SWidget::textWidth(QString text) {
+    return canvas.fontMetrics().width(text);
+}
+
+int SWidget::fontHeight() {
+    return canvas.fontMetrics().height();
 }
 
 void SWidget::fill(int value) {
@@ -101,18 +111,37 @@ void SWidget::setPen(int value) {
 
 void SWidget::setFont(QString fontName, int pointSize, int weight, bool italic) {
     QFont font(fontName, pointSize, weight, italic);
-    if (m_maskColor == m_fillColor) font.setStyleStrategy(QFont::NoAntialias);
-    else font.setStyleStrategy(QFont::PreferAntialias);
+    if (m_maskColor == m_fillColor) {
+        font.setStyleStrategy(QFont::NoAntialias);
+    }
+    else {
+        font.setStyleStrategy(QFont::PreferAntialias);
+    }
     canvas.setFont(font);
 }
 
 void SWidget::setSize(int w, int h) {
-    canvas.end();
+    if (width() == w && height() == h) {
+        return;
+    }
     resize(w, h);
+    QFont font = canvas.font();
+    if (!canvas.end()) {
+        qWarning("%s: canvas.begin", __func__);
+    }
     pixmap = pixmap.scaled(w, h);
-    canvas.begin(&pixmap);
-    if (m_maskColor == m_fillColor) canvas.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing, false);
-    else canvas.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
+    if (!canvas.begin(&pixmap)) {
+        qWarning("%s: canvas.begin", __func__);
+    }
+    if (m_maskColor == m_fillColor) {
+        canvas.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing, false);
+        font.setStyleStrategy(QFont::NoAntialias);
+    }
+    else {
+        canvas.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
+        font.setStyleStrategy(QFont::PreferAntialias);
+    }
+    canvas.setFont(font);
 }
 
 void SWidget::setPos(int x, int y) {
@@ -125,12 +154,18 @@ void SWidget::setInterval(int value) {
 
 void SWidget::setMaskColor(int value) {
     m_maskColor = QColor::fromRgb(value);
-    if (m_maskColor == m_fillColor) canvas.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing, false);
-    else canvas.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
+    if (m_maskColor == m_fillColor) {
+        canvas.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing, false);
+    }
+    else { 
+        canvas.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
+    }
 }
 
 void SWidget::setVars() {
-    if ((m_sat == 0) || (m_loc == 0) || (m_time == 0)) return;
+    if (!m_sat || !m_loc || !m_time) {
+        return;
+    }
     engine.globalObject().setProperty("timeNow", *m_time);
     engine.globalObject().setProperty("nameSat", m_sat->name());
     engine.globalObject().setProperty("nameLoc", m_loc->name());
