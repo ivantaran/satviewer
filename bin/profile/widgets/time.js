@@ -16,10 +16,10 @@ function main() {
     canvas.setFont("Courier", fontSize, 75, false);
     w = canvas.textWidth(text);
     h = canvas.fontHeight();
-    w = w * 1.1;
-    h = h * 1.4;
     dw = w * 0.05;
-    dh = h * 0.2;
+    dh = h * 0.1;
+    w = w * 1.1;
+    h = h * 1.1;
     canvas.setPos((parentWidth - w) * 0.5, parentHeight * 0.04);
     canvas.setSize(w, h);
     canvas.fill(0xF40000);
