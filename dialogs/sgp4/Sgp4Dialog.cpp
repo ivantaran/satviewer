@@ -216,7 +216,9 @@ void Sgp4Dialog::setColorSatTrack() {
 void Sgp4Dialog::setSatFont() {
     bool ok;
     QFont font = QFontDialog::getFont(&ok, widget.btnFont->font(), this);
-    if (ok) widget.btnFont->setFont(font);
+    if (ok) {
+        widget.btnFont->setFont(font);
+    }
 }
 
 void Sgp4Dialog::setDefault() {

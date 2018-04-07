@@ -13,7 +13,7 @@
 #include "SLocDialog.h"
 #include "satutils/Satellite.h"
 #include "zrvutils/ZrvIoList.h"
-//#include "jscalc/SScriptFrame.h"
+#include "jscalc/SScriptFrame.h"
 #include "ogl/GLSatWidget.h"
 #include "crd/crd.h"
 #include "tleupd/SUpdater.h"
@@ -34,7 +34,7 @@ class SDlgOptions: public QDialog {
 public:
     Sgp4Dialog *satDialog;
     SLocDialog *locDialog;
-//    SScriptFrame *scriptFrame;
+    SScriptFrame *scriptFrame;
     SUpdater *tleFrame;
     SWidgetList *jswList;
 

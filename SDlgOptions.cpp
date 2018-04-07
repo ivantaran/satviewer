@@ -23,11 +23,11 @@ SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
     locDialog->setWindowModality(Qt::WindowModal);
 
     QDir dir = QDir::home();
-//    dir.cd("satviewer/jsprm");
-//    scriptFrame = new SScriptFrame(dir.filePath("prmlist.js"));
-//    scriptFrame->setParent(tabWidget);
-//    stackedWidget->insertWidget(4, scriptFrame);
-//
+    dir.cd("satviewer/jsprm");
+    scriptFrame = new SScriptFrame(dir.filePath("prmlist.js"));
+    scriptFrame->setParent(widget.tabWidget);
+    widget.stackedWidget->insertWidget(4, scriptFrame);
+
     jswList = new SWidgetList();
     jswList->setParent(widget.tabWidget);
     widget.stackedWidget->insertWidget(5, jswList);
@@ -36,7 +36,7 @@ SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
     dir.cd("satviewer/tle");
     tleFrame = new SUpdater(dir.filePath("tle_list.lst"));
     tleFrame->setParent(widget.tabWidget);
-    widget.stackedWidget->insertWidget(4, tleFrame);// TODO 6
+    widget.stackedWidget->insertWidget(6, tleFrame);
 
     setSatWidget(satWidget);
 
@@ -76,7 +76,7 @@ SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
     connect(widget.listViewDBLoc, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(addToLocList(const QModelIndex &)));
     connect(widget.listViewSat, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(changeDbSat()));
     connect(widget.listViewLoc, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(changeDbLoc()));
-//    connect(widget.scriptFrame->btnRefresh, SIGNAL(clicked()), this, SLOT(scriptParameters()));
+    connect(scriptFrame->btnRefresh, SIGNAL(clicked()), this, SLOT(scriptParameters()));
     connect(widget.btnDeleteSatList, SIGNAL(clicked()), this, SLOT(deleteSatList()));
     connect(widget.btnDeleteLocList, SIGNAL(clicked()), this, SLOT(deleteLocList()));
     connect(widget.btnAddToSatList , SIGNAL(clicked()), this, SLOT(addToSatList ()));
@@ -753,10 +753,12 @@ void SDlgOptions::delFromLocList(const QModelIndex &index) {
 }
 
 void SDlgOptions::scriptParameters() {
-//    Satellite *sat = satWidget->currentSat();
-//    Location *loc = satWidget->currentLoc();
-//    if (sat == 0 || loc == 0) return;
-//    scriptFrame->exec(sat, loc, satWidget->time());
+    Satellite *sat = satWidget->currentSat();
+    Location *loc = satWidget->currentLoc();
+    if (sat == NULL || loc == NULL) {
+        return;
+    }
+    scriptFrame->exec(sat, loc, satWidget->time());
 }
 
 void SDlgOptions::addDbLoc() {

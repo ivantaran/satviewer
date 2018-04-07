@@ -12,9 +12,8 @@
 #include <QDialog>
 #include <QtNetwork>
 
-class SUpdater: public QWidget
-{
-	Q_OBJECT
+class SUpdater: public QWidget {
+    Q_OBJECT
 
 public:
     SUpdater(QString fileName = "");
@@ -23,8 +22,7 @@ public:
     inline Ui::Updater *getWidget() { return &widget; }
 private:
     Ui::Updater widget;
-//    QHttp *http;
-    QNetworkAccessManager nam;
+    QNetworkAccessManager manager;
     QNetworkReply *reply;
     QFile *file, *listFile;
     int httpGetId;

@@ -16,7 +16,7 @@ HEADERS    +=    \
                 SLocDialog.h \
                 dialogs/sgp4/Sgp4Dialog.h \
                 models/sgp4/Sgp4Model.h \
-#                jscalc/SScriptFrame.h \
+                jscalc/SScriptFrame.h \
                 ogl/GLSatWidget.h \
                 ogl/GLSatAbstractWidget.h \
                 ogl/GLSatWidget3d.h \
@@ -35,7 +35,6 @@ HEADERS    +=    \
                 ogl/globj/GLObjecter.h \
                 ogl/glsprite/GLSprite.h \
                 ogl/SatWidgetObject.h
-#                SAbstractObjDialog.h    
 
 SOURCES    +=   SatViewer.cpp \
                 SWindow.cpp \
@@ -43,7 +42,7 @@ SOURCES    +=   SatViewer.cpp \
                 SLocDialog.cpp \
                 dialogs/sgp4/Sgp4Dialog.cpp \
                 models/sgp4/Sgp4Model.cpp \
-#                jscalc/SScriptFrame.cpp \
+                jscalc/SScriptFrame.cpp \
                 ogl/GLSatWidget.cpp \
                 ogl/GLSatAbstractWidget.cpp \
                 ogl/GLSatWidget3d.cpp \
@@ -61,7 +60,6 @@ SOURCES    +=   SatViewer.cpp \
                 ogl/globj/GLObjecter.cpp \
                 ogl/glsprite/GLSprite.cpp \
                 ogl/SatWidgetObject.cpp
-#                SAbstractObjDialog.cpp
                                 
 RESOURCES   =    ui/SatViewer.qrc
 
