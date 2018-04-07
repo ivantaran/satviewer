@@ -54,7 +54,7 @@ void SUpdater::updateTle() {
     }
 
     QUrl url(model->item(urlIndex)->text());
-    model->item(urlIndex)->setIcon(QIcon(":/status/task.png"));
+    model->item(urlIndex)->setIcon(QIcon(":/status/right-arrow-1.svg"));
 
     QFileInfo fileInfo(url.url());
     QString fileName = fileInfo.fileName();
@@ -100,12 +100,12 @@ void SUpdater::httpFinished() {
     
     if (reply->error()) {
         file->remove();
-        model->item(urlIndex)->setIcon(QIcon(":/status/no.png"));
+        model->item(urlIndex)->setIcon(QIcon(":/status/prohibition.svg"));
         widget.textStatus->appendPlainText(QString("[%0]: %1")
             .arg(file->fileName()).arg(reply->errorString()));
     }
     else {
-        model->item(urlIndex)->setIcon(QIcon(":/status/ok.png"));
+        model->item(urlIndex)->setIcon(QIcon(":/status/correct.svg"));
         if (file->isWritable()) {
             file->write(reply->readAll());
         }

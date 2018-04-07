@@ -76,7 +76,7 @@ SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
     connect(widget.listViewDBLoc, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(addToLocList(const QModelIndex &)));
     connect(widget.listViewSat, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(changeDbSat()));
     connect(widget.listViewLoc, SIGNAL(doubleClicked(const QModelIndex &)), this, SLOT(changeDbLoc()));
-    connect(scriptFrame->btnRefresh, SIGNAL(clicked()), this, SLOT(scriptParameters()));
+    connect(scriptFrame->getWidget()->btnRefresh, SIGNAL(clicked()), this, SLOT(scriptParameters()));
     connect(widget.btnDeleteSatList, SIGNAL(clicked()), this, SLOT(deleteSatList()));
     connect(widget.btnDeleteLocList, SIGNAL(clicked()), this, SLOT(deleteLocList()));
     connect(widget.btnAddToSatList , SIGNAL(clicked()), this, SLOT(addToSatList ()));

@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1039</width>
+    <width>1025</width>
     <height>709</height>
    </rect>
   </property>
@@ -60,7 +60,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>192</width>
+           <width>178</width>
            <height>547</height>
           </rect>
          </property>
@@ -161,7 +161,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>192</width>
+           <width>178</width>
            <height>547</height>
           </rect>
          </property>
@@ -262,7 +262,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>192</width>
+           <width>178</width>
            <height>547</height>
           </rect>
          </property>
@@ -327,7 +327,7 @@
             </property>
             <property name="icon">
              <iconset resource="SatViewer.qrc">
-              <normaloff>:/actions/reload.png</normaloff>:/actions/reload.png</iconset>
+              <normaloff>:/actions/refresh.svg</normaloff>:/actions/refresh.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -410,11 +410,11 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>?</string>
+             <string>About</string>
             </property>
             <property name="icon">
              <iconset resource="SatViewer.qrc">
-              <normaloff>:/options/info.png</normaloff>:/options/info.png</iconset>
+              <normaloff>:/options/info.svg</normaloff>:/options/info.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -556,7 +556,7 @@
                </property>
                <property name="icon">
                 <iconset resource="SatViewer.qrc">
-                 <normaloff>:/actions/fileopen.png</normaloff>:/actions/fileopen.png</iconset>
+                 <normaloff>:/actions/folder.svg</normaloff>:/actions/folder.svg</iconset>
                </property>
                <property name="shortcut">
                 <string extracomment="Open TLE"/>
@@ -573,7 +573,7 @@
                </property>
                <property name="icon">
                 <iconset resource="SatViewer.qrc">
-                 <normaloff>:/actions/remove.png</normaloff>:/actions/remove.png</iconset>
+                 <normaloff>:/actions/remove.svg</normaloff>:/actions/remove.svg</iconset>
                </property>
                <property name="shortcut">
                 <string extracomment="Remove"/>
@@ -590,7 +590,7 @@
                </property>
                <property name="icon">
                 <iconset resource="SatViewer.qrc">
-                 <normaloff>:/actions/14_layer_deletelayer.png</normaloff>:/actions/14_layer_deletelayer.png</iconset>
+                 <normaloff>:/actions/garbage.svg</normaloff>:/actions/garbage.svg</iconset>
                </property>
                <property name="shortcut">
                 <string extracomment="Remove All"/>
@@ -629,7 +629,7 @@
                </property>
                <property name="icon">
                 <iconset resource="SatViewer.qrc">
-                 <normaloff>:/list/1rightarrow.png</normaloff>:/list/1rightarrow.png</iconset>
+                 <normaloff>:/list/right-arrow-1.svg</normaloff>:/list/right-arrow-1.svg</iconset>
                </property>
                <property name="autoRaise">
                 <bool>true</bool>
@@ -667,7 +667,7 @@
                </property>
                <property name="icon">
                 <iconset resource="SatViewer.qrc">
-                 <normaloff>:/actions/tooloptions.png</normaloff>:/actions/tooloptions.png</iconset>
+                 <normaloff>:/actions/edit.svg</normaloff>:/actions/edit.svg</iconset>
                </property>
                <property name="shortcut">
                 <string extracomment="Edit"/>
@@ -693,7 +693,7 @@
                </property>
                <property name="icon">
                 <iconset resource="SatViewer.qrc">
-                 <normaloff>:/actions/remove.png</normaloff>:/actions/remove.png</iconset>
+                 <normaloff>:/actions/remove.svg</normaloff>:/actions/remove.svg</iconset>
                </property>
                <property name="shortcut">
                 <string extracomment="Remove"/>
@@ -713,7 +713,7 @@
                </property>
                <property name="icon">
                 <iconset resource="SatViewer.qrc">
-                 <normaloff>:/actions/14_layer_deletelayer.png</normaloff>:/actions/14_layer_deletelayer.png</iconset>
+                 <normaloff>:/actions/garbage.svg</normaloff>:/actions/garbage.svg</iconset>
                </property>
                <property name="shortcut">
                 <string extracomment="Select All"/>
@@ -1104,7 +1104,7 @@
                </property>
                <property name="icon">
                 <iconset resource="SatViewer.qrc">
-                 <normaloff>:/actions/tooloptions.png</normaloff>:/actions/tooloptions.png</iconset>
+                 <normaloff>:/actions/edit.svg</normaloff>:/actions/edit.svg</iconset>
                </property>
                <property name="shortcut">
                 <string extracomment="Edit"/>
@@ -1130,7 +1130,7 @@
                </property>
                <property name="icon">
                 <iconset resource="SatViewer.qrc">
-                 <normaloff>:/actions/remove.png</normaloff>:/actions/remove.png</iconset>
+                 <normaloff>:/actions/remove.svg</normaloff>:/actions/remove.svg</iconset>
                </property>
                <property name="autoRaise">
                 <bool>true</bool>
@@ -1147,7 +1147,7 @@
                </property>
                <property name="icon">
                 <iconset resource="SatViewer.qrc">
-                 <normaloff>:/actions/14_layer_deletelayer.png</normaloff>:/actions/14_layer_deletelayer.png</iconset>
+                 <normaloff>:/actions/garbage.svg</normaloff>:/actions/garbage.svg</iconset>
                </property>
                <property name="autoRaise">
                 <bool>true</bool>
@@ -1207,7 +1207,7 @@
                </property>
                <property name="icon">
                 <iconset resource="SatViewer.qrc">
-                 <normaloff>:/list/1rightarrow.png</normaloff>:/list/1rightarrow.png</iconset>
+                 <normaloff>:/list/right-arrow-1.svg</normaloff>:/list/right-arrow-1.svg</iconset>
                </property>
                <property name="autoRaise">
                 <bool>true</bool>
@@ -1237,7 +1237,7 @@
                </property>
                <property name="icon">
                 <iconset resource="SatViewer.qrc">
-                 <normaloff>:/actions/14_layer_deletelayer.png</normaloff>:/actions/14_layer_deletelayer.png</iconset>
+                 <normaloff>:/actions/garbage.svg</normaloff>:/actions/garbage.svg</iconset>
                </property>
                <property name="shortcut">
                 <string extracomment="Remove All"/>
@@ -1257,7 +1257,7 @@
                </property>
                <property name="icon">
                 <iconset resource="SatViewer.qrc">
-                 <normaloff>:/actions/remove.png</normaloff>:/actions/remove.png</iconset>
+                 <normaloff>:/actions/remove.svg</normaloff>:/actions/remove.svg</iconset>
                </property>
                <property name="shortcut">
                 <string extracomment="Remove"/>
@@ -1277,7 +1277,7 @@
                </property>
                <property name="icon">
                 <iconset resource="SatViewer.qrc">
-                 <normaloff>:/actions/add.png</normaloff>:/actions/add.png</iconset>
+                 <normaloff>:/actions/add.svg</normaloff>:/actions/add.svg</iconset>
                </property>
                <property name="shortcut">
                 <string extracomment="Add"/>
@@ -1297,7 +1297,7 @@
                </property>
                <property name="icon">
                 <iconset resource="SatViewer.qrc">
-                 <normaloff>:/actions/fileopen.png</normaloff>:/actions/fileopen.png</iconset>
+                 <normaloff>:/actions/folder.svg</normaloff>:/actions/folder.svg</iconset>
                </property>
                <property name="shortcut">
                 <string extracomment="Open"/>
@@ -1549,9 +1549,8 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:18pt;&quot;&gt;satellite tracking tool&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:18pt;&quot;&gt;version 201&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-size:18pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;Website:	&lt;/span&gt;&lt;a href=&quot;http://satviewer.net&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://satviewer.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;Forum:	&lt;/span&gt;&lt;a href=&quot;http://groups.google.com/group/satviewer&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://groups.google.com/group/satviewer&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt;Mail:	&lt;/span&gt;&lt;a href=&quot;mailto:coduemat@gmail.com&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;coduemat@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt;Website:	&lt;/span&gt;&lt;a href=&quot;http://satviewer.net&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://satviewer.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2';&quot;&gt;Mail:		&lt;/span&gt;&lt;a href=&quot;mailto:satviewer@ya.ru&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;satviewer@ya.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="acceptRichText">
           <bool>false</bool>

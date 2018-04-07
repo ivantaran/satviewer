@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>268</height>
+    <width>453</width>
+    <height>564</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,16 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -41,9 +50,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-74</y>
-        <width>304</width>
-        <height>342</height>
+        <y>0</y>
+        <width>425</width>
+        <height>775</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">

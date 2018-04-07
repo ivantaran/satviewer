@@ -12,7 +12,7 @@
 #include "SScriptFrame.h"
 
 SScriptFrame::SScriptFrame(QString fileName) {
-    this->setupUi(this);
+    widget.setupUi(this);
     
     m_sat = NULL;
     m_loc = NULL;
@@ -22,16 +22,16 @@ SScriptFrame::SScriptFrame(QString fileName) {
     QFile file(fileName);
     
     if (!file.open(QIODevice::ReadOnly)) {
-        textEdit->append(file.errorString() + ": " + file.fileName());
+        widget.textEdit->append(file.errorString() + ": " + file.fileName());
     }
     
     QTextStream stream(&file);
     script = stream.readAll();
     file.close();
-    document = engine.newQObject(textEdit);
+    document = engine.newQObject(widget.textEdit);
     engine.globalObject().setProperty("document", document);
 
-    connect(btnRefresh, SIGNAL(clicked()), this, SLOT(reload()));
+    connect(widget.btnRefresh, SIGNAL(clicked()), this, SLOT(reload()));
 }
 
 SScriptFrame::~SScriptFrame() {
@@ -43,7 +43,7 @@ void SScriptFrame::reload() {
         return;
     }
     
-    textEdit->clear();
+    widget.textEdit->clear();
 
     QJSValue ascSat =  engine.newArray(6);
     QJSValue ascLoc =  engine.newArray(6);
@@ -66,7 +66,7 @@ void SScriptFrame::reload() {
     QJSValue sVal = engine.evaluate(script);
     
     if (sVal.isError()) {
-        textEdit->append(sVal.toString());
+        widget.textEdit->append(sVal.toString());
     }
 }
 

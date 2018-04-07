@@ -10,38 +10,34 @@
     <file>menu.svg</file>
   </qresource>
   <qresource prefix="status">
-    <file>ok.png</file>
-    <file>task.png</file>
-    <file>no.png</file>
+    <file>correct.svg</file>
+    <file>right-arrow-1.svg</file>
+    <file>prohibition.svg</file>
   </qresource>
   <qresource prefix="options">
     <file>widgets.png</file>
+    <file>info.svg</file>
     <file>satviewer.png</file>
     <file>calc.png</file>
     <file>mapsettings.png</file>
     <file>clock.png</file>
-    <file>reload.png</file>
     <file>configure.png</file>
     <file>stock_channel.png</file>
-    <file>info.png</file>
     <file>gnome-applets.png</file>
   </qresource>
   <qresource prefix="actions">
-    <file>tooloptions.png</file>
-    <file>cancel.png</file>
-    <file>14_layer_deletelayer.png</file>
+    <file>garbage.svg</file>
+    <file>folder.svg</file>
+    <file>cancel-1.svg</file>
+    <file>edit.svg</file>
+    <file>add.svg</file>
+    <file>remove.svg</file>
+    <file>refresh.svg</file>
     <file>select.png</file>
-    <file>filesave.png</file>
-    <file>reload.png</file>
-    <file>fileopen.png</file>
-    <file>edit.png</file>
-    <file>add.png</file>
-    <file>remove.png</file>
-    <file>clear.png</file>
   </qresource>
   <qresource prefix="list">
-    <file>1rightarrow.png</file>
-    <file>1leftarrow.png</file>
+    <file>right-arrow-1.svg</file>
+    <file>left-arrow-1.svg</file>
   </qresource>
   <qresource prefix="icon"/>
 </RCC>

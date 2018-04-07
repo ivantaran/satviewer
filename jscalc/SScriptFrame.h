@@ -13,12 +13,14 @@
 #include "../satutils/Satellite.h"
 #include "../locutils/Location.h"
 
-class SScriptFrame : public QWidget, public Ui::JsWidget {
+class SScriptFrame : public QWidget {
     Q_OBJECT;
 public:
     SScriptFrame(QString fileName = "");
     virtual ~SScriptFrame();
     void exec(Satellite *sat, Location *loc, double time);
+    inline Ui::JsWidget * getWidget() { return &widget; }
+    
 private:
     Satellite *m_sat;
     Location *m_loc;
@@ -26,6 +28,7 @@ private:
     QString script;
     QJSEngine engine;
     QJSValue document;
+    Ui::JsWidget widget;
 private slots:
     void reload();
 };
