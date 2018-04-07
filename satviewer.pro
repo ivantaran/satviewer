@@ -7,7 +7,7 @@ UI_DIR = build
 RCC_DIR = build
 OBJECTS_DIR = build
 
-CONFIG  += console debug
+CONFIG  += console debug c++11
 QT      += gui core sql widgets network qml
 
 HEADERS    +=    \

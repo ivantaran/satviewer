@@ -263,7 +263,11 @@ void SDlgOptions::setDb() {
     QDir dir = QDir::home();
     dir.cd("satviewer");
     db.setDatabaseName(dir.filePath("main.db"));
-    if (!db.open()) QMessageBox::information(this, "Error", db.lastError().text() + "\n" + dir.filePath("main.db"), 0);
+    
+    if (!db.open()) {
+        QMessageBox::information(this, "Error", 
+                db.lastError().text() + "\n" + dir.filePath("main.db"), 0);
+    }
 
     db.exec( QString(sqlSat    ) );
     db.exec( QString(sqlSatTemp) );
@@ -309,7 +313,13 @@ void SDlgOptions::setDb() {
     }
 
     widget.listViewDBLoc->setModel(modelDbLoc);
-    connect(widget.listViewDBLoc->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(selectDbLoc(const QModelIndex &, const QModelIndex &)));
+    
+    connect(
+            widget.listViewDBLoc->selectionModel(), 
+            SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), 
+            this, 
+            SLOT(selectDbLoc(const QModelIndex &, const QModelIndex &)));
+    
     widget.listViewDBLoc->setModelColumn(modelDbLoc->fieldIndex("name"));
 
     mapperLoc.setModel(modelDbLoc);
@@ -324,25 +334,13 @@ void SDlgOptions::setDb() {
 }
 
 void SDlgOptions::setSat(Satellite *sat, QSqlRecord record) {
-    if (sat == 0 || record.isEmpty()) return;
-//    double const deg2rad = M_PI/180.0;
-//    double const xpdotp = 1440.0/(2.0*M_PI);
-//    double i         = record.field("i"    ).value().toDouble()*deg2rad;
-//    double omg       = record.field("omg"  ).value().toDouble()*deg2rad;
-//    double e         = record.field("e"    ).value().toDouble();
-//    double w         = record.field("w"    ).value().toDouble()*deg2rad;
-//    double mo        = record.field("m0"   ).value().toDouble()*deg2rad;
-//    double no        = record.field("n"    ).value().toDouble()/xpdotp;
-//    double bstar     = record.field("bstar").value().toDouble();
-//    double jdsaepoch = record.field("time" ).value().toDouble();
+    if (sat == NULL || record.isEmpty()) return;
     QByteArray model_state = record.field("model_state").value().toByteArray();
-    if (model_state.size() < 1) {
-        puts("empty model");
+    if (model_state.size() <= 0) {
+        qWarning("empty model");
         return;
     }
     
-    printf("bytes length %d\n", model_state.length());
-    puts(model_state.toHex().data());
     QString icon     = record.field("icon" ).value().toString();
     if (icon.isEmpty() || !QFile::exists(icon)) {
         QDir dir = QDir::home();
@@ -353,7 +351,6 @@ void SDlgOptions::setSat(Satellite *sat, QSqlRecord record) {
 
     sat->setName(record.field("name").value().toString());
     sat->modelInit(model_state.data(), model_state.size());
-//    sat->modelInit(WGS84, jdsaepoch, bstar, i, omg, e, w, mo, no);
 }
 
 void SDlgOptions::setLoc(Location *loc, QSqlRecord record) {
@@ -442,8 +439,10 @@ void SDlgOptions::deleteLocList() {
 }
 
 void SDlgOptions::selectPage(const QModelIndex &current, const QModelIndex &previous) {
-    if (!current.isValid()) return;
-    widget.stackedWidget->setCurrentIndex(current.row());
+    Q_UNUSED(previous)
+    if (current.isValid()) {
+        widget.stackedWidget->setCurrentIndex(current.row());
+    }
 }
 
 void SDlgOptions::selectSatPage() {
@@ -484,29 +483,37 @@ void SDlgOptions::selectSettingsPage() {
 }
 
 void SDlgOptions::selectDbSat(const QModelIndex &current, const QModelIndex &previous) {
-    if (!current.isValid()) return;
-    mapperSat.setCurrentIndex(current.row());
-    Satellite sat;
-    setSat(&sat, modelDbSat->record(current.row()));
-    double tm = 86400000.0*(modelDbSat->record(current.row()).value("time").toDouble() - 2440587.5);
-    widget.lineEditSatTime->setText(QDateTime::fromMSecsSinceEpoch((uint64_t)tm).toUTC().toString("dd.MM.yyyy H:mm:ss.zzz"));
+    Q_UNUSED(previous)
+    if (current.isValid()) {
+        mapperSat.setCurrentIndex(current.row());
+        Satellite sat;
+        setSat(&sat, modelDbSat->record(current.row()));
+        double tm = 86400000.0 * (modelDbSat->record(current.row()).value("time").toDouble() - 2440587.5);
+        widget.lineEditSatTime->setText(QDateTime::fromMSecsSinceEpoch((uint64_t)tm).toUTC().toString("dd.MM.yyyy H:mm:ss.zzz"));
+    }
 }
 
 void SDlgOptions::selectDbLoc(const QModelIndex &current, const QModelIndex &previous) {
-    if (!current.isValid()) return;
-    mapperLoc.setCurrentIndex(current.row());
-    Location loc;
-    setLoc(&loc, modelDbLoc->record(current.row()));
+    Q_UNUSED(previous)
+    if (current.isValid()) {
+        mapperLoc.setCurrentIndex(current.row());
+        Location loc;
+        setLoc(&loc, modelDbLoc->record(current.row()));
+    }
 }
 
 void SDlgOptions::selectSat(const QModelIndex &current, const QModelIndex &previous) {
-    if (!current.isValid()) return;
-    satWidget->setIndexSat(current.row());
+    Q_UNUSED(previous)
+    if (current.isValid()) {
+        satWidget->setIndexSat(current.row());
+    }
 }
 
 void SDlgOptions::selectLoc(const QModelIndex &current, const QModelIndex &previous) {
-    if (!current.isValid()) return;
-    satWidget->setIndexLoc(current.row());
+    Q_UNUSED(previous)
+    if (current.isValid()) {
+        satWidget->setIndexLoc(current.row());
+    }
 }
 
 void SDlgOptions::setFilterSatName(const QString &line) {
@@ -579,17 +586,11 @@ void SDlgOptions::loadDbFromTle() {
                 .arg(tle.bStar()                , 0, 'g', 16)
                 .arg(tle.jEpoch()               , 0, 'g', 16);
 
-        QSqlQuery q(db);
-        q.prepare(query);
-        printf("tle state length %d\n", tle.sizeState());
-        QByteArray bytes(tle.state(), tle.sizeState());
-        printf("tle bytes length %d\n", bytes.length());
-        puts(bytes.toHex().data());
-        q.bindValue(":model_state", bytes);
-        q.exec();
-        puts(q.executedQuery().toLocal8Bit().data());
-//        db.exec(query);
-//        puts(db.lastError().text().toLocal8Bit().data());
+            QSqlQuery q(db);
+            q.prepare(query);
+            QByteArray bytes(tle.state(), tle.sizeState());
+            q.bindValue(":model_state", bytes);
+            q.exec();
         }
     }
     db.exec("COMMIT;");

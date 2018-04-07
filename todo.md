@@ -1,0 +1,11 @@
+- [ ] method lla (blh) в Satellite instead of separate
+- [ ] move global const
+- [ ] в locList coords as radians
+- [ ] radarmap
+- [ ] dir.path() + "/" + file.fileName()
+- [ ] shadow function
+- [ ] save widget view
+- [ ] in dialog mean motion after apply changed
+- [ ] \n \r\n in .obj
+- [ ] small indent in html
+- [ ] libpng warning: iCCP: known incorrect sRGB profile

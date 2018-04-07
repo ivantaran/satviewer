@@ -21,9 +21,9 @@ public:
     Satellite defaultSat;
     
     virtual Satellite *sat() { return 0; }
-    virtual void makeSat(Satellite *sat, bool fromlist = true) {}
-    virtual void setSatWidget(GLSatAbstractWidget *satWidget) {}
-    virtual void retranslateUi(QDialog *dialog) {}
+    virtual void makeSat(Satellite *sat, bool fromlist = true) { Q_UNUSED(sat) Q_UNUSED(fromlist) }
+    virtual void setSatWidget(GLSatAbstractWidget *satWidget) { Q_UNUSED(satWidget) }
+    virtual void retranslateUi(QDialog *dialog) { Q_UNUSED(dialog) }
 };
 
 #endif	/* SABSTRACTOBJDIALOG_H */

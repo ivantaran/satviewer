@@ -21,12 +21,11 @@
 inline double sqr(double __x) {return __x*__x;}
 
 KepModel::KepModel() {
-	// TODO Auto-generated constructor stub
 
 }
 
 KepModel::~KepModel() {
-	// TODO Auto-generated destructor stub
+
 }
 
 int KepModel::modelInit(int whichconst, double _jdsatepoch, double _bstar, double _inclo, double _argpo, double _ecco, double _nodeo, double _mo, double _no) {
