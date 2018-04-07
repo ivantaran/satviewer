@@ -67,9 +67,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-422</y>
+        <y>0</y>
         <width>662</width>
-        <height>1807</height>
+        <height>1707</height>
        </rect>
       </property>
       <layout class="QFormLayout" name="formLayout">
@@ -602,19 +602,6 @@
            </widget>
           </item>
          </layout>
-        </widget>
-       </item>
-       <item row="8" column="0" colspan="2">
-        <widget class="QComboBox" name="comboModel"/>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="labelModel">
-         <property name="text">
-          <string>Model</string>
-         </property>
-         <property name="buddy">
-          <cstring>comboModel</cstring>
-         </property>
         </widget>
        </item>
       </layout>

@@ -92,8 +92,6 @@ public:
     double* xyz_g ();
     double* vxyz_g();
 
-    int modelIndex() const { return model_index; }
-    void setModelIndex(int index) { model_index = index; }
     void setLocation(bool location);
     bool isLocation() const;
     void setSatellite(bool satellite);
@@ -122,7 +120,6 @@ private:
     double name_x, name_y;
     double lines_width;
     bool show_label, show_track, show_zrv, show_lines, active_zone, show_track_shadow;
-    int model_index;
     bool satellite, location;
 };
 #endif /* SATELLITE_H_ */

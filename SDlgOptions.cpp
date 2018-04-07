@@ -14,8 +14,6 @@
 SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
     widget.setupUi(this);
 
-////    getSObjDialog(satWidget)->show();
-//    satDialog = getSObjDialog(satWidget);
     satDialog = new Sgp4Dialog(satWidget);
     satDialog->setParent(this, Qt::Dialog | Qt::WindowTitleHint);
     satDialog->setWindowModality(Qt::WindowModal);
@@ -43,21 +41,23 @@ SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
     setSatWidget(satWidget);
 
     //connect(listView->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(selectPage(const QModelIndex &, const QModelIndex &)));
-    connect( widget.btnToolSat     , SIGNAL(clicked()), this, SLOT(selectSatPage     ()) );
-    connect( widget.btnToolLoc     , SIGNAL(clicked()), this, SLOT(selectLocPage     ()) );
-    connect( widget.btnToolZRV     , SIGNAL(clicked()), this, SLOT(selectZrvPage     ()) );
-    connect( widget.btnToolParams  , SIGNAL(clicked()), this, SLOT(selectParamsPage  ()) );
-    connect( widget.btnInfo        , SIGNAL(clicked()), this, SLOT(selectAboutPage   ()) );
-    connect( widget.btnToolSettings, SIGNAL(clicked()), this, SLOT(selectSettingsPage()) );
-    connect( widget.btnToolTle     , SIGNAL(clicked()), this, SLOT(selectTlePage     ()) );
-    connect( widget.btnToolWidgets , SIGNAL(clicked()), this, SLOT(selectWidgetsPage ()) );
-    connect( widget.btnToolMap     , SIGNAL(clicked()), this, SLOT(selectMapPage     ()) );
-    connect( widget.btnAboutQt     , SIGNAL(clicked()), this, SLOT(aboutQt           ()) );
+    connect(widget.btnToolSat     , SIGNAL(clicked()), this, SLOT(selectSatPage     ()));
+    connect(widget.btnToolLoc     , SIGNAL(clicked()), this, SLOT(selectLocPage     ()));
+    connect(widget.btnToolZRV     , SIGNAL(clicked()), this, SLOT(selectZrvPage     ()));
+    connect(widget.btnToolParams  , SIGNAL(clicked()), this, SLOT(selectParamsPage  ()));
+    connect(widget.btnInfo        , SIGNAL(clicked()), this, SLOT(selectAboutPage   ()));
+    connect(widget.btnToolSettings, SIGNAL(clicked()), this, SLOT(selectSettingsPage()));
+    connect(widget.btnToolTle     , SIGNAL(clicked()), this, SLOT(selectTlePage     ()));
+    connect(widget.btnToolWidgets , SIGNAL(clicked()), this, SLOT(selectWidgetsPage ()));
+    connect(widget.btnToolMap     , SIGNAL(clicked()), this, SLOT(selectMapPage     ()));
+    connect(widget.btnAboutQt     , SIGNAL(clicked()), this, SLOT(aboutQt           ()));
     
     setDb();
     
-    connect(widget.lineEditSatNameFilter, SIGNAL(textChanged(const QString &)), this, SLOT(setFilterSatName(const QString &)));
-    connect(widget.lineEditLocNameFilter, SIGNAL(textChanged(const QString &)), this, SLOT(setFilterLocName(const QString &)));
+    connect(widget.lineEditSatNameFilter, SIGNAL(textChanged(const QString &)), 
+            this, SLOT(setFilterSatName(const QString &)));
+    connect(widget.lineEditLocNameFilter, SIGNAL(textChanged(const QString &)), 
+            this, SLOT(setFilterLocName(const QString &)));
     connect(widget.btnSatSqlHelp, SIGNAL(clicked()), this, SLOT(helpSatSql  ()));
     connect(widget.btnLocSqlHelp, SIGNAL(clicked()), this, SLOT(helpLocSql  ()));
     connect(widget.btnSatFilter , SIGNAL(clicked()), this, SLOT(setFilterSat()));
@@ -108,9 +108,9 @@ void SDlgOptions::saveListViewSat() {
                 "'show_track', 'show_zrv', 'show_lines', 'active_zone', "
                 "'color_track', 'color_label', 'color_zrv', 'color_lines', "
                 "'track', 'font', 'name_x', 'name_y', 'lines_width', "
-                "'model_index', 'model_state') "
+                "'model_state') "
                 "VALUES('%0', %1, '%2', %3, %4, %5, %6, %7, %8, %9, %10, %11, "
-                "%12, '%13', %14, %15, %16, %17, :model_state);")
+                "%12, '%13', %14, %15, %16, :model_state);")
                 .arg(sat->name())
                 .arg(sat->zrvWidth()/deg2rad, 0, 'g', 16)
                 .arg(sat->iconName())
@@ -127,8 +127,7 @@ void SDlgOptions::saveListViewSat() {
                 .arg(sat->font().toString())
                 .arg(sat->nameX(), 0, 'g', 16)
                 .arg(sat->nameY(), 0, 'g', 16)
-                .arg(sat->linesWidth(), 0, 'g', 16)
-                .arg(sat->modelIndex());
+                .arg(sat->linesWidth(), 0, 'g', 16);
         QSqlQuery q(db);
         q.prepare(query);
         QByteArray bytes(sat->getState(), sat->getStateSize());
@@ -195,7 +194,6 @@ void SDlgOptions::loadListViewSat() {
         satWidget->setSatModel(model_index);
 //        sat = satWidget->satList.add(satWidget->getSatModel());
         sat = satWidget->getSatModel();
-        sat->setModelIndex(model_index);
         setSat(sat, modelSatTemp.record(i));
         sat->visibleLabel (modelSatTemp.record(i).field("show_label" ).value().toBool());
         sat->visibleTrack (modelSatTemp.record(i).field("show_track" ).value().toBool());

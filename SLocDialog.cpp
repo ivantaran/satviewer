@@ -11,7 +11,7 @@
 #include <QtMath>
 
 SLocDialog::SLocDialog(GLSatAbstractWidget *satWidget) {
-    m_loc = 0;
+    m_loc = NULL;
     widget.setupUi(this);
     setSatWidget(satWidget);
 
@@ -46,7 +46,9 @@ uint32_t SLocDialog::flipRgb(uint32_t rgb) {
 }
 
 void SLocDialog::showEvent(QShowEvent * event) {
-    if (m_loc == 0) return;
+    if (m_loc == NULL) {
+        return;
+    }
 
 //    double const rad2deg = 180.0/M_PI;
     QPalette pal;

@@ -244,7 +244,6 @@ void GLSatAbstractWidget::selectSatModel(int index, int pos) {
     
     if ((old_sat == 0) || (new_sat == 0)) return;
     new_sat->copy(old_sat);
-    new_sat->setModelIndex(index);
     setIcon(new_sat);
     satList.replace(pos, new_sat);
     delete old_sat;

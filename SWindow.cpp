@@ -181,7 +181,6 @@ void SWindow::readSettings() {
     dlgOptions->satDialog->defaultSat.setNameX( settings.value("defaultSat/nameX"   , 0.0).toDouble() );
     dlgOptions->satDialog->defaultSat.setNameY( settings.value("defaultSat/nameY"   , 0.0).toDouble() );
     dlgOptions->satDialog->defaultSat.setLinesWidth( settings.value("defaultSat/linesWidth"   , 1.0).toDouble() );
-    dlgOptions->satDialog->defaultSat.setModelIndex(settings.value("defaultSat/modelIndex"  , 0).toInt());
 
     dlgOptions->locDialog->defaultLoc.visibleLabel( settings.value("defaultLoc/isVisibleLabel", true ).toBool() );
     dlgOptions->locDialog->defaultLoc.visibleLines( settings.value("defaultLoc/isVisibleLines", false ).toBool() );
@@ -249,7 +248,6 @@ void SWindow::writeSettings() {
     settings.setValue( "defaultSat/nameX"   , dlgOptions->satDialog->defaultSat.nameX()           );
     settings.setValue( "defaultSat/nameY"   , dlgOptions->satDialog->defaultSat.nameY()           );
     settings.setValue( "defaultSat/linesWidth", dlgOptions->satDialog->defaultSat.linesWidth()    );
-    settings.setValue( "defaultSat/modelIndex", dlgOptions->satDialog->defaultSat.modelIndex()    );
 
     settings.setValue( "defaultLoc/isVisibleLabel", dlgOptions->locDialog->defaultLoc.isVisibleLabel() );
     settings.setValue( "defaultLoc/isVisibleLines", dlgOptions->locDialog->defaultLoc.isVisibleLines() );
@@ -427,7 +425,7 @@ void SWindow::selectLanguage(int value) {
     }
     widget.retranslateUi(this);
     dlgOptions->getWidget()->retranslateUi(dlgOptions);
-    dlgOptions->satDialog->retranslateUi(dlgOptions->satDialog);
+    dlgOptions->satDialog->getWidget()->retranslateUi(dlgOptions->satDialog);
     dlgOptions->locDialog->getWidget()->retranslateUi(dlgOptions->locDialog);
 //    dlgOptions->scriptFrame->retranslateUi(dlgOptions->scriptFrame);
     dlgOptions->tleFrame->getWidget()->retranslateUi(dlgOptions->tleFrame);

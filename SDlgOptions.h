@@ -27,14 +27,12 @@
 #include <QMessageBox>
 #include <QDataWidgetMapper>
 #include <QStandardItemModel>
-#include "SAbstractObjDialog.h"
+#include "dialogs/sgp4/Sgp4Dialog.h"
 
 class SDlgOptions: public QDialog {
     Q_OBJECT
 public:
-    typedef SAbstractObjDialog * (*CustomObjDialog)(GLSatAbstractWidget *satWidget);
-    CustomObjDialog getSObjDialog;
-    SAbstractObjDialog *satDialog;
+    Sgp4Dialog *satDialog;
     SLocDialog *locDialog;
 //    SScriptFrame *scriptFrame;
     SUpdater *tleFrame;

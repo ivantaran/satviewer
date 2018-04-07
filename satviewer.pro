@@ -34,8 +34,8 @@ HEADERS    +=    \
                 ogl/globj/GLObjMaterial.h \
                 ogl/globj/GLObjecter.h \
                 ogl/glsprite/GLSprite.h \
-                ogl/SatWidgetObject.h \
-                SAbstractObjDialog.h    
+                ogl/SatWidgetObject.h
+#                SAbstractObjDialog.h    
 
 SOURCES    +=   SatViewer.cpp \
                 SWindow.cpp \
@@ -60,8 +60,8 @@ SOURCES    +=   SatViewer.cpp \
                 ogl/globj/GLObjMaterial.cpp \
                 ogl/globj/GLObjecter.cpp \
                 ogl/glsprite/GLSprite.cpp \
-                ogl/SatWidgetObject.cpp \
-                SAbstractObjDialog.cpp
+                ogl/SatWidgetObject.cpp
+#                SAbstractObjDialog.cpp
                                 
 RESOURCES   =    ui/SatViewer.qrc
 

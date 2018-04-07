@@ -36,7 +36,6 @@ Satellite::Satellite(void) {
     color_track_shadow = 0xFF407464;
 
     _track = 0.5;
-    model_index = 0;
     satWObject = NULL;
     satellite = true;
     location = false;
@@ -71,7 +70,7 @@ bool Satellite::isSatellite() const {
 Satellite::~Satellite(void)
 {
     if (satWObject != 0) delete satWObject;
-    puts("satellite is removed");
+    qWarning("satellite is removed");
 }
 
 void Satellite::getGeod() {
@@ -107,7 +106,7 @@ void Satellite::getGeod() {
 }
 
 void Satellite::copy(Satellite *src) {
-//    modelInit(WGS84, src->jdsatepoch, src->bstar, src->incl0, src->argp0, src->ecc0, src->node0, src->m0, src->n0);
+
     modelInit(src->getState(), src->getStateSize());
     
     visibleLabel(src->isVisibleLabel());
@@ -130,7 +129,6 @@ void Satellite::copy(Satellite *src) {
 
     setLinesWidth(src->linesWidth());
     setIcon(src->iconName());
-    setModelIndex(src->modelIndex());
 }
 
 void Satellite::setName(QString name) {

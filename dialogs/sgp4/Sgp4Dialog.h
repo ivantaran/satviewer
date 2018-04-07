@@ -12,9 +12,8 @@
 #include "ui_sgp4.h"
 #include "../../satviewer/models/sgp4/Sgp4Model.h"
 #include "../../satviewer/ogl/GLSatAbstractWidget.h"
-#include "../../satviewer/SAbstractObjDialog.h"
 
-class Sgp4Dialog: public SAbstractObjDialog {
+class Sgp4Dialog: public QDialog {
     Q_OBJECT
 public:
     Sgp4Model defaultSat;
@@ -24,6 +23,7 @@ public:
     inline Satellite *sat() { return m_sat; }
     void makeSat(Satellite *sat, bool fromlist = true);
     void setSatWidget(GLSatAbstractWidget *satWidget);
+    inline Ui::SatDialog * getWidget() { return &widget; }
 
 protected:
     void showEvent(QShowEvent *event);
@@ -43,7 +43,6 @@ private slots:
     void setColorSatTrack();
     void setSatFont();
     void setDefault();
-    void selectModel(int index);
     void setIcon();
 };
 

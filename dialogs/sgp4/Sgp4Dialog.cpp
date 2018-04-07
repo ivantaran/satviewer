@@ -14,7 +14,7 @@
 #include <QColorDialog>
 #include <QtMath>
 
-Sgp4Dialog::Sgp4Dialog(GLSatAbstractWidget *satWidget) : SAbstractObjDialog(satWidget) {
+Sgp4Dialog::Sgp4Dialog(GLSatAbstractWidget *satWidget) {
     widget.setupUi(this);
     widget.lineEditBStar->setValidator(new QDoubleValidator());
     widget.lineEditE->setValidator    (new QDoubleValidator());
@@ -27,8 +27,7 @@ Sgp4Dialog::Sgp4Dialog(GLSatAbstractWidget *satWidget) : SAbstractObjDialog(satW
     m_sat = 0;
     m_fromlist = true;
     setSatWidget(satWidget);
-    widget.comboModel->addItems(satWidget->satModelList());
-    //connect(btnIcon, SIGNAL(clicked()), this, SLOT(setIcon()));
+    connect(widget.btnIcon, SIGNAL(clicked()), this, SLOT(setIcon()));
     connect(widget.btnColorName , SIGNAL(clicked()), this, SLOT(setColorSatName ()));
     connect(widget.btnColorZrv  , SIGNAL(clicked()), this, SLOT(setColorSatZrv  ()));
     connect(widget.btnColorLines, SIGNAL(clicked()), this, SLOT(setColorSatLines()));
@@ -36,7 +35,6 @@ Sgp4Dialog::Sgp4Dialog(GLSatAbstractWidget *satWidget) : SAbstractObjDialog(satW
     connect(widget.btnFont      , SIGNAL(clicked()), this, SLOT(setSatFont      ()));
     connect(widget.btnDefault   , SIGNAL(clicked()), this, SLOT(setDefault      ()));
     connect(widget.btnIcon      , SIGNAL(clicked()), this, SLOT(setIcon         ()));
-    connect(widget.comboModel, SIGNAL(currentIndexChanged(int)), this, SLOT(selectModel(int)));
 }
 
 Sgp4Dialog::~Sgp4Dialog() {
@@ -55,7 +53,11 @@ uint32_t Sgp4Dialog::flipRgb(uint32_t rgb) {
 }
 
 void Sgp4Dialog::showEvent(QShowEvent * event) {
-    if (m_sat == 0) return;
+    Q_UNUSED(event)
+            
+    if (m_sat == NULL) {
+        return;
+    }
 
     QPalette pal;
     QRgb rgb;
@@ -118,25 +120,27 @@ void Sgp4Dialog::showEvent(QShowEvent * event) {
     pal.setColor(QPalette::Button, QColor::fromRgba(flipRgb(rgb)));
 
     widget.btnColorTrack->setPalette(pal);
-    widget.comboModel->blockSignals(true);
-    widget.comboModel->setCurrentIndex(m_sat->modelIndex());
-    widget.comboModel->blockSignals(false);
 }
 
 void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
 
     QPalette pal;
     QRgb rgb;
-
+    sgp4_t state;
     QPixmap pixmap;
+    
     m_fromlist = fromlist;
     m_sat = (Sgp4Model *)sat;
-    if (exec() == QDialog::Rejected) return;
+    
+    if (exec() == QDialog::Rejected) {
+        return;
+    }
 
-    if (m_sat == NULL) return;
+    if (m_sat == NULL) {
+        return;
+    }
 
     QString name = widget.lineEditName->text();
-    sgp4_t state;
 
     state.incl = qDegreesToRadians(widget.lineEditI->text().toDouble());
     state.argp = qDegreesToRadians(widget.lineEditOmg->text().toDouble());
@@ -151,6 +155,7 @@ void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
     double zrv = qDegreesToRadians(widget.spinZRV->value());
 
     m_sat->modelInit((char *)&state, sizeof(state));
+
     m_sat->setName(name);
     m_sat->setZrv(zrv);
     m_sat->setTrack(widget.spinTrack->value());
@@ -182,8 +187,6 @@ void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
     pal = widget.btnColorTrack->palette();
     rgb = pal.color(QPalette::Button).rgba();
     m_sat->setColorTrack(flipRgb(rgb));
-
-    m_sat->setModelIndex(widget.comboModel->currentIndex());
 }
 
 void Sgp4Dialog::setBtnColor(QWidget *widget) {
@@ -220,37 +223,22 @@ void Sgp4Dialog::setSatFont() {
 
 void Sgp4Dialog::setDefault() {
     Sgp4Model *sat = m_sat;
-    makeSat(&defaultSat, 0);
+    makeSat(&defaultSat, false);
     m_sat = sat;
-}
-
-void Sgp4Dialog::selectModel(int index) {
-    if (index < 0) return;
-    puts("selectModel");
-    if (satWidget->satList.count() < 1) return;
-    if (m_fromlist) {
-        int pos = satWidget->satList.indexOf(m_sat);
-        if (pos == -1) {
-            puts("sat not found");
-            return;
-        }
-        satWidget->selectSatModel(index, pos);
-        m_sat = (Sgp4Model *)satWidget->satList.at(pos);
-    }
-    else m_sat->setModelIndex(index);
 }
 
 void Sgp4Dialog::setIcon() {
     QDir dir = QDir::home();
     dir.cd("satviewer/icons");
-    QString filePath = QFileDialog::getOpenFileName(this, "Open PNG Image", dir.path(), "PNG Images (*.png)");
-    if (filePath.isEmpty()) return;
-    widget.btnIcon->setIcon(QPixmap(filePath));
-    satWidget->setIcon(m_sat, filePath);
+    QString filePath = QFileDialog::getOpenFileName(this, "Open PNG Image", 
+            dir.path(), "PNG Images (*.png)", NULL, 
+            QFileDialog::DontUseNativeDialog);
+    if (filePath.isEmpty()) {
+        widget.btnIcon->setIcon(QPixmap(filePath));
+        satWidget->setIcon(m_sat, filePath);
+    }
 }
 
 void Sgp4Dialog::setSatWidget(GLSatAbstractWidget *satWidget) { 
     this->satWidget = satWidget; 
-    widget.comboModel->clear();
-    widget.comboModel->addItems(satWidget->satModelList());
 }
