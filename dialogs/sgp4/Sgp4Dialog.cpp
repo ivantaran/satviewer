@@ -25,7 +25,6 @@ Sgp4Dialog::Sgp4Dialog(GLSatAbstractWidget *satWidget) {
     widget.lineEditTime->setValidator (new QDoubleValidator());
     widget.lineEditW->setValidator    (new QDoubleValidator());
     m_sat = 0;
-    m_fromlist = true;
     setSatWidget(satWidget);
     connect(widget.btnIcon, SIGNAL(clicked()), this, SLOT(setIcon()));
     connect(widget.btnColorName , SIGNAL(clicked()), this, SLOT(setColorSatName ()));
@@ -129,10 +128,9 @@ void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
     sgp4_t state;
     QPixmap pixmap;
     
-    m_fromlist = fromlist;
     m_sat = (Sgp4Model *)sat;
     
-    if (exec() == QDialog::Rejected) {
+    if (fromlist && exec() == QDialog::Rejected) {
         return;
     }
 

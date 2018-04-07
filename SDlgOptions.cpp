@@ -661,7 +661,9 @@ void SDlgOptions::deleteDbLoc() {
 }
 
 void SDlgOptions::addToSatList(const QModelIndex &index) {
-    if (!index.isValid()) return;
+    if (!index.isValid()) {
+        return;
+    }
     int iRow = index.row();
     Satellite *sat;
     QModelIndexList indexList = widget.listViewDBSat->selectionModel()->selectedIndexes();
