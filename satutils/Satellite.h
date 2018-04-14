@@ -16,18 +16,14 @@
 #include <QFont>
 #include "../ogl/SatWidgetObject.h"
 
-//#define WGS72OLD 0
-//#define WGS72 1
-//#define WGS84 2
-
 class Satellite {
 
 public:
     Satellite(void);
     virtual ~Satellite(void);
     SatWidgetObject *satWObject;
-    virtual int model(double) { return 0; }
-    virtual int modelInit(char *state, int size) { return 0; }
+    virtual bool model(double) { return false; }
+    virtual bool modelInit(char *state, int size) { return false; }
     virtual char *getState() { return 0; }
     virtual int getStateSize() { return 0; }
     
@@ -96,20 +92,19 @@ public:
     bool isLocation() const;
     void setSatellite(bool satellite);
     bool isSatellite() const;
-//    int stateSize() const;
-//    char* getState() const;
 
 protected:
     double lon, lat, _height;
     double r[3], v[3], r_g[3], v_g[3];
-    double jdsatepoch, bstar, inclo, nodeo, ecco, argpo, mo, ao, no;
+//    double jdsatepoch, bstar, inclo, nodeo, ecco, argpo, mo, ao, no;
     double zrv;
-    double gsto; //current sidereal time
-    double t;    //current model time in minutes
-    double tumin, mu, radius_earth_km, xke, j2, j3, j4, j3oj2;
+//    double gsto; //current sidereal time
+//    double t;    //current model time in minutes
+//    double tumin, mu, radius_earth_km, xke, j2, j3, j4, j3oj2;
     double radius_earth;
-//    void getgravconst(int whichconst);
     void getGeod();
+    virtual double gsto() { return 0.0; }
+    virtual double minutes() { return 0.0; }
 
 private:
     QString icon_name;

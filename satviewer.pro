@@ -15,6 +15,7 @@ HEADERS    +=    \
                 SDlgOptions.h \
                 SLocDialog.h \
                 dialogs/sgp4/Sgp4Dialog.h \
+                models/sgp4/SGP4.h \
                 models/sgp4/Sgp4Model.h \
                 jscalc/SScriptFrame.h \
                 ogl/GLSatWidget.h \
@@ -41,6 +42,7 @@ SOURCES    +=   SatViewer.cpp \
                 SDlgOptions.cpp \
                 SLocDialog.cpp \
                 dialogs/sgp4/Sgp4Dialog.cpp \
+                models/sgp4/SGP4.cpp \
                 models/sgp4/Sgp4Model.cpp \
                 jscalc/SScriptFrame.cpp \
                 ogl/GLSatWidget.cpp \

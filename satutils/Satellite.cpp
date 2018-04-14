@@ -6,11 +6,6 @@
 #include <string.h>
 #include <math.h>
 
-#define PI 3.14159265358979323846
-#define temp4 1.0 + cos(PI-1.0e-9)
-#define twopi 2.0*PI
-#define x2o3 2.0/3.0
-
 
 Satellite::Satellite(void) {
     _name = "";
@@ -39,8 +34,7 @@ Satellite::Satellite(void) {
     satWObject = NULL;
     satellite = true;
     location = false;
-//    state = 0;
-//    state_size = 0;
+    radius_earth = 0.0;
 }
 
 void Satellite::setLocation(bool value) {
@@ -59,50 +53,36 @@ bool Satellite::isSatellite() const {
     return satellite;
 }
 
-//int Satellite::stateSize() const {
-//    return state_size;
-//}
-//
-//char* Satellite::getState() const {
-//    return state;
-//}
-
-Satellite::~Satellite(void)
-{
+Satellite::~Satellite(void) {
     if (satWObject != 0) delete satWObject;
     qWarning("satellite is removed");
 }
 
 void Satellite::getGeod() {
-  	double p, T, sT, cT, N;
-	double const WZ = 7.2921151467e-5;
-	double const a_axis = 6378137.0;   //WGS-84 earth's semi major axis
-	double const b_axis = 6356752.31;  //WGS-84 earth's semi minor axis
-	//double const deg2rad = M_PI/180;
-	//first  numerical eccentricity
-	double const e1sqr = ((a_axis * a_axis - b_axis * b_axis) / (a_axis * a_axis));
-	//second numerical eccentricity
-	double const e2sqr = ((a_axis * a_axis - b_axis * b_axis) / (b_axis * b_axis));
+    double p, T, sT, cT, N;
+    double const WZ = 7.2921151467e-5;
+    double const a_axis = 6378137.0;   //WGS-84 earth's semi major axis
+    double const b_axis = 6356752.31;  //WGS-84 earth's semi minor axis
 
-  	p = sqrt(r[0] * r[0] + r[1] * r[1]);
-  	T = atan(r[2] * a_axis / (p * b_axis));
-  	sT = sin(T);
-  	cT = cos(T);
-  	lat = atan((r[2] + e2sqr * b_axis * sT * sT * sT) / (p - e1sqr * a_axis * cT * cT * cT));
-  	if (r[0] == 0.0)
-    		lon = PI / 2.0;
-  	else
-    		lon = atan(r[1] / r[0]);
+    //first  numerical eccentricity
+    double const e1sqr = ((a_axis * a_axis - b_axis * b_axis) / (a_axis * a_axis));
+    //second numerical eccentricity
+    double const e2sqr = ((a_axis * a_axis - b_axis * b_axis) / (b_axis * b_axis));
 
-  	if (r[0] < 0 && r[1] > 0) lon += M_PI;
-    if (r[0] < 0 && r[1] < 0) lon -= M_PI;
+    p = sqrt(r[0] * r[0] + r[1] * r[1]);
+    T = atan(r[2] * a_axis / (p * b_axis));
+    sT = sin(T);
+    cT = cos(T);
+  
+    lat = atan2(r[2] + e2sqr * b_axis * sT * sT * sT, p - e1sqr * a_axis * cT * cT * cT);
+    lon = atan2(r[1], r[0]);
 
-    lon += -WZ*t*60 - gsto;
-    lon = fmod(lon + 3*PI, twopi) - PI;
-    if (lon < -PI) lon += 2*PI;
+    lon -= WZ * minutes() * 60 + gsto();
+    lon = fmod(lon + 3.0 * M_PI, 2.0 * M_PI) - M_PI;
+    if (lon < -M_PI) lon += 2.0 * M_PI;
 
     N = a_axis / sqrt(1.0 - e1sqr * sin(lat) * sin(lat));
-  	_height = p / cos(lat) - N;
+    _height = p / cos(lat) - N;
 }
 
 void Satellite::copy(Satellite *src) {
@@ -137,27 +117,33 @@ void Satellite::setName(QString name) {
 
 double* Satellite::xyz_g() {
     double const WZ = 7.2921151467e-5;
-    double alpha = WZ*t*60 + gsto;
-    r_g[0] =  cos(alpha)*r[0] + sin(alpha)*r[1];
-    r_g[1] = -sin(alpha)*r[0] + cos(alpha)*r[1];
+    double alpha = WZ * minutes() * 60 + gsto();
+    r_g[0] =  cos(alpha) * r[0] + sin(alpha) * r[1];
+    r_g[1] = -sin(alpha) * r[0] + cos(alpha) * r[1];
     r_g[2] =  r[2];
     return r_g;
 }
 
 double* Satellite::vxyz_g() {
     double const WZ = 7.2921151467e-5;
-    double alpha = WZ*t*60 + gsto;
+    double alpha = WZ * minutes() * 60 + gsto();
     xyz_g();
-    v_g[0] =  cos(alpha)*v[0] + sin(alpha)*v[1] + WZ*r_g[1];
-    v_g[1] = -sin(alpha)*v[0] + cos(alpha)*v[1] - WZ*r_g[0];
+    v_g[0] =  cos(alpha) * v[0] + sin(alpha) * v[1] + WZ * r_g[1];
+    v_g[1] = -sin(alpha) * v[0] + cos(alpha) * v[1] - WZ * r_g[0];
     v_g[2] =  v[2];
     return v_g;
 }
 
 void Satellite::setZrv(double value) {
-    if (value > 0.5*PI) value = 0.5*PI;
-    else if (value < 0) value = 0;
-    this->zrv = value;
+    if (value > M_PI_2) {
+        value = M_PI_2;
+    }
+    else {
+        if (value < 0.0) {
+            value = 0.0;
+        }
+    }
+    zrv = value;
 }
 
 void Satellite::setIcon(QString name) {
@@ -184,9 +170,3 @@ void Satellite::setNameY(double value) {
 void Satellite::setLinesWidth(double value) {
     lines_width = value;
 }
-
-//int Satellite::modelInit(char* state, int size) {
-//    this->state = state;
-//    state_size = size;
-//    return 0;
-//}

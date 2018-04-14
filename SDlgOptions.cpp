@@ -104,30 +104,30 @@ void SDlgOptions::saveListViewSat() {
     for (int i = 0; i < satWidget->satList.count(); i++) {
         sat = satWidget->satList.at(i);
         query = QString(
-                "INSERT INTO sattemp ('name', 'zrv', 'icon', 'show_label', "
-                "'show_track', 'show_zrv', 'show_lines', 'active_zone', "
-                "'color_track', 'color_label', 'color_zrv', 'color_lines', "
-                "'track', 'font', 'name_x', 'name_y', 'lines_width', "
-                "'model_state') "
-                "VALUES('%0', %1, '%2', %3, %4, %5, %6, %7, %8, %9, %10, %11, "
-                "%12, '%13', %14, %15, %16, :model_state);")
-                .arg(sat->name())
-                .arg(sat->zrvWidth()/deg2rad, 0, 'g', 16)
-                .arg(sat->iconName())
-                .arg(sat->isVisibleLabel())
-                .arg(sat->isVisibleTrack())
-                .arg(sat->isVisibleZrv())
-                .arg(sat->isVisibleLines())
-                .arg(sat->isAtctiveZone())
-                .arg(sat->colorTrack())
-                .arg(sat->colorLabel())
-                .arg(sat->colorZrv())
-                .arg(sat->colorLines())
-                .arg(sat->track(), 0, 'g', 16)
-                .arg(sat->font().toString())
-                .arg(sat->nameX(), 0, 'g', 16)
-                .arg(sat->nameY(), 0, 'g', 16)
-                .arg(sat->linesWidth(), 0, 'g', 16);
+            "INSERT INTO sattemp ('name', 'zrv', 'icon', 'show_label', "
+            "'show_track', 'show_zrv', 'show_lines', 'active_zone', "
+            "'color_track', 'color_label', 'color_zrv', 'color_lines', "
+            "'track', 'font', 'name_x', 'name_y', 'lines_width', "
+            "'model_state') "
+            "VALUES('%0', %1, '%2', %3, %4, %5, %6, %7, %8, %9, %10, %11, "
+            "%12, '%13', %14, %15, %16, :model_state);")
+            .arg(sat->name())
+            .arg(sat->zrvWidth()/deg2rad, 0, 'g', 16)
+            .arg(sat->iconName())
+            .arg(sat->isVisibleLabel())
+            .arg(sat->isVisibleTrack())
+            .arg(sat->isVisibleZrv())
+            .arg(sat->isVisibleLines())
+            .arg(sat->isAtctiveZone())
+            .arg(sat->colorTrack())
+            .arg(sat->colorLabel())
+            .arg(sat->colorZrv())
+            .arg(sat->colorLines())
+            .arg(sat->track(), 0, 'g', 16)
+            .arg(sat->font().toString())
+            .arg(sat->nameX(), 0, 'g', 16)
+            .arg(sat->nameY(), 0, 'g', 16)
+            .arg(sat->linesWidth(), 0, 'g', 16);
         QSqlQuery q(db);
         q.prepare(query);
         QByteArray bytes(sat->getState(), sat->getStateSize());
@@ -147,31 +147,32 @@ void SDlgOptions::saveListViewLoc() {
 
     for (int i = 0; i < satWidget->locList.count(); i++) {
         loc = satWidget->locList.at(i);
-        query = QString("INSERT INTO loctemp ('lat', 'lon', 'height', 'azimuth', 'sector', "
-                        "'r', 'name', 'icon', 'show_label', 'show_zrv', 'show_lines', "
-                        "'active_zone', 'color_label', 'color_zrv', 'color_lines', 'font', "
-                        "'name_x', 'name_y', 'lines_width') "
-                        "VALUES(%0, %1, %2, %3, %4, %5, '%6', '%7', %8, %9, %10, %11, %12, "
-                        "%13, %14, '%15', %16, %17, %18);")
-                        .arg(loc->latitude(), 0, 'g', 16)
-                        .arg(loc->longitude(), 0, 'g', 16)
-                        .arg(loc->height(), 0, 'g', 16)
-                        .arg(loc->zrlAzimuth(), 0, 'g', 16)
-                        .arg(loc->zrlWidth(), 0, 'g', 16)
-                        .arg(loc->zrlRange(), 0, 'g', 16)
-                        .arg(loc->name())
-                        .arg(loc->iconName())
-                        .arg(loc->isVisibleLabel())
-                        .arg(loc->isVisibleZrv())
-                        .arg(loc->isVisibleLines())
-                        .arg(loc->isActiveZone())
-                        .arg(loc->colorLabel())
-                        .arg(loc->colorZrv())
-                        .arg(loc->colorLines())
-                        .arg(loc->font().toString())
-                        .arg(loc->nameX(), 0, 'g', 16)
-                        .arg(loc->nameY(), 0, 'g', 16)
-                        .arg(loc->linesWidth(), 0, 'g', 16);
+        query = QString(
+            "INSERT INTO loctemp ('lat', 'lon', 'height', 'azimuth', 'sector', "
+            "'r', 'name', 'icon', 'show_label', 'show_zrv', 'show_lines', "
+            "'active_zone', 'color_label', 'color_zrv', 'color_lines', 'font', "
+            "'name_x', 'name_y', 'lines_width') "
+            "VALUES(%0, %1, %2, %3, %4, %5, '%6', '%7', %8, %9, %10, %11, %12, "
+            "%13, %14, '%15', %16, %17, %18);")
+            .arg(loc->latitude(), 0, 'g', 16)
+            .arg(loc->longitude(), 0, 'g', 16)
+            .arg(loc->height(), 0, 'g', 16)
+            .arg(loc->zrlAzimuth(), 0, 'g', 16)
+            .arg(loc->zrlWidth(), 0, 'g', 16)
+            .arg(loc->zrlRange(), 0, 'g', 16)
+            .arg(loc->name())
+            .arg(loc->iconName())
+            .arg(loc->isVisibleLabel())
+            .arg(loc->isVisibleZrv())
+            .arg(loc->isVisibleLines())
+            .arg(loc->isActiveZone())
+            .arg(loc->colorLabel())
+            .arg(loc->colorZrv())
+            .arg(loc->colorLines())
+            .arg(loc->font().toString())
+            .arg(loc->nameX(), 0, 'g', 16)
+            .arg(loc->nameY(), 0, 'g', 16)
+            .arg(loc->linesWidth(), 0, 'g', 16);
         db.exec(query);
     }
     db.exec("COMMIT;");
@@ -188,11 +189,8 @@ void SDlgOptions::loadListViewSat() {
     }
 
     Satellite *sat;
-    int model_index;
     for (int i = 0; i < modelSatTemp.rowCount(); i++) {
-        model_index = modelSatTemp.record(i).field("model_index").value().toInt();
-        satWidget->setSatModel(model_index);
-//        sat = satWidget->satList.add(satWidget->getSatModel());
+        satWidget->setSatModel(0);
         sat = satWidget->getSatModel();
         setSat(sat, modelSatTemp.record(i));
         sat->visibleLabel (modelSatTemp.record(i).field("show_label" ).value().toBool());
@@ -264,13 +262,13 @@ void SDlgOptions::setDb() {
     
     if (!db.open()) {
         QMessageBox::information(this, "Error", 
-                db.lastError().text() + "\n" + dir.filePath("main.db"), 0);
+        db.lastError().text() + "\n" + dir.filePath("main.db"), 0);
     }
 
     db.exec( QString(sqlSat    ) );
     db.exec( QString(sqlSatTemp) );
     db.exec( QString(sqlLoc    ) );
-    db.exec( QString(sqlLocTemp) ); // sun model problem
+    db.exec( QString(sqlLocTemp) ); // TODO sun model problem
 
     modelDbSat = new QSqlTableModel(this, db);
     modelDbSat->setTable("sat");
@@ -283,10 +281,10 @@ void SDlgOptions::setDb() {
 
     widget.listViewDBSat->setModel(modelDbSat);
     connect(widget.listViewDBSat->selectionModel(), 
-            SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), 
-            this, 
-            SLOT(selectDbSat(const QModelIndex &, const QModelIndex &))
-            );
+        SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), 
+        this, 
+        SLOT(selectDbSat(const QModelIndex &, const QModelIndex &))
+    );
     widget.listViewDBSat->setModelColumn(modelDbSat->fieldIndex("name"));
 
     mapperSat.setModel(modelDbSat);
@@ -313,10 +311,11 @@ void SDlgOptions::setDb() {
     widget.listViewDBLoc->setModel(modelDbLoc);
     
     connect(
-            widget.listViewDBLoc->selectionModel(), 
-            SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), 
-            this, 
-            SLOT(selectDbLoc(const QModelIndex &, const QModelIndex &)));
+        widget.listViewDBLoc->selectionModel(), 
+        SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), 
+        this, 
+        SLOT(selectDbLoc(const QModelIndex &, const QModelIndex &))
+    );
     
     widget.listViewDBLoc->setModelColumn(modelDbLoc->fieldIndex("name"));
 
@@ -332,7 +331,9 @@ void SDlgOptions::setDb() {
 }
 
 void SDlgOptions::setSat(Satellite *sat, QSqlRecord record) {
-    if (sat == NULL || record.isEmpty()) return;
+    if (sat == NULL || record.isEmpty()) {
+        return;
+    }
     QByteArray model_state = record.field("model_state").value().toByteArray();
     if (model_state.size() <= 0) {
         qWarning("empty model");
@@ -348,6 +349,7 @@ void SDlgOptions::setSat(Satellite *sat, QSqlRecord record) {
     satWidget->setIcon(sat, icon);
 
     sat->setName(record.field("name").value().toString());
+    qWarning() << model_state.size();
     sat->modelInit(model_state.data(), model_state.size());
 }
 
@@ -372,31 +374,35 @@ void SDlgOptions::setLoc(Location *loc, QSqlRecord record) {
 void SDlgOptions::updateListViewSat() {
     if (widget.listViewSat->model() != 0) delete widget.listViewSat->model();
     if (satWidget->satList.count() < 1) return;
-    QStandardItemModel *model = new QStandardItemModel(satWidget->satList.count(), 0);
-    for (int i = 0; i < satWidget->satList.count(); i++)
-            model->setItem(i, new QStandardItem(satWidget->satList.at(i)->name()));
+    QStandardItemModel *model = new QStandardItemModel(
+            satWidget->satList.count(), 0);
+    for (int i = 0; i < satWidget->satList.count(); i++) {
+        model->setItem(i, new QStandardItem(satWidget->satList.at(i)->name()));
+    }
     widget.listViewSat->setModel(model);
     connect(
-            widget.listViewSat->selectionModel(), 
-            SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), 
-            this, 
-            SLOT(selectSat(const QModelIndex &, const QModelIndex &))
-            );
+        widget.listViewSat->selectionModel(), 
+        SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), 
+        this, 
+        SLOT(selectSat(const QModelIndex &, const QModelIndex &))
+    );
 }
 
 void SDlgOptions::updateListViewLoc() {
     if (widget.listViewLoc->model() != 0) delete widget.listViewLoc->model();
     if (satWidget->locList.count() < 1) return;
-    QStandardItemModel *model = new QStandardItemModel(satWidget->locList.count(), 0);
-    for (int i = 0; i < satWidget->locList.count(); i++)
-            model->setItem(i, new QStandardItem(satWidget->locList.at(i)->name()));
+    QStandardItemModel *model = new QStandardItemModel(
+            satWidget->locList.count(), 0);
+    for (int i = 0; i < satWidget->locList.count(); i++) {
+        model->setItem(i, new QStandardItem(satWidget->locList.at(i)->name()));
+    }
     widget.listViewLoc->setModel(model);
     connect(
-            widget.listViewLoc->selectionModel(), 
-            SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), 
-            this, 
-            SLOT(selectLoc(const QModelIndex &, const QModelIndex &))
-            );
+        widget.listViewLoc->selectionModel(), 
+        SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), 
+        this, 
+        SLOT(selectLoc(const QModelIndex &, const QModelIndex &))
+    );
 }
 
 void SDlgOptions::setBtnColor(QWidget *widget) {
@@ -486,8 +492,12 @@ void SDlgOptions::selectDbSat(const QModelIndex &current, const QModelIndex &pre
         mapperSat.setCurrentIndex(current.row());
         Satellite sat;
         setSat(&sat, modelDbSat->record(current.row()));
-        double tm = 86400000.0 * (modelDbSat->record(current.row()).value("time").toDouble() - 2440587.5);
-        widget.lineEditSatTime->setText(QDateTime::fromMSecsSinceEpoch((uint64_t)tm).toUTC().toString("dd.MM.yyyy H:mm:ss.zzz"));
+        double tm = 86400000.0 * (modelDbSat->record(current.row())
+            .value("time").toDouble() - 2440587.5);
+        widget.lineEditSatTime->setText(
+            QDateTime::fromMSecsSinceEpoch((uint64_t)tm)
+                .toUTC().toString("dd.MM.yyyy H:mm:ss.zzz")
+        );
     }
 }
 

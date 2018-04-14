@@ -10,8 +10,8 @@
 
 #include <inttypes.h>
 #include "ui_sgp4.h"
-#include "../../satviewer/models/sgp4/Sgp4Model.h"
-#include "../../satviewer/ogl/GLSatAbstractWidget.h"
+#include "../models/sgp4/Sgp4Model.h"
+#include "../ogl/GLSatAbstractWidget.h"
 
 class Sgp4Dialog: public QDialog {
     Q_OBJECT

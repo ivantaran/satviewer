@@ -125,7 +125,7 @@ void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
 
     QPalette pal;
     QRgb rgb;
-    sgp4_t state;
+    TleReader::sgp4_t state;
     QPixmap pixmap;
     
     m_sat = (Sgp4Model *)sat;
@@ -148,7 +148,6 @@ void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
     state.n = qDegreesToRadians(widget.lineEditN->text().toDouble() * 0.25);
     state.bstar = widget.lineEditBStar->text().toDouble();
     state.jdsatepoch = widget.lineEditTime->text().toDouble();
-    state.consttype = WGS84;
 
     double zrv = qDegreesToRadians(widget.spinZRV->value());
 
