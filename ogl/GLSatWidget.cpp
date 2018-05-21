@@ -525,7 +525,9 @@ void GLSatWidget::onColorTypeChanged(int index) {
 void GLSatWidget::onBtnMapFileClicked() {
     QDir dir = QDir::home();
     dir.cd("satviewer");
-    QString filePath = QFileDialog::getOpenFileName(this, "Open Map File", dir.path(), "PNG Files (*.png)");
+    QString filePath = QFileDialog::getOpenFileName(this, "Open Map File", 
+            dir.path(), "PNG Files (*.png)", NULL, 
+            QFileDialog::DontUseNativeDialog);
     if (filePath == "") return;
     loadTexture(filePath);
     ui.btnMapFile->setText(filePath);
@@ -729,7 +731,7 @@ void GLSatWidget::compileSatList() {
         sat->model(m_time);
         px = sat->longitude() / M_PI;
         py = -2.0 * sat->latitude() / M_PI;
-//        sprite_current.exec(px, py);
+        sprite_current.exec(px, py, 0.0);
     glEndList();
 }
 
@@ -751,8 +753,8 @@ void GLSatWidget::compileLocList() {
                 px = loc->longitude() / 180.0;
                 py = -loc->latitude() / 90.0;
                 renderText(
-                        px + (float)loc->nameX()/width(), 
-                        py + (float)loc->nameY()/height(), 
+                        px + (float)loc->nameX() / width(), 
+                        py + (float)loc->nameY() / height(), 
                         loc->name(), loc->colorLabel(), loc->font());
             }
         }
@@ -764,13 +766,12 @@ void GLSatWidget::compileLocList() {
         sprite_current.exec(px, py, 0.0);
     glEndList();
     
-    for (Satellite *sat : satList) {
-        sat->satWObject->make();
-    }
+//    for (Satellite *sat : satList) {
+//        sat->satWObject->make();
+//    }
 }
 
 void GLSatWidget::compileEventsList() {
-    return;
     float px, py;
     Location *loc;
     Satellite *sat;

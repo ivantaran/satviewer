@@ -528,7 +528,9 @@ void SWindow::selectGlWidget(int value) {
 }
 
 void SWindow::onBtnPrintScrClicked() {
-    QString filePath = QFileDialog::getSaveFileName(this, tr("Save PNG File"), "", tr("PNG Files (*.png)"), 0);
+    QString filePath = QFileDialog::getSaveFileName(this, tr("Save PNG File"), 
+            "", tr("PNG Files (*.png)"), 
+            NULL, QFileDialog::DontUseNativeDialog);
     if (filePath.isEmpty()) return;
 //    QImage img = satWidget->grabFrameBuffer(); //TODO
 //    if (!img.save(filePath, "PNG")) QMessageBox::critical(this, tr("Error saving"), tr("File not saved - ") + filePath);

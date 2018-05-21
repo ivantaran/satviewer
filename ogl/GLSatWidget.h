@@ -58,15 +58,15 @@ private:
     bool testShadow(Satellite *sat, Satellite *sun);
     
 private slots:
-	void btnColorClicked();
-	void onBtnMapFileClicked();
-	void btnFontNetClicked();
-	void onColorTypeChanged(int index);
-	void onCheckSun(bool value);
-	void onCheckNight(bool value);
-	void changeZoom(double value);
-	void changeX(double value);
-	void changeY(double value);
+    void btnColorClicked();
+    void onBtnMapFileClicked();
+    void btnFontNetClicked();
+    void onColorTypeChanged(int index);
+    void onCheckSun(bool value);
+    void onCheckNight(bool value);
+    void changeZoom(double value);
+    void changeX(double value);
+    void changeY(double value);
 };
 
 #endif /* GLSATWIDGET_H_ */
