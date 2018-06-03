@@ -1,4 +1,4 @@
-*** TODO list: ***
+**TODO list**
 - [ ] method lla (blh) в Satellite instead of separate
 - [ ] move global const
 - [ ] в locList coords as radians
