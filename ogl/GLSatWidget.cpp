@@ -572,14 +572,14 @@ void GLSatWidget::compileMapList() {
         glLineWidth(1.0);
         glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
-        glColor4ubv((uint8_t *)&clrNet);
+        glColor4ubv((GLubyte *)&clrNet);
 
         glBegin(GL_LINES);
-            for (float i = -1.0; i < 1.0; i += 1.0/12.0) {
+            for (GLfloat i = -1.0; i < 1.0; i += 1.0 / 12.0) {
                 glVertex2f(i, -1);
                 glVertex2f(i,  1);
             }
-            for (float i = -1 + 1.0/6.0; i < 1; i = i + 1.0/6.0) {
+            for (GLfloat i = -1 + 1.0 / 6.0; i < 1; i = i + 1.0 / 6.0) {
                 glVertex2f(-1.0, i);
                 glVertex2f( 1.0, i);
             }
@@ -595,14 +595,14 @@ void GLSatWidget::compileMapList() {
 
         //The equator, 23 1/2 degrees north of the Tropic of Capricorn,
         //and 23 1/2 degrees south of the Tropic of Cancer.
-        glColor4ubv((uint8_t *)&clrNet);
+        glColor4ubv((GLubyte *)&clrNet);
         glEnable(GL_LINE_STIPPLE);
         glLineStipple(1, 0xF0F0);
         glBegin(GL_LINES);
-            glVertex2f(-1, -23.5/90.0);
-            glVertex2f( 1, -23.5/90.0);
-            glVertex2f(-1,  23.5/90.0);
-            glVertex2f( 1,  23.5/90.0);
+            glVertex2f(-1, -23.5 / 90.0);
+            glVertex2f( 1, -23.5 / 90.0);
+            glVertex2f(-1,  23.5 / 90.0);
+            glVertex2f( 1,  23.5 / 90.0);
         glEnd();
         glDisable(GL_LINE_STIPPLE);
         glDisable(GL_BLEND);
@@ -610,16 +610,16 @@ void GLSatWidget::compileMapList() {
 
     glNewList(list_labels, GL_COMPILE);
         float tmp = 0;
-        float borderW = 1 - 2.0*(float)fntNet.pointSize()/(float)width();
-        float borderH = 1 - 2.0*(float)fntNet.pointSize()/(float)height();
+        float borderW = 1.0 - 2.0 * (float)fntNet.pointSize() / (float)width();
+        float borderH = 1.0 - 2.0 * (float)fntNet.pointSize() / (float)height();
         //		  glLoadIdentity();
-        glColor4ubv((uint8_t *)&clrNet);
+        glColor4ubv((GLubyte *)&clrNet);
         for (int i = 1; i < 6; i++) {
             renderText((float)(-1 + (1 - borderW)/4.0), (float)(i/3.0 - 1), QString().number(abs(i*30 - 90)), clrNetFont, fntNet);
             renderText((float)(borderW - (1 - borderW)/1.25), (float)(i/3.0 - 1), QString().number(abs(i*30 - 90)), clrNetFont, fntNet);
         }
         for (int i = 1; i < 12; i++) {
-            tmp = i/6.0 - 1.0;
+            tmp = i / 6.0 - 1.0;
             renderText(tmp, (float)(-1 + (1 - borderH)/0.5), QString().number(abs(i*30 - 180)), clrNetFont, fntNet);
             renderText(tmp, (float)(borderH + (1 - borderH)/1.25), QString().number(abs(i*30 - 180)), clrNetFont, fntNet);
         }
@@ -856,24 +856,33 @@ void GLSatWidget::compileSunList() {
 }
 
 void GLSatWidget::renderText(float x, float y, const QString& text, int color, const QFont &font) {
-    QFontMetrics fontMetrics(font);
-    QRect rect = fontMetrics.boundingRect(text);
-    rect.setWidth(rect.width() + fontMetrics.averageCharWidth());
-    QPixmap pixmap(rect.size());
-    pixmap.fill(QColor(0, 0, 0, 0));
-    QPainter painter(&pixmap);
-    painter.setPen(color);
-    painter.setFont(font);
-    painter.drawText(-rect.left(), -rect.top(), text);
 
-    QImage img = pixmap.toImage();
-    img = img.mirrored(false, true);
-
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_BLEND);
-    glRasterPos2f(x, y);
-    glDrawPixels(rect.width(), rect.height(), GL_RGBA, GL_UNSIGNED_BYTE, img.bits());
-    glDisable(GL_BLEND);
+//    QPainter painter(this);
+//    painter.setPen(Qt::yellow);
+//    painter.setFont(font);
+//    painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
+//    painter.drawText(x * width(), y * height(), text); // z = pointT4.z + distOverOp / 4
+//    painter.end();
+    
+    return;
+//    QFontMetrics fontMetrics(font);
+//    QRect rect = fontMetrics.boundingRect(text);
+//    rect.setWidth(rect.width() + fontMetrics.averageCharWidth());
+//    QPixmap pixmap(rect.size());
+//    pixmap.fill(QColor(0, 0, 0, 0));
+//    QPainter painter(&pixmap);
+//    painter.setPen(color);
+//    painter.setFont(font);
+//    painter.drawText(-rect.left(), -rect.top(), text);
+//
+//    QImage img = pixmap.toImage();
+//    img = img.mirrored(false, true);
+//
+//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//    glEnable(GL_BLEND);
+//    glRasterPos2f((GLfloat)x, (GLfloat)y);
+//    glDrawPixels(rect.width(), rect.height(), GL_RGBA, GL_UNSIGNED_BYTE, img.bits());
+//    glDisable(GL_BLEND);
 }
 
 void GLSatWidget::mouseMoveEvent(QMouseEvent *event) {

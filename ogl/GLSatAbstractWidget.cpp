@@ -44,6 +44,15 @@ GLSatAbstractWidget::GLSatAbstractWidget(QWidget *parent) : QOpenGLWidget(parent
     shwSun = true;
     shwNight = true;
     setSatModel();
+    
+    list_map_ready       = true;
+    list_net_ready       = true;
+    list_events_ready    = true;
+    list_sun_ready       = true;
+    list_loc_ready       = true;
+    list_sat_ready       = true;
+    list_labels_ready    = true;
+    
 //    setSunModel();
 //    sun = getSunModel();
 //    sun->modelInit(WGS84, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -103,13 +112,13 @@ void GLSatAbstractWidget::paintGL() {
     glTranslatef(m_dx, m_dy, m_dz);
     glScalef(m_zoom, m_zoom, 0.0);
 
-    glCallList(list_map); // map
-    glCallList(list_net); //net
-    glCallList(list_sun); //sun
-    glCallList(list_events); //locList events
-    glCallList(list_loc); //locList zrl names
-    glCallList(list_sat); //satList
-    glCallList(list_labels); // net labels
+    if (list_map_ready   ) glCallList(list_map); // map
+    if (list_net_ready   ) glCallList(list_net); //net
+    if (list_sun_ready   ) glCallList(list_sun); //sun
+    if (list_events_ready) glCallList(list_events); //locList events
+    if (list_loc_ready   ) glCallList(list_loc); //locList zrl names
+    if (list_sat_ready   ) glCallList(list_sat); //satList
+    if (list_labels_ready) glCallList(list_labels); // net labels
     this->update();
 //    swapBuffers(); //TODO
 }

@@ -101,10 +101,10 @@ void GLSprite::make() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
     glBegin(GL_QUADS);
-    glTexCoord2f(0.0, 1.0); glVertex2f(-w, -h);
-    glTexCoord2f(1.0, 1.0); glVertex2f( w, -h);
-    glTexCoord2f(1.0, 0.0); glVertex2f( w,  h);
-    glTexCoord2f(0.0, 0.0); glVertex2f(-w,  h);
+    glTexCoord2f(0.0, 0.0); glVertex2f(-w, -h);
+    glTexCoord2f(0.0, 1.0); glVertex2f(-w,  h);
+    glTexCoord2f(1.0, 1.0); glVertex2f( w,  h);
+    glTexCoord2f(1.0, 0.0); glVertex2f( w, -h);
     glEnd();
     glPopAttrib();
     glEndList();
