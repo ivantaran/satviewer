@@ -119,6 +119,7 @@ protected:
     virtual void compileSunList() {}
     virtual void compileEventsList() {}
     virtual void renderText(float x, float y, QString text, int color, QFont font = QFont()) {}
+    virtual void drawText(int x, int y, const QString& text, int color = 0, const QFont &font = QFont()) {}
     virtual float zoom(float value = 0);
     virtual float moveX(float value = 0);
     virtual float moveY(float value = 0);

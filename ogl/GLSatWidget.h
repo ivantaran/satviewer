@@ -25,6 +25,8 @@ public:
     void addLoc(Location *loc);
     void setIcon(Satellite *sat, QString  fileName = QString());
     void setIcon(Location *loc, QString  fileName = QString());
+    void drawText(int x, int y, const QString& text, int color = 0, const QFont &font = QFont());
+    
 private:
     static const int VertexCount = 128;
     GLfloat vertex[VertexCount][2];
@@ -38,7 +40,6 @@ private:
     void compileLocList();
     void compileSunList();
     void compileEventsList();
-    void renderText(float x, float y, const QString& text, int color = 0, const QFont &font = QFont());
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseDoubleClickEvent(QMouseEvent *event);
@@ -57,6 +58,9 @@ private:
     void compileZrl(Location *loc);
     bool testShadow(Satellite *sat, Satellite *sun);
     
+protected:
+    void paintEvent(QPaintEvent *event) override;    
+        
 private slots:
     void btnColorClicked();
     void onBtnMapFileClicked();

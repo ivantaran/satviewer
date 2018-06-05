@@ -609,20 +609,6 @@ void GLSatWidget::compileMapList() {
     glEndList();
 
     glNewList(list_labels, GL_COMPILE);
-        float tmp = 0;
-        float borderW = 1.0 - 2.0 * (float)fntNet.pointSize() / (float)width();
-        float borderH = 1.0 - 2.0 * (float)fntNet.pointSize() / (float)height();
-        //		  glLoadIdentity();
-        glColor4ubv((GLubyte *)&clrNet);
-        for (int i = 1; i < 6; i++) {
-            renderText((float)(-1 + (1 - borderW)/4.0), (float)(i/3.0 - 1), QString().number(abs(i*30 - 90)), clrNetFont, fntNet);
-            renderText((float)(borderW - (1 - borderW)/1.25), (float)(i/3.0 - 1), QString().number(abs(i*30 - 90)), clrNetFont, fntNet);
-        }
-        for (int i = 1; i < 12; i++) {
-            tmp = i / 6.0 - 1.0;
-            renderText(tmp, (float)(-1 + (1 - borderH)/0.5), QString().number(abs(i*30 - 180)), clrNetFont, fntNet);
-            renderText(tmp, (float)(borderH + (1 - borderH)/1.25), QString().number(abs(i*30 - 180)), clrNetFont, fntNet);
-        }
     glEndList();
 }
 
@@ -855,8 +841,46 @@ void GLSatWidget::compileSunList() {
     glEndList();
 }
 
-void GLSatWidget::renderText(float x, float y, const QString& text, int color, const QFont &font) {
+void GLSatWidget::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    painter.setPen(clrNetFont);
+//    painter.setPen(Qt::black);
+    painter.setFont(fntNet);
+//    painter.setCompositionMode(QPainter::CompositionMode_Screen); // TODO
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
+    
+    int w = width();
+    int h = height();
+    double dw = width() / 12.0;
+    double dh = height() / 6.0;
 
+    QFontMetrics fm(fntNet);
+    int bw = fm.width("00");
+    int bh = fm.height();
+    
+    for (int i = 1; i < 6; i++) {
+        painter.drawText(0     , dh * i, QString().number(abs(i * 30 - 90)));
+        painter.drawText(w - bw, dh * i, QString().number(abs(i * 30 - 90)));
+    }
+    
+//    painter.setPen(Qt::white);
+    for (int i = 1; i < 12; i++) {
+        painter.drawText(dw * i, bh, QString().number(abs(i * 30 - 180)));
+        painter.drawText(dw * i,  h, QString().number(abs(i * 30 - 180)));
+    }
+    
+    painter.end();
+}
+
+
+void GLSatWidget::drawText(int x, int y, const QString& text, int color, const QFont &font) {
+//    QPainter painter(this);
+//    painter.setPen(Qt::yellow);
+//    painter.setFont(font);
+//    painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
+//    painter.drawText(0.5 * width(), 0.5 * height(), "oLOLO");
+//    painter.end();
+    
 //    QPainter painter(this);
 //    painter.setPen(Qt::yellow);
 //    painter.setFont(font);
