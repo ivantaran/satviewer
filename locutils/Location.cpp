@@ -33,7 +33,7 @@ Location::Location(void) {
     active_zone = true;
 
     _color      = 0x000000FF;
-    color_label = 0x0000FFFF;
+    color_label = 0x00FFFF00;
     color_zrv   = 0xFF608080;
     color_lines = 0x0000FFFF;
     satWObject = 0;
@@ -49,65 +49,65 @@ Location::Location(void) {
 }
 
 Location::~Location(void) {
-	puts("location is removed");
+    qWarning("location is removed");
 }
 
 void Location::copy(Location *src) {
-	setName(src->name());
-	lat = src->latitude();
-	lon = src->longitude();
-	_height = src->height();
-	calcXYZ();
+    setName(src->name());
+    lat = src->latitude();
+    lon = src->longitude();
+    _height = src->height();
+    calcXYZ();
 
-	visibleLabel( src->isVisibleLabel() );
-	visibleLines( src->isVisibleLines() );
-	visibleZrv  ( src->isVisibleZrv()   );
+    visibleLabel( src->isVisibleLabel() );
+    visibleLines( src->isVisibleLines() );
+    visibleZrv  ( src->isVisibleZrv()   );
 
-	setColorLabel( src->colorLabel() );
-	setColorLines( src->colorLines() );
-	setColorZrv  ( src->colorZrv()   );
+    setColorLabel( src->colorLabel() );
+    setColorLines( src->colorLines() );
+    setColorZrv  ( src->colorZrv()   );
 
-	setFont( src->font() );
+    setFont( src->font() );
 
-	setNameX( src->nameX() );
-	setNameY( src->nameY() );
+    setNameX( src->nameX() );
+    setNameY( src->nameY() );
 
-	setLinesWidth( src->linesWidth() );
+    setLinesWidth( src->linesWidth() );
 
-	setZrlAzimuth( src->zrlAzimuth() );
-	setZrlRange  ( src->zrlRange()   );
-	setZrlWidth  ( src->zrlWidth()   );
+    setZrlAzimuth( src->zrlAzimuth() );
+    setZrlRange  ( src->zrlRange()   );
+    setZrlWidth  ( src->zrlWidth()   );
 }
 
 void Location::setName(QString name) {
-	_name = name;
+    _name = name;
 }
 
 void Location::calcXYZ() {
-	//this not valid
-	double const a_axis = 6378137.0;   //WGS-84 earth's semi major axis
-	double const b_axis = 6356752.31;  //WGS-84 earth's semi minor axis
-	double const e1sqr = ((a_axis * a_axis - b_axis * b_axis) / (a_axis * a_axis));
+    // TODO this not valid
+    double const a_axis = 6378137.0;   //WGS-84 earth's semi major axis
+    double const b_axis = 6356752.31;  //WGS-84 earth's semi minor axis
+    double const e1sqr = ((a_axis * a_axis - b_axis * b_axis) / (a_axis * a_axis));
     double N = a_axis / sqrt(1.0 - e1sqr * sin(lat*M_PI/180.0) * sin(lat*M_PI/180.0));
 
-	r[0] = (N + _height)*cos(lat*M_PI/180.0)*cos(lon*M_PI/180.0);
-	r[1] = (N + _height)*cos(lat*M_PI/180.0)*sin(lon*M_PI/180.0);
-	r[2] = (N*(1.0 - e1sqr) + _height)*sin(lat*M_PI/180.0);
+    r[0] = (N + _height)*cos(lat*M_PI/180.0)*cos(lon*M_PI/180.0);
+    r[1] = (N + _height)*cos(lat*M_PI/180.0)*sin(lon*M_PI/180.0);
+    r[2] = (N*(1.0 - e1sqr) + _height)*sin(lat*M_PI/180.0);
 }
 
 void Location::setLatitude(double latitude) {
-	lat = latitude;
-	calcXYZ();
+    lat = latitude;
+    calcXYZ();
 }
 
 void Location::setLongitude(double longitude) {
-	lon = longitude;
-	calcXYZ();
+    lon = longitude;
+    calcXYZ();
 }
 
 void Location::setHeight(double height) {
-	_height = height;
-	calcXYZ();
+    _height = height;
+    calcXYZ();
 }
 
 void Location::setIcon(QString name) {
@@ -115,17 +115,17 @@ void Location::setIcon(QString name) {
 }
 
 void Location::setFont(QFont font) {
-	_font = font;
+    _font = font;
 }
 
 void Location::setNameX(double value) {
-	name_x = value;
+    name_x = value;
 }
 
 void Location::setNameY(double value) {
-	name_y = value;
+    name_y = value;
 }
 
 void Location::setLinesWidth(double value) {
-	lines_width = value;
+    lines_width = value;
 }

@@ -9,12 +9,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 744.09448819 1052.3622047"
+   width="66.040001mm"
+   height="66.039993mm"
+   viewBox="0 0 234 233.99998"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.92.3 (3ce5693, 2018-03-11)"
    sodipodi:docname="drawing.svg">
   <defs
      id="defs4" />
@@ -26,20 +26,27 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="334.33695"
-     inkscape:cy="715.59596"
+     inkscape:cx="-17.663049"
+     inkscape:cy="98.059569"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
      showguides="false"
-     inkscape:window-width="1536"
-     inkscape:window-height="801"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1">
+     inkscape:window-width="3706"
+     inkscape:window-height="2049"
+     inkscape:window-x="134"
+     inkscape:window-y="55"
+     inkscape:window-maximized="1"
+     showborder="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
     <inkscape:grid
        type="xygrid"
-       id="grid4198" />
+       id="grid4198"
+       originx="-329.99999"
+       originy="-560.00001" />
   </sodipodi:namedview>
   <metadata
      id="metadata7">
@@ -56,7 +63,8 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-330,-258.36221)">
     <circle
        style="fill:#fd5e53;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.1391623px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="path3336-2"

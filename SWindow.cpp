@@ -168,7 +168,7 @@ void SWindow::readSettings() {
     dlgOptions->satDialog->defaultSat.visibleTrack( settings.value("defaultSat/isVisibleTrack", true).toBool() );
     dlgOptions->satDialog->defaultSat.visibleZrv  ( settings.value("defaultSat/isVisibleZrv"  , true).toBool() );
 
-    dlgOptions->satDialog->defaultSat.setColorLabel( settings.value("defaultSat/colorLabel", 0x0000FFFF).toUInt() );
+    dlgOptions->satDialog->defaultSat.setColorLabel( settings.value("defaultSat/colorLabel", 0x00FFFF00).toUInt() );
     dlgOptions->satDialog->defaultSat.setColorLines( settings.value("defaultSat/colorLines", 0xFF45772D).toUInt() );
     dlgOptions->satDialog->defaultSat.setColorTrack( settings.value("defaultSat/colorTrack", 0xFF00FF55).toUInt() );
     dlgOptions->satDialog->defaultSat.setColorZrv  ( settings.value("defaultSat/colorZrv"  , 0x1000AA00).toUInt() );
@@ -186,7 +186,7 @@ void SWindow::readSettings() {
     dlgOptions->locDialog->defaultLoc.visibleLines( settings.value("defaultLoc/isVisibleLines", false ).toBool() );
     dlgOptions->locDialog->defaultLoc.visibleZrv  ( settings.value("defaultLoc/isVisibleZrv"  , false).toBool() );
 
-    dlgOptions->locDialog->defaultLoc.setColorLabel( settings.value("defaultLoc/colorLabel", 0x0000FFFF).toUInt() );
+    dlgOptions->locDialog->defaultLoc.setColorLabel( settings.value("defaultLoc/colorLabel", 0x00FFFF00).toUInt() );
     dlgOptions->locDialog->defaultLoc.setColorLines( settings.value("defaultLoc/colorLines", 0xFF00FFFF).toUInt() );
     dlgOptions->locDialog->defaultLoc.setColorZrv  ( settings.value("defaultLoc/colorZrv"  , 0x2000FFFF).toUInt() );
 

@@ -17,7 +17,7 @@
 
 #include "../zrvutils/ZrvIoList.h"
 
-typedef Satellite * (*CustomSat)();
+typedef Satellite * (*CustomSat)(); // TODO remove this
 
 class GLSatAbstractWidget : public QOpenGLWidget, protected QOpenGLFunctions_2_0 { // TODO QOpenGLWidget - to protected
 	Q_OBJECT
@@ -71,12 +71,12 @@ public:
     inline int indexLoc() {return m_indexLoc;}
 
     Satellite * currentSat() {
-        if ((m_indexSat < 0) || (m_indexSat >= satList.count())) return 0;
+        if ((m_indexSat < 0) || (m_indexSat >= satList.count())) return NULL; // TODO move to cpp
         return satList.at(m_indexSat);
     }
 
     Location * currentLoc() {
-        if ((m_indexLoc < 0) || (m_indexLoc >= locList.count())) return 0;
+        if ((m_indexLoc < 0) || (m_indexLoc >= locList.count())) return NULL; // TODO move to cpp
         return locList.at(m_indexLoc);
     }
 
@@ -118,8 +118,6 @@ protected:
     virtual void compileLocList() {}
     virtual void compileSunList() {}
     virtual void compileEventsList() {}
-    virtual void renderText(float x, float y, QString text, int color, QFont font = QFont()) {}
-    virtual void drawText(int x, int y, const QString& text, int color = 0, const QFont &font = QFont()) {}
     virtual float zoom(float value = 0);
     virtual float moveX(float value = 0);
     virtual float moveY(float value = 0);

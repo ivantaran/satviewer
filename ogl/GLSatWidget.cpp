@@ -617,7 +617,7 @@ void GLSatWidget::compileSatList() {
     float trackBegin, trackEnd;
     uint8_t shadow_state, shadow_tmp;
     uint32_t clr;
-    Satellite *sat = 0;
+    Satellite *sat = NULL;
     
     if (satList.count() < 1) {
         glNewList(list_sat, GL_COMPILE);
@@ -626,8 +626,7 @@ void GLSatWidget::compileSatList() {
     }
 
     glNewList(list_sat, GL_COMPILE);
-        for (int i = 0; i < satList.count(); i++) {
-            sat = satList.at(i);
+        foreach (sat, satList) {
             shadow_state = 2;
             sat->model(m_time);
             
@@ -637,9 +636,6 @@ void GLSatWidget::compileSatList() {
             }
 
             if (sat->isVisibleTrack()) {
-//                clr = sat->colorTrack();
-//                glColor4ubv((uint8_t *)&clr);
-                
                 glShadeModel(GL_SMOOTH);
                 glEnable(GL_ALPHA_TEST);
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -648,41 +644,41 @@ void GLSatWidget::compileSatList() {
                 glLineWidth(sat->linesWidth());
 
                 glBegin(GL_LINE_STRIP);
-                    tper = 120*M_PI/sat->meanMotion(); //move this line
-                    trackBegin = sat->track()*(-0.5*tper + tper/180.0);
-                    trackEnd = sat->track()*(0.5*tper + tper/180.0);
+                    tper = 120.0 * M_PI / sat->meanMotion(); //move this line
+                    trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
+                    trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
                     sat->model(trackBegin + m_time);
-                    tmpx = sat->longitude()/M_PI;
-                    tmpy = -2*sat->latitude()/M_PI;
-                    for (float i = trackBegin; i < trackEnd; i += tper/180.0) {
+                    tmpx = sat->longitude() / M_PI;
+                    tmpy = -2*sat->latitude() / M_PI;
+                    for (float i = trackBegin; i < trackEnd; i += tper / 180.0) {
                         sat->model(i + m_time);
                         if (sat->isVisibleTrackShadow()) {
                             shadow_tmp = shadow_state;
                             if (shadow_state) {
                                 clr = sat->colorTrack();
-                                glColor4ubv((uint8_t *)&clr);
+                                glColor4ubv((GLubyte *)&clr);
                             }
                             else {
                                 clr = sat->colorTrackShadow();
-                                glColor4ubv((uint8_t *)&clr);
+                                glColor4ubv((GLubyte *)&clr);
                             }
                         }
                         else {
                             clr = sat->colorTrack();
-                            glColor4ubv((uint8_t *)&clr);
+                            glColor4ubv((GLubyte *)&clr);
                         }
-                        px = sat->longitude()/M_PI;
-                        py = -2*sat->latitude()/M_PI;
+                        px = sat->longitude() / M_PI;
+                        py = -2.0 * sat->latitude() / M_PI;
                         if (fabs(px - tmpx) > 1.75) {
                             if (px > tmpx) {
-                                glVertex2f(-1, 0.5*(py + tmpy));
+                                glVertex2f(-1.0, 0.5 * (py + tmpy));
                                 glEnd(); glBegin(GL_LINE_STRIP);
-                                glVertex2f( 1, 0.5*(py + tmpy));
+                                glVertex2f( 1.0, 0.5 * (py + tmpy));
                             }
                             else {
-                                glVertex2f( 1, 0.5*(py + tmpy));
+                                glVertex2f( 1.0, 0.5 * (py + tmpy));
                                 glEnd(); glBegin(GL_LINE_STRIP);
-                                glVertex2f(-1, 0.5*(py + tmpy));
+                                glVertex2f(-1.0, 0.5 * (py + tmpy));
                             }
                         }
                         glVertex2f(px, py);
@@ -700,13 +696,6 @@ void GLSatWidget::compileSatList() {
             py = -2.0 * sat->latitude() / M_PI;
             if (sat->satWObject) {
                 sat->satWObject->exec(px, py, 0.0);
-            }
-
-            if (sat->isVisibleLabel()) {
-                renderText(
-                        px + (float)sat->nameX() / width(), 
-                        py + (float)sat->nameY() / height(), 
-                        sat->name(), sat->colorLabel(), sat->font());
             }
         }
 
@@ -732,21 +721,15 @@ void GLSatWidget::compileLocList() {
     }
 
     glNewList(list_loc, GL_COMPILE);
-        for (int i = 0; i < locList.count(); i++) {
-            loc = locList.at(i);
+
+        foreach (loc, locList) {
             compileZrl(loc);
-            if (loc->isVisibleLabel()) {
-                px = loc->longitude() / 180.0;
-                py = -loc->latitude() / 90.0;
-                renderText(
-                        px + (float)loc->nameX() / width(), 
-                        py + (float)loc->nameY() / height(), 
-                        loc->name(), loc->colorLabel(), loc->font());
-            }
         }
 
         loc = currentLoc();
-        if (loc == 0) loc = locList.first();
+        if (loc == NULL) {
+            loc = locList.first();
+        }
         px = loc->longitude() / 180.0;
         py = -loc->latitude() / 90.0;
         sprite_current.exec(px, py, 0.0);
@@ -842,71 +825,57 @@ void GLSatWidget::compileSunList() {
 }
 
 void GLSatWidget::paintEvent(QPaintEvent *event) {
+    GLSatAbstractWidget::paintEvent(event);
     QPainter painter(this);
     painter.setPen(clrNetFont);
-//    painter.setPen(Qt::black);
     painter.setFont(fntNet);
 //    painter.setCompositionMode(QPainter::CompositionMode_Screen); // TODO
     painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
     
     int w = width();
     int h = height();
-    double dw = width() / 12.0;
-    double dh = height() / 6.0;
+    double dx = width() / 12.0;
+    double dy = height() / 6.0;
 
     QFontMetrics fm(fntNet);
     int bw = fm.width("00");
     int bh = fm.height();
     
     for (int i = 1; i < 6; i++) {
-        painter.drawText(0     , dh * i, QString().number(abs(i * 30 - 90)));
-        painter.drawText(w - bw, dh * i, QString().number(abs(i * 30 - 90)));
+        painter.drawText(0     , dy * i, QString().number(abs(i * 30 - 90)));
+        painter.drawText(w - bw, dy * i, QString().number(abs(i * 30 - 90)));
     }
     
-//    painter.setPen(Qt::white);
     for (int i = 1; i < 12; i++) {
-        painter.drawText(dw * i, bh, QString().number(abs(i * 30 - 180)));
-        painter.drawText(dw * i,  h, QString().number(abs(i * 30 - 180)));
+        painter.drawText(dx * i, bh, QString().number(abs(i * 30 - 180)));
+        painter.drawText(dx * i,  h, QString().number(abs(i * 30 - 180)));
+    }
+    
+    foreach (Satellite *sat, satList) {
+        if (sat->isVisibleLabel()) {
+            painter.setPen(sat->colorLabel());
+            painter.setFont(sat->font());
+            
+            dx = 0.5 * w * (1.0 + sat->longitude() / M_PI) + sat->nameX();
+            dy = h * (0.5 - sat->latitude() / M_PI) - sat->nameY();
+
+            painter.drawText(dx,  dy, sat->name());
+        }
+    }
+    
+    foreach (Location *loc, locList) {
+        if (loc->isVisibleLabel()) {
+            painter.setPen(loc->colorLabel());
+            painter.setFont(loc->font());
+            
+            dx = 0.5 * w * (1.0 + loc->longitude() / 180.0) + loc->nameX();
+            dy = h * (0.5 - loc->latitude() / 180.0) - loc->nameY();
+
+            painter.drawText(dx,  dy, loc->name());
+        }
     }
     
     painter.end();
-}
-
-
-void GLSatWidget::drawText(int x, int y, const QString& text, int color, const QFont &font) {
-//    QPainter painter(this);
-//    painter.setPen(Qt::yellow);
-//    painter.setFont(font);
-//    painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
-//    painter.drawText(0.5 * width(), 0.5 * height(), "oLOLO");
-//    painter.end();
-    
-//    QPainter painter(this);
-//    painter.setPen(Qt::yellow);
-//    painter.setFont(font);
-//    painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
-//    painter.drawText(x * width(), y * height(), text); // z = pointT4.z + distOverOp / 4
-//    painter.end();
-    
-    return;
-//    QFontMetrics fontMetrics(font);
-//    QRect rect = fontMetrics.boundingRect(text);
-//    rect.setWidth(rect.width() + fontMetrics.averageCharWidth());
-//    QPixmap pixmap(rect.size());
-//    pixmap.fill(QColor(0, 0, 0, 0));
-//    QPainter painter(&pixmap);
-//    painter.setPen(color);
-//    painter.setFont(font);
-//    painter.drawText(-rect.left(), -rect.top(), text);
-//
-//    QImage img = pixmap.toImage();
-//    img = img.mirrored(false, true);
-//
-//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//    glEnable(GL_BLEND);
-//    glRasterPos2f((GLfloat)x, (GLfloat)y);
-//    glDrawPixels(rect.width(), rect.height(), GL_RGBA, GL_UNSIGNED_BYTE, img.bits());
-//    glDisable(GL_BLEND);
 }
 
 void GLSatWidget::mouseMoveEvent(QMouseEvent *event) {
@@ -916,47 +885,54 @@ void GLSatWidget::mouseMoveEvent(QMouseEvent *event) {
 
     float x = event->x();
     float y = event->y();
-    float kxl = w/360.0;
-    float kyl = h/180.0;
-    float kxs = 0.5*w/M_PI;
-    float kys = h/M_PI;
+    float kxl = w / 360.0;
+    float kyl = h / 180.0;
+    float kxs = 0.5 * w/M_PI;
+    float kys = h / M_PI;
+    int i;
     int resultLoc = -1;
     int resultSat = -1;
-    Location *loc;
-    Satellite *sat;
 
-    for (int i = 0; i < locList.count(); i++) {
-        loc = locList.at(i);
-        px = kxl*(180.0 + loc->longitude())*m_zoom - 0.5*(m_zoom - 1 - m_dx)*w;
-        py = kyl*( 90.0 - loc->latitude() )*m_zoom - 0.5*(m_zoom - 1 - m_dy)*h;
-        if (fabs(px - x) < 7*m_zoom && fabs(py - y) < 7*m_zoom) {
+    i = 0;
+    foreach (Location *loc, locList) {
+        px = kxl * (180.0 + loc->longitude()) * m_zoom - 0.5 * (m_zoom - 1.0 - m_dx) * w;
+        py = kyl * ( 90.0 - loc->latitude() ) * m_zoom - 0.5 * (m_zoom - 1.0 - m_dy) * h;
+        if (fabs(px - x) < 7.0 * m_zoom && fabs(py - y) < 7.0 * m_zoom) {
             resultLoc = i;
             break;
         }
+        i++;
     }
 
-    if ((event->buttons() == Qt::LeftButton) && (resultLoc != -1)) setIndexLoc(resultLoc);
-
-    for (int i = 0; i < satList.count(); i++) {
-        sat = satList.at(i);
-        px = kxs*(    M_PI + sat->longitude())*m_zoom - 0.5*(m_zoom - 1 - m_dx)*w;
-        py = kys*(0.5*M_PI - sat->latitude() )*m_zoom - 0.5*(m_zoom - 1 - m_dy)*h;
-        if (fabs(px - x) < 7*m_zoom && fabs(py - y) < 7*m_zoom) {
+    if ((event->buttons() == Qt::LeftButton) && (resultLoc != -1)) {
+        setIndexLoc(resultLoc);
+    }
+    
+    i = 0;
+    foreach (Satellite *sat, satList) {
+        px = kxs * (      M_PI + sat->longitude()) * m_zoom - 0.5 * (m_zoom - 1.0 - m_dx) * w;
+        py = kys * (0.5 * M_PI - sat->latitude() ) * m_zoom - 0.5 * (m_zoom - 1.0 - m_dy) * h;
+        if (fabs(px - x) < 7.0 * m_zoom && fabs(py - y) < 7.0 * m_zoom) {
             resultSat = i;
             break;
         }
+        i++;
     }
 
-    if ((event->buttons() == Qt::LeftButton) && (resultSat != -1)) setIndexSat(resultSat);
+    if ((event->buttons() == Qt::LeftButton) && (resultSat != -1)) {
+        setIndexSat(resultSat);
+    }
 
     if (resultSat > -1 || resultLoc > -1) {
         setCursor(Qt::PointingHandCursor);
     }
-    else setCursor(Qt::CrossCursor);
+    else {
+        setCursor(Qt::CrossCursor);
+    }
 
     if (event->buttons() == Qt::RightButton) {
-        moveX(2*(event->x() - pointMoveMap.x())/w);
-        moveY(2*(event->y() - pointMoveMap.y())/h);
+        moveX(2.0 * (event->x() - pointMoveMap.x()) / w);
+        moveY(2.0 * (event->y() - pointMoveMap.y()) / h);
         pointMoveMap = event->pos();
         paintGL();
     }
@@ -994,7 +970,7 @@ void GLSatWidget::mouseDoubleClickEvent(QMouseEvent *event) {
 
 void GLSatWidget::wheelEvent(QWheelEvent *event) {
     if (event->buttons() == Qt::RightButton) {
-        zoom(0.001*event->delta());
+        zoom(0.001 * event->delta());
         paintGL();
     }
     event->accept();

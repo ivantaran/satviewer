@@ -7,7 +7,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1280</width>
+    <width>1350</width>
     <height>768</height>
    </rect>
   </property>
@@ -22,7 +22,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="SatViewer.qrc">
-    <normaloff>:/options/satviewer.png</normaloff>:/options/satviewer.png</iconset>
+    <normaloff>:/options/satviewer.svg</normaloff>:/options/satviewer.svg</iconset>
   </property>
   <property name="locale">
    <locale language="C" country="AnyCountry"/>

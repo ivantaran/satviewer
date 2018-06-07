@@ -25,7 +25,7 @@ Satellite::Satellite(void) {
 
     _color      = 0x000000FF;
     color_track = 0xFF90B4A4;
-    color_label = 0x0000FFFF;
+    color_label = 0x00FFFF00;
     color_zrv   = 0xFF8E9E80;
     color_lines = 0xFF45772D;
     color_track_shadow = 0xFF407464;

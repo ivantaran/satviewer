@@ -79,7 +79,7 @@ void SLocDialog::showEvent(QShowEvent * event) {
 
     rgb = m_loc->colorLabel();
     pal = widget.btnColorName->palette();
-    pal.setColor(QPalette::Button, QColor::fromRgba(flipRgb(rgb)));
+    pal.setColor(QPalette::Button, QColor::fromRgba(rgb));
     widget.btnColorName->setPalette(pal);
 
     rgb = m_loc->colorZrv();
@@ -131,7 +131,7 @@ void SLocDialog::makeLoc(Location *loc) {
 
     pal = widget.btnColorName->palette();
     rgb = pal.color(QPalette::Button).rgba();
-    loc->setColorLabel(flipRgb(rgb));
+    loc->setColorLabel(rgb);
 
     pal = widget.btnColorZrv->palette();
     rgb = pal.color(QPalette::Button).rgba();

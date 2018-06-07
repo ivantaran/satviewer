@@ -1,7 +1,9 @@
 **TODO list**
+- [ ] netfont select dialog
+- [ ] merge list_net and list_map
+- [ ] locList coords as radians
 - [ ] method lla (blh) в Satellite instead of separate
 - [ ] move global const
-- [ ] в locList coords as radians
 - [ ] radarmap
 - [ ] dir.path() + "/" + file.fileName()
 - [ ] shadow function

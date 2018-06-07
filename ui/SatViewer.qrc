@@ -15,9 +15,9 @@
     <file>prohibition.svg</file>
   </qresource>
   <qresource prefix="options">
+    <file>satviewer.svg</file>
     <file>widgets.png</file>
     <file>info.svg</file>
-    <file>satviewer.png</file>
     <file>calc.png</file>
     <file>mapsettings.png</file>
     <file>clock.png</file>

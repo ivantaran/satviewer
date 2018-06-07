@@ -25,7 +25,6 @@ public:
     void addLoc(Location *loc);
     void setIcon(Satellite *sat, QString  fileName = QString());
     void setIcon(Location *loc, QString  fileName = QString());
-    void drawText(int x, int y, const QString& text, int color = 0, const QFont &font = QFont());
     
 private:
     static const int VertexCount = 128;

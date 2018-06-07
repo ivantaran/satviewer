@@ -32,7 +32,7 @@ GLSprite::~GLSprite() {
 
 void GLSprite::load(QString fileName, QOpenGLWidget *parentWidget) {
     if ((parentWidget == NULL) || (!parentWidget->isValid())) {
-        qWarning("GLSprite::load: QOpenGLWidget is not valid");
+//        qWarning("GLSprite::load: QOpenGLWidget is not valid");
         return;
     }
 
@@ -114,7 +114,7 @@ void GLSprite::exec(float x, float y, float z) {
     Q_UNUSED(z)
 
     if (!widget || !widget->isValid()) {
-        qWarning("GLSprite::exec: invalid QOpenGLWidget");
+//        qWarning("GLSprite::exec: invalid QOpenGLWidget");
         return;
     }
 

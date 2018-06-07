@@ -101,7 +101,7 @@ void Sgp4Dialog::showEvent(QShowEvent * event) {
 
     rgb = m_sat->colorLabel();
     pal = widget.btnColorName->palette();
-    pal.setColor(QPalette::Button, QColor::fromRgba(flipRgb(rgb)));
+    pal.setColor(QPalette::Button, QColor::fromRgba(rgb));
     widget.btnColorName->setPalette(pal);
 
     rgb = m_sat->colorZrv();
@@ -171,7 +171,7 @@ void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
 
     pal = widget.btnColorName->palette();
     rgb = pal.color(QPalette::Button).rgba();
-    m_sat->setColorLabel(flipRgb(rgb));
+    m_sat->setColorLabel(rgb);
 
     pal = widget.btnColorZrv->palette();
     rgb = pal.color(QPalette::Button).rgba();
