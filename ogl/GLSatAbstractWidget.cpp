@@ -119,8 +119,6 @@ void GLSatAbstractWidget::paintGL() {
     if (list_loc_ready   ) glCallList(list_loc); //locList zrl names
     if (list_sat_ready   ) glCallList(list_sat); //satList
     if (list_labels_ready) glCallList(list_labels); // net labels
-
-    this->update();
 }
 
 void GLSatAbstractWidget::resizeGL(int width, int height) {

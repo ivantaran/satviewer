@@ -16,11 +16,10 @@
 #include <QFontDialog>
 #include <QFileDialog>
 #include <QColorDialog>
-//#include <QtOpenGL>
 #include <QFont>
-
 #include <math.h>
 #include "satogl.h"
+#include "../models/sun/sunmodel.h"
 
 GLSatWidget::GLSatWidget(QWidget *parent) : GLSatAbstractWidget(parent) {
     ui.setupUi(settingsWidget);
@@ -60,94 +59,102 @@ void GLSatWidget::glZoneLines(float lat) {
     glEnable(GL_LINE_SMOOTH);
 
     if (fabsf(vertex[0][0] - vertex[VertexCount - 1][0]) > 1) {
-    	breakpoint[type] = 0;
-		type++;
-	}
-	for (int i = 0; i < VertexCount - 1; i++)
-		if (fabsf(vertex[i][0] - vertex[i + 1][0]) > 1) {
-			breakpoint[type] = i + 1;
-			type++;
-		}
+        breakpoint[type] = 0;
+        type++;
+    }
+    
+    for (int i = 0; i < VertexCount - 1; i++) {
+        if (fabsf(vertex[i][0] - vertex[i + 1][0]) > 1) {
+            breakpoint[type] = i + 1;
+            type++;
+        }
+    }
 
-	if (lat < 0) polar = 1.0f;
-	else polar = -1.0f;
-	switch (type) {
+    polar = lat < 0.0 ? 1.0 : -1.0;
+    
+    switch (type) {
 
-		case 0:
-		glBegin(GL_LINE_STRIP);
-			for (int i = 0; i < VertexCount; i++) glVertex2fv(vertex[i]);
-			glVertex2fv(vertex[0]);
-		glEnd();
-		break;
+    case 0:
+        glBegin(GL_LINE_STRIP);
+        for (int i = 0; i < VertexCount; i++) glVertex2fv(vertex[i]);
+        glVertex2fv(vertex[0]);
+        glEnd();
+        break;
 
-		case 1:
-			glBegin(GL_LINE_STRIP);
-				glVertex2f(polar, vertex[breakpoint[0]][1]);
-				for (int i = breakpoint[0]; i < VertexCount; i++) {
-					glVertex2fv(vertex[i]);
-				}
-				for (int i = 0; i < breakpoint[0]; i++) {
-					glVertex2fv(vertex[i]);
-				}
-				glVertex2f(-polar, vertex[breakpoint[0]][1]);
-			glEnd();
-		break;
+    case 1:
+        glBegin(GL_LINE_STRIP);
+        glVertex2f(polar, vertex[breakpoint[0]][1]);
+        for (int i = breakpoint[0]; i < VertexCount; i++) {
+            glVertex2fv(vertex[i]);
+        }
+        for (int i = 0; i < breakpoint[0]; i++) {
+            glVertex2fv(vertex[i]);
+        }
+        glVertex2f(-polar, vertex[breakpoint[0]][1]);
+        glEnd();
+        break;
 
-		case 2:
-			if (vertex[breakpoint[0]][0] < 0) polar = -1;
-			else polar = 1;
-			glBegin(GL_LINE_STRIP);
-				glVertex2f(polar, vertex[breakpoint[0]][1]);
-				for (int i = breakpoint[0] + 1; i < breakpoint[1] - 1; i++) glVertex2fv(vertex[i]);
-				glVertex2f(polar, vertex[breakpoint[1] - 1][1]);
-			glEnd();
+    case 2:
+        polar = vertex[breakpoint[0]][0] < 0.0 ? -1.0 : 1.0;
+        glBegin(GL_LINE_STRIP);
+        glVertex2f(polar, vertex[breakpoint[0]][1]);
+        for (int i = breakpoint[0] + 1; i < breakpoint[1] - 1; i++) {
+            glVertex2fv(vertex[i]);
+        }
+        glVertex2f(polar, vertex[breakpoint[1] - 1][1]);
+        glEnd();
 
-			if (vertex[breakpoint[1]][0] < 0) polar = -1;
-			else polar = 1;
-			glBegin(GL_LINE_LOOP);
-				glVertex2f(polar, vertex[breakpoint[1]][1]);
-				for (int i = breakpoint[1] + 1; i < VertexCount; i++) glVertex2fv(vertex[i]);
-				if (breakpoint[0] > 0) {
-					for (int i = 0; i < breakpoint[0] - 1; i++) glVertex2fv(vertex[i]);
-					glVertex2f(polar, vertex[breakpoint[0] - 1][1]);
-				}
-				else glVertex2f(polar, vertex[VertexCount - 1][1]);
-			glEnd();
-		break;
-		}
-	glDisable(GL_BLEND);
-	glDisable(GL_LINE_SMOOTH);
+        polar = vertex[breakpoint[1]][0] < 0.0 ? -1.0 : 1.0;
+        glBegin(GL_LINE_LOOP);
+        glVertex2f(polar, vertex[breakpoint[1]][1]);
+        for (int i = breakpoint[1] + 1; i < VertexCount; i++) {
+            glVertex2fv(vertex[i]);
+        }
+        if (breakpoint[0] > 0) {
+            for (int i = 0; i < breakpoint[0] - 1; i++) {
+                glVertex2fv(vertex[i]);
+            }
+            glVertex2f(polar, vertex[breakpoint[0] - 1][1]);
+        }
+        else {
+            glVertex2f(polar, vertex[VertexCount - 1][1]);
+        }
+        glEnd();
+        break;
+    }
+    glDisable(GL_BLEND);
+    glDisable(GL_LINE_SMOOTH);
 }
 
 void GLSatWidget::glZoneNight(float lat) {
-	int breakpoint = 0;
-	float polar;
+    int breakpoint = 0;
+    float polar;
 
-	if (fabs(vertex[0][0] - vertex[VertexCount - 1][0]) > 1) {
-		breakpoint = 0;
-	}
-	for (int i = 0; i < VertexCount - 1; i++)
-		if (fabs(vertex[i][0] - vertex[i + 1][0]) > 1) {
-			breakpoint = i + 1;
-		}
+    if (fabs(vertex[0][0] - vertex[VertexCount - 1][0]) > 1) {
+        breakpoint = 0;
+    }
+    for (int i = 0; i < VertexCount - 1; i++)
+        if (fabs(vertex[i][0] - vertex[i + 1][0]) > 1) {
+            breakpoint = i + 1;
+        }
 
-	if (lat > 0) polar = 1.0f;
-	else polar = -1.0f;
+    if (lat > 0) polar = 1.0f;
+    else polar = -1.0f;
 
-	glBegin(GL_TRIANGLE_STRIP);
-		glVertex2f(-polar, vertex[breakpoint][1]);
-		glVertex2f(-polar, polar);
-		for (int i = breakpoint; i < VertexCount; i++) {
-			glVertex2fv(vertex[i]);
-			glVertex2f(vertex[i][0], polar);
-		}
-		for (int i = 0; i < breakpoint; i++) {
-			glVertex2fv(vertex[i]);
-			glVertex2f(vertex[i][0], polar);
-		}
-		glVertex2f(polar, vertex[breakpoint][1]);
-		glVertex2f(polar, polar);
-	glEnd();
+    glBegin(GL_TRIANGLE_STRIP);
+        glVertex2f(-polar, vertex[breakpoint][1]);
+        glVertex2f(-polar, polar);
+        for (int i = breakpoint; i < VertexCount; i++) {
+            glVertex2fv(vertex[i]);
+            glVertex2f(vertex[i][0], polar);
+        }
+        for (int i = 0; i < breakpoint; i++) {
+            glVertex2fv(vertex[i]);
+            glVertex2f(vertex[i][0], polar);
+        }
+        glVertex2f(polar, vertex[breakpoint][1]);
+        glVertex2f(polar, polar);
+    glEnd();
 }
 
 void GLSatWidget::lfi_ort(double fi, double lam, double* xyz) {
@@ -194,81 +201,81 @@ int GLSatWidget::testIOZRV(Satellite *sat, Location *loc, ZrvIoList *list, doubl
 }
 
 void GLSatWidget::compileZrl(Location *loc) {
-	if (!(loc->isVisibleZrv() || loc->isVisibleLines())) return;
+    if (!(loc->isVisibleZrv() || loc->isVisibleLines())) return;
 
-	double const deg2rad = M_PI/180;
-	double z = loc->zrlRange()*deg2rad;
-	double a1 = M_PI -loc->zrlAzimuth()*deg2rad;
-	double a2 = loc->zrlWidth()*deg2rad;
-	double b = -loc->latitude()*deg2rad;
-	double l = loc->longitude()*deg2rad + M_PI;
+    double const deg2rad = M_PI/180;
+    double z = loc->zrlRange()*deg2rad;
+    double a1 = M_PI -loc->zrlAzimuth()*deg2rad;
+    double a2 = loc->zrlWidth()*deg2rad;
+    double b = -loc->latitude()*deg2rad;
+    double l = loc->longitude()*deg2rad + M_PI;
 
-	int cntRadius = VertexCount/4;
-	int cntFront = VertexCount - 2*cntRadius;
-	if (a2 >= 2*M_PI) {
-		cntFront = VertexCount;
-		cntRadius = 0;
-	}
+    int cntRadius = VertexCount/4;
+    int cntFront = VertexCount - 2*cntRadius;
+    if (a2 >= 2*M_PI) {
+        cntFront = VertexCount;
+        cntRadius = 0;
+    }
 
-	double fiz = 0;
-	for (int i = 0; i < cntRadius; i++) {
-		double y0 = asin(cos(fiz)*sin(b) + sin(fiz)*cos(b)*cos(a1 - a2/2));
-		double x0 = l + asin(sin(fiz)*sin(a1 - a2/2)/cos(y0));
-		if ((cos(fiz) - sin(b)*sin(y0)) < 0 ) x0 = 2*l - x0 + M_PI;
-		x0 = fmod(x0/M_PI + 4, 2) - 1;
-		y0 = 2*y0/M_PI;
-		vertex[i][0] = x0;
-		vertex[i][1] = y0;
-		fiz += z/cntRadius;
-	}
+    double fiz = 0;
+    for (int i = 0; i < cntRadius; i++) {
+        double y0 = asin(cos(fiz)*sin(b) + sin(fiz)*cos(b)*cos(a1 - a2/2));
+        double x0 = l + asin(sin(fiz)*sin(a1 - a2/2)/cos(y0));
+        if ((cos(fiz) - sin(b)*sin(y0)) < 0 ) x0 = 2*l - x0 + M_PI;
+        x0 = fmod(x0/M_PI + 4, 2) - 1;
+        y0 = 2*y0/M_PI;
+        vertex[i][0] = x0;
+        vertex[i][1] = y0;
+        fiz += z/cntRadius;
+    }
 
-	double a = a1 - a2/2;
-	for (int i = 0; i < cntFront; i++) {
-		double y0 = asin(cos(z)*sin(b) + sin(z)*cos(b)*cos(a));
-		double x0 = l + asin(sin(z)*sin(a)/cos(y0));
-		if ((cos(z) - sin(b)*sin(y0)) < 0 ) x0 = 2*l - x0 + M_PI;
-		x0 = fmod(x0/M_PI + 4, 2) - 1;
-		y0 = 2*y0/M_PI;
-		vertex[i + cntRadius][0] = x0;
-		vertex[i + cntRadius][1] = y0;
-		a += a2/cntFront;
-	}
+    double a = a1 - a2/2;
+    for (int i = 0; i < cntFront; i++) {
+        double y0 = asin(cos(z)*sin(b) + sin(z)*cos(b)*cos(a));
+        double x0 = l + asin(sin(z)*sin(a)/cos(y0));
+        if ((cos(z) - sin(b)*sin(y0)) < 0 ) x0 = 2*l - x0 + M_PI;
+        x0 = fmod(x0/M_PI + 4, 2) - 1;
+        y0 = 2*y0/M_PI;
+        vertex[i + cntRadius][0] = x0;
+        vertex[i + cntRadius][1] = y0;
+        a += a2/cntFront;
+    }
 
-	fiz = z;
-	for (int i = 0; i < cntRadius; i++) {
-		double y0 = asin(cos(fiz)*sin(b) + sin(fiz)*cos(b)*cos(a1 + a2/2));
-		double x0 = l + asin(sin(fiz)*sin(a1 + a2/2)/cos(y0));
-		if ((cos(fiz) - sin(b)*sin(y0)) < 0 ) x0 = 2*l - x0 + M_PI;
-		x0 = fmod(x0/M_PI + 4, 2) - 1;
-		y0 = 2*y0/M_PI;
-		vertex[i + cntFront + cntRadius][0] = x0;
-		vertex[i + cntFront + cntRadius][1] = y0;
-		fiz -= z/cntRadius;
-	}
+    fiz = z;
+    for (int i = 0; i < cntRadius; i++) {
+        double y0 = asin(cos(fiz)*sin(b) + sin(fiz)*cos(b)*cos(a1 + a2/2));
+        double x0 = l + asin(sin(fiz)*sin(a1 + a2/2)/cos(y0));
+        if ((cos(fiz) - sin(b)*sin(y0)) < 0 ) x0 = 2*l - x0 + M_PI;
+        x0 = fmod(x0/M_PI + 4, 2) - 1;
+        y0 = 2*y0/M_PI;
+        vertex[i + cntFront + cntRadius][0] = x0;
+        vertex[i + cntFront + cntRadius][1] = y0;
+        fiz -= z/cntRadius;
+    }
 
-	GLuint clr = loc->colorZrv();
-	glColor4ubv((GLubyte *)&clr);
+    GLuint clr = loc->colorZrv();
+    glColor4ubv((GLubyte *)&clr);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
-	if (loc->isVisibleZrv()) fillFootprint(loc->latitude());
-	glDisable(GL_BLEND);
-	if (loc->isVisibleLines()) {
-		clr = loc->colorLines();
-		glColor4ubv((GLubyte *)&clr);
-	    glLineWidth(loc->linesWidth());
-	    glZoneLines(loc->latitude());
-	}
+    glEnable(GL_BLEND);
+    if (loc->isVisibleZrv()) fillFootprint(loc->latitude());
+    glDisable(GL_BLEND);
+    if (loc->isVisibleLines()) {
+            clr = loc->colorLines();
+            glColor4ubv((GLubyte *)&clr);
+            glLineWidth(loc->linesWidth());
+            glZoneLines(loc->latitude());
+    }
 }
 
 bool GLSatWidget::testShadow(Satellite *sat, Satellite *sun) {
-	if ((sat == 0) || (sun == 0)) return true;
-	double r_sat = sqrt(sat->xyz()[0]*sat->xyz()[0] + sat->xyz()[1]*sat->xyz()[1] + sat->xyz()[2]*sat->xyz()[2]);
-	double r_sun = sqrt(sun->xyz()[0]*sun->xyz()[0] + sun->xyz()[1]*sun->xyz()[1] + sun->xyz()[2]*sun->xyz()[2]);
-	if ((r_sat == 0) || (r_sun == 0) || (sat->radiusEarth() > r_sat)) return true;
-	double f = asin(sat->radiusEarth()/r_sat);
-	double l = M_PI - acos((sat->xyz()[0]*sun->xyz()[0] + sat->xyz()[1]*sun->xyz()[1] + sat->xyz()[2]*sun->xyz()[2])/(r_sat*r_sun));
-	if ((-f < l) && (l < f)) return false;
-	return true;
+    if ((sat == 0) || (sun == 0)) return true;
+    double r_sat = sqrt(sat->xyz()[0]*sat->xyz()[0] + sat->xyz()[1]*sat->xyz()[1] + sat->xyz()[2]*sat->xyz()[2]);
+    double r_sun = sqrt(sun->xyz()[0]*sun->xyz()[0] + sun->xyz()[1]*sun->xyz()[1] + sun->xyz()[2]*sun->xyz()[2]);
+    if ((r_sat == 0) || (r_sun == 0) || (sat->radiusEarth() > r_sat)) return true;
+    double f = asin(sat->radiusEarth()/r_sat);
+    double l = M_PI - acos((sat->xyz()[0]*sun->xyz()[0] + sat->xyz()[1]*sun->xyz()[1] + sat->xyz()[2]*sun->xyz()[2])/(r_sat*r_sun));
+    if ((-f < l) && (l < f)) return false;
+    return true;
 }
 
 void GLSatWidget::fillFootprint(float lat) {
@@ -344,41 +351,41 @@ void GLSatWidget::fillFootprint(float lat) {
 }
 
 void GLSatWidget::compileZRV(Satellite *sat, bool poly, bool lines, uint32_t colorPoly, uint32_t colorLines) {
-	double fiz = 0;
-	double z = sat->zrvWidth();
-	if (fabs(cos(z)*sat->radiusEarth()) > (sat->height() + sat->radiusEarth())) fiz = -z;
-	else fiz = (M_PI/2 - z - asin(cos(z)*sat->radiusEarth()/(sat->height() + sat->radiusEarth())));
-	double x, y;
-	double polar, angle = 0;
-	if (fabs(sat->latitude()) + fiz < M_PI/2) polar = 1;
-	else polar = -1;
-	for (int i = 0; i < VertexCount; i++) {
-		y = asin(cos(fiz)*sin(sat->latitude()) + sin(fiz)*cos(sat->latitude())*cos(angle));
-		x = sin(fiz)*sin(angle)/cos(y);
-		if (x > 1) x = 1.0;
-		if (x < -1) x = -1.0;
-		x = sat->longitude() + polar*asin(x);
-		if ((cos(fiz) - sin(sat->latitude())*sin(y)) < 0 ) {x = 2*sat->longitude() - x + M_PI;}
-		x = fmod(x + M_PI, 2*M_PI);
-		if (x < 0) x += 2*M_PI;
-		vertex[i][0] = (float)(x/M_PI - 1);
-		vertex[i][1] = (float)(-2*y/M_PI);
-		angle += 2*M_PI/(double)VertexCount;
-	}
-	if (poly) {
-		glColor4ubv((uint8_t *)&colorPoly);
-	    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glEnable(GL_BLEND);
-//		glZone(sat->latitude());
-		fillFootprint(sat->latitude());
-		glDisable(GL_BLEND);
-	}
+    double fiz = 0;
+    double z = sat->zrvWidth();
+    if (fabs(cos(z)*sat->radiusEarth()) > (sat->height() + sat->radiusEarth())) fiz = -z;
+    else fiz = (M_PI/2 - z - asin(cos(z)*sat->radiusEarth()/(sat->height() + sat->radiusEarth())));
+    double x, y;
+    double polar, angle = 0;
+    if (fabs(sat->latitude()) + fiz < M_PI/2) polar = 1;
+    else polar = -1;
+    for (int i = 0; i < VertexCount; i++) {
+        y = asin(cos(fiz)*sin(sat->latitude()) + sin(fiz)*cos(sat->latitude())*cos(angle));
+        x = sin(fiz)*sin(angle)/cos(y);
+        if (x > 1) x = 1.0;
+        if (x < -1) x = -1.0;
+        x = sat->longitude() + polar*asin(x);
+        if ((cos(fiz) - sin(sat->latitude())*sin(y)) < 0 ) {x = 2*sat->longitude() - x + M_PI;}
+        x = fmod(x + M_PI, 2*M_PI);
+        if (x < 0) x += 2*M_PI;
+        vertex[i][0] = (float)(x/M_PI - 1);
+        vertex[i][1] = (float)(-2*y/M_PI);
+        angle += 2*M_PI/(double)VertexCount;
+    }
+    if (poly) {
+        glColor4ubv((uint8_t *)&colorPoly);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_BLEND);
+//        glZone(sat->latitude());
+        fillFootprint(sat->latitude());
+        glDisable(GL_BLEND);
+    }
 
-	if (lines){
-		glColor4ubv((uint8_t *)&colorLines);
-	    glLineWidth(sat->linesWidth());
-		glZoneLines(sat->latitude());
-	}
+    if (lines){
+        glColor4ubv((uint8_t *)&colorLines);
+        glLineWidth(sat->linesWidth());
+        glZoneLines(sat->latitude());
+    }
 }
 
 void GLSatWidget::readSettings() {
@@ -547,65 +554,65 @@ void GLSatWidget::initializeGL() {
     dir.cd("satviewer/icons");
     sprite_current.load(dir.filePath("current.png"), this);
     sprite_active.load(dir.filePath("active.png"), this);
-//    sun->satWObject = new GLSprite(dir.filePath("sun.png"), this);
+    sprite_sun.load(dir.filePath("sun.png"), this);
 }
 
 void GLSatWidget::compileMapList() {
     
     glNewList(list_map, GL_COMPILE);
-        if (textureID) {
-            textureID->bind();
-        }
+    if (textureID) {
+        textureID->bind();
+    }
 
-        glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-        glEnable(GL_TEXTURE_2D);
-        glBegin(GL_QUADS);
-            glTexCoord2f(0.0, 0.0); glVertex2f(-1.0, -1.0);
-            glTexCoord2f(0.0, 1.0); glVertex2f(-1.0,  1.0);
-            glTexCoord2f(1.0, 1.0); glVertex2f( 1.0,  1.0);
-            glTexCoord2f(1.0, 0.0); glVertex2f( 1.0, -1.0);
-        glEnd();
-        glDisable(GL_TEXTURE_2D);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+    glEnable(GL_TEXTURE_2D);
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0); glVertex2f(-1.0, -1.0);
+    glTexCoord2f(0.0, 1.0); glVertex2f(-1.0,  1.0);
+    glTexCoord2f(1.0, 1.0); glVertex2f( 1.0,  1.0);
+    glTexCoord2f(1.0, 0.0); glVertex2f( 1.0, -1.0);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
     glEndList();
 
     glNewList(list_net, GL_COMPILE);
-        glLineWidth(1.0);
-        glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
-        glEnable(GL_BLEND);
-        glColor4ubv((GLubyte *)&clrNet);
+    glLineWidth(1.0);
+    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+    glColor4ubv((GLubyte *)&clrNet);
 
-        glBegin(GL_LINES);
-            for (GLfloat i = -1.0; i < 1.0; i += 1.0 / 12.0) {
-                glVertex2f(i, -1);
-                glVertex2f(i,  1);
-            }
-            for (GLfloat i = -1 + 1.0 / 6.0; i < 1; i = i + 1.0 / 6.0) {
-                glVertex2f(-1.0, i);
-                glVertex2f( 1.0, i);
-            }
-        glEnd();
+    glBegin(GL_LINES);
+    for (GLfloat i = -1.0; i < 1.0; i += 1.0 / 12.0) {
+        glVertex2f(i, -1);
+        glVertex2f(i,  1);
+    }
+    for (GLfloat i = -1 + 1.0 / 6.0; i < 1; i = i + 1.0 / 6.0) {
+        glVertex2f(-1.0, i);
+        glVertex2f( 1.0, i);
+    }
+    glEnd();
 
-        glDisable(GL_LINE_STIPPLE);
-        glColor4ub(192, 64, 64, 192);
+    glDisable(GL_LINE_STIPPLE);
+    glColor4ub(192, 64, 64, 192);
 
-        glBegin(GL_LINES);
-            glVertex2f(-1, 0);
-            glVertex2f( 1, 0);
-        glEnd();
+    glBegin(GL_LINES);
+    glVertex2f(-1, 0);
+    glVertex2f( 1, 0);
+    glEnd();
 
-        //The equator, 23 1/2 degrees north of the Tropic of Capricorn,
-        //and 23 1/2 degrees south of the Tropic of Cancer.
-        glColor4ubv((GLubyte *)&clrNet);
-        glEnable(GL_LINE_STIPPLE);
-        glLineStipple(1, 0xF0F0);
-        glBegin(GL_LINES);
-            glVertex2f(-1, -23.5 / 90.0);
-            glVertex2f( 1, -23.5 / 90.0);
-            glVertex2f(-1,  23.5 / 90.0);
-            glVertex2f( 1,  23.5 / 90.0);
-        glEnd();
-        glDisable(GL_LINE_STIPPLE);
-        glDisable(GL_BLEND);
+    //The equator, 23 1/2 degrees north of the Tropic of Capricorn,
+    //and 23 1/2 degrees south of the Tropic of Cancer.
+    glColor4ubv((GLubyte *)&clrNet);
+    glEnable(GL_LINE_STIPPLE);
+    glLineStipple(1, 0xF0F0);
+    glBegin(GL_LINES);
+    glVertex2f(-1, -23.5 / 90.0);
+    glVertex2f( 1, -23.5 / 90.0);
+    glVertex2f(-1,  23.5 / 90.0);
+    glVertex2f( 1,  23.5 / 90.0);
+    glEnd();
+    glDisable(GL_LINE_STIPPLE);
+    glDisable(GL_BLEND);
     glEndList();
 
     glNewList(list_labels, GL_COMPILE);
@@ -752,7 +759,7 @@ void GLSatWidget::compileEventsList() {
     if (locList.count() < 1) {
         glNewList(list_events, GL_COMPILE);
         glEndList();
-    	return;
+        return;
     }
 
     glNewList(list_events, GL_COMPILE);
@@ -793,18 +800,20 @@ void GLSatWidget::compileEventsList() {
             py = -loc->latitude() / 90.0;
             loc->satWObject->exec(px, py, 0.0);
 
-            if (inZRV > 0) sprite_active.exec(px, py, 0.0);
+            if (inZRV > 0.0) sprite_active.exec(px, py, 0.0);
         }
     glEndList();
 }
 
 void GLSatWidget::compileSunList() {
-    return;
+    double lat, lon;
     glNewList(list_sun, GL_COMPILE);
-//        sun->model(m_time);
-//        float px =  sun->longitude()/M_PI;
-//        float py = -2*sun->latitude()/M_PI;
-//
+    
+    sunmodel_ll((time_t)m_time, &lat, &lon);
+    
+    float px =  lon / M_PI;
+    float py = -2.0 * lat / M_PI;
+
 //        if (shwNight) {
 //            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //            glEnable(GL_BLEND);
@@ -817,10 +826,11 @@ void GLSatWidget::compileSunList() {
 //            }
 //                glDisable(GL_BLEND);
 //        }
-//
-//        if (shwSun) {
-//        sun->satWObject->exec(px, py);
-//        }
+
+        if (shwSun) {
+            sprite_sun.exec(px, py, 0.0);
+        }
+        
     glEndList();
 }
 

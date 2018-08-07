@@ -31,7 +31,7 @@ private:
     GLfloat vertex[VertexCount][2];
 
     Ui::MapWidgetSettings ui;
-    GLSprite sprite_current, sprite_active;
+    GLSprite sprite_current, sprite_active, sprite_sun;
 
     void initializeGL();
     void compileMapList();

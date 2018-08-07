@@ -334,6 +334,7 @@ void SWindow::onTimer() {
     }
     
     satWidget->setTime(time);
+    satWidget->update();
 }
 
 void SWindow::onPlayClick() {
