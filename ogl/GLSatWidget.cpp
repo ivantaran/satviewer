@@ -533,7 +533,7 @@ void GLSatWidget::onBtnMapFileClicked() {
     QDir dir = QDir::home();
     dir.cd("satviewer");
     QString filePath = QFileDialog::getOpenFileName(this, "Open Map File", 
-            dir.path(), "PNG Files (*.png)", NULL, 
+            dir.path(), "Images (*.jpg *.png *.svg)", NULL, 
             QFileDialog::DontUseNativeDialog);
     if (filePath == "") return;
     loadTexture(filePath);
@@ -777,9 +777,10 @@ void GLSatWidget::compileEventsList() {
                         tmpTime = QDateTime::fromTime_t((int)m_time);
                         msg = QString("%0|%1|%2|%3|%4")
                             .arg(sat->name())
-                            .arg("in")
+                            .arg("i")
                             .arg(loc->name())
-                            .arg(tmpTime.time().toString())
+                            .arg((time_t)m_time)
+//                            .arg(tmpTime.time().toString())
                             .arg("*");
                         emit statusZRVChanged(msg);
                     }
@@ -787,9 +788,10 @@ void GLSatWidget::compileEventsList() {
                         tmpTime = QDateTime::fromTime_t((int)m_time);
                         msg = QString("%0|%1|%2|%3|%4")
                             .arg(sat->name())
-                            .arg("out")
+                            .arg("o")
                             .arg(loc->name())
-                            .arg(tmpTime.time().toString())
+                            .arg((time_t)m_time)
+//                            .arg(tmpTime.time().toString())
                             .arg(m_time - oldTime);
                         emit statusZRVChanged(msg);
                     }

@@ -305,10 +305,10 @@ void SWindow::addZRVMessage(QString text) {
         "<table border=0 valign=middle cellpadding=2 cellspacing=1 width=100%>"
         "<tr bgcolor=" + color + ">"
         "<td width=29%>" + list.at(0) + "</td>"
-        "<td width=12%>sign " + list.at(1) + "</td>"
+        "<td width=12%>" + list.at(1) + "</td>"
         "<td width=29%>" + list.at(2) + "</td>"
         "<td width=12%>" + list.at(3) + "</td>"
-        "<td width=18%>" + list.at(4) + " sec.</td>"
+        "<td width=18%>" + list.at(4) + "</td>"
         "</tr></table>";
     dlgOptions->getWidget()->textZRVList->append(msg);
 }
