@@ -39,7 +39,7 @@ private:
     float m_xyz[3];
     float m_angle[3];
     uint32_t m_index;
-    vector<float *> vertex, tex_vertex, normals;
+    std::vector<float *> vertex, tex_vertex, normals;
     char line[BUF_SIZE];
     char type[BUF_SIZE];
     GLObjMaterial *mtlLib;

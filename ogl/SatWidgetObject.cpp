@@ -10,6 +10,7 @@
 #include "SatWidgetObject.h"
 
 SatWidgetObject::SatWidgetObject(QString fileName, QOpenGLWidget *parentWidget) {
+    Q_UNUSED(parentWidget);
     file_name =  fileName;
 }
 

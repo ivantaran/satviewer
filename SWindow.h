@@ -58,7 +58,7 @@ private slots:
     void onTimeClick();
     void onBackwardClick();
     void onForwardClick();
-    void onStepChanged(int value);
+    void onStepChanged(int value = 0);
     void onTimeXChanged(int value);
     void selectLanguage(int value);
     void setSwlVars(Satellite *sat, Location *loc, double *time);

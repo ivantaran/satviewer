@@ -11,14 +11,14 @@
 #include <fstream>
 #include "../dialogs/sgp4/Sgp4Dialog.h"
 
-SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
+SDlgOptions::SDlgOptions(GLSatAbstractWidget *w) {
     widget.setupUi(this);
 
-    satDialog = new Sgp4Dialog(satWidget);
+    satDialog = new Sgp4Dialog(w);
     satDialog->setParent(this, Qt::Dialog | Qt::WindowTitleHint);
     satDialog->setWindowModality(Qt::WindowModal);
 
-    locDialog = new SLocDialog(satWidget);
+    locDialog = new SLocDialog(w);
     locDialog->setParent(this, Qt::Dialog | Qt::WindowTitleHint);
     locDialog->setWindowModality(Qt::WindowModal);
 
@@ -41,7 +41,7 @@ SDlgOptions::SDlgOptions(GLSatAbstractWidget *satWidget) {
     widget.listViewSat->setModel(new QStandardItemModel(this));
     widget.listViewLoc->setModel(new QStandardItemModel(this));
     
-    setSatWidget(satWidget);
+    setSatWidget(w);
 
     //connect(listView->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(selectPage(const QModelIndex &, const QModelIndex &)));
     connect(widget.btnToolSat     , SIGNAL(clicked()), this, SLOT(selectSatPage     ()));
@@ -824,8 +824,8 @@ void SDlgOptions::helpLocSql() {
                 "Example: lat>60 and name LIKE \'Rio%\'");
 }
 
-void SDlgOptions::setSatWidget(GLSatAbstractWidget *satWidget) {
-    this->satWidget = satWidget;
+void SDlgOptions::setSatWidget(GLSatAbstractWidget *w) {
+    this->satWidget = w;
     satWidget->settingsWidget->setParent(widget.tabWidget);
     jswList->setDesktop(satWidget);
     if (widget.stackedWidget->widget(7) != NULL) {

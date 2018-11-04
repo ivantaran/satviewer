@@ -40,10 +40,10 @@ public:
 
     QSqlDatabase db;
 
-    SDlgOptions(GLSatAbstractWidget *satWidget);
+    SDlgOptions(GLSatAbstractWidget *w);
     virtual ~SDlgOptions();
 
-    void setSatWidget(GLSatAbstractWidget *satWidget);
+    void setSatWidget(GLSatAbstractWidget *w);
 
     inline GLSatAbstractWidget* getSatWidget() const { return satWidget; }
     inline Ui::Dialog* getWidget() { return &widget; }

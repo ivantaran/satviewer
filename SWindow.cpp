@@ -204,7 +204,7 @@ void SWindow::readSettings() {
     dlgOptions->loadListViewLoc();
     if (satWidget->satList.count() > 0) satWidget->setIndexSat(0);
     if (satWidget->locList.count() > 0) satWidget->setIndexLoc(0);
-    onStepChanged(0);
+    onStepChanged();
     onTimeClick();
     onTimer();
 }
@@ -292,7 +292,7 @@ void SWindow::wheelEvent(QWheelEvent *event) {
 
 
 void SWindow::onTimeTypeChanged(int index) {
-    timeType = widget.comboBoxTimeType->currentIndex();
+    timeType = index;
 }
 
 void SWindow::addZRVMessage(QString text) {
@@ -379,7 +379,7 @@ void SWindow::onForwardClick() {
     onPlayClick();
 }
 
-void SWindow::onStepChanged(int value) {
+void SWindow::onStepChanged(int) {
     switch (widget.comboBoxStep->currentIndex()) {
     case 0:
         timeStep = 1;

@@ -46,16 +46,14 @@ uint32_t SLocDialog::flipRgb(uint32_t rgb) {
 }
 
 void SLocDialog::showEvent(QShowEvent * event) {
+    Q_UNUSED(event)
+
     if (m_loc == NULL) {
         return;
     }
 
-//    double const rad2deg = 180.0/M_PI;
-    QPalette pal;
-    QRgb rgb;
-
     QPixmap pixmap(m_loc->iconName());
-        widget.btnIcon->setIcon(pixmap);
+    widget.btnIcon->setIcon(pixmap);
 
     widget.btnFont->setFont(m_loc->font());
 
@@ -77,8 +75,8 @@ void SLocDialog::showEvent(QShowEvent * event) {
     widget.checkZrvLines->setChecked ( m_loc->isVisibleLines() );
     widget.checkZrvEnable->setChecked( m_loc->isActiveZone  () );
 
-    rgb = m_loc->colorLabel();
-    pal = widget.btnColorName->palette();
+    QRgb rgb = m_loc->colorLabel();
+    QPalette pal = widget.btnColorName->palette();
     pal.setColor(QPalette::Button, QColor::fromRgba(rgb));
     widget.btnColorName->setPalette(pal);
 
@@ -96,10 +94,6 @@ void SLocDialog::showEvent(QShowEvent * event) {
 void SLocDialog::makeLoc(Location *loc) {
     if (loc == NULL) return;
 
-    QPalette pal;
-    QRgb rgb;
-
-    QPixmap pixmap;
     setLoc(loc);
     if (exec() == QDialog::Rejected) return;
 
@@ -129,8 +123,8 @@ void SLocDialog::makeLoc(Location *loc) {
     loc->visibleLines( widget.checkZrvLines->isChecked()  );
     loc->activeZone  ( widget.checkZrvEnable->isChecked() );
 
-    pal = widget.btnColorName->palette();
-    rgb = pal.color(QPalette::Button).rgba();
+    QPalette pal = widget.btnColorName->palette();
+    QRgb rgb = pal.color(QPalette::Button).rgba();
     loc->setColorLabel(rgb);
 
     pal = widget.btnColorZrv->palette();

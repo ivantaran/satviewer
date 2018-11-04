@@ -26,20 +26,20 @@ void copyDefault() {
         if (it.fileInfo().isDir()) {
             if (!it.fileInfo().dir().mkdir(home + QDir(profile).relativeFilePath(it.fileInfo().filePath()))) {
                 qWarning("Error mkdir:");
-                qWarning(it.fileInfo().filePath().toLocal8Bit().data());
+                qWarning() << it.fileInfo().filePath();
             } else {
                 qWarning("mkdir:");
-                qWarning(it.fileInfo().filePath().toLocal8Bit().data());
+                qWarning() << it.fileInfo().filePath();
             }
         }
 
         if (it.fileInfo().isFile()) {
             if (!QFile(it.filePath()).copy(QString(home + QDir(profile).relativeFilePath(it.fileInfo().filePath())))) {
                 qWarning("Error copy:");
-                qWarning(it.fileInfo().filePath().toLocal8Bit().data());
+                qWarning() << it.fileInfo().filePath();
             } else {
                 qWarning("copy:");
-                qWarning(it.fileInfo().filePath().toLocal8Bit().data());
+                qWarning() << it.fileInfo().filePath();
             }
         }
     }

@@ -23,7 +23,7 @@ public:
     virtual ~Satellite(void);
     SatWidgetObject *satWObject;
     virtual bool model(double) { return false; }
-    virtual bool modelInit(char *state, int size) { return false; }
+    virtual bool modelInit(char *state, int size) { Q_UNUSED(state); Q_UNUSED(size); return false; }
     virtual char *getState() { return 0; }
     virtual int getStateSize() { return 0; }
     
@@ -95,12 +95,11 @@ public:
 
 protected:
     double lon, lat, _height;
-    double r[3], v[3], r_g[3], v_g[3];
-//    double jdsatepoch, bstar, inclo, nodeo, ecco, argpo, mo, ao, no;
+    double r[3] = {0.0, 0.0, 0.0};
+    double v[3] = {0.0, 0.0, 0.0};
+    double r_g[3] = {0.0, 0.0, 0.0};
+    double v_g[3] = {0.0, 0.0, 0.0};
     double zrv;
-//    double gsto; //current sidereal time
-//    double t;    //current model time in minutes
-//    double tumin, mu, radius_earth_km, xke, j2, j3, j4, j3oj2;
     double radius_earth;
     void getGeod();
     virtual double gsto() { return 0.0; }

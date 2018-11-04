@@ -43,6 +43,9 @@ private:
     void compileLocList() {}
     void compileSunList() {}
     void compileEventsList() {}
+//    void setIcon(Satellite *sat, const QString& fileName = "") {}
+//    void setIcon(Location *loc, const QString& fileName = "") {}
+    
 private slots:
     void moveX(double value);
     void moveY(double value);

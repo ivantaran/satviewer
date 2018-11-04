@@ -210,9 +210,10 @@ void GLSatAbstractWidget::enumSatModelList() {
 }
 
 void GLSatAbstractWidget::setSatModel(int index) {
+    Q_UNUSED(index);
     getSatModel = (CustomSat)Sgp4Model::getSatModel;
     qWarning("%s [getSatModel %p]\n", lib.fileName().toLocal8Bit().data(), getSatModel);
-    if (getSatModel == 0) exit(-1);
+    if (getSatModel == NULL) exit(-1);
 }
 
 void GLSatAbstractWidget::setSunModel(QString fileName) {

@@ -11,7 +11,10 @@ Satellite::Satellite(void) {
     _name = "";
     icon_name = "";
     zrv = 0.0;
-
+    lon = 0.0;
+    lat = 0.0;
+    _height = 0.0;
+    
     name_x = 0;
     name_y = 0;
     lines_width = 1;

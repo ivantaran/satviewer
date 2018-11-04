@@ -449,13 +449,13 @@ void GLSatWidget::addLoc(Location* loc) {
     if (loc->satWObject == 0) setIcon(loc);
 }
 
-void GLSatWidget::setIcon(Satellite *sat, QString fileName) {
+void GLSatWidget::setIcon(Satellite *sat, const QString& fileName) {
     if (sat->satWObject != 0) delete sat->satWObject;
     if (!fileName.isEmpty()) sat->setIcon(fileName);
     sat->satWObject = new GLSprite(sat->iconName(), this);
 }
 
-void GLSatWidget::setIcon(Location *loc, QString fileName) {
+void GLSatWidget::setIcon(Location *loc, const QString& fileName) {
     if (loc->satWObject != 0) delete loc->satWObject;
     if (!fileName.isEmpty()) loc->setIcon(fileName);
     loc->satWObject = new GLSprite(loc->iconName(), this);
@@ -583,8 +583,8 @@ void GLSatWidget::compileMapList() {
 
     glBegin(GL_LINES);
     for (GLfloat i = -1.0; i < 1.0; i += 1.0 / 12.0) {
-        glVertex2f(i, -1);
-        glVertex2f(i,  1);
+        glVertex2f(i, -1.0);
+        glVertex2f(i,  1.0);
     }
     for (GLfloat i = -1 + 1.0 / 6.0; i < 1; i = i + 1.0 / 6.0) {
         glVertex2f(-1.0, i);
@@ -596,8 +596,8 @@ void GLSatWidget::compileMapList() {
     glColor4ub(192, 64, 64, 192);
 
     glBegin(GL_LINES);
-    glVertex2f(-1, 0);
-    glVertex2f( 1, 0);
+    glVertex2f(-1.0, 0.0);
+    glVertex2f( 1.0, 0.0);
     glEnd();
 
     //The equator, 23 1/2 degrees north of the Tropic of Capricorn,
@@ -606,10 +606,10 @@ void GLSatWidget::compileMapList() {
     glEnable(GL_LINE_STIPPLE);
     glLineStipple(1, 0xF0F0);
     glBegin(GL_LINES);
-    glVertex2f(-1, -23.5 / 90.0);
-    glVertex2f( 1, -23.5 / 90.0);
-    glVertex2f(-1,  23.5 / 90.0);
-    glVertex2f( 1,  23.5 / 90.0);
+    glVertex2f(-1.0, -23.5 / 90.0);
+    glVertex2f( 1.0, -23.5 / 90.0);
+    glVertex2f(-1.0,  23.5 / 90.0);
+    glVertex2f( 1.0,  23.5 / 90.0);
     glEnd();
     glDisable(GL_LINE_STIPPLE);
     glDisable(GL_BLEND);
@@ -633,7 +633,7 @@ void GLSatWidget::compileSatList() {
     }
 
     glNewList(list_sat, GL_COMPILE);
-        foreach (sat, satList) {
+        for (const auto& sat : satList) {
             shadow_state = 2;
             sat->model(m_time);
             
@@ -729,7 +729,7 @@ void GLSatWidget::compileLocList() {
 
     glNewList(list_loc, GL_COMPILE);
 
-        foreach (loc, locList) {
+        for (const auto& loc : locList) {
             compileZrl(loc);
         }
 
@@ -749,8 +749,6 @@ void GLSatWidget::compileLocList() {
 
 void GLSatWidget::compileEventsList() {
     float px, py;
-    Location *loc;
-    Satellite *sat;
     int inZRV, statusZRV;
     double oldTime;
     QString msg;
@@ -763,12 +761,10 @@ void GLSatWidget::compileEventsList() {
     }
 
     glNewList(list_events, GL_COMPILE);
-        for (int i = 0; i < locList.count(); i++) {
-            loc = locList.at(i);
+        for (const auto& loc : locList) {
             inZRV = 0;
             if (loc->isActiveZone()) {
-                for (int j = 0; j < satList.count(); j++) {
-                    sat = satList.at(j);
+                for (const auto& sat : satList) {
                     if (!sat->isAtctiveZone()) continue;
                     oldTime = m_time;
                     statusZRV = testIOZRV(sat, loc, &ioList, oldTime);
@@ -863,7 +859,7 @@ void GLSatWidget::paintEvent(QPaintEvent *event) {
         painter.drawText(dx * i,  h, QString().number(abs(i * 30 - 180)));
     }
     
-    foreach (Satellite *sat, satList) {
+    for (const auto& sat : satList) {
         if (sat->isVisibleLabel()) {
             painter.setPen(sat->colorLabel());
             painter.setFont(sat->font());
@@ -875,7 +871,7 @@ void GLSatWidget::paintEvent(QPaintEvent *event) {
         }
     }
     
-    foreach (Location *loc, locList) {
+    for (const auto& loc : locList) {
         if (loc->isVisibleLabel()) {
             painter.setPen(loc->colorLabel());
             painter.setFont(loc->font());
@@ -899,14 +895,14 @@ void GLSatWidget::mouseMoveEvent(QMouseEvent *event) {
     float y = event->y();
     float kxl = w / 360.0;
     float kyl = h / 180.0;
-    float kxs = 0.5 * w/M_PI;
+    float kxs = 0.5 * w / M_PI;
     float kys = h / M_PI;
     int i;
     int resultLoc = -1;
     int resultSat = -1;
 
     i = 0;
-    foreach (Location *loc, locList) {
+    for (const auto& loc : locList) {
         px = kxl * (180.0 + loc->longitude()) * m_zoom - 0.5 * (m_zoom - 1.0 - m_dx) * w;
         py = kyl * ( 90.0 - loc->latitude() ) * m_zoom - 0.5 * (m_zoom - 1.0 - m_dy) * h;
         if (fabs(px - x) < 7.0 * m_zoom && fabs(py - y) < 7.0 * m_zoom) {
@@ -921,7 +917,7 @@ void GLSatWidget::mouseMoveEvent(QMouseEvent *event) {
     }
     
     i = 0;
-    foreach (Satellite *sat, satList) {
+    for (const auto& sat : satList) {
         px = kxs * (      M_PI + sat->longitude()) * m_zoom - 0.5 * (m_zoom - 1.0 - m_dx) * w;
         py = kys * (0.5 * M_PI - sat->latitude() ) * m_zoom - 0.5 * (m_zoom - 1.0 - m_dy) * h;
         if (fabs(px - x) < 7.0 * m_zoom && fabs(py - y) < 7.0 * m_zoom) {

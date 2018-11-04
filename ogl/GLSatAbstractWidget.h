@@ -28,13 +28,13 @@ public:
     QWidget *settingsWidget;
     typedef Satellite * (*CustomSat)();
     CustomSat getSatModel, getSunModel;
-    GLSatAbstractWidget(QWidget *parent = 0);
+    GLSatAbstractWidget(QWidget *parent = NULL);
     virtual ~GLSatAbstractWidget();
     virtual void readSettings() {}
-    virtual void writeSettings(QSettings *settings) {}
+    virtual void writeSettings(QSettings *settings) { Q_UNUSED(settings); }
     virtual void retranslateUi() {}
-    virtual void setIcon(Satellite *sat, QString fileName = QString()) {}
-    virtual void setIcon(Location *loc, QString fileName = QString()) {}
+    virtual void setIcon(Satellite *sat, const QString& fileName = "") { Q_UNUSED(sat); Q_UNUSED(fileName); }
+    virtual void setIcon(Location *loc, const QString& fileName = "") { Q_UNUSED(loc); Q_UNUSED(fileName); }
     void setTime(double secs);
     void setSatModel(int index = -1);
     void setSunModel(QString fileName = "");
@@ -50,14 +50,14 @@ public:
     void setColorNetFont (uint32_t color);
     void setColorNight(uint32_t color);
 
-    inline uint32_t colorNet() {return clrNet;}
-    inline uint32_t colorNetFont() {return clrNetFont;}
-    inline uint32_t colorNight() {return clrNight;}
+    uint32_t colorNet() const {return clrNet;}
+    uint32_t colorNetFont() const {return clrNetFont;}
+    uint32_t colorNight() const {return clrNight;}
 
-    inline QFont fontNet() {return fntNet;}
-    inline double time() {return m_time;}
+    QFont fontNet() const {return fntNet;}
+    double time() const {return m_time;}
 
-    inline QStringList satModelList() {return m_satModelList;}
+    QStringList satModelList() const {return m_satModelList;}
 
     void showZRV(bool value);
     void showZRVLines(bool value);
@@ -67,8 +67,8 @@ public:
     void showSun(bool value);
     void showNight(bool value);
 
-    inline int indexSat() {return m_indexSat;}
-    inline int indexLoc() {return m_indexLoc;}
+    int indexSat() const {return m_indexSat;}
+    int indexLoc() const {return m_indexLoc;}
 
     Satellite * currentSat() {
         if ((m_indexSat < 0) || (m_indexSat >= satList.count())) return NULL; // TODO move to cpp

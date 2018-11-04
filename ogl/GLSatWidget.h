@@ -23,8 +23,8 @@ public:
     inline void retranslateUi() { ui.retranslateUi(this); }
     void addSat(Satellite *sat);
     void addLoc(Location *loc);
-    void setIcon(Satellite *sat, QString  fileName = QString());
-    void setIcon(Location *loc, QString  fileName = QString());
+    void setIcon(Satellite *sat, const QString& fileName = "");
+    void setIcon(Location *loc, const QString& fileName = "");
     
 private:
     static const int VertexCount = 128;
