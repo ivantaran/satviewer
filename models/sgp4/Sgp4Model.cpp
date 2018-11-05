@@ -23,6 +23,8 @@ Sgp4Model::Sgp4Model() {
     SGP4Funcs::getgravconst(gravconsttype::wgs84, tmp, tmp, radius_earth, tmp, 
             tmp, tmp, tmp, tmp);
     radius_earth *= 1000.0;
+    memset(&elset, 0, sizeof(elset));
+    memset(&state, 0, sizeof(state));
 }
 
 Sgp4Model::~Sgp4Model() {

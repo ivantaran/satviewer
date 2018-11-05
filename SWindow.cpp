@@ -41,10 +41,9 @@ SWindow::SWindow() {
     connect(widget.tlBtnOptions, SIGNAL(clicked()), dlgOptions, SLOT(show()));
 
     uiSettings.setupUi(&settingsWidget);
-    dlgOptions->getWidget()->stackedWidget->insertWidget(8, &settingsWidget);
+    dlgOptions->getWidget()->tabWidgetSettings->insertTab(3, &settingsWidget, tr("Settings"));  // TODO: move line to sdlgoptions
     uiSettings.comboStyle->addItem(tr("system (need restart)"));
     uiSettings.comboStyle->addItems(QStyleFactory::keys());
-    //    uiSettings.comboSatModel->addItems(satWidget->satModelList());
 
     mapLayout->addWidget(satWidget);
     widget.frameMap->setLayout(mapLayout);

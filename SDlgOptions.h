@@ -73,20 +73,12 @@ private slots:
     void deleteSatList();
     void addToLocList();
     void deleteLocList();
-    void selectPage(const QModelIndex &current, const QModelIndex &previous);
-    void selectSatPage();
-    void selectLocPage();
-    void selectZrvPage();
-    void selectParamsPage();
-    void selectSettingsPage();
-    void selectTlePage();
-    void selectWidgetsPage();
-    void selectMapPage();
-    void selectAboutPage();
+
     void selectDbSat(const QModelIndex &current, const QModelIndex &previous);
     void selectDbLoc(const QModelIndex &current, const QModelIndex &previous);
     void selectSat(const QModelIndex &current, const QModelIndex &previous);
     void selectLoc(const QModelIndex &current, const QModelIndex &previous);
+    
     void clearSatList();
     void clearLocList();
     void setFilterSatName(const QString &line);

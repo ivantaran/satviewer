@@ -23,38 +23,26 @@ SDlgOptions::SDlgOptions(GLSatAbstractWidget *w) {
     locDialog->setWindowModality(Qt::WindowModal);
 
     QDir dir = QDir::home();
-    dir.cd("satviewer/jsprm");
-    scriptFrame = new SScriptFrame(dir.filePath("prmlist.js"));
-    scriptFrame->setParent(widget.tabWidget);
-    widget.stackedWidget->insertWidget(4, scriptFrame);
-
-    jswList = new SWidgetList();
-    jswList->setParent(widget.tabWidget);
-    widget.stackedWidget->insertWidget(5, jswList);
-
-    dir = QDir::home();
     dir.cd("satviewer/tle");
     tleFrame = new SUpdater(dir.filePath("tle_list.lst"));
-    tleFrame->setParent(widget.tabWidget);
-    widget.stackedWidget->insertWidget(6, tleFrame);
+    tleFrame->setParent(widget.tabWidgetSettings);
+    widget.tabWidgetSettings->insertTab(0, tleFrame, tr("TLE"));
+
+    jswList = new SWidgetList();
+    jswList->setParent(widget.tabWidgetSettings);
+    widget.tabWidgetSettings->insertTab(1, jswList, tr("Widgets"));
+
+    dir = QDir::home();
+    dir.cd("satviewer/jsprm");
+    scriptFrame = new SScriptFrame(dir.filePath("prmlist.js"));
+    scriptFrame->setParent(widget.tabWidgetData);
+    widget.tabWidgetData-> insertTab(1, scriptFrame, tr("Parameters"));
+
 
     widget.listViewSat->setModel(new QStandardItemModel(this));
     widget.listViewLoc->setModel(new QStandardItemModel(this));
     
     setSatWidget(w);
-
-    //connect(listView->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(selectPage(const QModelIndex &, const QModelIndex &)));
-    connect(widget.btnToolSat     , SIGNAL(clicked()), this, SLOT(selectSatPage     ()));
-    connect(widget.btnToolLoc     , SIGNAL(clicked()), this, SLOT(selectLocPage     ()));
-    connect(widget.btnToolZRV     , SIGNAL(clicked()), this, SLOT(selectZrvPage     ()));
-    connect(widget.btnToolParams  , SIGNAL(clicked()), this, SLOT(selectParamsPage  ()));
-    connect(widget.btnInfo        , SIGNAL(clicked()), this, SLOT(selectAboutPage   ()));
-    connect(widget.btnToolSettings, SIGNAL(clicked()), this, SLOT(selectSettingsPage()));
-    connect(widget.btnToolTle     , SIGNAL(clicked()), this, SLOT(selectTlePage     ()));
-    connect(widget.btnToolWidgets , SIGNAL(clicked()), this, SLOT(selectWidgetsPage ()));
-    connect(widget.btnToolMap     , SIGNAL(clicked()), this, SLOT(selectMapPage     ()));
-    connect(widget.btnAboutQt     , SIGNAL(clicked()), this, SLOT(aboutQt           ()));
-    
     setDb();
     
     connect(widget.lineEditSatNameFilter, SIGNAL(textChanged(const QString &)), 
@@ -439,50 +427,6 @@ void SDlgOptions::deleteLocList() {
     delFromLocList(widget.listViewLoc->currentIndex());
 }
 
-void SDlgOptions::selectPage(const QModelIndex &current, const QModelIndex &previous) {
-    Q_UNUSED(previous)
-    if (current.isValid()) {
-        widget.stackedWidget->setCurrentIndex(current.row());
-    }
-}
-
-void SDlgOptions::selectSatPage() {
-    widget.stackedWidget->setCurrentIndex(0);
-}
-
-void SDlgOptions::selectLocPage() {
-    widget.stackedWidget->setCurrentIndex(1);
-}
-
-void SDlgOptions::selectZrvPage() {
-    widget.stackedWidget->setCurrentIndex(2);
-}
-
-void SDlgOptions::selectAboutPage() {
-    widget.stackedWidget->setCurrentIndex(3);
-}
-
-void SDlgOptions::selectParamsPage() {
-    widget.stackedWidget->setCurrentIndex(4);
-    scriptParameters();
-}
-
-void SDlgOptions::selectWidgetsPage() {
-    widget.stackedWidget->setCurrentIndex(5);
-}
-
-void SDlgOptions::selectTlePage() {
-    widget.stackedWidget->setCurrentIndex(6);
-}
-
-void SDlgOptions::selectMapPage() {
-    widget.stackedWidget->setCurrentIndex(7);
-}
-
-void SDlgOptions::selectSettingsPage() {
-    widget.stackedWidget->setCurrentIndex(8);
-}
-
 void SDlgOptions::selectDbSat(const QModelIndex &current, const QModelIndex &previous) {
     Q_UNUSED(previous)
     if (current.isValid()) {
@@ -826,12 +770,12 @@ void SDlgOptions::helpLocSql() {
 
 void SDlgOptions::setSatWidget(GLSatAbstractWidget *w) {
     this->satWidget = w;
-    satWidget->settingsWidget->setParent(widget.tabWidget);
+    satWidget->settingsWidget->setParent(widget.tabWidgetSettings);
     jswList->setDesktop(satWidget);
-    if (widget.stackedWidget->widget(7) != NULL) {
-        widget.stackedWidget->removeWidget(widget.stackedWidget->widget(7));
-    }
-    widget.stackedWidget->insertWidget(7, satWidget->settingsWidget);
+//    if (widget.stackedWidget->widget(7) != NULL) {
+//        widget.stackedWidget->removeWidget(widget.stackedWidget->widget(7));
+//    }
+    widget.tabWidgetSettings->insertTab(4, satWidget->settingsWidget, "Map");
     satDialog->setSatWidget(satWidget);
     locDialog->setSatWidget(satWidget);
 }

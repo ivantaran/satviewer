@@ -42,8 +42,8 @@ GLSatWidget::~GLSatWidget() {
 
 void GLSatWidget::initSatOgl() {
     for (int i = 0; i < VertexCount; ++i) {
-        vertex[i][0] = 0;
-        vertex[i][1] = 0;
+        vertex[i][0] = 0.0;
+        vertex[i][1] = 0.0;
     }
 }
 
