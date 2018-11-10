@@ -128,7 +128,7 @@ void GLSatWidget::glZoneLines(float lat) {
 
 void GLSatWidget::glZoneNight(float lat) {
     int breakpoint = 0;
-    float polar;
+    GLfloat polar;
 
     if (fabs(vertex[0][0] - vertex[VertexCount - 1][0]) > 1) {
         breakpoint = 0;
@@ -177,8 +177,8 @@ int GLSatWidget::testIOZRV(Satellite *sat, Location *loc, ZrvIoList *list, doubl
     double fiz = 0;
     double z = sat->zrvWidth();
     //---------------------
-    if (fabs(cos(z)*sat->radiusEarth()) > (sat->height() + sat->radiusEarth())) fiz = -z;
-    else fiz = (M_PI/2 - z - asin(cos(z)*sat->radiusEarth()/(sat->height() + sat->radiusEarth())));
+    if (fabs(cos(z)*sat->radiusEarth()) > (sat->altitude() + sat->radiusEarth())) fiz = -z;
+    else fiz = (M_PI/2 - z - asin(cos(z)*sat->radiusEarth()/(sat->altitude() + sat->radiusEarth())));
     //---------------------
     double ortl[3], orts[3];
     lfi_ort(loc->latitude()*M_PI/180, loc->longitude()*M_PI/180, ortl);
@@ -350,41 +350,64 @@ void GLSatWidget::fillFootprint(float lat) {
     }
 }
 
-void GLSatWidget::compileZRV(Satellite *sat, bool poly, bool lines, uint32_t colorPoly, uint32_t colorLines) {
-    double fiz = 0;
-    double z = sat->zrvWidth();
-    if (fabs(cos(z)*sat->radiusEarth()) > (sat->height() + sat->radiusEarth())) fiz = -z;
-    else fiz = (M_PI/2 - z - asin(cos(z)*sat->radiusEarth()/(sat->height() + sat->radiusEarth())));
+void GLSatWidget::compileFootprint(double longitude, double latitude, 
+        double altitude, double zoneWidth, bool fill, bool lines, 
+        GLfloat linesWidth, GLuint colorPoly, GLuint colorLines) {
     double x, y;
+    double fiz;
     double polar, angle = 0;
-    if (fabs(sat->latitude()) + fiz < M_PI/2) polar = 1;
-    else polar = -1;
-    for (int i = 0; i < VertexCount; i++) {
-        y = asin(cos(fiz)*sin(sat->latitude()) + sin(fiz)*cos(sat->latitude())*cos(angle));
-        x = sin(fiz)*sin(angle)/cos(y);
-        if (x > 1) x = 1.0;
-        if (x < -1) x = -1.0;
-        x = sat->longitude() + polar*asin(x);
-        if ((cos(fiz) - sin(sat->latitude())*sin(y)) < 0 ) {x = 2*sat->longitude() - x + M_PI;}
-        x = fmod(x + M_PI, 2*M_PI);
-        if (x < 0) x += 2*M_PI;
-        vertex[i][0] = (float)(x/M_PI - 1);
-        vertex[i][1] = (float)(-2*y/M_PI);
-        angle += 2*M_PI/(double)VertexCount;
+    double cosz = cos(zoneWidth);
+    double radius = altitude + Satellite::RadiusEarth;
+    
+    if (fabs(cosz * Satellite::RadiusEarth) > radius) {
+        fiz = -zoneWidth;
     }
-    if (poly) {
-        glColor4ubv((uint8_t *)&colorPoly);
+    else {
+        fiz = 0.5 * M_PI - zoneWidth - asin(cosz * Satellite::RadiusEarth / radius);
+    }
+    
+    polar = (fabs(latitude) + fiz < M_PI * 0.5) ? 1.0 : -1.0;
+    
+    for (int i = 0; i < VertexCount; i++) {
+        y = asin(cos(fiz) * sin(latitude) + sin(fiz) * cos(latitude) * cos(angle));
+        x = sin(fiz) * sin(angle) / cos(y);
+        
+        if (x > 1.0) {
+            x = 1.0;
+        }
+        else if (x < -1.0) {
+            x = -1.0;
+        }
+        
+        x = longitude + polar * asin(x);
+        
+        if ((cos(fiz) - sin(latitude) * sin(y)) < 0.0 ) {
+            x = 2.0 * longitude - x + M_PI;
+        }
+        
+        x = fmod(x + M_PI, 2.0 * M_PI);
+        
+        if (x < 0.0) {
+            x += 2.0 * M_PI;
+        }
+        
+        vertex[i][0] = x / M_PI - 1.0;
+        vertex[i][1] = -2.0 * y / M_PI;
+        angle += 2.0 * M_PI / (double)VertexCount;
+    }
+    
+    if (fill) {
+        glColor4ubv((GLubyte *)&colorPoly);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
-//        glZone(sat->latitude());
-        fillFootprint(sat->latitude());
+        fillFootprint(latitude);
         glDisable(GL_BLEND);
     }
 
     if (lines){
-        glColor4ubv((uint8_t *)&colorLines);
-        glLineWidth(sat->linesWidth());
-        glZoneLines(sat->latitude());
+        glColor4ubv((GLubyte *)&colorLines);
+        glLineWidth(linesWidth);
+        glZoneLines(latitude);
     }
 }
 
@@ -606,10 +629,10 @@ void GLSatWidget::compileMapList() {
     glEnable(GL_LINE_STIPPLE);
     glLineStipple(1, 0xF0F0);
     glBegin(GL_LINES);
-    glVertex2f(-1.0, -23.5 / 90.0);
-    glVertex2f( 1.0, -23.5 / 90.0);
-    glVertex2f(-1.0,  23.5 / 90.0);
-    glVertex2f( 1.0,  23.5 / 90.0);
+    glVertex2f(-1.0, -23.43684 / 90.0);
+    glVertex2f( 1.0, -23.43684 / 90.0);
+    glVertex2f(-1.0,  23.43684 / 90.0);
+    glVertex2f( 1.0,  23.43684 / 90.0);
     glEnd();
     glDisable(GL_LINE_STIPPLE);
     glDisable(GL_BLEND);
@@ -638,7 +661,9 @@ void GLSatWidget::compileSatList() {
             sat->model(m_time);
             
             if (sat->isVisibleZrv() || sat->isVisibleLines()) {
-                compileZRV(sat, sat->isVisibleZrv(), sat->isVisibleLines(), 
+                compileFootprint(sat->longitude(), sat->latitude(), 
+                        sat->altitude(), sat->zrvWidth(), sat->isVisibleZrv(), 
+                        sat->isVisibleLines(), sat->linesWidth(), 
                         sat->colorZrv(), sat->colorLines());
             }
 
@@ -812,18 +837,21 @@ void GLSatWidget::compileSunList() {
     float px =  lon / M_PI;
     float py = -2.0 * lat / M_PI;
 
-//        if (shwNight) {
-//            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//            glEnable(GL_BLEND);
-//            compileZRV(sun, false, false, 0, 0);
-//            glColor4ubv((uint8_t *)&clrNight);
-//            glZoneNight(sun->latitude());
-//            if (true) {
-//                glColor3f(0.4, 0.4, 0.4);
-//                glZoneLines(sun->latitude());
-//            }
-//                glDisable(GL_BLEND);
-//        }
+        if (shwNight) {
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glEnable(GL_BLEND);
+            compileFootprint(lon, lat, 149597871000.0 - Satellite::RadiusEarth, 
+                    0.0, false, false, 
+                    1.0, // linesWidth
+                    0, 0);
+            glColor4ubv((GLubyte *)&clrNight);
+            glZoneNight(lat);
+            if (true) {
+                glColor3f(0.4, 0.4, 0.4);
+                glZoneLines(lat);
+            }
+                glDisable(GL_BLEND);
+        }
 
         if (shwSun) {
             sprite_sun.exec(px, py, 0.0);

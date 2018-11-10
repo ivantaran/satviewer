@@ -19,6 +19,7 @@
 class Satellite {
 
 public:
+    static const double RadiusEarth;
     Satellite(void);
     virtual ~Satellite(void);
     SatWidgetObject *satWObject;
@@ -45,7 +46,7 @@ public:
 
     double latitude     () const { return lat;          }
     double longitude    () const { return lon;          }
-    double height       () const { return _height;      }
+    double altitude     () const { return _altitude;      }
     double radiusEarth  () const { return radius_earth; }
     double zrvWidth     () const { return zrv;          }
     virtual double meanMotion() { return 0.0; }
@@ -94,7 +95,7 @@ public:
     bool isSatellite() const;
 
 protected:
-    double lon, lat, _height;
+    double lon, lat, _altitude;
     double r[3] = {0.0, 0.0, 0.0};
     double v[3] = {0.0, 0.0, 0.0};
     double r_g[3] = {0.0, 0.0, 0.0};

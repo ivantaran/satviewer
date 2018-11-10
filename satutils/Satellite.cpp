@@ -13,7 +13,7 @@ Satellite::Satellite(void) {
     zrv = 0.0;
     lon = 0.0;
     lat = 0.0;
-    _height = 0.0;
+    _altitude = 0.0;
     
     name_x = 0;
     name_y = 0;
@@ -85,7 +85,7 @@ void Satellite::getGeod() {
     if (lon < -M_PI) lon += 2.0 * M_PI;
 
     N = a_axis / sqrt(1.0 - e1sqr * sin(lat) * sin(lat));
-    _height = p / cos(lat) - N;
+    _altitude = p / cos(lat) - N;
 }
 
 void Satellite::copy(Satellite *src) {
@@ -173,3 +173,5 @@ void Satellite::setNameY(double value) {
 void Satellite::setLinesWidth(double value) {
     lines_width = value;
 }
+
+const double Satellite::RadiusEarth = 6378137.0;

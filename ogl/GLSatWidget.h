@@ -49,7 +49,9 @@ private:
     void initSatOgl();
     void glZoneLines(float lat);
     void glZoneNight(float lat);
-    void compileZRV(Satellite *sat, bool poly, bool lines, uint32_t colorPoly, uint32_t colorLines);
+    void compileFootprint(double longitude, double latitude, 
+        double altitude, double zoneWidth, bool fill, bool lines, 
+        GLfloat linesWidth, GLuint colorPoly, GLuint colorLines);
     void lfi_ort(double fi, double lam, double* xyz);
     bool testZRV(double* crd1, double* crd2, double fiz);
     int testIOZRV(Satellite *sat, Location *loc, ZrvIoList *list, double &time);
