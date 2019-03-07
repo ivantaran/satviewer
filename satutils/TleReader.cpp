@@ -79,8 +79,12 @@ void TleReader::item(int index) {
     if (index >= m_count) return;
     int bexp;
     setlocale(LC_NUMERIC, "C");
-
-    sscanf(lines[0][index],"%24[^\r\n]", m_name);
+    if (lines[0][index][0] == '0') {
+        sscanf(lines[0][index], "%*d %24[^\r\n]", m_name);
+    }
+    else {
+        sscanf(lines[0][index], "%24[^\r\n]", m_name);
+    }
     sscanf(lines[1][index], "%*s %*s %*s %lf %*s %*s %7lf %2d", 
             &epochdays, &m_state.bstar, &bexp);
     sscanf(lines[2][index], "%*s %*s %lf %lf %lf %lf %lf %11lf", 
