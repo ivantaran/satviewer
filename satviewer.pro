@@ -1,6 +1,6 @@
 
-TARGET = SatViewer
-DESTDIR = bin
+TARGET = satviewer
+DESTDIR = .
 
 MOC_DIR = build
 UI_DIR = build

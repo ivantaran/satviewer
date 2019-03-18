@@ -60,7 +60,7 @@ SWindow::SWindow() {
     shcEscFullScreen = new QShortcut(QKeySequence("Esc"), this);
     dlgOptions->jswList->init(widget.frameMap, path.path());
 
-    uCheck = new UCheck(this, 20112, "http://satviewer.net/version/current.txt");
+    uCheck = new UCheck(this, 190318, "http://satviewer.net/version/current.txt");
 
     connect(uiSettings.comboStyle, SIGNAL(currentIndexChanged(int)), this, 
             SLOT(selectStyle (int)));
