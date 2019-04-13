@@ -22,7 +22,7 @@ using namespace std;
 
 class GLObjecter : protected QOpenGLFunctions_2_0 {
 public:
-    GLObjecter(QOpenGLWidget *parent, int index, char *path, char *fileName);
+    GLObjecter(QOpenGLWidget *parent, int index, const char *path, const char *fileName);
     virtual ~GLObjecter();
     void move(float x, float y, float z);
     void moveX(float value);

@@ -16,7 +16,7 @@
 class GLSatWidget : public GLSatAbstractWidget {
     Q_OBJECT
 public:
-    GLSatWidget(QWidget *parent = 0);
+    GLSatWidget(QWidget *parent = nullptr);
     virtual ~GLSatWidget();
     void readSettings();
     void writeSettings(QSettings *settings);

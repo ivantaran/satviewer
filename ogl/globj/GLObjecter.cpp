@@ -9,7 +9,7 @@
 
 #include "GLObjecter.h"
 
-GLObjecter::GLObjecter(QOpenGLWidget *parent, int index, char *path, char *fileName) {
+GLObjecter::GLObjecter(QOpenGLWidget *parent, int index, const char *path, const char *fileName) {
     if (!parent || !parent->isValid()) {
         qWarning("error: GLObjecter, invalid QOpenGLWidget");
         return;

@@ -8,12 +8,26 @@
 #ifndef RADARWIDGET_H
 #define RADARWIDGET_H
 
-class RadarWidget {
+#include "GLSatAbstractWidget.h"
+
+class RadarWidget : public GLSatAbstractWidget {
+    Q_OBJECT
 public:
-    RadarWidget();
-    RadarWidget(const RadarWidget& orig);
+    RadarWidget(QWidget *parent = nullptr);
+//    RadarWidget(const RadarWidget& orig);
     virtual ~RadarWidget();
 private:
+//    void initializeGL();
+//    void paintGL();
+//    void resizeGL(int width, int height) {}
+    void compileMapList();
+//    void compileSatList() {}
+//    void compileLocList() {}
+//    void compileSunList() {}
+//    void compileEventsList() {}
+//    float zoom(float value = 0.0) {}
+//    float moveX(float value = 0.0) {}
+//    float moveY(float value = 0.0) {}
 
 };
 

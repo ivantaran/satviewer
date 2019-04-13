@@ -16,9 +16,9 @@
 #include "ui_SatViewer.h"
 #include "ui_settings.h"
 #include "uchecker/UCheck.h"
-#include "ogl/GLSatWidget3d.h"
+#include "ogl/RadarWidget.h"
 #include "ogl/GLSatWidget.h"
-#include "ogl/GLSatAbstractWidget.h"
+#include "ogl/GLSatWidget3d.h"
 
 class SWindow: public QMainWindow {
     Q_OBJECT

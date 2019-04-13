@@ -50,7 +50,7 @@ public:
     void setColorNetFont (uint32_t color);
     void setColorNight(uint32_t color);
 
-    uint32_t colorNet() const {return clrNet;}
+    uint32_t colorNet() const {return m_colorNet;}
     uint32_t colorNetFont() const {return clrNetFont;}
     uint32_t colorNight() const {return clrNight;}
 
@@ -99,8 +99,8 @@ signals:
     void initialized();
     
 protected:
-    GLuint clrNet, clrNetFont, clrNight;
-    GLuint list_map, list_net, list_events, list_sun, list_loc, list_sat, list_labels;
+    GLuint m_colorNet, clrNetFont, clrNight;
+    GLuint list_map, list_net, list_events, list_sun, list_loc, list_sat;
     bool list_map_ready, list_net_ready, list_events_ready, list_sun_ready, list_loc_ready, list_sat_ready, list_labels_ready;
     double m_time;
     QOpenGLTexture *textureID;

@@ -634,7 +634,7 @@ void GLSatWidget::compileMapList() {
     glLineWidth(1.0);
     glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
-    glColor4ubv((GLubyte *)&clrNet);
+    glColor4ubv((GLubyte *)&m_colorNet);
 
     glBegin(GL_LINES);
     for (GLfloat i = -1.0; i < 1.0; i += 1.0 / 12.0) {
@@ -647,8 +647,7 @@ void GLSatWidget::compileMapList() {
     }
     glEnd();
 
-    glDisable(GL_LINE_STIPPLE);
-    glColor4ub(192, 64, 64, 192);
+    glColor4ub(192, 64, 64, 192); // TODO: parametrize color
 
     glBegin(GL_LINES);
     glVertex2f(-1.0, 0.0);
@@ -657,7 +656,7 @@ void GLSatWidget::compileMapList() {
 
     //The equator, 23 1/2 degrees north of the Tropic of Capricorn,
     //and 23 1/2 degrees south of the Tropic of Cancer.
-    glColor4ubv((GLubyte *)&clrNet);
+    glColor4ubv((GLubyte *)&m_colorNet);
     glEnable(GL_LINE_STIPPLE);
     glLineStipple(1, 0xF0F0);
     glBegin(GL_LINES);
@@ -668,9 +667,6 @@ void GLSatWidget::compileMapList() {
     glEnd();
     glDisable(GL_LINE_STIPPLE);
     glDisable(GL_BLEND);
-    glEndList();
-
-    glNewList(list_labels, GL_COMPILE);
     glEndList();
 }
 

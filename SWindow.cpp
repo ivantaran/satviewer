@@ -105,6 +105,12 @@ SWindow::SWindow() {
     connect(satWidget, SIGNAL(initialized()), this, SLOT(readSettings()));
     // readSettings();
     // enumSatModelList();
+    
+    RadarWidget *radarWidget = new RadarWidget(this);
+    radarWidget->resize(256, 256);
+    radarWidget->move(128, 128);
+    radarWidget->setWindowFlag(Qt::Window);
+    radarWidget->show();
 }
 
 SWindow::~SWindow() {

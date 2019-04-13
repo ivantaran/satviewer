@@ -30,7 +30,7 @@ GLSatAbstractWidget::GLSatAbstractWidget(QWidget *parent) : QOpenGLWidget(parent
     m_indexLoc = -1;
     m_indexSat = -1;
 
-    clrNet = 0xFF8B8B8B;
+    m_colorNet = 0xFF8B8B8B;
     clrNetFont = 0x0;
     clrNight = 0x00666666;
 
@@ -91,14 +91,13 @@ void GLSatAbstractWidget::initializeGL() {
     glBlendFunc(GL_SRC_COLOR, GL_DST_COLOR);
 //    glBlendFunc(GL_DST_COLOR, GL_SRC_COLOR);
 //    loadTexture();
-    list_map    = glGenLists(7);
-    printf("list_map %d\n", (int)list_map);
+    list_map    = glGenLists(6);
+    qWarning("list_map %d\n", (int)list_map);
     list_net    = list_map + 1;
-    list_labels = list_map + 2;
-    list_sat    = list_map + 3;
-    list_loc    = list_map + 4;
-    list_sun    = list_map + 5;
-    list_events = list_map + 6;
+    list_sat    = list_map + 2;
+    list_loc    = list_map + 3;
+    list_sun    = list_map + 4;
+    list_events = list_map + 5;
     
     emit initialized();
     
@@ -118,7 +117,6 @@ void GLSatAbstractWidget::paintGL() {
     if (list_events_ready) glCallList(list_events); //locList events
     if (list_loc_ready   ) glCallList(list_loc); //locList zrl names
     if (list_sat_ready   ) glCallList(list_sat); //satList
-    if (list_labels_ready) glCallList(list_labels); // net labels
 }
 
 void GLSatAbstractWidget::resizeGL(int width, int height) {
@@ -173,7 +171,7 @@ void GLSatAbstractWidget::setFontNet(QFont font) {
 }
 
 void GLSatAbstractWidget::setColorNet(uint32_t color) {
-    clrNet = color;
+    m_colorNet = color;
     refreshAll();
 }
 
