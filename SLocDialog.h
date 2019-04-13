@@ -15,6 +15,8 @@
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QColorDialog>
+#include <QValidator>
+
 #include "locutils/Location.h"
 #include "ogl/GLSatAbstractWidget.h"
 
@@ -37,6 +39,7 @@ private:
     Ui::LocDialog widget;
     Location *m_loc;
     GLSatAbstractWidget *satWidget;
+    QDoubleValidator m_doubleValidator;
     void setBtnColor(QWidget *widget);
     uint32_t flipRgb(uint32_t rgb);
 

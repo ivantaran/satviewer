@@ -23,6 +23,7 @@
 
 GLSatWidget::GLSatWidget(QWidget *parent) : GLSatAbstractWidget(parent) {
     ui.setupUi(settingsWidget);
+    
     initSatOgl();
 
     connect(ui.btnColor     , SIGNAL(clicked()), this, SLOT(btnColorClicked    ()));
@@ -172,7 +173,7 @@ bool GLSatWidget::testZRV(double* crd1, double* crd2, double fiz) {
 
 int GLSatWidget::testIOZRV(Satellite *sat, Location *loc, ZrvIoList *list, double &time) {
     int result = -1;
-    if (time == 0) return result;  // o_O
+    if (time == 0) return result;  //TODO: o_O
     bool inZRV;
     double fiz = 0;
     double z = sat->zrvWidth();
@@ -268,13 +269,29 @@ void GLSatWidget::compileZrl(Location *loc) {
 }
 
 bool GLSatWidget::testShadow(Satellite *sat, Satellite *sun) {
-    if ((sat == 0) || (sun == 0)) return true;
-    double r_sat = sqrt(sat->xyz()[0]*sat->xyz()[0] + sat->xyz()[1]*sat->xyz()[1] + sat->xyz()[2]*sat->xyz()[2]);
-    double r_sun = sqrt(sun->xyz()[0]*sun->xyz()[0] + sun->xyz()[1]*sun->xyz()[1] + sun->xyz()[2]*sun->xyz()[2]);
-    if ((r_sat == 0) || (r_sun == 0) || (sat->radiusEarth() > r_sat)) return true;
-    double f = asin(sat->radiusEarth()/r_sat);
-    double l = M_PI - acos((sat->xyz()[0]*sun->xyz()[0] + sat->xyz()[1]*sun->xyz()[1] + sat->xyz()[2]*sun->xyz()[2])/(r_sat*r_sun));
-    if ((-f < l) && (l < f)) return false;
+    
+    if ((sat == nullptr) || (sun == nullptr)) {
+        return true;
+    }
+    
+    double r_sat = sqrt(sat->xyz()[0] * sat->xyz()[0] 
+        + sat->xyz()[1] * sat->xyz()[1] + sat->xyz()[2] * sat->xyz()[2]);
+    double r_sun = sqrt(sun->xyz()[0] * sun->xyz()[0] 
+        + sun->xyz()[1] * sun->xyz()[1] + sun->xyz()[2] * sun->xyz()[2]);
+    
+    if ((r_sat == 0.0) || (r_sun == 0.0) || (sat->radiusEarth() > r_sat)) { // TODO: compare with epsilon
+        return true;
+    }
+    
+    double f = asin(sat->radiusEarth() / r_sat);
+    double l = M_PI - acos((sat->xyz()[0] * sun->xyz()[0] 
+        + sat->xyz()[1] * sun->xyz()[1] + sat->xyz()[2] * sun->xyz()[2]) 
+                / (r_sat * r_sun));
+    
+    if ((-f < l) && (l < f)) {
+        return false;
+    }
+    
     return true;
 }
 
@@ -464,30 +481,45 @@ void GLSatWidget::writeSettings(QSettings *settings) {
 
 void GLSatWidget::addSat(Satellite *sat) {
     GLSatAbstractWidget::addSat(sat);
-    if (sat->satWObject == 0) setIcon(sat);
+    if (sat->satWObject == nullptr) {
+        setIcon(sat);
+    }
 }
 
 void GLSatWidget::addLoc(Location* loc) {
     GLSatAbstractWidget::addLoc(loc);
-    if (loc->satWObject == 0) setIcon(loc);
+    if (loc->satWObject == nullptr) {
+        setIcon(loc);
+    }
 }
 
 void GLSatWidget::setIcon(Satellite *sat, const QString& fileName) {
-    if (sat->satWObject != 0) delete sat->satWObject;
-    if (!fileName.isEmpty()) sat->setIcon(fileName);
+    if (sat->satWObject != nullptr) {
+        delete sat->satWObject;
+    }
+    if (!fileName.isEmpty()) {
+        sat->setIcon(fileName);
+    }
     sat->satWObject = new GLSprite(sat->iconName(), this);
 }
 
 void GLSatWidget::setIcon(Location *loc, const QString& fileName) {
-    if (loc->satWObject != 0) delete loc->satWObject;
-    if (!fileName.isEmpty()) loc->setIcon(fileName);
+    if (loc->satWObject != nullptr) {
+        delete loc->satWObject;
+    }
+    if (!fileName.isEmpty()) {
+        loc->setIcon(fileName);
+    }
     loc->satWObject = new GLSprite(loc->iconName(), this);
 }
 
 void GLSatWidget::btnColorClicked() {
     QPalette pal = ui.btnColor->palette();
-    QColor color = QColorDialog::getColor(pal.color(QPalette::Button), this, 0, QColorDialog::ShowAlphaChannel);
-    if (!color.isValid()) return;
+    QColor color = QColorDialog::getColor(pal.color(QPalette::Button), this, "", // TODO: set caption
+            QColorDialog::ShowAlphaChannel);
+    if (!color.isValid()) {
+        return;
+    }
 
     pal.setColor(QPalette::Button, color);
     ui.btnColor->setPalette(pal);
@@ -556,7 +588,7 @@ void GLSatWidget::onBtnMapFileClicked() {
     QDir dir = QDir::home();
     dir.cd("satviewer");
     QString filePath = QFileDialog::getOpenFileName(this, "Open Map File", 
-            dir.path(), "Images (*.jpg *.png *.svg)", NULL, 
+            dir.path(), "Images (*.jpg *.png *.svg)", nullptr, 
             QFileDialog::DontUseNativeDialog);
     if (filePath == "") return;
     loadTexture(filePath);
@@ -645,9 +677,8 @@ void GLSatWidget::compileMapList() {
 void GLSatWidget::compileSatList() {
     float px, py, tmpx, tmpy, tper = 0;
     float trackBegin, trackEnd;
-    uint8_t shadow_state, shadow_tmp;
     uint32_t clr;
-    Satellite *sat = NULL;
+    Satellite *sat = nullptr;
     
     if (satList.count() < 1) {
         glNewList(list_sat, GL_COMPILE);
@@ -657,7 +688,7 @@ void GLSatWidget::compileSatList() {
 
     glNewList(list_sat, GL_COMPILE);
         for (const auto& sat : satList) {
-            shadow_state = 2;
+            bool shadow_state = testShadow(sat, nullptr); //TODO: check sun shadow
             sat->model(m_time);
             
             if (sat->isVisibleZrv() || sat->isVisibleLines()) {
@@ -681,11 +712,10 @@ void GLSatWidget::compileSatList() {
                     trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
                     sat->model(trackBegin + m_time);
                     tmpx = sat->longitude() / M_PI;
-                    tmpy = -2*sat->latitude() / M_PI;
+                    tmpy = -2.0 * sat->latitude() / M_PI;
                     for (float i = trackBegin; i < trackEnd; i += tper / 180.0) {
                         sat->model(i + m_time);
                         if (sat->isVisibleTrackShadow()) {
-                            shadow_tmp = shadow_state;
                             if (shadow_state) {
                                 clr = sat->colorTrack();
                                 glColor4ubv((GLubyte *)&clr);
@@ -732,7 +762,7 @@ void GLSatWidget::compileSatList() {
         }
 
         sat = currentSat();
-        if (sat == NULL) {
+        if (sat == nullptr) {
             sat = satList.first();
         }
         sat->model(m_time);
@@ -759,7 +789,7 @@ void GLSatWidget::compileLocList() {
         }
 
         loc = currentLoc();
-        if (loc == NULL) {
+        if (loc == nullptr) {
             loc = locList.first();
         }
         px = loc->longitude() / 180.0;

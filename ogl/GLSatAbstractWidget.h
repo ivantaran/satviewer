@@ -28,7 +28,7 @@ public:
     QWidget *settingsWidget;
     typedef Satellite * (*CustomSat)();
     CustomSat getSatModel, getSunModel;
-    GLSatAbstractWidget(QWidget *parent = NULL);
+    GLSatAbstractWidget(QWidget *parent = nullptr);
     virtual ~GLSatAbstractWidget();
     virtual void readSettings() {}
     virtual void writeSettings(QSettings *settings) { Q_UNUSED(settings); }
@@ -71,12 +71,12 @@ public:
     int indexLoc() const {return m_indexLoc;}
 
     Satellite * currentSat() {
-        if ((m_indexSat < 0) || (m_indexSat >= satList.count())) return NULL; // TODO move to cpp
+        if ((m_indexSat < 0) || (m_indexSat >= satList.count())) return nullptr; // TODO move to cpp
         return satList.at(m_indexSat);
     }
 
     Location * currentLoc() {
-        if ((m_indexLoc < 0) || (m_indexLoc >= locList.count())) return NULL; // TODO move to cpp
+        if ((m_indexLoc < 0) || (m_indexLoc >= locList.count())) return nullptr; // TODO move to cpp
         return locList.at(m_indexLoc);
     }
 
@@ -117,9 +117,9 @@ protected:
     virtual void compileLocList() {}
     virtual void compileSunList() {}
     virtual void compileEventsList() {}
-    virtual float zoom(float value = 0);
-    virtual float moveX(float value = 0);
-    virtual float moveY(float value = 0);
+    virtual float zoom(float value = 0.0);
+    virtual float moveX(float value = 0.0);
+    virtual float moveY(float value = 0.0);
 //        virtual void compileSatIcon(Satellite *sat) {}
 //        virtual void compileLocIcon(Location *loc) {}
 private:

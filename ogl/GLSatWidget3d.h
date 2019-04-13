@@ -22,7 +22,7 @@ class GLSatWidget3d : public GLSatAbstractWidget {
     Q_OBJECT
 
 public:
-    GLSatWidget3d(QWidget *parent = 0);
+    GLSatWidget3d(QWidget *parent = nullptr);
     virtual ~GLSatWidget3d();
     void readSettings(QSettings *settings);
     void writeSettings(QSettings *settings);

@@ -32,6 +32,7 @@ private:
     Ui::SatDialog widget;
     Sgp4Model *m_sat;
     GLSatAbstractWidget *satWidget;
+    QDoubleValidator m_doubleValidator;
     void setBtnColor(QWidget *widget);
     uint32_t flipRgb(uint32_t rgb);
 

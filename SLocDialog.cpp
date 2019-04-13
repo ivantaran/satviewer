@@ -11,16 +11,19 @@
 #include <QtMath>
 
 SLocDialog::SLocDialog(GLSatAbstractWidget *satWidget) {
-    m_loc = NULL;
     widget.setupUi(this);
-    setSatWidget(satWidget);
 
-    widget.lineEditAzimuth->setValidator(new QDoubleValidator());
-    widget.lineEditHeight->setValidator (new QDoubleValidator());
-    widget.lineEditLat->setValidator    (new QDoubleValidator());
-    widget.lineEditLon->setValidator    (new QDoubleValidator());
-    widget.lineEditRange->setValidator  (new QDoubleValidator());
-    widget.lineEditWidth->setValidator  (new QDoubleValidator());
+    m_loc = nullptr;
+
+    setSatWidget(satWidget);
+    
+    m_doubleValidator.setLocale(QLocale::C);
+    widget.lineEditAzimuth->setValidator(&m_doubleValidator);
+    widget.lineEditHeight->setValidator (&m_doubleValidator);
+    widget.lineEditLat->setValidator    (&m_doubleValidator);
+    widget.lineEditLon->setValidator    (&m_doubleValidator);
+    widget.lineEditRange->setValidator  (&m_doubleValidator);
+    widget.lineEditWidth->setValidator  (&m_doubleValidator);
 
     connect(widget.btnColorName , SIGNAL(clicked()), this, SLOT(setColorLocName ()));
     connect(widget.btnColorZrv  , SIGNAL(clicked()), this, SLOT(setColorLocZrv  ()));
@@ -48,7 +51,7 @@ uint32_t SLocDialog::flipRgb(uint32_t rgb) {
 void SLocDialog::showEvent(QShowEvent * event) {
     Q_UNUSED(event)
 
-    if (m_loc == NULL) {
+    if (m_loc == nullptr) {
         return;
     }
 
@@ -92,10 +95,16 @@ void SLocDialog::showEvent(QShowEvent * event) {
 }
 
 void SLocDialog::makeLoc(Location *loc) {
-    if (loc == NULL) return;
+    
+    if (loc == nullptr) {
+        return;
+    }
 
     setLoc(loc);
-    if (exec() == QDialog::Rejected) return;
+
+    if (exec() == QDialog::Rejected) {
+        return;
+    }
 
     double lat     = widget.lineEditLat->text().toDouble();
     double lon     = widget.lineEditLon->text().toDouble();
@@ -182,7 +191,7 @@ void SLocDialog::setIcon() {
             this, 
             "Open PNG Image", 
             dir.path(), 
-            "PNG Images (*.png)", NULL, 
+            "PNG Images (*.png)", nullptr, 
             QFileDialog::DontUseNativeDialog);
     if (!filePath.isEmpty()) {
         widget.btnIcon->setIcon(QPixmap(filePath));

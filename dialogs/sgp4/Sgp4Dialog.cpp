@@ -16,15 +16,19 @@
 
 Sgp4Dialog::Sgp4Dialog(GLSatAbstractWidget *satWidget) {
     widget.setupUi(this);
-    widget.lineEditBStar->setValidator(new QDoubleValidator());
-    widget.lineEditE->setValidator    (new QDoubleValidator());
-    widget.lineEditI->setValidator    (new QDoubleValidator());
-    widget.lineEditM0->setValidator   (new QDoubleValidator());
-    widget.lineEditN->setValidator    (new QDoubleValidator());
-    widget.lineEditOmg->setValidator  (new QDoubleValidator());
-    widget.lineEditTime->setValidator (new QDoubleValidator());
-    widget.lineEditW->setValidator    (new QDoubleValidator());
-    m_sat = 0;
+
+    m_sat = nullptr;
+    
+    m_doubleValidator.setLocale(QLocale::C);
+    widget.lineEditBStar->setValidator(&m_doubleValidator);
+    widget.lineEditE->setValidator    (&m_doubleValidator);
+    widget.lineEditI->setValidator    (&m_doubleValidator);
+    widget.lineEditM0->setValidator   (&m_doubleValidator);
+    widget.lineEditN->setValidator    (&m_doubleValidator);
+    widget.lineEditOmg->setValidator  (&m_doubleValidator);
+    widget.lineEditTime->setValidator (&m_doubleValidator);
+    widget.lineEditW->setValidator    (&m_doubleValidator);
+    
     setSatWidget(satWidget);
     connect(widget.btnIcon, SIGNAL(clicked()), this, SLOT(setIcon()));
     connect(widget.btnColorName , SIGNAL(clicked()), this, SLOT(setColorSatName ()));
@@ -54,7 +58,7 @@ uint32_t Sgp4Dialog::flipRgb(uint32_t rgb) {
 void Sgp4Dialog::showEvent(QShowEvent * event) {
     Q_UNUSED(event)
             
-    if (m_sat == NULL) {
+    if (m_sat == nullptr) {
         return;
     }
 
@@ -134,7 +138,7 @@ void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
         return;
     }
 
-    if (m_sat == NULL) {
+    if (m_sat == nullptr) {
         return;
     }
 
@@ -230,7 +234,7 @@ void Sgp4Dialog::setIcon() {
     QDir dir = QDir::home();
     dir.cd("satviewer/icons");
     QString filePath = QFileDialog::getOpenFileName(this, "Open PNG Image", 
-            dir.path(), "PNG Images (*.png)", NULL, 
+            dir.path(), "PNG Images (*.png)", nullptr, 
             QFileDialog::DontUseNativeDialog);
     if (filePath.isEmpty()) {
         widget.btnIcon->setIcon(QPixmap(filePath));

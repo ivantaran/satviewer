@@ -14,7 +14,7 @@
 #include "glsprite/GLSprite.h"
 
 class GLSatWidget : public GLSatAbstractWidget {
-	Q_OBJECT
+    Q_OBJECT
 public:
     GLSatWidget(QWidget *parent = 0);
     virtual ~GLSatWidget();
