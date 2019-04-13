@@ -11,6 +11,7 @@ CONFIG  += console debug c++11
 QT      += gui core sql widgets network qml
 
 HEADERS += \
+    SatViewer.h \
     SWindow.h \
     SDlgOptions.h \
     SLocDialog.h \
@@ -40,6 +41,7 @@ HEADERS += \
     ogl/SatWidgetObject.h
 
 SOURCES += \
+    main.cpp \
     SatViewer.cpp \
     SWindow.cpp \
     SDlgOptions.cpp \
