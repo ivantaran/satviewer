@@ -7,6 +7,7 @@
 
 #include <QApplication>
 #include "SWindow.h"
+#include "SatViewer.h"
 
 void copyDefault() {
     QString home = QDir::home().path() + QDir::separator() + "satviewer" + QDir::separator();
@@ -51,7 +52,8 @@ int main(int argc, char *argv[]) {
 //    QSurfaceFormat::setDefaultFormat(format);
 
     copyDefault();
-    SWindow wndMain;
+    SatViewer satviewer;
+    SWindow wndMain(&satviewer);
     wndMain.show();
     return app.exec();
 }

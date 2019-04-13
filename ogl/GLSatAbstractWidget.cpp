@@ -71,10 +71,9 @@ GLSatAbstractWidget::~GLSatAbstractWidget() {
 
 void GLSatAbstractWidget::initializeGL() {
     
-    if (!initializeOpenGLFunctions()) {
-        qWarning("initializeOpenGLFunctions error");
-        exit(-1);
-    }
+    bool ok = initializeOpenGLFunctions();
+    
+    assert(ok);
     
 //    setAutoBufferSwap(false); //TODO
     glClearColor(0.1, 0.1, 0.1, 0.0);
@@ -91,7 +90,9 @@ void GLSatAbstractWidget::initializeGL() {
 //    glBlendFunc(GL_DST_COLOR, GL_SRC_COLOR);
 //    loadTexture();
     list_map    = glGenLists(6);
-    qWarning("list_map %d\n", (int)list_map);
+
+    assert(list_map > 0);
+    
     list_net    = list_map + 1;
     list_sat    = list_map + 2;
     list_loc    = list_map + 3;

@@ -19,18 +19,20 @@
 #include "ogl/RadarWidget.h"
 #include "ogl/GLSatWidget.h"
 #include "ogl/GLSatWidget3d.h"
+#include "SatViewer.h"
 
 class SWindow: public QMainWindow {
     Q_OBJECT
 public:
     SDlgOptions *dlgOptions;
     QTimer *timer;
-    SWindow();
+    SWindow(SatViewer *satviewer);
     virtual ~SWindow();
     void readStrings();
     void writeSettings();
 
 private:
+    SatViewer *m_satviewer;
     QWidget settingsWidget;
     Ui::SettingsWidget uiSettings;
     Ui::MainWindow widget;

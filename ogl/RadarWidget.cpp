@@ -9,7 +9,6 @@
 
 RadarWidget::RadarWidget(QWidget *parent) : GLSatAbstractWidget(parent) {
     m_colorNet = 0x00808080;
-    
 }
 
 //RadarWidget::RadarWidget(const RadarWidget& orig) {
@@ -17,10 +16,6 @@ RadarWidget::RadarWidget(QWidget *parent) : GLSatAbstractWidget(parent) {
 
 RadarWidget::~RadarWidget() {
 }
-
-//void RadarWidget::initializeGL() {
-//    GLSatAbstractWidget::initializeGL();
-//}
 
 void RadarWidget::compileMapList() {
     

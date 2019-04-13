@@ -10,13 +10,12 @@
 #include "SWindow.h"
 #include <QStyleFactory>
 
-SWindow::SWindow() {
-    satWidget = 0;
-    dlgOptions = 0;
-    language = tr("English");
-
+SWindow::SWindow(SatViewer *satviewer) {
     widget.setupUi(this);
     originalPalette = qApp->palette();
+    
+    m_satviewer = satviewer;
+    language = tr("English");
 
     labelLoc.setMinimumWidth(32);
     labelSat.setMinimumWidth(32);
