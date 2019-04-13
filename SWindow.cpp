@@ -107,7 +107,7 @@ SWindow::SWindow() {
     // enumSatModelList();
     
     RadarWidget *radarWidget = new RadarWidget(this);
-    radarWidget->resize(256, 256);
+    radarWidget->resize(512, 512);
     radarWidget->move(128, 128);
     radarWidget->setWindowFlag(Qt::Window);
     radarWidget->show();

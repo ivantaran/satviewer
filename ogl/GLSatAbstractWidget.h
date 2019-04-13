@@ -11,7 +11,6 @@
 #include <inttypes.h>
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions_2_0>
-#include <QLibrary>
 #include <QSettings>
 #include <QOpenGLTexture>
 
@@ -43,7 +42,6 @@ public:
     void setFontNames(QFont font);
     void setFontNet(QFont font);
     void loadTexture(QString filePath = "");
-    void selectSatModel(int index, int pos);
 
     void setColorNet(uint32_t color);
     void setColorLocA(uint32_t color);
@@ -56,8 +54,6 @@ public:
 
     QFont fontNet() const {return fntNet;}
     double time() const {return m_time;}
-
-    QStringList satModelList() const {return m_satModelList;}
 
     void showZRV(bool value);
     void showZRVLines(bool value);
@@ -123,10 +119,7 @@ protected:
 //        virtual void compileSatIcon(Satellite *sat) {}
 //        virtual void compileLocIcon(Location *loc) {}
 private:
-    QStringList m_satModelList;
     TleReader *tle;
-    QLibrary lib;
-    void enumSatModelList();
 };
 
 #endif /* GLSATABSTRACTWIDGET_H_ */

@@ -673,8 +673,7 @@ void GLSatWidget::compileMapList() {
 void GLSatWidget::compileSatList() {
     float px, py, tmpx, tmpy, tper = 0;
     float trackBegin, trackEnd;
-    uint32_t clr;
-    Satellite *sat = nullptr;
+    GLuint clr;
     
     if (satList.count() < 1) {
         glNewList(list_sat, GL_COMPILE);
@@ -683,88 +682,90 @@ void GLSatWidget::compileSatList() {
     }
 
     glNewList(list_sat, GL_COMPILE);
-        for (const auto& sat : satList) {
-            bool shadow_state = testShadow(sat, nullptr); //TODO: check sun shadow
-            sat->model(m_time);
-            
-            if (sat->isVisibleZrv() || sat->isVisibleLines()) {
-                compileFootprint(sat->longitude(), sat->latitude(), 
-                        sat->altitude(), sat->zrvWidth(), sat->isVisibleZrv(), 
-                        sat->isVisibleLines(), sat->linesWidth(), 
-                        sat->colorZrv(), sat->colorLines());
-            }
+    
+    for (const auto& sat : satList) {
+        bool shadow_state = testShadow(sat, nullptr); //TODO: check sun shadow
+        sat->model(m_time);
 
-            if (sat->isVisibleTrack()) {
-                glShadeModel(GL_SMOOTH);
-                glEnable(GL_ALPHA_TEST);
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                glEnable(GL_BLEND);
-                glEnable(GL_LINE_SMOOTH);
-                glLineWidth(sat->linesWidth());
+        if (sat->isVisibleZrv() || sat->isVisibleLines()) {
+            compileFootprint(sat->longitude(), sat->latitude(), 
+                    sat->altitude(), sat->zrvWidth(), sat->isVisibleZrv(), 
+                    sat->isVisibleLines(), sat->linesWidth(), 
+                    sat->colorZrv(), sat->colorLines());
+        }
 
-                glBegin(GL_LINE_STRIP);
-                    tper = 120.0 * M_PI / sat->meanMotion(); //move this line
-                    trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
-                    trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
-                    sat->model(trackBegin + m_time);
-                    tmpx = sat->longitude() / M_PI;
-                    tmpy = -2.0 * sat->latitude() / M_PI;
-                    for (float i = trackBegin; i < trackEnd; i += tper / 180.0) {
-                        sat->model(i + m_time);
-                        if (sat->isVisibleTrackShadow()) {
-                            if (shadow_state) {
-                                clr = sat->colorTrack();
-                                glColor4ubv((GLubyte *)&clr);
-                            }
-                            else {
-                                clr = sat->colorTrackShadow();
-                                glColor4ubv((GLubyte *)&clr);
-                            }
-                        }
-                        else {
+        if (sat->isVisibleTrack()) {
+            glShadeModel(GL_SMOOTH);
+            glEnable(GL_ALPHA_TEST);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glEnable(GL_BLEND);
+            glEnable(GL_LINE_SMOOTH);
+            glLineWidth(sat->linesWidth());
+
+            glBegin(GL_LINE_STRIP);
+                tper = 120.0 * M_PI / sat->meanMotion(); //move this line
+                trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
+                trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
+                sat->model(trackBegin + m_time);
+                tmpx = sat->longitude() / M_PI;
+                tmpy = -2.0 * sat->latitude() / M_PI;
+                for (float i = trackBegin; i < trackEnd; i += tper / 180.0) {
+                    sat->model(i + m_time);
+                    if (sat->isVisibleTrackShadow()) {
+                        if (shadow_state) {
                             clr = sat->colorTrack();
                             glColor4ubv((GLubyte *)&clr);
                         }
-                        px = sat->longitude() / M_PI;
-                        py = -2.0 * sat->latitude() / M_PI;
-                        if (fabs(px - tmpx) > 1.75) {
-                            if (px > tmpx) {
-                                glVertex2f(-1.0, 0.5 * (py + tmpy));
-                                glEnd(); glBegin(GL_LINE_STRIP);
-                                glVertex2f( 1.0, 0.5 * (py + tmpy));
-                            }
-                            else {
-                                glVertex2f( 1.0, 0.5 * (py + tmpy));
-                                glEnd(); glBegin(GL_LINE_STRIP);
-                                glVertex2f(-1.0, 0.5 * (py + tmpy));
-                            }
+                        else {
+                            clr = sat->colorTrackShadow();
+                            glColor4ubv((GLubyte *)&clr);
                         }
-                        glVertex2f(px, py);
-                        tmpx = px;
-                        tmpy = py;
                     }
-                glEnd();
+                    else {
+                        clr = sat->colorTrack();
+                        glColor4ubv((GLubyte *)&clr);
+                    }
+                    px = sat->longitude() / M_PI;
+                    py = -2.0 * sat->latitude() / M_PI;
+                    if (fabs(px - tmpx) > 1.75) {
+                        if (px > tmpx) {
+                            glVertex2f(-1.0, 0.5 * (py + tmpy));
+                            glEnd(); glBegin(GL_LINE_STRIP);
+                            glVertex2f( 1.0, 0.5 * (py + tmpy));
+                        }
+                        else {
+                            glVertex2f( 1.0, 0.5 * (py + tmpy));
+                            glEnd(); glBegin(GL_LINE_STRIP);
+                            glVertex2f(-1.0, 0.5 * (py + tmpy));
+                        }
+                    }
+                    glVertex2f(px, py);
+                    tmpx = px;
+                    tmpy = py;
+                }
+            glEnd();
 
-                glDisable(GL_BLEND);
-                glDisable(GL_LINE_SMOOTH);
-            }
-
-            sat->model(m_time);
-            px = sat->longitude() / M_PI;
-            py = -2.0 * sat->latitude() / M_PI;
-            if (sat->satWObject) {
-                sat->satWObject->exec(px, py, 0.0);
-            }
+            glDisable(GL_BLEND);
+            glDisable(GL_LINE_SMOOTH);
         }
 
-        sat = currentSat();
-        if (sat == nullptr) {
-            sat = satList.first();
-        }
         sat->model(m_time);
         px = sat->longitude() / M_PI;
         py = -2.0 * sat->latitude() / M_PI;
-        sprite_current.exec(px, py, 0.0);
+        if (sat->satWObject) {
+            sat->satWObject->exec(px, py, 0.0);
+        }
+    }
+
+    Satellite *sat = currentSat();
+    if (sat == nullptr) {
+        sat = satList.first();
+    }
+    sat->model(m_time);
+    px = sat->longitude() / M_PI;
+    py = -2.0 * sat->latitude() / M_PI;
+    sprite_current.exec(px, py, 0.0);
+    
     glEndList();
 }
 

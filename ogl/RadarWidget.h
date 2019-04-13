@@ -21,7 +21,7 @@ private:
 //    void paintGL();
 //    void resizeGL(int width, int height) {}
     void compileMapList();
-//    void compileSatList() {}
+    void compileSatList();
 //    void compileLocList() {}
 //    void compileSunList() {}
 //    void compileEventsList() {}

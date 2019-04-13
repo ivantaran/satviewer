@@ -8,6 +8,8 @@
 #include "RadarWidget.h"
 
 RadarWidget::RadarWidget(QWidget *parent) : GLSatAbstractWidget(parent) {
+    m_colorNet = 0x00808080;
+    
 }
 
 //RadarWidget::RadarWidget(const RadarWidget& orig) {
@@ -33,7 +35,6 @@ void RadarWidget::compileMapList() {
 
     int c = 128;
     int d = 3;
-    glColor4ub(128, 128, 128, 0);
 
     for (int j = 0; j < d; j++) {
         GLfloat r = (GLfloat)(j + 1) / (GLfloat)d;
@@ -60,5 +61,87 @@ void RadarWidget::compileMapList() {
     glDisable(GL_LINE_STIPPLE);
     
     glDisable(GL_BLEND);
+    glEndList();
+}
+
+void RadarWidget::compileSatList() {
+    GLfloat px, py, tmpx, tmpy, tper = 0;
+    GLfloat trackBegin, trackEnd;
+    GLuint clr;
+    
+    Location *loc = currentLoc();
+    
+    if ((satList.count() < 1) || (loc == nullptr)) {
+        glNewList(list_sat, GL_COMPILE);
+        glEndList();
+        return;
+    }
+
+    glNewList(list_sat, GL_COMPILE);
+    
+    for (const auto& sat : satList) {
+
+        sat->model(m_time);
+
+        if (sat->isVisibleTrack()) {
+            glShadeModel(GL_SMOOTH);
+            glEnable(GL_ALPHA_TEST);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glEnable(GL_BLEND);
+            glEnable(GL_LINE_SMOOTH);
+            glLineWidth(sat->linesWidth());
+            clr = 0xffffffff;//sat->colorTrack();
+            glColor4ubv((GLubyte *)&clr);
+
+            glBegin(GL_LINE_STRIP);
+                tper = 120.0 * M_PI / sat->meanMotion(); //move this line
+                trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
+                trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
+                sat->model(trackBegin + m_time);
+                tmpx = sat->longitude() / M_PI;
+                tmpy = -2.0 * sat->latitude() / M_PI;
+                for (GLfloat i = trackBegin; i < trackEnd; i += tper / 180.0) {
+                    sat->model(i + m_time);
+                    px = sat->longitude() / M_PI;
+                    py = -2.0 * sat->latitude() / M_PI;
+                    if (fabs(px - tmpx) > 1.75) {
+                        if (px > tmpx) {
+                            glVertex2f(-1.0, 0.5 * (py + tmpy));
+                            glEnd(); glBegin(GL_LINE_STRIP);
+                            glVertex2f( 1.0, 0.5 * (py + tmpy));
+                        }
+                        else {
+                            glVertex2f( 1.0, 0.5 * (py + tmpy));
+                            glEnd(); glBegin(GL_LINE_STRIP);
+                            glVertex2f(-1.0, 0.5 * (py + tmpy));
+                        }
+                    }
+                    glVertex2f(px, py);
+                    tmpx = px;
+                    tmpy = py;
+                }
+            glEnd();
+
+            glDisable(GL_BLEND);
+            glDisable(GL_LINE_SMOOTH);
+        }
+
+        sat->model(m_time);
+        px = sat->longitude() / M_PI;
+        py = -2.0 * sat->latitude() / M_PI;
+        if (sat->satWObject) {
+            sat->satWObject->exec(px, py, 0.0);
+        }
+    }
+
+//    Satellite *sat = currentSat();
+//    if (sat == nullptr) {
+//        sat = satList.first();
+//    }
+//    sat->model(m_time);
+//    px = sat->longitude() / M_PI;
+//    py = -2.0 * sat->latitude() / M_PI;
+//    sprite_current.exec(px, py, 0.0);
+        
     glEndList();
 }

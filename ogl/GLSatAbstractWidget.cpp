@@ -14,7 +14,7 @@
 #include <QMouseEvent>
 #include <QDateTime>
 #include <QCoreApplication>
-#include "math.h"
+#include <QtMath>
 #include "satogl.h"
 #include "../models/sgp4/Sgp4Model.h"
 
@@ -23,7 +23,6 @@ GLSatAbstractWidget::GLSatAbstractWidget(QWidget *parent) : QOpenGLWidget(parent
     satList.clear();
     locList.clear();
     setMouseTracking(true);
-    enumSatModelList();
 
     settingsWidget = new QWidget();
 
@@ -195,40 +194,9 @@ void GLSatAbstractWidget::showNight(bool value) {
     refreshAll();
 }
 
-void GLSatAbstractWidget::enumSatModelList() {
-    QDir dir = QCoreApplication::applicationDirPath();
-    dir.cd("plugins");
-    QStringList list = dir.entryList(QDir::Files | QDir::NoSymLinks);
-    m_satModelList.clear();
-    m_satModelList.append("default");
-    for (int i = 0; i < list.count(); i++)
-        if (QLibrary::resolve(dir.filePath(list.at(i)), "getSatModel") != NULL)
-            m_satModelList.append(list.at(i));
-    list.clear();
-}
-
 void GLSatAbstractWidget::setSatModel(int index) {
     Q_UNUSED(index);
-    getSatModel = (CustomSat)Sgp4Model::getSatModel;
-    qWarning("%s [getSatModel %p]\n", lib.fileName().toLocal8Bit().data(), getSatModel);
-    if (getSatModel == NULL) exit(-1);
-}
-
-void GLSatAbstractWidget::setSunModel(QString fileName) {
-    QString path = qApp->applicationDirPath() + "/plugins/";
-    QRegExp re("*sun*");
-    re.setPatternSyntax(QRegExp::Wildcard);
-    int def = m_satModelList.indexOf(re);
-    if (def == -1) {
-        puts("Error: basic sun model not found");
-        exit(-1);
-    }
-    if (fileName.isEmpty()) fileName = path + m_satModelList.at(def);
-    else fileName = path + fileName;
-    lib.setFileName(fileName);
-    getSunModel = (CustomSat)lib.resolve(fileName, "getSatModel");
-    qWarning("%s [getSunModel %p]\n", lib.fileName().toLocal8Bit().data(), getSunModel);
-    if (getSunModel == 0) exit(-1);
+    getSatModel = (CustomSat)Sgp4Model::getSatModel; // TODO: drop this method
 }
 
 void GLSatAbstractWidget::setIndexSat(int index) {
@@ -240,20 +208,6 @@ void GLSatAbstractWidget::setIndexLoc(int index) {
     m_indexLoc = index;
     refreshAll();
     emit currentChanged(currentSat(), currentLoc(), &m_time);
-}
-
-void GLSatAbstractWidget::selectSatModel(int index, int pos) {
-    setSatModel(index);
-    if (pos == -1) return;
-    Satellite *old_sat = satList.at(pos);
-    Satellite *new_sat = getSatModel();
-    
-    if ((old_sat == 0) || (new_sat == 0)) return;
-    new_sat->copy(old_sat);
-    setIcon(new_sat);
-    satList.replace(pos, new_sat);
-    delete old_sat;
-    setIndexSat(pos);
 }
 
 void GLSatAbstractWidget::addSat(Satellite* sat) {
