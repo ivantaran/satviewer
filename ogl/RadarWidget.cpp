@@ -63,6 +63,7 @@ void RadarWidget::compileSatList() {
     GLfloat px, py, tmpx, tmpy, tper = 0;
     GLfloat trackBegin, trackEnd;
     GLuint clr;
+    double aerv[4];
     
     Location *loc = m_satviewer->currentLocation();
     
@@ -93,12 +94,14 @@ void RadarWidget::compileSatList() {
                 trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
                 trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
                 sat->model(trackBegin + m_satviewer->time());
-                tmpx = sat->longitude() / M_PI;
-                tmpy = -2.0 * sat->latitude() / M_PI;
+                SatViewer::aerv(loc->rg(), sat->rg(), aerv);
+                tmpx = (M_PI_2 - aerv[1]) * sin(aerv[0]) / M_PI_2;
+                tmpy = (aerv[1] - M_PI_2) * cos(aerv[0]) / M_PI_2;
                 for (double i = trackBegin; i < trackEnd; i += tper / 180.0) {
                     sat->model(i + m_satviewer->time());
-                    px = sat->longitude() / M_PI;
-                    py = -2.0 * sat->latitude() / M_PI;
+                    SatViewer::aerv(loc->rg(), sat->rg(), aerv);
+                    px = (M_PI_2 - aerv[1]) * sin(aerv[0]) / M_PI_2;
+                    py = (aerv[1] - M_PI_2) * cos(aerv[0]) / M_PI_2;
                     if (fabs(px - tmpx) > 1.75) {
                         if (px > tmpx) {
                             glVertex2f(-1.0, 0.5 * (py + tmpy));
@@ -122,8 +125,11 @@ void RadarWidget::compileSatList() {
         }
 
         sat->model(m_satviewer->time());
-        px = sat->longitude() / M_PI;
-        py = -2.0 * sat->latitude() / M_PI;
+//        px = sat->longitude() / M_PI;
+//        py = -2.0 * sat->latitude() / M_PI;
+        SatViewer::aerv(loc->rg(), sat->rg(), aerv);
+        px = (M_PI_2 - aerv[1]) * sin(aerv[0]) / M_PI_2;
+        py = (aerv[1] - M_PI_2) * cos(aerv[0]) / M_PI_2;
         if (sat->satWObject) {
             sat->satWObject->exec(px, py, 0.0);
         }

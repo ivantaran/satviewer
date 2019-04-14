@@ -76,7 +76,7 @@ bool Sgp4Model::modelInit(char *state, int size) {
 
 bool Sgp4Model::model(double time) {
     bool result;
-
+    
     time = (2440587.5 - state.jdsatepoch + time / 86400.0) * 1440.0;
     result = SGP4Funcs::sgp4(elset, time, m_r, m_r + 3);
     
@@ -87,7 +87,8 @@ bool Sgp4Model::model(double time) {
     m_r[4] *= 1000.0;
     m_r[5] *= 1000.0;
     
-    getGeod();
-
+    makeGeod();
+    makeRg();
+    
     return result; 
 }

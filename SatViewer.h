@@ -18,6 +18,7 @@ public:
     SatViewer();
     SatViewer(const SatViewer& orig);
     virtual ~SatViewer();
+    static void aerv(const double loc_rg[], const double sat_rg[], double aerv[]);
     void appendSatellite(Satellite* sat);
     void appendLocation(Location* loc);
     void removeSatellite(Satellite *sat);
@@ -45,7 +46,6 @@ private:
     Location *m_currentLocation;
     double m_time;
     ZrvIoList m_ioList;
-    static void aerv();
     
 };
 

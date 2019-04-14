@@ -34,7 +34,7 @@ Satellite::Satellite(void) {
     color_track_shadow = 0xFF407464;
 
     _track = 0.5;
-    satWObject = NULL;
+    satWObject = nullptr;
     satellite = true;
     location = false;
     radius_earth = 0.0;
@@ -61,7 +61,7 @@ Satellite::~Satellite(void) {
     qWarning("satellite is removed");
 }
 
-void Satellite::getGeod() {
+void Satellite::makeGeod() {
     double p, T, sT, cT, N;
     double const WZ = 7.2921151467e-5;
     double const a_axis = 6378137.0;   //WGS-84 earth's semi major axis
@@ -118,7 +118,7 @@ void Satellite::setName(QString name) {
     _name = name;
 }
 
-double *Satellite::rg() {
+void Satellite::makeRg() {
     double const WZ = 7.2921151467e-5; // TODO
     double alpha = WZ * minutes() * 60.0 + gsto();
     m_rg[0] =  cos(alpha) * m_r[0] + sin(alpha) * m_r[1];
@@ -127,18 +127,7 @@ double *Satellite::rg() {
     m_rg[3] =  cos(alpha) * m_r[3] + sin(alpha) * m_r[4] + WZ * m_rg[1];
     m_rg[4] = -sin(alpha) * m_r[3] + cos(alpha) * m_r[4] - WZ * m_rg[0];
     m_rg[5] =  m_r[5];
-    return m_rg;
 }
-
-//double* Satellite::vxyz_g() {
-//    double const WZ = 7.2921151467e-5;
-//    double alpha = WZ * minutes() * 60.0 + gsto();
-//    xyz_g();
-//    v_g[0] =  cos(alpha) * v[0] + sin(alpha) * v[1] + WZ * r_g[1];
-//    v_g[1] = -sin(alpha) * v[0] + cos(alpha) * v[1] - WZ * r_g[0];
-//    v_g[2] =  v[2];
-//    return v_g;
-//}
 
 void Satellite::setZrv(double value) {
     if (value > M_PI_2) {

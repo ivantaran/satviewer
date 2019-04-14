@@ -42,7 +42,7 @@ public:
     double nameY() const { return name_y; }
 
     double *r() { return m_r; }
-//    double* vxyz() { return v; }
+    double *rg() { return m_rg; }
 
     double latitude     () const { return lat;          }
     double longitude    () const { return lon;          }
@@ -86,9 +86,6 @@ public:
     bool isAtctiveZone () const { return active_zone; }
     bool isVisibleTrackShadow() const { return show_track_shadow; }
 
-    double *rg();
-//    double* vxyz_g();
-
     void setLocation(bool location);
     bool isLocation() const;
     void setSatellite(bool satellite);
@@ -97,12 +94,11 @@ public:
 protected:
     double lon, lat, _altitude;
     double m_r[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-//    double v[3] = {0.0, 0.0, 0.0};
     double m_rg[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-//    double v_g[3] = {0.0, 0.0, 0.0};
     double zrv;
     double radius_earth;
-    void getGeod();
+    void makeGeod();
+    void makeRg();
     virtual double gsto() { return 0.0; }
     virtual double minutes() { return 0.0; }
 
