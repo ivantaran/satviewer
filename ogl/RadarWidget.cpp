@@ -7,7 +7,7 @@
 
 #include "RadarWidget.h"
 
-RadarWidget::RadarWidget(QWidget *parent) : GLSatAbstractWidget(parent) {
+RadarWidget::RadarWidget(SatViewer *satviewer, QWidget *parent) : GLSatAbstractWidget(satviewer, parent) {
     m_colorNet = 0x00808080;
 }
 
@@ -64,9 +64,9 @@ void RadarWidget::compileSatList() {
     GLfloat trackBegin, trackEnd;
     GLuint clr;
     
-    Location *loc = currentLoc();
+    Location *loc = m_satviewer->currentLocation();
     
-    if ((satList.count() < 1) || (loc == nullptr)) {
+    if (m_satviewer->satellites().empty() || (loc == nullptr)) {
         glNewList(list_sat, GL_COMPILE);
         glEndList();
         return;
@@ -74,7 +74,7 @@ void RadarWidget::compileSatList() {
 
     glNewList(list_sat, GL_COMPILE);
     
-    for (const auto& sat : satList) {
+    for (const auto& sat : m_satviewer->satellites()) {
 
         sat->model(m_time);
 

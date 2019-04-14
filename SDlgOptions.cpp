@@ -11,9 +11,11 @@
 #include <fstream>
 #include "../dialogs/sgp4/Sgp4Dialog.h"
 
-SDlgOptions::SDlgOptions(GLSatAbstractWidget *w) {
+SDlgOptions::SDlgOptions(SatViewer *satviewer, GLSatAbstractWidget *w) {
     widget.setupUi(this);
-
+    
+    m_satviewer = satviewer;
+    
     satDialog = new Sgp4Dialog(w);
     satDialog->setParent(this, Qt::Dialog | Qt::WindowTitleHint);
     satDialog->setWindowModality(Qt::WindowModal);
@@ -100,7 +102,7 @@ void SDlgOptions::saveListViewSat() {
     db.exec("DELETE FROM sattemp;");
     db.exec("BEGIN;");
 
-    for (const auto& sat : satWidget->satList) {
+    for (const auto& sat : m_satviewer->satellites()) {
         QString query = QString(
             "INSERT INTO sattemp ('name', 'zrv', 'icon', 'show_label', "
             "'show_track', 'show_zrv', 'show_lines', 'active_zone', "
@@ -139,7 +141,7 @@ void SDlgOptions::saveListViewLoc() {
     db.exec("DELETE FROM loctemp;");
     db.exec("BEGIN;");
 
-    for (const auto &loc : satWidget->locList) {
+    for (const auto &loc : m_satviewer->locations()) {
         QString query = QString(
             "INSERT INTO loctemp ('lat', 'lon', 'height', 'azimuth', 'sector', "
             "'r', 'name', 'icon', 'show_label', 'show_zrv', 'show_lines', "
@@ -202,14 +204,14 @@ void SDlgOptions::loadListViewSat() {
         sat->setNameX(modelSatTemp.record(i).field("name_x").value().toDouble());
         sat->setNameY(modelSatTemp.record(i).field("name_y").value().toDouble());
         sat->setLinesWidth(modelSatTemp.record(i).field("lines_width").value().toDouble());
-        satWidget->addSat(sat);
+        satWidget->satviewer()->appendSatellite(sat);
     }
     modelSatTemp.clear();
 
     updateListViewSat();
-    if (satWidget->satList.count() == 1) {
-        satWidget->setIndexSat(0);
-    }
+//    if (satWidget->satList.count() == 1) { //TODO
+//        satWidget->setIndexSat(0);
+//    }
     satWidget->refreshAll();
 }
 
@@ -240,14 +242,14 @@ void SDlgOptions::loadListViewLoc() {
         loc->setNameX     (modelLocTemp.record(i).field("name_x"     ).value().toDouble());
         loc->setNameY     (modelLocTemp.record(i).field("name_y"     ).value().toDouble());
         loc->setLinesWidth(modelLocTemp.record(i).field("lines_width").value().toDouble());
-        satWidget->addLoc(loc);
+        satWidget->satviewer()->appendLocation(loc);
     }
     modelLocTemp.clear();
 
     updateListViewLoc();
-    if (satWidget->locList.count() == 1) {
-        satWidget->setIndexLoc(0);
-    }
+//    if (satWidget->locList.count() == 1) { // TODO
+//        satWidget->setIndexLoc(0);
+//    }
     satWidget->refreshAll();
 }
 
@@ -372,9 +374,9 @@ void SDlgOptions::setLoc(Location *loc, QSqlRecord record) {
 
 void SDlgOptions::updateListViewSat() {
     QStandardItemModel *model = (QStandardItemModel *)widget.listViewSat->model();
-    if (model != NULL) {
+    if (model != nullptr) {
         model->clear();
-        for (const auto& sat : satWidget->satList) {
+        for (const auto& sat : m_satviewer->satellites()) {
             model->appendRow(new QStandardItem(sat->name()));
         }
     }
@@ -382,9 +384,9 @@ void SDlgOptions::updateListViewSat() {
 
 void SDlgOptions::updateListViewLoc() {
     QStandardItemModel *model = (QStandardItemModel *)widget.listViewLoc->model();
-    if (model != NULL) {
+    if (model != nullptr) {
         model->clear();
-        for (const auto& loc : satWidget->locList) {
+        for (const auto& loc : m_satviewer->locations()) {
             model->appendRow(new QStandardItem(loc->name()));
         }
     }
@@ -625,19 +627,22 @@ void SDlgOptions::addToSatList(const QModelIndex &index) {
             Satellite *sat = satWidget->getSatModel();
             sat->copy(&satDialog->defaultSat);
             setSat(sat, modelDbSat->record(i.row()));
-            satWidget->addSat(sat);
+            satWidget->satviewer()->appendSatellite(sat);
         }
     }
     updateListViewSat();
     
     int position = index.row() + indexList.count() + 1;
     QModelIndex mIndex = widget.listViewDBSat->model()->index(position, 0);
+    
     if (mIndex.isValid()) {
         widget.listViewDBSat->setCurrentIndex(mIndex);
     }
-    if (satWidget->indexSat() < 0 && satWidget->satList.count() > 0) {
-        satWidget->setIndexSat(0);
+    
+    if (m_satviewer->currentSatellite() == nullptr) {
+        m_satviewer->setCurrentSatelliteIndex(0);
     }
+
     satWidget->refreshAll();
 }
 
@@ -653,7 +658,7 @@ void SDlgOptions::addToLocList(const QModelIndex &index) {
             Location *loc = new Location();
             loc->copy(&locDialog->defaultLoc);
             setLoc(loc, modelDbLoc->record(i.row()));
-            satWidget->addLoc(loc);
+            satWidget->satviewer()->appendLocation(loc);
         }
     }
 
@@ -661,25 +666,33 @@ void SDlgOptions::addToLocList(const QModelIndex &index) {
 
     int position = index.row() + indexList.count() + 1;
     QModelIndex mIndex = widget.listViewDBLoc->model()->index(position, 0);
+    
     if (mIndex.isValid()) {
         widget.listViewDBLoc->setCurrentIndex(mIndex);
     }
-    if ((satWidget->indexLoc() < 0) && (satWidget->locList.count() > 0)) { 
-        satWidget->setIndexLoc(0);
+    
+    if (m_satviewer->currentLocation() == nullptr) {
+        m_satviewer->setCurrentLocationIndex(0);
     }
+    
     satWidget->refreshAll();
 }
 
 void SDlgOptions::delFromSatList(const QModelIndex &index) {
     QModelIndexList indexList = widget.listViewSat->selectionModel()->selectedIndexes();
-    QVector<Satellite *> list;
+    
+    std::vector<Satellite *> v { 
+        m_satviewer->satellites().begin(), 
+        m_satviewer->satellites().end() 
+    };
     
     for (const auto& i : indexList) {
-        list.append(satWidget->satList.at(i.row()));
+        m_satviewer->removeSatellite(v.at(i.row()));
+//        list.append(satWidget->satList.at(i.row()));
     }
-    for (const auto& sat : list) {
-        satWidget->removeSat(sat);
-    }
+//    for (const auto& sat : list) {
+//        satWidget->satviewer()->removeSatellite(sat);
+//    }
 
     updateListViewSat();
 
@@ -693,14 +706,19 @@ void SDlgOptions::delFromSatList(const QModelIndex &index) {
 
 void SDlgOptions::delFromLocList(const QModelIndex &index) {
     QModelIndexList indexList = widget.listViewLoc->selectionModel()->selectedIndexes();
-    QVector<Location *> list;
+    
+    std::vector<Location *> v { 
+        m_satviewer->locations().begin(), 
+        m_satviewer->locations().end() 
+    };
     
     for (const auto& i : indexList) {
-        list.append(satWidget->locList.at(i.row()));
+        m_satviewer->removeLocation(v.at(i.row()));
+//        list.append(satWidget->locList.at(i.row()));
     }
-    for (const auto& loc : list) {
-        satWidget->removeLoc(loc);
-    }
+//    for (const auto& loc : list) {
+//        satWidget->satviewer()->removeLocation(loc);
+//    }
 
     updateListViewLoc();
     int position = index.isValid() ? index.row() : -1;
@@ -712,9 +730,9 @@ void SDlgOptions::delFromLocList(const QModelIndex &index) {
 }
 
 void SDlgOptions::scriptParameters() {
-    Satellite *sat = satWidget->currentSat();
-    Location *loc = satWidget->currentLoc();
-    if (sat == NULL || loc == NULL) {
+    Satellite *sat = m_satviewer->currentSatellite();
+    Location *loc = m_satviewer->currentLocation();
+    if ((sat == nullptr) || (loc == nullptr)) {
         return;
     }
     scriptFrame->exec(sat, loc, satWidget->time());
@@ -726,12 +744,12 @@ void SDlgOptions::addDbLoc() {
 }
 
 void SDlgOptions::changeDbSat() {
-    satDialog->makeSat(satWidget->currentSat());
+    satDialog->makeSat(m_satviewer->currentSatellite());
     satWidget->refreshAll();
 }
 
 void SDlgOptions::changeDbLoc() {
-    locDialog->makeLoc(satWidget->currentLoc());
+    locDialog->makeLoc(m_satviewer->currentLocation());
     satWidget->refreshAll();
 }
 

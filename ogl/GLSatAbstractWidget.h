@@ -15,19 +15,20 @@
 #include <QOpenGLTexture>
 
 #include "../zrvutils/ZrvIoList.h"
+#include "../SatViewer.h"
 
 typedef Satellite * (*CustomSat)(); // TODO remove this
 
 class GLSatAbstractWidget : public QOpenGLWidget, protected QOpenGLFunctions_2_0 { // TODO QOpenGLWidget - to protected
 	Q_OBJECT
 public:
-    QList<Satellite *> satList;
-    QList<Location *> locList;
+//    QList<Satellite *> satList;
+//    QList<Location *> locList;
     ZrvIoList ioList;
     QWidget *settingsWidget;
     typedef Satellite * (*CustomSat)();
     CustomSat getSatModel, getSunModel;
-    GLSatAbstractWidget(QWidget *parent = nullptr);
+    GLSatAbstractWidget(SatViewer *satviewer, QWidget *parent = nullptr);
     virtual ~GLSatAbstractWidget();
     virtual void readSettings() {}
     virtual void writeSettings(QSettings *settings) { Q_UNUSED(settings); }
@@ -62,27 +63,28 @@ public:
     void showLocNames(bool value);
     void showSun(bool value);
     void showNight(bool value);
-
+    
+    SatViewer *satviewer() { return m_satviewer; }
     int indexSat() const {return m_indexSat;}
     int indexLoc() const {return m_indexLoc;}
 
-    Satellite * currentSat() {
-        if ((m_indexSat < 0) || (m_indexSat >= satList.count())) return nullptr; // TODO move to cpp
-        return satList.at(m_indexSat);
-    }
-
-    Location * currentLoc() {
-        if ((m_indexLoc < 0) || (m_indexLoc >= locList.count())) return nullptr; // TODO move to cpp
-        return locList.at(m_indexLoc);
-    }
+//    Satellite * currentSat() {
+//        if ((m_indexSat < 0) || (m_indexSat >= satList.count())) return nullptr; // TODO move to cpp
+//        return satList.at(m_indexSat);
+//    }
+//
+//    Location * currentLoc() {
+//        if ((m_indexLoc < 0) || (m_indexLoc >= locList.count())) return nullptr; // TODO move to cpp
+//        return locList.at(m_indexLoc);
+//    }
 
     void setIndexSat(int index);
     void setIndexLoc(int index);
 
-    virtual void addSat(Satellite *sat);
-    virtual void addLoc(Location *loc);
-    void removeSat(Satellite *sat);
-    void removeLoc(Location *loc);
+//    virtual void addSat(Satellite *sat);
+//    virtual void addLoc(Location *loc);
+//    void removeSat(Satellite *sat);
+//    void removeLoc(Location *loc);
 
 signals:
     void statusZRVChanged(QString text);
@@ -95,6 +97,7 @@ signals:
     void initialized();
     
 protected:
+    SatViewer *m_satviewer;
     GLuint m_colorNet, clrNetFont, clrNight;
     GLuint list_map, list_net, list_events, list_sun, list_loc, list_sat;
     bool list_map_ready, list_net_ready, list_events_ready, list_sun_ready, list_loc_ready, list_sat_ready, list_labels_ready;

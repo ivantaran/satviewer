@@ -11,7 +11,7 @@
 #include "math.h"
 #include <QDir>
 
-GLSatWidget3d::GLSatWidget3d(QWidget *parent) : GLSatAbstractWidget(parent) {
+GLSatWidget3d::GLSatWidget3d(SatViewer *satviewer, QWidget *parent) : GLSatAbstractWidget(satviewer, parent) {
 
 	ui.setupUi(settingsWidget);
 //	gluObj = gluNewQuadric();
@@ -168,59 +168,60 @@ void GLSatWidget3d::compileMapList() {
 }
 
 void GLSatWidget3d::compileSatList() {
-	const double radiusEarth = 6378137.0;
-    if (satList.count() < 1) {
-		glNewList(4, GL_COMPILE);
-		glEndList();
-		return;
+    const double radiusEarth = 6378137.0;
+
+    if (m_satviewer->satellites().empty()) {
+        glNewList(4, GL_COMPILE);
+        glEndList();
+        return;
     }
-    Satellite *sat = 0;
+    
     float tper, trackBegin, trackEnd;
     uint32_t clr;
-	glNewList(4, GL_COMPILE);
-		for (int i = 0; i < satList.count(); i++) {
-			sat = satList.at(i);
-			if (sat->isVisibleTrack()) {
-				clr = sat->colorTrack();
-				glPushAttrib(GL_ENABLE_BIT);
-				glColor4ubv((uint8_t *)&clr);
+    glNewList(4, GL_COMPILE);
+    
+    for (const auto& sat : m_satviewer->satellites()) {
+        if (sat->isVisibleTrack()) {
+            clr = sat->colorTrack();
+            glPushAttrib(GL_ENABLE_BIT);
+            glColor4ubv((uint8_t *)&clr);
 //				glShadeModel(GL_SMOOTH);
 //				glEnable(GL_ALPHA_TEST);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-				glEnable(GL_BLEND);
-				glEnable(GL_LINE_SMOOTH);
-				glDisable(GL_LIGHTING);
-				glLineWidth(sat->linesWidth());
-				glBegin(GL_LINE_STRIP);
-					tper = 120*M_PI/sat->meanMotion();
-					trackBegin = sat->track()*(-0.5*tper + tper/180.0);
-					trackEnd = sat->track()*(0.5*tper + tper/180.0);
-					for (float i = trackBegin; i < trackEnd; i += tper/180.0) {
-						sat->model(i + m_time);
-						glVertex3f(sat->xyz_g()[0]/radiusEarth, sat->xyz_g()[1]/radiusEarth, sat->xyz_g()[2]/radiusEarth);
-					}
-				glEnd();
-				glPopAttrib();
-			}
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glEnable(GL_BLEND);
+            glEnable(GL_LINE_SMOOTH);
+            glDisable(GL_LIGHTING);
+            glLineWidth(sat->linesWidth());
+            glBegin(GL_LINE_STRIP);
+            tper = 120*M_PI/sat->meanMotion();
+            trackBegin = sat->track()*(-0.5*tper + tper/180.0);
+            trackEnd = sat->track()*(0.5*tper + tper/180.0);
+            for (float i = trackBegin; i < trackEnd; i += tper/180.0) {
+                sat->model(i + m_time);
+                glVertex3f(sat->xyz_g()[0]/radiusEarth, sat->xyz_g()[1]/radiusEarth, sat->xyz_g()[2]/radiusEarth);
+            }
+            glEnd();
+            glPopAttrib();
+        }
 
-			sat->model(m_time);
-			float r = sqrtf(sat->xyz_g()[0]*sat->xyz_g()[0] + sat->xyz_g()[1]*sat->xyz_g()[1] + sat->xyz_g()[2]*sat->xyz_g()[2]);
-			float rz = sqrtf(sat->xyz_g()[0]*sat->xyz_g()[0] + sat->xyz_g()[1]*sat->xyz_g()[1]);
-			glPushMatrix();
-			globjSat->move(0, 0, 0);
-			globjSat->rotateX(0);
-			globjSat->rotateY(0);
-			globjSat->rotateY(0);
-			float arzx = acosf(sat->xyz_g()[0]/rz)*180/M_PI;
-			float az = acosf(sat->xyz_g()[2]/r)*180/M_PI;
-			if (sat->xyz_g()[1] < 0) arzx = -arzx;
-			glRotatef(arzx, 0, 0, 1);
-			glRotatef(az, 0, 1, 0);
-			glRotatef(-arzx, 0, 0, 1);
-			glTranslatef(0, 0, r/radiusEarth);
-			globjSat->exec();
-			glPopMatrix();
-		}
+        sat->model(m_time);
+        float r = sqrtf(sat->xyz_g()[0]*sat->xyz_g()[0] + sat->xyz_g()[1]*sat->xyz_g()[1] + sat->xyz_g()[2]*sat->xyz_g()[2]);
+        float rz = sqrtf(sat->xyz_g()[0]*sat->xyz_g()[0] + sat->xyz_g()[1]*sat->xyz_g()[1]);
+        glPushMatrix();
+        globjSat->move(0, 0, 0);
+        globjSat->rotateX(0);
+        globjSat->rotateY(0);
+        globjSat->rotateY(0);
+        float arzx = acosf(sat->xyz_g()[0]/rz)*180/M_PI;
+        float az = acosf(sat->xyz_g()[2]/r)*180/M_PI;
+        if (sat->xyz_g()[1] < 0) arzx = -arzx;
+        glRotatef(arzx, 0, 0, 1);
+        glRotatef(az, 0, 1, 0);
+        glRotatef(-arzx, 0, 0, 1);
+        glTranslatef(0, 0, r/radiusEarth);
+        globjSat->exec();
+        glPopMatrix();
+    }
 	glEndList();
 }
 

@@ -24,14 +24,14 @@ SWindow::SWindow(SatViewer *satviewer) {
     statusBar()->addWidget(&labelLoc, 0);
     statusBar()->addWidget(&labelSat, 0);
 
-    satWidget = new GLSatWidget(this);
+    satWidget = new GLSatWidget(satviewer, this);
 
     QHBoxLayout *mapLayout = new QHBoxLayout;
     mapLayout->setSpacing(0);
     mapLayout->setMargin(0);
     //selectGlWidget(0);
 
-    dlgOptions = new SDlgOptions(satWidget);
+    dlgOptions = new SDlgOptions(satviewer, satWidget);
     dlgOptions->setParent(this, Qt::Window);
     move((qApp->desktop()->width() - width()) / 2, 
             (qApp->desktop()->height() - height()) / 2);
@@ -105,7 +105,7 @@ SWindow::SWindow(SatViewer *satviewer) {
     // readSettings();
     // enumSatModelList();
     
-    RadarWidget *radarWidget = new RadarWidget(this);
+    RadarWidget *radarWidget = new RadarWidget(satviewer, this);
     radarWidget->resize(512, 512);
     radarWidget->move(128, 128);
     radarWidget->setWindowFlag(Qt::Window);
@@ -206,8 +206,10 @@ void SWindow::readSettings() {
 
     dlgOptions->loadListViewSat();
     dlgOptions->loadListViewLoc();
-    if (satWidget->satList.count() > 0) satWidget->setIndexSat(0);
-    if (satWidget->locList.count() > 0) satWidget->setIndexLoc(0);
+
+    m_satviewer->setCurrentSatelliteIndex(0);
+    m_satviewer->setCurrentLocationIndex(0);
+
     onStepChanged();
     onTimeClick();
     onTimer();
@@ -501,36 +503,36 @@ void SWindow::selectPalette(bool value) {
     else qApp->setPalette(originalPalette);
 }
 
-void SWindow::selectGlWidget(int value) {
-    GLSatAbstractWidget *tmp = satWidget;
-    if (satWidget != NULL) {
-        widget.frameMap->layout()->removeWidget(satWidget);
-    }
-    if (value == 0) {
-        satWidget = new GLSatWidget();
-    }
-    else {
-        satWidget = new GLSatWidget3d();
-    }
-    widget.frameMap->layout()->addWidget(satWidget);
-
-    if (dlgOptions != NULL) {
-        dlgOptions->setSatWidget(satWidget);
-    }
-    connect(satWidget, SIGNAL(statusZRVChanged(QString)), this, 
-            SLOT(addZRVMessage(QString)));
-    connect(satWidget, SIGNAL(doubleClickedSat()), dlgOptions, 
-            SLOT(changeDbSat()));
-    connect(satWidget, SIGNAL(doubleClickedLoc()), dlgOptions, 
-            SLOT(changeDbLoc()));
-    connect(satWidget, SIGNAL(currentChanged(Satellite*, Location*, double*)), 
-            this, SLOT(setSwlVars(Satellite*, Location*, double*)));
-    readSettings();
-    uiSettings.comboGlWidget->blockSignals(true);
-    uiSettings.comboGlWidget->setCurrentIndex(value);
-    uiSettings.comboGlWidget->blockSignals(false);
-    if (tmp != 0) delete tmp;
-}
+//void SWindow::selectGlWidget(int value) {
+//    GLSatAbstractWidget *tmp = satWidget;
+//    if (satWidget != NULL) {
+//        widget.frameMap->layout()->removeWidget(satWidget);
+//    }
+//    if (value == 0) {
+//        satWidget = new GLSatWidget();
+//    }
+//    else {
+//        satWidget = new GLSatWidget3d();
+//    }
+//    widget.frameMap->layout()->addWidget(satWidget);
+//
+//    if (dlgOptions != NULL) {
+//        dlgOptions->setSatWidget(satWidget);
+//    }
+//    connect(satWidget, SIGNAL(statusZRVChanged(QString)), this, 
+//            SLOT(addZRVMessage(QString)));
+//    connect(satWidget, SIGNAL(doubleClickedSat()), dlgOptions, 
+//            SLOT(changeDbSat()));
+//    connect(satWidget, SIGNAL(doubleClickedLoc()), dlgOptions, 
+//            SLOT(changeDbLoc()));
+//    connect(satWidget, SIGNAL(currentChanged(Satellite*, Location*, double*)), 
+//            this, SLOT(setSwlVars(Satellite*, Location*, double*)));
+//    readSettings();
+//    uiSettings.comboGlWidget->blockSignals(true);
+//    uiSettings.comboGlWidget->setCurrentIndex(value);
+//    uiSettings.comboGlWidget->blockSignals(false);
+//    if (tmp != 0) delete tmp;
+//}
 
 void SWindow::onBtnPrintScrClicked() {
     QString filePath = QFileDialog::getSaveFileName(this, tr("Save PNG File"), 

@@ -40,7 +40,7 @@ public:
 
     QSqlDatabase db;
 
-    SDlgOptions(GLSatAbstractWidget *w);
+    SDlgOptions(SatViewer *satviewer, GLSatAbstractWidget *w);
     virtual ~SDlgOptions();
 
     void setSatWidget(GLSatAbstractWidget *w);
@@ -54,6 +54,7 @@ public:
     void loadListViewLoc();
 
 private:
+    SatViewer *m_satviewer;
     Ui::Dialog widget;
     QDataWidgetMapper mapperSat, mapperLoc;
     QSqlTableModel *modelDbSat, *modelDbLoc;

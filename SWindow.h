@@ -65,7 +65,7 @@ private slots:
     void selectLanguage(int value);
     void setSwlVars(Satellite *sat, Location *loc, double *time);
     void selectStyle(int value);
-    void selectGlWidget(int value);
+//    void selectGlWidget(int value);
     void selectPalette(bool value);
     //	void onSatModelChanged(int index);
     void onBtnPrintScrClicked();

@@ -13,7 +13,7 @@
 class RadarWidget : public GLSatAbstractWidget {
     Q_OBJECT
 public:
-    RadarWidget(QWidget *parent = nullptr);
+    RadarWidget(SatViewer *satviewer, QWidget *parent = nullptr);
 //    RadarWidget(const RadarWidget& orig);
     virtual ~RadarWidget();
 private:

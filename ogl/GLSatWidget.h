@@ -16,13 +16,13 @@
 class GLSatWidget : public GLSatAbstractWidget {
     Q_OBJECT
 public:
-    GLSatWidget(QWidget *parent = nullptr);
+    GLSatWidget(SatViewer *satviewer, QWidget *parent = nullptr);
     virtual ~GLSatWidget();
     void readSettings();
     void writeSettings(QSettings *settings);
     inline void retranslateUi() { ui.retranslateUi(this); }
-    void addSat(Satellite *sat);
-    void addLoc(Location *loc);
+//    void addSat(Satellite *sat);
+//    void addLoc(Location *loc);
     void setIcon(Satellite *sat, const QString& fileName = "");
     void setIcon(Location *loc, const QString& fileName = "");
     
