@@ -10,8 +10,10 @@
 
 #include "locutils/Location.h"
 #include "satutils/Satellite.h"
+#include "zrvutils/ZrvIoList.h"
 
-class SatViewer {
+class SatViewer : public QObject {
+    Q_OBJECT
 public:
     SatViewer();
     SatViewer(const SatViewer& orig);
@@ -22,15 +24,28 @@ public:
     void removeLocation(Location *loc);
     void setCurrentSatelliteIndex(long unsigned int index);
     void setCurrentLocationIndex(long unsigned int index);
+    void setCurrentSatellite(Satellite* sat);
+    void setCurrentLocation(Location* loc);
+    void setTime(double value);
     std::list<Satellite *> satellites() { return m_satellites; }
     std::list<Location *> locations() { return m_locations; }
     Satellite *currentSatellite();
     Location *currentLocation();
+    ZrvIoList *ioList() { return &m_ioList; }
+    double time() { return m_time; }
+    
+signals:
+    void currentChanged(Satellite *sat, Location *loc, double *time);
+    void timeChanged();
+    
 private:
     std::list<Satellite *> m_satellites;
     std::list<Location *> m_locations;
     Satellite *m_currentSatellite;
     Location *m_currentLocation;
+    double m_time;
+    ZrvIoList m_ioList;
+    
 };
 
 #endif /* SATVIEWER_H */

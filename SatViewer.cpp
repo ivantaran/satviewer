@@ -12,26 +12,27 @@ SatViewer::SatViewer() {
     m_locations.clear();
     m_currentSatellite = nullptr;
     m_currentLocation = nullptr;
+    m_time = 0.0;
 }
 
 SatViewer::SatViewer(const SatViewer& orig) {
 }
 
 SatViewer::~SatViewer() {
+    // TODO
+//    for (const auto& sat : m_satellites) {
+//        if (sat != nullptr) {
+//            delete sat;
+//        }
+//    }
+//    m_satellites.clear();
     
-    for (const auto& sat : m_satellites) {
-        if (sat != nullptr) {
-            delete sat;
-        }
-    }
-    m_satellites.clear();
-    
-    for (const auto& loc : m_locations) {
-        if (loc != nullptr) {
-            delete loc;
-        }
-    }
-    m_locations.clear();
+//    for (const auto& loc : m_locations) {
+//        if (loc != nullptr) {
+//            delete loc;
+//        }
+//    }
+//    m_locations.clear();
     
 }
 
@@ -89,7 +90,7 @@ void SatViewer::setCurrentSatelliteIndex(long unsigned int index) {
     else {
         m_currentSatellite = nullptr;
     }
-//    emit currentChanged(currentSat(), currentLoc(), &m_time); // TODO
+    emit currentChanged(m_currentSatellite, m_currentLocation, &m_time);
 }
 
 void SatViewer::setCurrentLocationIndex(long unsigned int index) {
@@ -101,6 +102,21 @@ void SatViewer::setCurrentLocationIndex(long unsigned int index) {
     else {
         m_currentLocation = nullptr;
     }
-//    refreshAll();
-//    emit currentChanged(currentSat(), currentLoc(), &m_time); // TODO
+    emit currentChanged(m_currentSatellite, m_currentLocation, &m_time);
+}
+
+void SatViewer::setCurrentSatellite(Satellite* sat) {
+    m_currentSatellite = sat;
+    emit currentChanged(m_currentSatellite, m_currentLocation, &m_time);
+}
+
+void SatViewer::setCurrentLocation(Location* loc) {
+    m_currentLocation = loc;
+    emit currentChanged(m_currentSatellite, m_currentLocation, &m_time);
+}
+
+
+void SatViewer::setTime(double value) {
+    m_time = value;
+    emit timeChanged();
 }

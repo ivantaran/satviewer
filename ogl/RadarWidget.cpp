@@ -76,7 +76,7 @@ void RadarWidget::compileSatList() {
     
     for (const auto& sat : m_satviewer->satellites()) {
 
-        sat->model(m_time);
+        sat->model(m_satviewer->time());
 
         if (sat->isVisibleTrack()) {
             glShadeModel(GL_SMOOTH);
@@ -92,11 +92,11 @@ void RadarWidget::compileSatList() {
                 tper = 120.0 * M_PI / sat->meanMotion(); //move this line
                 trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
                 trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
-                sat->model(trackBegin + m_time);
+                sat->model(trackBegin + m_satviewer->time());
                 tmpx = sat->longitude() / M_PI;
                 tmpy = -2.0 * sat->latitude() / M_PI;
-                for (GLfloat i = trackBegin; i < trackEnd; i += tper / 180.0) {
-                    sat->model(i + m_time);
+                for (double i = trackBegin; i < trackEnd; i += tper / 180.0) {
+                    sat->model(i + m_satviewer->time());
                     px = sat->longitude() / M_PI;
                     py = -2.0 * sat->latitude() / M_PI;
                     if (fabs(px - tmpx) > 1.75) {
@@ -121,7 +121,7 @@ void RadarWidget::compileSatList() {
             glDisable(GL_LINE_SMOOTH);
         }
 
-        sat->model(m_time);
+        sat->model(m_satviewer->time());
         px = sat->longitude() / M_PI;
         py = -2.0 * sat->latitude() / M_PI;
         if (sat->satWObject) {

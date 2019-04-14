@@ -685,7 +685,7 @@ void GLSatWidget::compileSatList() {
     
     for (const auto& sat : m_satviewer->satellites()) {
         bool shadow_state = testShadow(sat, nullptr); //TODO: check sun shadow
-        sat->model(m_time);
+        sat->model(m_satviewer->time());
 
         if (sat->isVisibleZrv() || sat->isVisibleLines()) {
             compileFootprint(sat->longitude(), sat->latitude(), 
@@ -706,11 +706,11 @@ void GLSatWidget::compileSatList() {
                 tper = 120.0 * M_PI / sat->meanMotion(); //move this line
                 trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
                 trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
-                sat->model(trackBegin + m_time);
+                sat->model(trackBegin + m_satviewer->time());
                 tmpx = sat->longitude() / M_PI;
                 tmpy = -2.0 * sat->latitude() / M_PI;
-                for (float i = trackBegin; i < trackEnd; i += tper / 180.0) {
-                    sat->model(i + m_time);
+                for (double i = trackBegin; i < trackEnd; i += tper / 180.0) {
+                    sat->model(i + m_satviewer->time());
                     if (sat->isVisibleTrackShadow()) {
                         if (shadow_state) {
                             clr = sat->colorTrack();
@@ -749,7 +749,7 @@ void GLSatWidget::compileSatList() {
             glDisable(GL_LINE_SMOOTH);
         }
 
-        sat->model(m_time);
+        sat->model(m_satviewer->time());
         px = sat->longitude() / M_PI;
         py = -2.0 * sat->latitude() / M_PI;
         if (sat->satWObject) {
@@ -759,7 +759,7 @@ void GLSatWidget::compileSatList() {
 
     Satellite *sat = m_satviewer->currentSatellite();
     if (sat != nullptr) {
-        sat->model(m_time);
+        sat->model(m_satviewer->time());
         px = sat->longitude() / M_PI;
         py = -2.0 * sat->latitude() / M_PI;
         sprite_current.exec(px, py, 0.0);
@@ -817,29 +817,29 @@ void GLSatWidget::compileEventsList() {
             if (loc->isActiveZone()) {
                 for (const auto& sat : m_satviewer->satellites()) {
                     if (!sat->isAtctiveZone()) continue;
-                    oldTime = m_time;
-                    statusZRV = testIOZRV(sat, loc, &ioList, oldTime);
+                    oldTime = m_satviewer->time();
+                    statusZRV = testIOZRV(sat, loc, m_satviewer->ioList(), oldTime);
                     if (statusZRV > -1) inZRV++;
                     if (statusZRV == 1) {
-                        tmpTime = QDateTime::fromTime_t((int)m_time);
+                        tmpTime = QDateTime::fromTime_t((uint)m_satviewer->time());
                         msg = QString("%0|%1|%2|%3|%4")
                             .arg(sat->name())
                             .arg("i")
                             .arg(loc->name())
-                            .arg((time_t)m_time)
+                            .arg((time_t)m_satviewer->time())
 //                            .arg(tmpTime.time().toString())
                             .arg("*");
                         emit statusZRVChanged(msg);
                     }
                     if (statusZRV == 2) {
-                        tmpTime = QDateTime::fromTime_t((int)m_time);
+                        tmpTime = QDateTime::fromTime_t((uint)m_satviewer->time());
                         msg = QString("%0|%1|%2|%3|%4")
                             .arg(sat->name())
                             .arg("o")
                             .arg(loc->name())
-                            .arg((time_t)m_time)
+                            .arg((time_t)m_satviewer->time())
 //                            .arg(tmpTime.time().toString())
-                            .arg(m_time - oldTime);
+                            .arg(m_satviewer->time() - oldTime);
                         emit statusZRVChanged(msg);
                     }
                 }
@@ -858,7 +858,7 @@ void GLSatWidget::compileSunList() {
     double lat, lon;
     glNewList(list_sun, GL_COMPILE);
     
-    sunmodel_ll((time_t)m_time, &lat, &lon);
+    sunmodel_ll((time_t)m_satviewer->time(), &lat, &lon);
     
     float px =  lon / M_PI;
     float py = -2.0 * lat / M_PI;
@@ -951,41 +951,39 @@ void GLSatWidget::mouseMoveEvent(QMouseEvent *event) {
     float kyl = h / 180.0;
     float kxs = 0.5 * w / M_PI;
     float kys = h / M_PI;
-    int i;
-    int resultLoc = -1;
-    int resultSat = -1;
 
-    i = 0;
+    Location *currentLoc = nullptr;
+    Satellite *currentSat = nullptr;
+
     for (const auto& loc : m_satviewer->locations()) {
         px = kxl * (180.0 + loc->longitude()) * m_zoom - 0.5 * (m_zoom - 1.0 - m_dx) * w;
         py = kyl * ( 90.0 - loc->latitude() ) * m_zoom - 0.5 * (m_zoom - 1.0 - m_dy) * h;
         if (fabs(px - x) < 7.0 * m_zoom && fabs(py - y) < 7.0 * m_zoom) {
-            resultLoc = i;
+            currentLoc = loc;
             break;
         }
-        i++;
     }
+    m_cursorOnLocation = (currentLoc != nullptr);
 
-    if ((event->buttons() == Qt::LeftButton) && (resultLoc != -1)) {
-        setIndexLoc(resultLoc);
+    if ((event->buttons() == Qt::LeftButton) && m_cursorOnLocation) {
+        m_satviewer->setCurrentLocation(currentLoc);
     }
     
-    i = 0;
     for (const auto& sat : m_satviewer->satellites()) {
         px = kxs * (      M_PI + sat->longitude()) * m_zoom - 0.5 * (m_zoom - 1.0 - m_dx) * w;
         py = kys * (0.5 * M_PI - sat->latitude() ) * m_zoom - 0.5 * (m_zoom - 1.0 - m_dy) * h;
         if (fabs(px - x) < 7.0 * m_zoom && fabs(py - y) < 7.0 * m_zoom) {
-            resultSat = i;
+            currentSat = sat;
             break;
         }
-        i++;
+    }
+    m_cursorOnSatellite = (currentSat != nullptr);
+
+    if ((event->buttons() == Qt::LeftButton) && m_cursorOnSatellite) {
+        m_satviewer->setCurrentSatellite(currentSat);
     }
 
-    if ((event->buttons() == Qt::LeftButton) && (resultSat != -1)) {
-        setIndexSat(resultSat);
-    }
-
-    if (resultSat > -1 || resultLoc > -1) {
+    if (m_cursorOnSatellite || m_cursorOnLocation) {
         setCursor(Qt::PointingHandCursor);
     }
     else {
@@ -1004,7 +1002,6 @@ void GLSatWidget::mouseMoveEvent(QMouseEvent *event) {
 void GLSatWidget::mousePressEvent(QMouseEvent *event) {
     if (event->buttons() == Qt::LeftButton) {
         mouseMoveEvent(event);
-        refreshAll();
     }
     if (event->buttons() == Qt::RightButton) {
         pointMoveMap = event->pos();
@@ -1014,17 +1011,11 @@ void GLSatWidget::mousePressEvent(QMouseEvent *event) {
 
 void GLSatWidget::mouseDoubleClickEvent(QMouseEvent *event) {
     if (event->buttons() == Qt::LeftButton) {
-        int tmp = m_indexSat;
-        m_indexSat = -1;
-        this->mouseMoveEvent(event);
-        if (m_indexSat != -1) emit this->doubleClickedSat();
-        else {
-            m_indexSat = tmp;
-            tmp = m_indexLoc;
-            m_indexLoc = -1;
-            this->mouseMoveEvent(event);
-            if (m_indexLoc != -1) emit this->doubleClickedLoc();
-            else m_indexLoc = tmp;
+        if (m_cursorOnSatellite) {
+            emit this->doubleClickedSat();
+        }
+        else if (m_cursorOnLocation) {
+            emit this->doubleClickedLoc();
         }
     }
     event->accept();

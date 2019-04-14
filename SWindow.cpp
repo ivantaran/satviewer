@@ -63,8 +63,8 @@ SWindow::SWindow(SatViewer *satviewer) {
 
     connect(uiSettings.comboStyle, SIGNAL(currentIndexChanged(int)), this, 
             SLOT(selectStyle (int)));
-    connect(uiSettings.comboGlWidget, SIGNAL(currentIndexChanged(int)), this, 
-            SLOT(selectGlWidget(int)));
+//    connect(uiSettings.comboGlWidget, SIGNAL(currentIndexChanged(int)), this, 
+//            SLOT(selectGlWidget(int)));
     connect(uiSettings.btnPrintScr, SIGNAL(clicked()), this, 
             SLOT(onBtnPrintScrClicked()));
     // connect(uiSettings.comboSatModel, SIGNAL(currentIndexChanged(int)), this, SLOT(onSatModelChanged(int)));
@@ -99,9 +99,9 @@ SWindow::SWindow(SatViewer *satviewer) {
             SLOT(changeDbSat()));
     connect(satWidget, SIGNAL(doubleClickedLoc()), dlgOptions, 
             SLOT(changeDbLoc()));
-    connect(satWidget, SIGNAL(currentChanged(Satellite*, Location*, double*)), 
-            this, SLOT(setSwlVars(Satellite*, Location*, double*)));
     connect(satWidget, SIGNAL(initialized()), this, SLOT(readSettings()));
+    connect(m_satviewer, SIGNAL(currentChanged(Satellite*, Location*, double*)), 
+            this, SLOT(setSwlVars(Satellite*, Location*, double*)));
     // readSettings();
     // enumSatModelList();
     
@@ -339,8 +339,8 @@ void SWindow::onTimer() {
         break;
     }
     
-    satWidget->setTime(time);
-    satWidget->update();
+    m_satviewer->setTime(time);
+    satWidget->update();// TODO remove this?
 }
 
 void SWindow::onPlayClick() {

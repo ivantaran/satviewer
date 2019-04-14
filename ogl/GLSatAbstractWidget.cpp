@@ -27,8 +27,8 @@ GLSatAbstractWidget::GLSatAbstractWidget(SatViewer *satviewer, QWidget *parent) 
 
     settingsWidget = new QWidget();
 
-    m_indexLoc = -1;
-    m_indexSat = -1;
+//    m_indexLoc = -1;
+//    m_indexSat = -1;
 
     m_colorNet = 0xFF8B8B8B;
     clrNetFont = 0x0;
@@ -39,10 +39,14 @@ GLSatAbstractWidget::GLSatAbstractWidget(SatViewer *satviewer, QWidget *parent) 
     m_dy = 0.0;
     m_dz = 0.0;
     
+    m_cursorOnSatellite = false;
+    m_cursorOnLocation = false;
+    
     textureID = NULL;
-    m_time = 0;
+
     shwSun = true;
     shwNight = true;
+    
     setSatModel();
     
     list_map_ready       = true;
@@ -52,7 +56,7 @@ GLSatAbstractWidget::GLSatAbstractWidget(SatViewer *satviewer, QWidget *parent) 
     list_loc_ready       = true;
     list_sat_ready       = true;
     list_labels_ready    = true;
-    
+    connect(m_satviewer, SIGNAL(timeChanged()), this, SLOT(refresh()));
 //    setSunModel();
 //    sun = getSunModel();
 //    sun->modelInit(WGS84, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -65,7 +69,7 @@ GLSatAbstractWidget::~GLSatAbstractWidget() {
     makeCurrent();
 //    satList.clear();
 //    locList.clear();
-    ioList.clear();
+//    ioList.clear();
     // TODO delete tex
     doneCurrent();
 }
@@ -147,11 +151,6 @@ void GLSatAbstractWidget::loadTexture(QString filePath) {
     textureID = new QOpenGLTexture(QImage(filePath), QOpenGLTexture::GenerateMipMaps);
 }
 
-void GLSatAbstractWidget::setTime(double secs) {
-    m_time = secs;
-    refresh();
-}
-
 void GLSatAbstractWidget::refresh() {
     if (!isValid()) {
         qWarning("GLSatAbstractWidget::refresh invalid");
@@ -201,16 +200,44 @@ void GLSatAbstractWidget::setSatModel(int index) {
     getSatModel = (CustomSat)Sgp4Model::getSatModel; // TODO: drop this method
 }
 
-void GLSatAbstractWidget::setIndexSat(int index) {
-    m_indexSat = index;
-//    emit currentChanged(currentSat(), currentLoc(), &m_time);
+void GLSatAbstractWidget::compileMapList() {
+    glNewList(list_map, GL_COMPILE);
+    glEndList();
+    glNewList(list_net, GL_COMPILE);
+    glEndList();
 }
 
-void GLSatAbstractWidget::setIndexLoc(int index) {
-    m_indexLoc = index;
-    refreshAll();
-//    emit currentChanged(currentSat(), currentLoc(), &m_time);
+void GLSatAbstractWidget::compileSatList() {
+    glNewList(list_sat, GL_COMPILE);
+    glEndList();
 }
+
+void GLSatAbstractWidget::compileLocList() {
+    glNewList(list_loc, GL_COMPILE);
+    glEndList();
+}
+
+void GLSatAbstractWidget::compileSunList() {
+    glNewList(list_sun, GL_COMPILE);
+    glEndList();
+}
+
+void GLSatAbstractWidget::compileEventsList() {
+    glNewList(list_events, GL_COMPILE);
+    glEndList();
+}
+
+
+//void GLSatAbstractWidget::setIndexSat(int index) {
+//    m_indexSat = index;
+////    emit currentChanged(currentSat(), currentLoc(), &m_time);
+//}
+//
+//void GLSatAbstractWidget::setIndexLoc(int index) {
+//    m_indexLoc = index;
+//    refreshAll();
+////    emit currentChanged(currentSat(), currentLoc(), &m_time);
+//}
 
 //void GLSatAbstractWidget::addSat(Satellite* sat) {
 //    satList.append(sat);

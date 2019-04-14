@@ -196,15 +196,15 @@ void GLSatWidget3d::compileSatList() {
             tper = 120*M_PI/sat->meanMotion();
             trackBegin = sat->track()*(-0.5*tper + tper/180.0);
             trackEnd = sat->track()*(0.5*tper + tper/180.0);
-            for (float i = trackBegin; i < trackEnd; i += tper/180.0) {
-                sat->model(i + m_time);
+            for (double i = trackBegin; i < trackEnd; i += tper/180.0) {
+                sat->model(i + m_satviewer->time());
                 glVertex3f(sat->xyz_g()[0]/radiusEarth, sat->xyz_g()[1]/radiusEarth, sat->xyz_g()[2]/radiusEarth);
             }
             glEnd();
             glPopAttrib();
         }
 
-        sat->model(m_time);
+        sat->model(m_satviewer->time());
         float r = sqrtf(sat->xyz_g()[0]*sat->xyz_g()[0] + sat->xyz_g()[1]*sat->xyz_g()[1] + sat->xyz_g()[2]*sat->xyz_g()[2]);
         float rz = sqrtf(sat->xyz_g()[0]*sat->xyz_g()[0] + sat->xyz_g()[1]*sat->xyz_g()[1]);
         glPushMatrix();

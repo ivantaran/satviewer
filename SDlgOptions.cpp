@@ -456,14 +456,14 @@ void SDlgOptions::selectDbLoc(const QModelIndex &current, const QModelIndex &pre
 void SDlgOptions::selectSat(const QModelIndex &current, const QModelIndex &previous) {
     Q_UNUSED(previous)
     if (current.isValid()) {
-        satWidget->setIndexSat(current.row());
+        m_satviewer->setCurrentSatelliteIndex(current.row());
     }
 }
 
 void SDlgOptions::selectLoc(const QModelIndex &current, const QModelIndex &previous) {
     Q_UNUSED(previous)
     if (current.isValid()) {
-        satWidget->setIndexLoc(current.row());
+        m_satviewer->setCurrentLocationIndex(current.row());
     }
 }
 
@@ -735,7 +735,7 @@ void SDlgOptions::scriptParameters() {
     if ((sat == nullptr) || (loc == nullptr)) {
         return;
     }
-    scriptFrame->exec(sat, loc, satWidget->time());
+    scriptFrame->exec(sat, loc, m_satviewer->time());
 }
 
 void SDlgOptions::addDbLoc() {

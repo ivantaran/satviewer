@@ -20,11 +20,11 @@
 typedef Satellite * (*CustomSat)(); // TODO remove this
 
 class GLSatAbstractWidget : public QOpenGLWidget, protected QOpenGLFunctions_2_0 { // TODO QOpenGLWidget - to protected
-	Q_OBJECT
+    Q_OBJECT
 public:
 //    QList<Satellite *> satList;
 //    QList<Location *> locList;
-    ZrvIoList ioList;
+//    ZrvIoList ioList;
     QWidget *settingsWidget;
     typedef Satellite * (*CustomSat)();
     CustomSat getSatModel, getSunModel;
@@ -35,10 +35,8 @@ public:
     virtual void retranslateUi() {}
     virtual void setIcon(Satellite *sat, const QString& fileName = "") { Q_UNUSED(sat); Q_UNUSED(fileName); }
     virtual void setIcon(Location *loc, const QString& fileName = "") { Q_UNUSED(loc); Q_UNUSED(fileName); }
-    void setTime(double secs);
     void setSatModel(int index = -1);
     void setSunModel(QString fileName = "");
-    void refresh();
     void refreshAll();
     void setFontNames(QFont font);
     void setFontNet(QFont font);
@@ -54,7 +52,6 @@ public:
     uint32_t colorNight() const {return clrNight;}
 
     QFont fontNet() const {return fntNet;}
-    double time() const {return m_time;}
 
     void showZRV(bool value);
     void showZRVLines(bool value);
@@ -65,8 +62,8 @@ public:
     void showNight(bool value);
     
     SatViewer *satviewer() { return m_satviewer; }
-    int indexSat() const {return m_indexSat;}
-    int indexLoc() const {return m_indexLoc;}
+//    int indexSat() const {return m_indexSat;}
+//    int indexLoc() const {return m_indexLoc;}
 
 //    Satellite * currentSat() {
 //        if ((m_indexSat < 0) || (m_indexSat >= satList.count())) return nullptr; // TODO move to cpp
@@ -78,19 +75,20 @@ public:
 //        return locList.at(m_indexLoc);
 //    }
 
-    void setIndexSat(int index);
-    void setIndexLoc(int index);
+//    void setIndexSat(int index);
+//    void setIndexLoc(int index);
 
 //    virtual void addSat(Satellite *sat);
 //    virtual void addLoc(Location *loc);
 //    void removeSat(Satellite *sat);
 //    void removeLoc(Location *loc);
-
+public slots:
+    void refresh(); //TODO private this
+    
 signals:
     void statusZRVChanged(QString text);
     void doubleClickedSat();
     void doubleClickedLoc();
-    void currentChanged(Satellite *sat, Location *loc, double *time);
     void zoomed(float value);
     void movedX(float value);
     void movedY(float value);
@@ -101,21 +99,21 @@ protected:
     GLuint m_colorNet, clrNetFont, clrNight;
     GLuint list_map, list_net, list_events, list_sun, list_loc, list_sat;
     bool list_map_ready, list_net_ready, list_events_ready, list_sun_ready, list_loc_ready, list_sat_ready, list_labels_ready;
-    double m_time;
     QOpenGLTexture *textureID;
     QFont fntNet;
     bool shwSun, shwNight;
     float m_zoom, m_dx, m_dy, m_dz;
-    int m_indexLoc, m_indexSat;
+//    int m_indexLoc, m_indexSat;
     QPoint pointMoveMap;
+    bool m_cursorOnSatellite, m_cursorOnLocation;
     virtual void initializeGL();
     virtual void paintGL();
     virtual void resizeGL(int width, int height);
-    virtual void compileMapList() {}
-    virtual void compileSatList() {}
-    virtual void compileLocList() {}
-    virtual void compileSunList() {}
-    virtual void compileEventsList() {}
+    virtual void compileMapList();
+    virtual void compileSatList();
+    virtual void compileLocList();
+    virtual void compileSunList();
+    virtual void compileEventsList();
     virtual float zoom(float value = 0.0);
     virtual float moveX(float value = 0.0);
     virtual float moveY(float value = 0.0);
