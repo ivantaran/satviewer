@@ -681,18 +681,14 @@ void SDlgOptions::addToLocList(const QModelIndex &index) {
 void SDlgOptions::delFromSatList(const QModelIndex &index) {
     QModelIndexList indexList = widget.listViewSat->selectionModel()->selectedIndexes();
     
-    std::vector<Satellite *> v { 
+    std::vector<Satellite *> v ( 
         m_satviewer->satellites().begin(), 
         m_satviewer->satellites().end() 
-    };
-    
+    );
+
     for (const auto& i : indexList) {
         m_satviewer->removeSatellite(v.at(i.row()));
-//        list.append(satWidget->satList.at(i.row()));
     }
-//    for (const auto& sat : list) {
-//        satWidget->satviewer()->removeSatellite(sat);
-//    }
 
     updateListViewSat();
 
@@ -701,7 +697,6 @@ void SDlgOptions::delFromSatList(const QModelIndex &index) {
     if (mIndex.isValid()) {
         widget.listViewSat->setCurrentIndex(mIndex);
     }
-    satWidget->refreshAll();
 }
 
 void SDlgOptions::delFromLocList(const QModelIndex &index) {
@@ -714,11 +709,7 @@ void SDlgOptions::delFromLocList(const QModelIndex &index) {
     
     for (const auto& i : indexList) {
         m_satviewer->removeLocation(v.at(i.row()));
-//        list.append(satWidget->locList.at(i.row()));
     }
-//    for (const auto& loc : list) {
-//        satWidget->satviewer()->removeLocation(loc);
-//    }
 
     updateListViewLoc();
     int position = index.isValid() ? index.row() : -1;
@@ -726,7 +717,6 @@ void SDlgOptions::delFromLocList(const QModelIndex &index) {
     if (mIndex.isValid()) {
         widget.listViewLoc->setCurrentIndex(mIndex);
     }
-    satWidget->refreshAll();
 }
 
 void SDlgOptions::scriptParameters() {
@@ -793,7 +783,7 @@ void SDlgOptions::setSatWidget(GLSatAbstractWidget *w) {
 //    if (widget.stackedWidget->widget(7) != NULL) {
 //        widget.stackedWidget->removeWidget(widget.stackedWidget->widget(7));
 //    }
-    widget.tabWidgetSettings->insertTab(4, satWidget->settingsWidget, "Map");
+    widget.tabWidgetSettings->insertTab(4, satWidget->settingsWidget, tr("Map"));
     satDialog->setSatWidget(satWidget);
     locDialog->setSatWidget(satWidget);
 }
@@ -803,11 +793,15 @@ void SDlgOptions::aboutQt() {
 }
 
 void SDlgOptions::clearSatList() {
-    widget.listViewSat->selectAll();
-    delFromSatList(widget.listViewSat->currentIndex());
+//    widget.listViewSat->selectAll();
+//    delFromSatList(widget.listViewSat->currentIndex());
+    m_satviewer->clearSatellites();
+    updateListViewSat();
 }
 
 void SDlgOptions::clearLocList() {
-    widget.listViewLoc->selectAll();
-    delFromLocList(widget.listViewLoc->currentIndex());
+//    widget.listViewLoc->selectAll();
+//    delFromLocList(widget.listViewLoc->currentIndex());
+    m_satviewer->clearLocations();
+    updateListViewLoc();
 }

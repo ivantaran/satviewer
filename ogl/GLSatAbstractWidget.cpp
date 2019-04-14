@@ -21,14 +21,9 @@
 GLSatAbstractWidget::GLSatAbstractWidget(SatViewer *satviewer, QWidget *parent) : QOpenGLWidget(parent) {
     m_satviewer = satviewer;
 //    initSatOgl();
-//    satList.clear();
-//    locList.clear();
     setMouseTracking(true);
 
     settingsWidget = new QWidget();
-
-//    m_indexLoc = -1;
-//    m_indexSat = -1;
 
     m_colorNet = 0xFF8B8B8B;
     clrNetFont = 0x0;
@@ -61,14 +56,10 @@ GLSatAbstractWidget::GLSatAbstractWidget(SatViewer *satviewer, QWidget *parent) 
 //    sun->modelInit(WGS84, 0, 0, 0, 0, 0, 0, 0, 0);
 //    sun->modelInit(0, 0);
 //    sun->setName("Sun");
-//    makeCurrent();
 }
 
 GLSatAbstractWidget::~GLSatAbstractWidget() {
     makeCurrent();
-//    satList.clear();
-//    locList.clear();
-//    ioList.clear();
     // TODO delete tex
     doneCurrent();
 }
@@ -228,44 +219,6 @@ void GLSatAbstractWidget::compileEventsList() {
     glNewList(list_events, GL_COMPILE);
     glEndList();
 }
-
-
-//void GLSatAbstractWidget::setIndexSat(int index) {
-//    m_indexSat = index;
-////    emit currentChanged(currentSat(), currentLoc(), &m_time);
-//}
-//
-//void GLSatAbstractWidget::setIndexLoc(int index) {
-//    m_indexLoc = index;
-//    refreshAll();
-////    emit currentChanged(currentSat(), currentLoc(), &m_time);
-//}
-
-//void GLSatAbstractWidget::addSat(Satellite* sat) {
-//    satList.append(sat);
-//}
-//
-//void GLSatAbstractWidget::addLoc(Location* loc) {
-//    locList.append(loc);
-//}
-//
-//void GLSatAbstractWidget::removeSat(Satellite *sat) {
-//    int pos = satList.indexOf(sat);
-//    if (pos == -1) return;
-//    ioList.deleteSat(satList.at(pos));
-//    satList.removeAt(pos);
-//    delete sat;
-//    setIndexSat(pos - 1);
-//}
-//
-//void GLSatAbstractWidget::removeLoc(Location *loc) {
-//    int pos = locList.indexOf(loc);
-//    if (pos == -1) return;
-//    ioList.deleteLoc(locList.at(pos));
-//    locList.removeAt(pos);
-//    delete loc;
-//    setIndexLoc(pos - 1);
-//}
 
 float GLSatAbstractWidget::zoom(float value) {
     m_zoom += value;

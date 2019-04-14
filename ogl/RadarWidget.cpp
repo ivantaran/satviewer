@@ -45,15 +45,15 @@ void RadarWidget::compileMapList() {
 
 //    glColor4ub(192, 64, 64, 192);
 
-    glEnable(GL_LINE_STIPPLE);
-    glLineStipple(1, 0xF0F0);
+//    glEnable(GL_LINE_STIPPLE);
+//    glLineStipple(1, 0xF0F0);
     glBegin(GL_LINES);
     glVertex2f(-1.0,  0.0);
     glVertex2f( 1.0,  0.0);
     glVertex2f( 0.0, -1.0);
     glVertex2f( 0.0,  1.0);
     glEnd();
-    glDisable(GL_LINE_STIPPLE);
+//    glDisable(GL_LINE_STIPPLE);
     
     glDisable(GL_BLEND);
     glEndList();
@@ -86,7 +86,7 @@ void RadarWidget::compileSatList() {
             glEnable(GL_BLEND);
             glEnable(GL_LINE_SMOOTH);
             glLineWidth(sat->linesWidth());
-            clr = 0xffffffff;//sat->colorTrack();
+            clr = sat->colorTrack();
             glColor4ubv((GLubyte *)&clr);
 
             glBegin(GL_LINE_STRIP);
@@ -100,6 +100,9 @@ void RadarWidget::compileSatList() {
                 for (double i = trackBegin; i < trackEnd; i += tper / 180.0) {
                     sat->model(i + m_satviewer->time());
                     SatViewer::aerv(loc->rg(), sat->rg(), aerv);
+                    if (aerv[1] < 0.0) {
+                        continue;
+                    }
                     px = (M_PI_2 - aerv[1]) * sin(aerv[0]) / M_PI_2;
                     py = (aerv[1] - M_PI_2) * cos(aerv[0]) / M_PI_2;
                     if (fabs(px - tmpx) > 1.75) {
@@ -128,10 +131,12 @@ void RadarWidget::compileSatList() {
 //        px = sat->longitude() / M_PI;
 //        py = -2.0 * sat->latitude() / M_PI;
         SatViewer::aerv(loc->rg(), sat->rg(), aerv);
-        px = (M_PI_2 - aerv[1]) * sin(aerv[0]) / M_PI_2;
-        py = (aerv[1] - M_PI_2) * cos(aerv[0]) / M_PI_2;
-        if (sat->satWObject) {
-            sat->satWObject->exec(px, py, 0.0);
+        if (aerv[1] >= 0.0) {
+            px = (M_PI_2 - aerv[1]) * sin(aerv[0]) / M_PI_2;
+            py = (aerv[1] - M_PI_2) * cos(aerv[0]) / M_PI_2;
+            if (sat->satWObject) {
+                sat->satWObject->exec(px, py, 0.0);
+            }
         }
     }
 

@@ -66,6 +66,14 @@ void SatViewer::removeLocation(Location *loc) {
 //    setIndexLoc(pos - 1);
 }
 
+void SatViewer::clearSatellites() {
+    m_satellites.clear();
+}
+
+void SatViewer::clearLocations() {
+    m_locations.clear();
+}
+
 Satellite *SatViewer::currentSatellite() {
     return m_currentSatellite;
 //    if ((m_currentSatellite >= 0) && 

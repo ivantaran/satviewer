@@ -23,13 +23,15 @@ public:
     void appendLocation(Location* loc);
     void removeSatellite(Satellite *sat);
     void removeLocation(Location *loc);
+    void clearSatellites();
+    void clearLocations();
     void setCurrentSatelliteIndex(long unsigned int index);
     void setCurrentLocationIndex(long unsigned int index);
     void setCurrentSatellite(Satellite* sat);
     void setCurrentLocation(Location* loc);
     void setTime(double value);
-    std::list<Satellite *> satellites() { return m_satellites; }
-    std::list<Location *> locations() { return m_locations; }
+    const std::list<Satellite *> &satellites() { return m_satellites; }
+    const std::list<Location *> &locations() { return m_locations; }
     Satellite *currentSatellite();
     Location *currentLocation();
     ZrvIoList *ioList() { return &m_ioList; }

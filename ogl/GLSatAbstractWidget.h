@@ -22,8 +22,6 @@ typedef Satellite * (*CustomSat)(); // TODO remove this
 class GLSatAbstractWidget : public QOpenGLWidget, protected QOpenGLFunctions_2_0 { // TODO QOpenGLWidget - to protected
     Q_OBJECT
 public:
-//    QList<Satellite *> satList;
-//    QList<Location *> locList;
 //    ZrvIoList ioList;
     QWidget *settingsWidget;
     typedef Satellite * (*CustomSat)();
@@ -62,26 +60,7 @@ public:
     void showNight(bool value);
     
     SatViewer *satviewer() { return m_satviewer; }
-//    int indexSat() const {return m_indexSat;}
-//    int indexLoc() const {return m_indexLoc;}
 
-//    Satellite * currentSat() {
-//        if ((m_indexSat < 0) || (m_indexSat >= satList.count())) return nullptr; // TODO move to cpp
-//        return satList.at(m_indexSat);
-//    }
-//
-//    Location * currentLoc() {
-//        if ((m_indexLoc < 0) || (m_indexLoc >= locList.count())) return nullptr; // TODO move to cpp
-//        return locList.at(m_indexLoc);
-//    }
-
-//    void setIndexSat(int index);
-//    void setIndexLoc(int index);
-
-//    virtual void addSat(Satellite *sat);
-//    virtual void addLoc(Location *loc);
-//    void removeSat(Satellite *sat);
-//    void removeLoc(Location *loc);
 public slots:
     void refresh(); //TODO private this
     
@@ -103,7 +82,6 @@ protected:
     QFont fntNet;
     bool shwSun, shwNight;
     float m_zoom, m_dx, m_dy, m_dz;
-//    int m_indexLoc, m_indexSat;
     QPoint pointMoveMap;
     bool m_cursorOnSatellite, m_cursorOnLocation;
     virtual void initializeGL();

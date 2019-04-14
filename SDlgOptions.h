@@ -15,7 +15,6 @@
 #include "zrvutils/ZrvIoList.h"
 #include "jscalc/SScriptFrame.h"
 #include "ogl/GLSatWidget.h"
-#include "crd/crd.h"
 #include "tleupd/SUpdater.h"
 #include "jswidgets/SWidgetList.h"
 
