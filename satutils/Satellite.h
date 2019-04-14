@@ -41,8 +41,8 @@ public:
     double nameX() const { return name_x; }
     double nameY() const { return name_y; }
 
-    double* xyz () { return r; }
-    double* vxyz() { return v; }
+    double *r() { return m_r; }
+//    double* vxyz() { return v; }
 
     double latitude     () const { return lat;          }
     double longitude    () const { return lon;          }
@@ -86,8 +86,8 @@ public:
     bool isAtctiveZone () const { return active_zone; }
     bool isVisibleTrackShadow() const { return show_track_shadow; }
 
-    double* xyz_g ();
-    double* vxyz_g();
+    double *rg();
+//    double* vxyz_g();
 
     void setLocation(bool location);
     bool isLocation() const;
@@ -96,10 +96,10 @@ public:
 
 protected:
     double lon, lat, _altitude;
-    double r[3] = {0.0, 0.0, 0.0};
-    double v[3] = {0.0, 0.0, 0.0};
-    double r_g[3] = {0.0, 0.0, 0.0};
-    double v_g[3] = {0.0, 0.0, 0.0};
+    double m_r[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+//    double v[3] = {0.0, 0.0, 0.0};
+    double m_rg[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+//    double v_g[3] = {0.0, 0.0, 0.0};
     double zrv;
     double radius_earth;
     void getGeod();

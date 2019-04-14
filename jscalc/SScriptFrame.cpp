@@ -48,11 +48,9 @@ void SScriptFrame::reload() {
     QJSValue ascSat =  engine.newArray(6);
     QJSValue ascLoc =  engine.newArray(6);
     
-    for (int i = 0; i < 3; i++) {
-        ascSat.setProperty(i, m_sat->xyz_g()[i]);
-        ascSat.setProperty(i + 3, m_sat->vxyz_g()[i]);
-        ascLoc.setProperty(i, m_loc->xyz()[i]);
-        ascLoc.setProperty(i + 3, 0.0);
+    for (int i = 0; i < 6; i++) {
+        ascSat.setProperty(i, m_sat->rg()[i]);
+        ascLoc.setProperty(i, m_loc->rg()[i]);
     }
 
     engine.globalObject().setProperty("ascSat", ascSat);

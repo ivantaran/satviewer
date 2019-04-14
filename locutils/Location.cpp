@@ -43,9 +43,12 @@ Location::Location(void) {
     _zrlWidth = 0.0;
     _zrlAzimuth = 0.0;
     _zrlRange = 0.0;
-    r[0] = 0.0;
-    r[1] = 0.0;
-    r[2] = 0.0;
+    m_rg[0] = 0.0;
+    m_rg[1] = 0.0;
+    m_rg[2] = 0.0;
+    m_rg[3] = 0.0;
+    m_rg[4] = 0.0;
+    m_rg[5] = 0.0;
 }
 
 Location::~Location(void) {
@@ -89,10 +92,10 @@ void Location::calcXYZ() {
     double const b_axis = 6356752.31;  //WGS-84 earth's semi minor axis
     double const e1sqr = ((a_axis * a_axis - b_axis * b_axis) / (a_axis * a_axis));
     double N = a_axis / sqrt(1.0 - e1sqr * sin(lat*M_PI/180.0) * sin(lat*M_PI/180.0));
-
-    r[0] = (N + _height)*cos(lat*M_PI/180.0)*cos(lon*M_PI/180.0);
-    r[1] = (N + _height)*cos(lat*M_PI/180.0)*sin(lon*M_PI/180.0);
-    r[2] = (N*(1.0 - e1sqr) + _height)*sin(lat*M_PI/180.0);
+    //TODO
+    m_rg[0] = (N + _height)*cos(lat*M_PI/180.0)*cos(lon*M_PI/180.0);
+    m_rg[1] = (N + _height)*cos(lat*M_PI/180.0)*sin(lon*M_PI/180.0);
+    m_rg[2] = (N*(1.0 - e1sqr) + _height)*sin(lat*M_PI/180.0);
 }
 
 void Location::setLatitude(double latitude) {

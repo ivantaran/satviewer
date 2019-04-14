@@ -13,7 +13,7 @@
 SWindow::SWindow(SatViewer *satviewer) {
     widget.setupUi(this);
     originalPalette = qApp->palette();
-    
+
     m_satviewer = satviewer;
     language = tr("English");
 
@@ -105,7 +105,7 @@ SWindow::SWindow(SatViewer *satviewer) {
     // readSettings();
     // enumSatModelList();
     
-    RadarWidget *radarWidget = new RadarWidget(satviewer, this);
+    radarWidget = new RadarWidget(satviewer, this);
     radarWidget->resize(512, 512);
     radarWidget->move(128, 128);
     radarWidget->setWindowFlag(Qt::Window);
@@ -340,7 +340,7 @@ void SWindow::onTimer() {
     }
     
     m_satviewer->setTime(time);
-    satWidget->update();// TODO remove this?
+    
 }
 
 void SWindow::onPlayClick() {

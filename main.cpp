@@ -43,6 +43,8 @@ void copyDefault() {
 }
 
 int main(int argc, char *argv[]) {
+//    QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+    QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
     QApplication app(argc, argv);
 
 //    QSurfaceFormat format;

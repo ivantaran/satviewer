@@ -24,12 +24,10 @@ HEADERS += \
     ogl/GLSatWidget.h \
     ogl/RadarWidget.h \
     ogl/GLSatWidget3d.h \
-    ogl/satogl.h \
     satutils/Satellite.h \
     satutils/TleReader.h \
     locutils/Location.h \
     zrvutils/ZrvIoList.h \
-    crd/crd.h \
     tleupd/SUpdater.h \
     sql/dbsql.h \
     jswidgets/SWidget.h \
@@ -55,12 +53,10 @@ SOURCES += \
     ogl/GLSatWidget.cpp \
     ogl/RadarWidget.cpp \
     ogl/GLSatWidget3d.cpp \
-    ogl/satogl.cpp \
     satutils/Satellite.cpp \
     satutils/TleReader.cpp \
     locutils/Location.cpp \
     zrvutils/ZrvIoList.cpp \ 
-    crd/crd.cpp \
     tleupd/SUpdater.cpp \
     jswidgets/SWidget.cpp \
     jswidgets/SWidgetList.cpp \

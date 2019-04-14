@@ -45,6 +45,7 @@ private:
     Location *m_currentLocation;
     double m_time;
     ZrvIoList m_ioList;
+    static void aerv();
     
 };
 

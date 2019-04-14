@@ -18,7 +18,7 @@ RadarWidget::~RadarWidget() {
 }
 
 void RadarWidget::compileMapList() {
-    
+
     glNewList(list_map, GL_COMPILE);
     glEndList();
 

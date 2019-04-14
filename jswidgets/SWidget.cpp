@@ -14,7 +14,7 @@
 #include <QDebug>
 
 SWidget::SWidget(QWidget *parent, QString fileName) {
-    m_sat = 0;
+    m_sat = 0; //TODO nullptr, fileName - const
     m_loc = 0;
     m_time = 0;
     m_maskColor = Qt::magenta;
@@ -171,11 +171,9 @@ void SWidget::setVars() {
     engine.globalObject().setProperty("nameLoc", m_loc->name());
     QJSValue ascSat =  engine.newArray(6);
     QJSValue ascLoc =  engine.newArray(6);
-    for (int i = 0; i < 3; i++) {
-        ascSat.setProperty(i    , m_sat->xyz_g()[i] );
-        ascSat.setProperty(i + 3, m_sat->vxyz_g()[i]);
-        ascLoc.setProperty(i    , m_loc->xyz()[i]   );
-        ascLoc.setProperty(i + 3, 0.0               );
+    for (int i = 0; i < 6; i++) {
+        ascSat.setProperty(i, m_sat->rg()[i]);
+        ascLoc.setProperty(i, m_loc->rg()[i]);
     }
     engine.globalObject().setProperty("ascSat", ascSat);
     engine.globalObject().setProperty("ascLoc", ascLoc);

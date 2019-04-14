@@ -198,23 +198,23 @@ void GLSatWidget3d::compileSatList() {
             trackEnd = sat->track()*(0.5*tper + tper/180.0);
             for (double i = trackBegin; i < trackEnd; i += tper/180.0) {
                 sat->model(i + m_satviewer->time());
-                glVertex3f(sat->xyz_g()[0]/radiusEarth, sat->xyz_g()[1]/radiusEarth, sat->xyz_g()[2]/radiusEarth);
+                glVertex3f(sat->rg()[0]/radiusEarth, sat->rg()[1]/radiusEarth, sat->rg()[2]/radiusEarth);
             }
             glEnd();
             glPopAttrib();
         }
 
         sat->model(m_satviewer->time());
-        float r = sqrtf(sat->xyz_g()[0]*sat->xyz_g()[0] + sat->xyz_g()[1]*sat->xyz_g()[1] + sat->xyz_g()[2]*sat->xyz_g()[2]);
-        float rz = sqrtf(sat->xyz_g()[0]*sat->xyz_g()[0] + sat->xyz_g()[1]*sat->xyz_g()[1]);
+        float r = sqrtf(sat->rg()[0]*sat->rg()[0] + sat->rg()[1]*sat->rg()[1] + sat->rg()[2]*sat->rg()[2]);
+        float rz = sqrtf(sat->rg()[0]*sat->rg()[0] + sat->rg()[1]*sat->rg()[1]);
         glPushMatrix();
         globjSat->move(0, 0, 0);
         globjSat->rotateX(0);
         globjSat->rotateY(0);
         globjSat->rotateY(0);
-        float arzx = acosf(sat->xyz_g()[0]/rz)*180/M_PI;
-        float az = acosf(sat->xyz_g()[2]/r)*180/M_PI;
-        if (sat->xyz_g()[1] < 0) arzx = -arzx;
+        float arzx = acosf(sat->rg()[0]/rz)*180/M_PI;
+        float az = acosf(sat->rg()[2]/r)*180/M_PI;
+        if (sat->rg()[1] < 0) arzx = -arzx;
         glRotatef(arzx, 0, 0, 1);
         glRotatef(az, 0, 1, 0);
         glRotatef(-arzx, 0, 0, 1);
@@ -222,7 +222,7 @@ void GLSatWidget3d::compileSatList() {
         globjSat->exec();
         glPopMatrix();
     }
-	glEndList();
+    glEndList();
 }
 
 void GLSatWidget3d::renderText(float x, float y, const QString& text, int color, const QFont &font) {

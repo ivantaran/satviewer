@@ -1,4 +1,4 @@
-**TODO list**
+## TODO list:
 - [ ] netfont select dialog
 - [ ] merge list_net and list_map
 - [ ] locList coords as radians
@@ -12,3 +12,6 @@
 - [ ] \n \r\n in .obj
 - [ ] small indent in html
 - [ ] libpng warning: iCCP: known incorrect sRGB profile
+- [ ] remove crd.h, satogl.h
+- [ ] move current cursor on paused click
+- [ ] radians - degrees conversions

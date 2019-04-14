@@ -274,18 +274,18 @@ bool GLSatWidget::testShadow(Satellite *sat, Satellite *sun) {
         return true;
     }
     
-    double r_sat = sqrt(sat->xyz()[0] * sat->xyz()[0] 
-        + sat->xyz()[1] * sat->xyz()[1] + sat->xyz()[2] * sat->xyz()[2]);
-    double r_sun = sqrt(sun->xyz()[0] * sun->xyz()[0] 
-        + sun->xyz()[1] * sun->xyz()[1] + sun->xyz()[2] * sun->xyz()[2]);
+    double r_sat = sqrt(sat->r()[0] * sat->r()[0] 
+        + sat->r()[1] * sat->r()[1] + sat->r()[2] * sat->r()[2]);
+    double r_sun = sqrt(sun->r()[0] * sun->r()[0] 
+        + sun->r()[1] * sun->r()[1] + sun->r()[2] * sun->r()[2]);
     
     if ((r_sat == 0.0) || (r_sun == 0.0) || (sat->radiusEarth() > r_sat)) { // TODO: compare with epsilon
         return true;
     }
     
     double f = asin(sat->radiusEarth() / r_sat);
-    double l = M_PI - acos((sat->xyz()[0] * sun->xyz()[0] 
-        + sat->xyz()[1] * sun->xyz()[1] + sat->xyz()[2] * sun->xyz()[2]) 
+    double l = M_PI - acos((sat->r()[0] * sun->r()[0] 
+        + sat->r()[1] * sun->r()[1] + sat->r()[2] * sun->r()[2]) 
                 / (r_sat * r_sun));
     
     if ((-f < l) && (l < f)) {

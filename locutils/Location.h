@@ -40,7 +40,7 @@ public:
     inline double latitude () { return lat;     }
     inline double longitude() { return lon;     }
     inline double height   () { return _height; }
-    inline double *xyz     () { return r;       }
+    inline double *rg       () { return m_rg;       }
 
     inline double zrlWidth  () { return _zrlWidth;   }
     inline double zrlAzimuth() { return _zrlAzimuth; }
@@ -87,6 +87,6 @@ private:
     double lines_width;
     double lat, lon, _height;
     double _zrlWidth, _zrlAzimuth, _zrlRange;
-    double r[3];
+    double m_rg[6];
 };
 #endif /* LOCATION_H_ */

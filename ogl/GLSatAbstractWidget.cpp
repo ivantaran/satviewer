@@ -56,7 +56,6 @@ GLSatAbstractWidget::GLSatAbstractWidget(SatViewer *satviewer, QWidget *parent) 
     list_loc_ready       = true;
     list_sat_ready       = true;
     list_labels_ready    = true;
-    connect(m_satviewer, SIGNAL(timeChanged()), this, SLOT(refresh()));
 //    setSunModel();
 //    sun = getSunModel();
 //    sun->modelInit(WGS84, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -79,7 +78,7 @@ void GLSatAbstractWidget::initializeGL() {
     bool ok = initializeOpenGLFunctions();
     
     assert(ok);
-    
+
 //    setAutoBufferSwap(false); //TODO
     glClearColor(0.1, 0.1, 0.1, 0.0);
     //glShadeModel(GL_FLAT);
@@ -94,10 +93,10 @@ void GLSatAbstractWidget::initializeGL() {
     glBlendFunc(GL_SRC_COLOR, GL_DST_COLOR);
 //    glBlendFunc(GL_DST_COLOR, GL_SRC_COLOR);
 //    loadTexture();
-    list_map    = glGenLists(6);
-
+    list_map = glGenLists(6);
+    qWarning() << "list_map" << list_map << endl;
     assert(list_map > 0);
-    
+
     list_net    = list_map + 1;
     list_sat    = list_map + 2;
     list_loc    = list_map + 3;
@@ -107,6 +106,8 @@ void GLSatAbstractWidget::initializeGL() {
     emit initialized();
     
     readSettings();
+    
+    connect(m_satviewer, SIGNAL(timeChanged()), this, SLOT(refresh()));
 }
 
 void GLSatAbstractWidget::paintGL() {
@@ -138,7 +139,7 @@ void GLSatAbstractWidget::refreshAll() {
     compileLocList();
     compileEventsList();
     compileSunList();
-    paintGL();
+    update();
 }
 
 void GLSatAbstractWidget::loadTexture(QString filePath) {
@@ -157,12 +158,13 @@ void GLSatAbstractWidget::refresh() {
         return;
     }
 //	compileMapList();
-	compileSatList();
-	compileEventsList();
+    compileSatList();
+    compileEventsList();
 //	compileLocList();
-	compileSunList();
+    compileSunList();
 //	refreshAll();
-	paintGL();
+//	paintGL();
+    update();
 }
 
 void GLSatAbstractWidget::setFontNet(QFont font) {

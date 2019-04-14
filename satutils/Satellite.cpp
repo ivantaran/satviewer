@@ -72,15 +72,15 @@ void Satellite::getGeod() {
     //second numerical eccentricity
     double const e2sqr = ((a_axis * a_axis - b_axis * b_axis) / (b_axis * b_axis));
 
-    p = sqrt(r[0] * r[0] + r[1] * r[1]);
-    T = atan(r[2] * a_axis / (p * b_axis));
+    p = sqrt(m_r[0] * m_r[0] + m_r[1] * m_r[1]);
+    T = atan(m_r[2] * a_axis / (p * b_axis));
     sT = sin(T);
     cT = cos(T);
   
-    lat = atan2(r[2] + e2sqr * b_axis * sT * sT * sT, p - e1sqr * a_axis * cT * cT * cT);
-    lon = atan2(r[1], r[0]);
+    lat = atan2(m_r[2] + e2sqr * b_axis * sT * sT * sT, p - e1sqr * a_axis * cT * cT * cT);
+    lon = atan2(m_r[1], m_r[0]);
 
-    lon -= WZ * minutes() * 60 + gsto();
+    lon -= WZ * minutes() * 60.0 + gsto();
     lon = fmod(lon + 3.0 * M_PI, 2.0 * M_PI) - M_PI;
     if (lon < -M_PI) lon += 2.0 * M_PI;
 
@@ -118,24 +118,27 @@ void Satellite::setName(QString name) {
     _name = name;
 }
 
-double* Satellite::xyz_g() {
-    double const WZ = 7.2921151467e-5;
-    double alpha = WZ * minutes() * 60 + gsto();
-    r_g[0] =  cos(alpha) * r[0] + sin(alpha) * r[1];
-    r_g[1] = -sin(alpha) * r[0] + cos(alpha) * r[1];
-    r_g[2] =  r[2];
-    return r_g;
+double *Satellite::rg() {
+    double const WZ = 7.2921151467e-5; // TODO
+    double alpha = WZ * minutes() * 60.0 + gsto();
+    m_rg[0] =  cos(alpha) * m_r[0] + sin(alpha) * m_r[1];
+    m_rg[1] = -sin(alpha) * m_r[0] + cos(alpha) * m_r[1];
+    m_rg[2] =  m_r[2];
+    m_rg[3] =  cos(alpha) * m_r[3] + sin(alpha) * m_r[4] + WZ * m_rg[1];
+    m_rg[4] = -sin(alpha) * m_r[3] + cos(alpha) * m_r[4] - WZ * m_rg[0];
+    m_rg[5] =  m_r[5];
+    return m_rg;
 }
 
-double* Satellite::vxyz_g() {
-    double const WZ = 7.2921151467e-5;
-    double alpha = WZ * minutes() * 60 + gsto();
-    xyz_g();
-    v_g[0] =  cos(alpha) * v[0] + sin(alpha) * v[1] + WZ * r_g[1];
-    v_g[1] = -sin(alpha) * v[0] + cos(alpha) * v[1] - WZ * r_g[0];
-    v_g[2] =  v[2];
-    return v_g;
-}
+//double* Satellite::vxyz_g() {
+//    double const WZ = 7.2921151467e-5;
+//    double alpha = WZ * minutes() * 60.0 + gsto();
+//    xyz_g();
+//    v_g[0] =  cos(alpha) * v[0] + sin(alpha) * v[1] + WZ * r_g[1];
+//    v_g[1] = -sin(alpha) * v[0] + cos(alpha) * v[1] - WZ * r_g[0];
+//    v_g[2] =  v[2];
+//    return v_g;
+//}
 
 void Satellite::setZrv(double value) {
     if (value > M_PI_2) {

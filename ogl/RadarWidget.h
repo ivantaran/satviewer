@@ -23,7 +23,7 @@ private:
     void compileMapList();
     void compileSatList();
 //    void compileLocList() {}
-//    void compileSunList() {}
+//    void compileSunList() {GLSatAbstractWidget::compileSunList();}
 //    void compileEventsList() {}
 //    float zoom(float value = 0.0) {}
 //    float moveX(float value = 0.0) {}

@@ -38,6 +38,7 @@ private:
     Ui::MainWindow widget;
     QPalette originalPalette;
     GLSatAbstractWidget *satWidget;
+    RadarWidget *radarWidget;
     double time, timeStep, timeX;
     int timeType;
     QShortcut *shcFullScreen, *shcEscFullScreen;
