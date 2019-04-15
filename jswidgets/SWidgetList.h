@@ -16,15 +16,15 @@
 class SWidgetList : public QWidget, private QList <SWidget *> {
     Q_OBJECT
 public:
-    SWidgetList(QWidget *parent = 0);
-    void init(QWidget *desktop = 0, QString path = "");
+    SWidgetList(QWidget *parent = nullptr);
+    void init(QWidget *desktop = nullptr, const QString &path = "");
     virtual ~SWidgetList();
     void setVars(Satellite *sat, Location *loc, double *time);
     inline void retranslateUi() { ui.retranslateUi(this); }
     void setDesktop(QWidget *desktop);
 private:
     Ui::JsWidgetList ui;
-    QFile *stateFile;
+    QFile stateFile;
     void load();
 private slots:
     void save();

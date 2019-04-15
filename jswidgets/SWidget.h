@@ -18,14 +18,14 @@
 class SWidget : public QWidget {
     Q_OBJECT
 public:
-    SWidget(QWidget *parent = 0, QString fileName = "");
+    SWidget(QWidget* parent = nullptr, const QString &fileName = "");
     virtual ~SWidget();
     void set(Satellite *sat, Location *loc, double *time);
     inline QString title() { return m_title; }
     void activate(bool state = true);
 
 public slots:
-    void drawText(int x, int y, QString text);
+    void drawText(int x, int y, const QString &text);
     void fill(int value);
     void setPen(int value);
     void setFont(QString name, int pointSize, int weight, bool italic);
@@ -33,7 +33,7 @@ public slots:
     void setPos(int x, int y);
     void setInterval(int value);
     void setMaskColor(int value);
-    int textWidth(QString text);
+    int textWidth(const QString &text);
     int fontHeight();
 
 protected:
@@ -46,7 +46,8 @@ private:
     QPixmap pixmap;
     QPainter canvas;
     QColor m_maskColor, m_fillColor;
-    QTimer *timer;
+    int m_timer;
+    int m_interval;
     QString script;
     QString m_title;
     QJSEngine engine;
@@ -54,7 +55,8 @@ private:
     Location *m_loc;
     double *m_time;
     void setVars();
-
+    void timerEvent(QTimerEvent *event);
+    
 private slots:
     void onTimer();
 };

@@ -13,26 +13,29 @@
 #include <QTimer>
 #include <QDebug>
 
-SWidget::SWidget(QWidget *parent, QString fileName) {
-    m_sat = 0; //TODO nullptr, fileName - const
-    m_loc = 0;
-    m_time = 0;
+SWidget::SWidget(QWidget *parent, const QString &fileName) : QWidget(parent) {
+    m_sat = nullptr;
+    m_loc = nullptr;
+    m_time = nullptr;
     m_maskColor = Qt::magenta;
     m_fillColor = Qt::black;
     this->resize(64, 32);
+    
     QFile file(fileName);
-    if (!file.open(QFile::ReadOnly)) {
+    if (!file.open(QFile::ReadOnly | QFile::Text)) {
         qWarning() << "Error script file open: " << file.errorString();
         return;
     }
     QTextStream stream(&file);
     script = stream.readAll();
     file.close();
+    
     QJSValue scriptCanvas = engine.newQObject(this);
     engine.globalObject().setProperty("canvas", scriptCanvas);
+    
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint);
     setCursor(Qt::OpenHandCursor);
-    this->setParent(parent);
+    
     pixmap = QPixmap(width(), height());
     pixmap.fill(Qt::black);
     if (!canvas.begin(&pixmap)) {
@@ -41,11 +44,16 @@ SWidget::SWidget(QWidget *parent, QString fileName) {
 
     engine.evaluate(script);
     m_title = engine.globalObject().property("title").toString();
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(onTimer()));
-    timer->setInterval(1000);
-    timer->start();
+    
+    m_interval = 1000;
+    m_timer = startTimer(m_interval);
     this->onTimer();
+}
+
+void SWidget::timerEvent(QTimerEvent *event) {
+    if (event->timerId() == m_timer) {
+        onTimer();
+    }
 }
 
 void SWidget::paintEvent(QPaintEvent *event) {
@@ -88,11 +96,11 @@ void SWidget::onTimer() {
     repaint();
 }
 
-void SWidget::drawText(int x, int y, QString text) {
+void SWidget::drawText(int x, int y, const QString &text) {
     canvas.drawText(x, y, text);
 }
 
-int SWidget::textWidth(QString text) {
+int SWidget::textWidth(const QString &text) {
     return canvas.fontMetrics().width(text);
 }
 
@@ -149,7 +157,10 @@ void SWidget::setPos(int x, int y) {
 }
 
 void SWidget::setInterval(int value) {
-    timer->setInterval(value);
+    m_interval = value;
+    if (m_timer >= 0) {
+        activate(true);
+    }
 }
 
 void SWidget::setMaskColor(int value) {
@@ -189,12 +200,15 @@ void SWidget::set(Satellite *sat, Location *loc, double *time) {
 }
 
 void SWidget::activate(bool state) {
+    if (m_timer >= 0) {
+        killTimer(m_timer);
+        m_timer = -1;
+    }
     if (state) {
-        timer->start();
+        m_timer = startTimer(m_interval);
         show();
     }
     else {
-        timer->stop();
         hide();
     }
 }
