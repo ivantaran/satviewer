@@ -9,6 +9,7 @@
 #define RADARWIDGET_H
 
 #include "GLSatAbstractWidget.h"
+#include "glsprite/GLSprite.h"
 
 class RadarWidget : public GLSatAbstractWidget {
     Q_OBJECT
@@ -17,13 +18,15 @@ public:
 //    RadarWidget(const RadarWidget& orig);
     virtual ~RadarWidget();
 private:
-//    void initializeGL();
+    GLSprite sprite_current, sprite_sun;
+    void initializeGL();
 //    void paintGL();
 //    void resizeGL(int width, int height) {}
     void compileMapList();
     void compileSatList();
+    static void polar2ortho(GLfloat azm, GLfloat elv, GLfloat &x, GLfloat &y);
 //    void compileLocList() {}
-//    void compileSunList() {GLSatAbstractWidget::compileSunList();}
+    void compileSunList();
 //    void compileEventsList() {}
 //    float zoom(float value = 0.0) {}
 //    float moveX(float value = 0.0) {}

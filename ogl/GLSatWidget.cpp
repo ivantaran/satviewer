@@ -671,8 +671,7 @@ void GLSatWidget::compileMapList() {
 }
 
 void GLSatWidget::compileSatList() {
-    float px, py, tmpx, tmpy, tper = 0;
-    float trackBegin, trackEnd;
+    float px, py, tmpx, tmpy;
     GLuint clr;
     
     if (m_satviewer->satellites().empty()) {
@@ -703,9 +702,9 @@ void GLSatWidget::compileSatList() {
             glLineWidth(sat->linesWidth());
 
             glBegin(GL_LINE_STRIP);
-                tper = 120.0 * M_PI / sat->meanMotion(); //move this line
-                trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
-                trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
+                double tper = 120.0 * M_PI / sat->meanMotion(); //TODO move this line
+                double trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
+                double trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
                 sat->model(trackBegin + m_satviewer->time());
                 tmpx = sat->longitude() / M_PI;
                 tmpy = -2.0 * sat->latitude() / M_PI;

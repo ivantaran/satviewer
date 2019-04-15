@@ -6,6 +6,7 @@
  */
 
 #include "RadarWidget.h"
+#include "../models/sun/sunmodel.h"
 
 RadarWidget::RadarWidget(SatViewer *satviewer, QWidget *parent) : GLSatAbstractWidget(satviewer, parent) {
     m_colorNet = 0x00808080;
@@ -15,6 +16,14 @@ RadarWidget::RadarWidget(SatViewer *satviewer, QWidget *parent) : GLSatAbstractW
 //}
 
 RadarWidget::~RadarWidget() {
+}
+
+void RadarWidget::initializeGL() {
+    GLSatAbstractWidget::initializeGL();
+    QDir dir = QDir::home();
+    dir.cd("satviewer/icons");
+    sprite_current.load(dir.filePath("current.png"), this);
+    sprite_sun.load(dir.filePath("sun.png"), this);
 }
 
 void RadarWidget::compileMapList() {
@@ -59,9 +68,13 @@ void RadarWidget::compileMapList() {
     glEndList();
 }
 
+void RadarWidget::polar2ortho(GLfloat azm, GLfloat elv, GLfloat &x, GLfloat &y) {
+    x = ((GLfloat)M_PI_2 - elv) * sinf(azm) / (GLfloat)M_PI_2;
+    y = (elv - (GLfloat)M_PI_2) * cosf(azm) / (GLfloat)M_PI_2;
+}
+
 void RadarWidget::compileSatList() {
-    GLfloat px, py, tmpx, tmpy, tper = 0;
-    GLfloat trackBegin, trackEnd;
+    GLfloat px, py;
     GLuint clr;
     double aerv[4];
     
@@ -90,37 +103,28 @@ void RadarWidget::compileSatList() {
             glColor4ubv((GLubyte *)&clr);
 
             glBegin(GL_LINE_STRIP);
-                tper = 120.0 * M_PI / sat->meanMotion(); //move this line
-                trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
-                trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
-                sat->model(trackBegin + m_satviewer->time());
+            
+            double tper = 120.0 * M_PI / sat->meanMotion(); //TODO move this line
+            double trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
+            double trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
+            bool inZone = false;
+            for (double i = trackBegin; i < trackEnd; i += tper / 180.0) {
+                sat->model(i + m_satviewer->time());
                 SatViewer::aerv(loc->rg(), sat->rg(), aerv);
-                tmpx = (M_PI_2 - aerv[1]) * sin(aerv[0]) / M_PI_2;
-                tmpy = (aerv[1] - M_PI_2) * cos(aerv[0]) / M_PI_2;
-                for (double i = trackBegin; i < trackEnd; i += tper / 180.0) {
-                    sat->model(i + m_satviewer->time());
-                    SatViewer::aerv(loc->rg(), sat->rg(), aerv);
-                    if (aerv[1] < 0.0) {
-                        continue;
+                if (aerv[1] < 0.0) {
+                    if (inZone) {
+                        inZone = false;
+                        glEnd();
+                        glBegin(GL_LINE_STRIP);
                     }
-                    px = (M_PI_2 - aerv[1]) * sin(aerv[0]) / M_PI_2;
-                    py = (aerv[1] - M_PI_2) * cos(aerv[0]) / M_PI_2;
-                    if (fabs(px - tmpx) > 1.75) {
-                        if (px > tmpx) {
-                            glVertex2f(-1.0, 0.5 * (py + tmpy));
-                            glEnd(); glBegin(GL_LINE_STRIP);
-                            glVertex2f( 1.0, 0.5 * (py + tmpy));
-                        }
-                        else {
-                            glVertex2f( 1.0, 0.5 * (py + tmpy));
-                            glEnd(); glBegin(GL_LINE_STRIP);
-                            glVertex2f(-1.0, 0.5 * (py + tmpy));
-                        }
-                    }
-                    glVertex2f(px, py);
-                    tmpx = px;
-                    tmpy = py;
                 }
+                else {
+                    inZone = true;
+                    polar2ortho(aerv[0], aerv[1], px, py);
+                    glVertex2f(px, py);
+                }
+            }
+            
             glEnd();
 
             glDisable(GL_BLEND);
@@ -128,26 +132,52 @@ void RadarWidget::compileSatList() {
         }
 
         sat->model(m_satviewer->time());
-//        px = sat->longitude() / M_PI;
-//        py = -2.0 * sat->latitude() / M_PI;
         SatViewer::aerv(loc->rg(), sat->rg(), aerv);
         if (aerv[1] >= 0.0) {
-            px = (M_PI_2 - aerv[1]) * sin(aerv[0]) / M_PI_2;
-            py = (aerv[1] - M_PI_2) * cos(aerv[0]) / M_PI_2;
+            polar2ortho(aerv[0], aerv[1], px, py);
             if (sat->satWObject) {
                 sat->satWObject->exec(px, py, 0.0);
             }
         }
     }
 
-//    Satellite *sat = currentSat();
-//    if (sat == nullptr) {
-//        sat = satList.first();
-//    }
-//    sat->model(m_time);
-//    px = sat->longitude() / M_PI;
-//    py = -2.0 * sat->latitude() / M_PI;
-//    sprite_current.exec(px, py, 0.0);
+    Satellite *sat = m_satviewer->currentSatellite();
+    if (sat != nullptr) {
+        sat->model(m_satviewer->time());
+        SatViewer::aerv(loc->rg(), sat->rg(), aerv);
+        if (aerv[1] >= 0.0) {
+            polar2ortho(aerv[0], aerv[1], px, py);
+            sprite_current.exec(px, py, 0.0);
+        }
+    }
+        
+    glEndList();
+}
+
+void RadarWidget::compileSunList() {
+    
+    Location *loc = m_satviewer->currentLocation();
+    
+    if (loc == nullptr) {
+        glNewList(list_sun, GL_COMPILE);
+        glEndList();
+        return;
+    }
+    
+    glNewList(list_sun, GL_COMPILE);
+
+    if (shwSun) {
+        double azm = 0.0;
+        double elv = 0.0;
+        sunmodel_ae((time_t)m_satviewer->time(), 
+                qDegreesToRadians(loc->latitude()), 
+                qDegreesToRadians(loc->longitude()), &azm, &elv, 'n');
+        if (elv >= 0.0) {
+            GLfloat px, py;
+            polar2ortho(azm, elv, px, py);
+            sprite_sun.exec(px, py, 0.0);
+        }
+    }
         
     glEndList();
 }
