@@ -26,6 +26,13 @@ void RadarWidget::initializeGL() {
     dir.cd("satviewer/icons");
     sprite_current.load(dir.filePath("current.png"), this);
     sprite_sun.load(dir.filePath("sun.png"), this);
+    
+    connect(
+        m_satviewer, 
+        SIGNAL(currentChanged(Satellite *, Location *, double *)), 
+        this, 
+        SLOT(onCurrentChanged(Satellite *, Location *, double *))
+    );
 }
 
 void RadarWidget::compileMapList() {
@@ -248,4 +255,10 @@ void RadarWidget::paintEvent(QPaintEvent *event) {
 //    }
     
     painter.end();
+}
+
+void RadarWidget::onCurrentChanged(Satellite *sat, Location *loc, double *time) {
+    Q_UNUSED(sat);
+    Q_UNUSED(time);
+    setWindowTitle(loc->name());
 }

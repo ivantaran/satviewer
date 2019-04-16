@@ -105,8 +105,10 @@ SWindow::SWindow(SatViewer *satviewer) {
     // readSettings();
     // enumSatModelList();
     radarWidget = new RadarWidget(satviewer, this);
+    radarWidget->setWindowFlags(Qt::Tool);
     radarWidget->resize(512, 512);
-    radarWidget->move(0, 0);
+//    radarWidget->move(0, 0);
+//    connect(radarWidget, SIGNAL(initialized()), this, SLOT(onStart()));
 //    radarWidget->setWindowFlags(Qt::Tool);
 //    radarWidget->show();
     QTimer::singleShot(0, this, SLOT(onStart()));
@@ -321,7 +323,9 @@ void SWindow::addZRVMessage(QString text) {
 
 void SWindow::onStart() {
 //    radarWidget->setWindowFlags(Qt::Tool);
-//    radarWidget->show();
+//    radarWidget->resize(512, 512);
+//    radarWidget->move(0, 0);
+    radarWidget->show();
 }
 
 void SWindow::onTimer() {
@@ -345,7 +349,6 @@ void SWindow::onTimer() {
     }
     
     m_satviewer->setTime(time);
-    
 }
 
 void SWindow::onPlayClick() {

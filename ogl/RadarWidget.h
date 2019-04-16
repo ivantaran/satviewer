@@ -35,7 +35,8 @@ private:
 //    float zoom(float value = 0.0) {}
 //    float moveX(float value = 0.0) {}
 //    float moveY(float value = 0.0) {}
-
+private slots:
+    void onCurrentChanged(Satellite *sat, Location *loc, double *time);
 };
 
 #endif /* RADARWIDGET_H */
