@@ -16,7 +16,7 @@ SWindow::SWindow(SatViewer *satviewer) {
 
     m_satviewer = satviewer;
     language = tr("English");
-
+    
     labelLoc.setMinimumWidth(32);
     labelSat.setMinimumWidth(32);
     labelLoc.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
@@ -104,12 +104,12 @@ SWindow::SWindow(SatViewer *satviewer) {
             this, SLOT(setSwlVars(Satellite*, Location*, double*)));
     // readSettings();
     // enumSatModelList();
-    
     radarWidget = new RadarWidget(satviewer, this);
     radarWidget->resize(512, 512);
-    radarWidget->move(128, 128);
-    radarWidget->setWindowFlag(Qt::Window);
-    radarWidget->show();
+    radarWidget->move(0, 0);
+//    radarWidget->setWindowFlags(Qt::Tool);
+//    radarWidget->show();
+    QTimer::singleShot(0, this, SLOT(onStart()));
 }
 
 SWindow::~SWindow() {
@@ -317,6 +317,11 @@ void SWindow::addZRVMessage(QString text) {
         "<td width=18%>" + list.at(4) + "</td>"
         "</tr></table>";
     dlgOptions->getWidget()->textZRVList->append(msg);
+}
+
+void SWindow::onStart() {
+//    radarWidget->setWindowFlags(Qt::Tool);
+//    radarWidget->show();
 }
 
 void SWindow::onTimer() {

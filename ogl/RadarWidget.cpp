@@ -5,6 +5,8 @@
  * Created on April 13, 2019, 6:58 PM
  */
 
+#include <QPainter>
+
 #include "RadarWidget.h"
 #include "../models/sun/sunmodel.h"
 
@@ -180,4 +182,70 @@ void RadarWidget::compileSunList() {
     }
         
     glEndList();
+}
+
+void RadarWidget::paintEvent(QPaintEvent *event) {
+    GLSatAbstractWidget::paintEvent(event);
+
+    Location *loc = m_satviewer->currentLocation();
+    if (loc == nullptr) {
+        return;
+    }
+    
+    QPainter painter(this);
+//    painter.setPen(clrNetFont);
+//    painter.setFont(fntNet);
+//    painter.setCompositionMode(QPainter::CompositionMode_Screen); // TODO
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
+    
+    int w = width();
+    int h = height();
+    double aerv[4];
+    GLfloat px, py;
+    
+//    double dx = width() / 12.0;
+//    double dy = height() / 6.0;
+//
+//    QFontMetrics fm(fntNet);
+//    int bw = fm.width("00");
+//    int bh = fm.height();
+//    
+//    for (int i = 1; i < 6; i++) {
+//        painter.drawText(0     , dy * i, QString().number(abs(i * 30 - 90)));
+//        painter.drawText(w - bw, dy * i, QString().number(abs(i * 30 - 90)));
+//    }
+//    
+//    for (int i = 1; i < 12; i++) {
+//        painter.drawText(dx * i, bh, QString().number(abs(i * 30 - 180)));
+//        painter.drawText(dx * i,  h, QString().number(abs(i * 30 - 180)));
+//    }
+    
+    for (const auto& sat : m_satviewer->satellites()) {
+        if (sat->isVisibleLabel()) {
+            painter.setPen(sat->colorLabel());
+            painter.setFont(sat->font());
+
+            SatViewer::aerv(loc->rg(), sat->rg(), aerv);
+            if (aerv[1] >= 0.0) {
+                polar2ortho(aerv[0], aerv[1], px, py);
+                double dx = 0.5 * w * (1.0 + px) + sat->nameX();
+                double dy = 0.5 * h * (1.0 + py) - sat->nameY();
+                painter.drawText(dx, dy, sat->name());
+            }
+        }
+    }
+    
+//    for (const auto& loc : m_satviewer->locations()) {
+//        if (loc->isVisibleLabel()) {
+//            painter.setPen(loc->colorLabel());
+//            painter.setFont(loc->font());
+//            
+//            double dx = 0.5 * w * (1.0 + loc->longitude() / 180.0) + loc->nameX();
+//            double dy = h * (0.5 - loc->latitude() / 180.0) - loc->nameY();
+//
+//            painter.drawText(dx,  dy, loc->name());
+//        }
+//    }
+    
+    painter.end();
 }

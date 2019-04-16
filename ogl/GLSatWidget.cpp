@@ -479,20 +479,6 @@ void GLSatWidget::writeSettings(QSettings *settings) {
     settings->setValue("cylindrical/mapY"   , ui.spinY->value   ());
 }
 
-//void GLSatWidget::addSat(Satellite *sat) {
-//    GLSatAbstractWidget::addSat(sat);
-//    if (sat->satWObject == nullptr) {
-//        setIcon(sat);
-//    }
-//}
-//
-//void GLSatWidget::addLoc(Location* loc) {
-//    GLSatAbstractWidget::addLoc(loc);
-//    if (loc->satWObject == nullptr) {
-//        setIcon(loc);
-//    }
-//}
-
 void GLSatWidget::setIcon(Satellite *sat, const QString& fileName) {
     if (sat->satWObject != nullptr) {
         delete sat->satWObject;

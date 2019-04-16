@@ -56,6 +56,7 @@ private slots:
     void onTimeTypeChanged(int index);
     void addZRVMessage(QString text);
     void checkVersion(bool checked);
+    void onStart();
     void onTimer();
     void onPlayClick();
     void onTimeClick();
