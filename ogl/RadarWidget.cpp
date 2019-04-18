@@ -262,3 +262,73 @@ void RadarWidget::onCurrentChanged(Satellite *sat, Location *loc, double *time) 
     Q_UNUSED(time);
     setWindowTitle(loc->name());
 }
+
+void RadarWidget::mouseMoveEvent(QMouseEvent *event) {
+    float px, py;
+    float w = this->width();
+    float h = this->height();
+
+    float x = event->x();
+    float y = event->y();
+    float kxl = w / 360.0;
+    float kyl = h / 180.0;
+    float kxs = 0.5 * w / M_PI;
+    float kys = h / M_PI;
+    double aerv[4];
+    
+    Location *loc = m_satviewer->currentLocation();
+    if (loc == nullptr) {
+        return;
+    }
+    
+    Satellite *currentSat = nullptr;
+    
+    for (const auto& sat : m_satviewer->satellites()) {
+        SatViewer::aerv(loc->rg(), sat->rg(), aerv);
+        GLfloat sx, sy;
+        if (aerv[1] >= 0.0) {
+            polar2ortho(aerv[0], aerv[1], sx, sy);
+        }
+        
+        px = kxs * sx * m_zoom - 0.5 * (m_zoom - 1.0 - m_dx) * w;
+        py = kys * sy * m_zoom - 0.5 * (m_zoom - 1.0 - m_dy) * h;
+        if (fabsf(px - x) < 7.0 * m_zoom && fabsf(py - y) < 7.0 * m_zoom) {
+            currentSat = sat;
+            break;
+        }
+    }
+    
+    m_cursorOnSatellite = (currentSat != nullptr);
+
+    if ((event->buttons() == Qt::LeftButton) && m_cursorOnSatellite) {
+        m_satviewer->setCurrentSatellite(currentSat);
+    }
+
+    if (m_cursorOnSatellite) {
+        setCursor(Qt::PointingHandCursor);
+    }
+    else {
+        setCursor(Qt::CrossCursor);
+    }
+
+    event->accept();
+}
+
+void RadarWidget::mousePressEvent(QMouseEvent *event) {
+    if (event->buttons() == Qt::LeftButton) {
+        mouseMoveEvent(event);
+    }
+    event->accept();
+}
+
+void RadarWidget::mouseDoubleClickEvent(QMouseEvent *event) {
+    if (event->buttons() == Qt::LeftButton) {
+        if (m_cursorOnSatellite) {
+            emit this->doubleClickedSat();
+        }
+        else if (m_cursorOnLocation) {
+            emit this->doubleClickedLoc();
+        }
+    }
+    event->accept();
+}

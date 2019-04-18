@@ -8,6 +8,8 @@
 #ifndef RADARWIDGET_H
 #define RADARWIDGET_H
 
+#include <QMouseEvent>
+
 #include "GLSatAbstractWidget.h"
 #include "glsprite/GLSprite.h"
 
@@ -24,17 +26,13 @@ protected:
 private:
     GLSprite sprite_current, sprite_sun;
     void initializeGL();
-//    void paintGL();
-//    void resizeGL(int width, int height) {}
     void compileMapList();
     void compileSatList();
     static void polar2ortho(GLfloat azm, GLfloat elv, GLfloat &x, GLfloat &y);
-//    void compileLocList() {}
     void compileSunList();
-//    void compileEventsList() {}
-//    float zoom(float value = 0.0) {}
-//    float moveX(float value = 0.0) {}
-//    float moveY(float value = 0.0) {}
+    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
 private slots:
     void onCurrentChanged(Satellite *sat, Location *loc, double *time);
 };
