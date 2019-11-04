@@ -10,3 +10,4 @@ satviewer
 /build/
 /PVS-Studio/
 analyze.*
+.vscode/

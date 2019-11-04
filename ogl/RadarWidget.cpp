@@ -258,9 +258,15 @@ void RadarWidget::paintEvent(QPaintEvent *event) {
 }
 
 void RadarWidget::onCurrentChanged(Satellite *sat, Location *loc, double *time) {
-    Q_UNUSED(sat);
-    Q_UNUSED(time);
-    setWindowTitle(loc->name());
+    if (sat != nullptr) {
+
+    }
+    if (loc != nullptr) {
+        setWindowTitle(loc->name());
+    }
+    if (time != nullptr) {
+
+    }
 }
 
 void RadarWidget::mouseMoveEvent(QMouseEvent *event) {
