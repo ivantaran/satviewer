@@ -8,20 +8,22 @@
 #ifndef SWIDGET_H_
 #define SWIDGET_H_
 
-#include <QWidget>
+#include "../locutils/Location.h"
+#include "../satutils/Satellite.h"
+#include <QFontMetrics>
 #include <QJSEngine>
 #include <QPainter>
-#include <QFontMetrics>
-#include "../satutils/Satellite.h"
-#include "../locutils/Location.h"
+#include <QWidget>
 
 class SWidget : public QWidget {
     Q_OBJECT
 public:
-    SWidget(QWidget* parent = nullptr, const QString &fileName = "");
+    SWidget(QWidget *parent = nullptr, const QString &fileName = "");
     virtual ~SWidget();
     void set(Satellite *sat, Location *loc, double *time);
-    inline QString title() { return m_title; }
+    inline QString title() {
+        return m_title;
+    }
     void activate(bool state = true);
 
 public slots:
@@ -56,7 +58,7 @@ private:
     double *m_time;
     void setVars();
     void timerEvent(QTimerEvent *event);
-    
+
 private slots:
     void onTimer();
 };

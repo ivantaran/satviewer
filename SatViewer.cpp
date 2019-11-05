@@ -1,7 +1,7 @@
-/* 
+/*
  * File:   SatViewer.cpp
  * Author: Ivan Ryazanov
- * 
+ *
  * Created on April 13, 2019, 9:45 PM
  */
 
@@ -17,53 +17,52 @@ SatViewer::SatViewer() {
     m_time = 0.0;
 }
 
-SatViewer::SatViewer(const SatViewer& orig) {
+SatViewer::SatViewer(const SatViewer &orig) {
 }
 
 SatViewer::~SatViewer() {
     // TODO
-//    for (const auto& sat : m_satellites) {
-//        if (sat != nullptr) {
-//            delete sat;
-//        }
-//    }
-//    m_satellites.clear();
-    
-//    for (const auto& loc : m_locations) {
-//        if (loc != nullptr) {
-//            delete loc;
-//        }
-//    }
-//    m_locations.clear();
-    
+    //    for (const auto& sat : m_satellites) {
+    //        if (sat != nullptr) {
+    //            delete sat;
+    //        }
+    //    }
+    //    m_satellites.clear();
+
+    //    for (const auto& loc : m_locations) {
+    //        if (loc != nullptr) {
+    //            delete loc;
+    //        }
+    //    }
+    //    m_locations.clear();
 }
 
-void SatViewer::appendSatellite(Satellite* sat) {
+void SatViewer::appendSatellite(Satellite *sat) {
     m_satellites.push_back(sat);
 }
 
-void SatViewer::appendLocation(Location* loc) {
+void SatViewer::appendLocation(Location *loc) {
     m_locations.push_back(loc);
 }
 
 void SatViewer::removeSatellite(Satellite *sat) {
     m_satellites.remove(sat);
-//    int pos = satList.indexOf(sat);
-//    if (pos == -1) return;
-//    ioList.deleteSat(satList.at(pos));
-//    satList.removeAt(pos);
-//    delete sat;
-//    setIndexSat(pos - 1);
+    //    int pos = satList.indexOf(sat);
+    //    if (pos == -1) return;
+    //    ioList.deleteSat(satList.at(pos));
+    //    satList.removeAt(pos);
+    //    delete sat;
+    //    setIndexSat(pos - 1);
 }
 
 void SatViewer::removeLocation(Location *loc) {
     m_locations.remove(loc);
-//    int pos = locList.indexOf(loc);
-//    if (pos == -1) return;
-//    ioList.deleteLoc(locList.at(pos));
-//    locList.removeAt(pos);
-//    delete loc;
-//    setIndexLoc(pos - 1);
+    //    int pos = locList.indexOf(loc);
+    //    if (pos == -1) return;
+    //    ioList.deleteLoc(locList.at(pos));
+    //    locList.removeAt(pos);
+    //    delete loc;
+    //    setIndexLoc(pos - 1);
 }
 
 void SatViewer::clearSatellites() {
@@ -76,15 +75,15 @@ void SatViewer::clearLocations() {
 
 Satellite *SatViewer::currentSatellite() {
     return m_currentSatellite;
-//    if ((m_currentSatellite >= 0) && 
-//            ((long unsigned int)m_currentSatellite < m_satellites.size())) {
-//        auto item = m_satellites.begin();
-//        std::advance(item, m_currentSatellite);
-//        return (*item);
-//    }
-//    else {
-//        return nullptr;
-//    }
+    //    if ((m_currentSatellite >= 0) &&
+    //            ((long unsigned int)m_currentSatellite < m_satellites.size())) {
+    //        auto item = m_satellites.begin();
+    //        std::advance(item, m_currentSatellite);
+    //        return (*item);
+    //    }
+    //    else {
+    //        return nullptr;
+    //    }
 }
 
 Location *SatViewer::currentLocation() {
@@ -95,9 +94,8 @@ void SatViewer::setCurrentSatelliteIndex(long unsigned int index) {
     if (index < m_satellites.size()) {
         auto it = m_satellites.begin();
         std::advance(it, index);
-        m_currentSatellite =  (*it);
-    }
-    else {
+        m_currentSatellite = (*it);
+    } else {
         m_currentSatellite = nullptr;
     }
     emit currentChanged(m_currentSatellite, m_currentLocation, &m_time);
@@ -107,24 +105,22 @@ void SatViewer::setCurrentLocationIndex(long unsigned int index) {
     if (index < m_locations.size()) {
         auto it = m_locations.begin();
         std::advance(it, index);
-        m_currentLocation =  (*it);
-    }
-    else {
+        m_currentLocation = (*it);
+    } else {
         m_currentLocation = nullptr;
     }
     emit currentChanged(m_currentSatellite, m_currentLocation, &m_time);
 }
 
-void SatViewer::setCurrentSatellite(Satellite* sat) {
+void SatViewer::setCurrentSatellite(Satellite *sat) {
     m_currentSatellite = sat;
     emit currentChanged(m_currentSatellite, m_currentLocation, &m_time);
 }
 
-void SatViewer::setCurrentLocation(Location* loc) {
+void SatViewer::setCurrentLocation(Location *loc) {
     m_currentLocation = loc;
     emit currentChanged(m_currentSatellite, m_currentLocation, &m_time);
 }
-
 
 void SatViewer::setTime(double value) {
     m_time = value;
@@ -137,15 +133,9 @@ void SatViewer::aerv(const double loc_rg[], const double sat_rg[], double aerv[]
     double d[3];
     double p = sqrt(loc_rg[0] * loc_rg[0] + loc_rg[1] * loc_rg[1]);
     double r = sqrt(loc_rg[0] * loc_rg[0] + loc_rg[1] * loc_rg[1] + loc_rg[2] * loc_rg[2]);
-    
-    double dd[] = {
-        loc_rg[0] - sat_rg[0], 
-        loc_rg[1] - sat_rg[1], 
-        loc_rg[2] - sat_rg[2], 
-        loc_rg[3] - sat_rg[3], 
-        loc_rg[4] - sat_rg[4], 
-        loc_rg[5] - sat_rg[5]
-    };
+
+    double dd[] = {loc_rg[0] - sat_rg[0], loc_rg[1] - sat_rg[1], loc_rg[2] - sat_rg[2],
+                   loc_rg[3] - sat_rg[3], loc_rg[4] - sat_rg[4], loc_rg[5] - sat_rg[5]};
 
     aerv[2] = sqrt(dd[0] * dd[0] + dd[1] * dd[1] + dd[2] * dd[2]);
 
@@ -175,7 +165,7 @@ void SatViewer::aerv(const double loc_rg[], const double sat_rg[], double aerv[]
             d[j] += (sat_rg[i] - loc_rg[i]) * m[j][i];
         }
     }
-    
+
     double s = d[2] / sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
 
     aerv[0] = atan2(d[0], d[1]);

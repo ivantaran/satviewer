@@ -8,27 +8,27 @@
 #ifndef SDLGOPTIONS_H_
 #define SDLGOPTIONS_H_
 
-#include <inttypes.h>
-#include "ui_options.h"
 #include "SLocDialog.h"
-#include "satutils/Satellite.h"
-#include "zrvutils/ZrvIoList.h"
 #include "jscalc/SScriptFrame.h"
-#include "ogl/GLSatWidget.h"
-#include "tleupd/SUpdater.h"
 #include "jswidgets/SWidgetList.h"
+#include "ogl/GLSatWidget.h"
+#include "satutils/Satellite.h"
+#include "tleupd/SUpdater.h"
+#include "ui_options.h"
+#include "zrvutils/ZrvIoList.h"
+#include <inttypes.h>
 
-#include <QtSql>
+#include "dialogs/sgp4/Sgp4Dialog.h"
+#include <QColorDialog>
+#include <QDataWidgetMapper>
 #include <QDialog>
 #include <QFileDialog>
 #include <QFontDialog>
-#include <QColorDialog>
 #include <QMessageBox>
-#include <QDataWidgetMapper>
 #include <QStandardItemModel>
-#include "dialogs/sgp4/Sgp4Dialog.h"
+#include <QtSql>
 
-class SDlgOptions: public QDialog {
+class SDlgOptions : public QDialog {
     Q_OBJECT
 public:
     Sgp4Dialog *satDialog;
@@ -44,8 +44,12 @@ public:
 
     void setSatWidget(GLSatAbstractWidget *w);
 
-    inline GLSatAbstractWidget* getSatWidget() const { return satWidget; }
-    inline Ui::Dialog* getWidget() { return &widget; }
+    inline GLSatAbstractWidget *getSatWidget() const {
+        return satWidget;
+    }
+    inline Ui::Dialog *getWidget() {
+        return &widget;
+    }
 
     void saveListViewSat();
     void saveListViewLoc();
@@ -66,7 +70,6 @@ private:
     void setBtnColor(QWidget *widget);
     uint32_t flipRgb(uint32_t rgb);
 
-
 private slots:
     void aboutQt();
     void addToSatList();
@@ -78,7 +81,7 @@ private slots:
     void selectDbLoc(const QModelIndex &current, const QModelIndex &previous);
     void selectSat(const QModelIndex &current, const QModelIndex &previous);
     void selectLoc(const QModelIndex &current, const QModelIndex &previous);
-    
+
     void clearSatList();
     void clearLocList();
     void setFilterSatName(const QString &line);

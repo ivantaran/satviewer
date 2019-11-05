@@ -9,18 +9,19 @@
 
 #include "GLSatAbstractWidget.h"
 
-#include <QDir>
-#include <QPainter>
-#include <QMouseEvent>
-#include <QDateTime>
-#include <QCoreApplication>
-#include <QtMath>
-#include "satogl.h"
 #include "../models/sgp4/Sgp4Model.h"
+#include "satogl.h"
+#include <QCoreApplication>
+#include <QDateTime>
+#include <QDir>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QtMath>
 
-GLSatAbstractWidget::GLSatAbstractWidget(SatViewer *satviewer, QWidget *parent) : QOpenGLWidget(parent) {
+GLSatAbstractWidget::GLSatAbstractWidget(SatViewer *satviewer, QWidget *parent)
+    : QOpenGLWidget(parent) {
     m_satviewer = satviewer;
-//    initSatOgl();
+    //    initSatOgl();
     setMouseTracking(true);
 
     settingsWidget = new QWidget();
@@ -33,29 +34,29 @@ GLSatAbstractWidget::GLSatAbstractWidget(SatViewer *satviewer, QWidget *parent) 
     m_dx = 0.0;
     m_dy = 0.0;
     m_dz = 0.0;
-    
+
     m_cursorOnSatellite = false;
     m_cursorOnLocation = false;
-    
+
     textureID = NULL;
 
     shwSun = true;
     shwNight = true;
-    
+
     setSatModel();
-    
-    list_map_ready       = true;
-    list_net_ready       = true;
-    list_events_ready    = true;
-    list_sun_ready       = true;
-    list_loc_ready       = true;
-    list_sat_ready       = true;
-    list_labels_ready    = true;
-//    setSunModel();
-//    sun = getSunModel();
-//    sun->modelInit(WGS84, 0, 0, 0, 0, 0, 0, 0, 0);
-//    sun->modelInit(0, 0);
-//    sun->setName("Sun");
+
+    list_map_ready = true;
+    list_net_ready = true;
+    list_events_ready = true;
+    list_sun_ready = true;
+    list_loc_ready = true;
+    list_sat_ready = true;
+    list_labels_ready = true;
+    //    setSunModel();
+    //    sun = getSunModel();
+    //    sun->modelInit(WGS84, 0, 0, 0, 0, 0, 0, 0, 0);
+    //    sun->modelInit(0, 0);
+    //    sun->setName("Sun");
 }
 
 GLSatAbstractWidget::~GLSatAbstractWidget() {
@@ -65,39 +66,39 @@ GLSatAbstractWidget::~GLSatAbstractWidget() {
 }
 
 void GLSatAbstractWidget::initializeGL() {
-    
+
     bool ok = initializeOpenGLFunctions();
-    
+
     assert(ok);
 
-//    setAutoBufferSwap(false); //TODO
+    //    setAutoBufferSwap(false); //TODO
     glClearColor(0.1, 0.1, 0.1, 0.0);
-    //glShadeModel(GL_FLAT);
+    // glShadeModel(GL_FLAT);
     glShadeModel(GL_SMOOTH);
     glMatrixMode(GL_PROJECTION);
-//    glLoadIdentity();
+    //    glLoadIdentity();
     glOrtho(-1, 1, 1, -1, -1, 1);
-    //glFrustum(-1, 1, 1, -1, -1, 1);
+    // glFrustum(-1, 1, 1, -1, -1, 1);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-//    glTranslatef(0.0, 0.0, 0.0);
+    //    glTranslatef(0.0, 0.0, 0.0);
     glBlendFunc(GL_SRC_COLOR, GL_DST_COLOR);
-//    glBlendFunc(GL_DST_COLOR, GL_SRC_COLOR);
-//    loadTexture();
+    //    glBlendFunc(GL_DST_COLOR, GL_SRC_COLOR);
+    //    loadTexture();
     list_map = glGenLists(6);
     qWarning() << "list_map" << list_map << endl;
     assert(list_map > 0);
 
-    list_net    = list_map + 1;
-    list_sat    = list_map + 2;
-    list_loc    = list_map + 3;
-    list_sun    = list_map + 4;
+    list_net = list_map + 1;
+    list_sat = list_map + 2;
+    list_loc = list_map + 3;
+    list_sun = list_map + 4;
     list_events = list_map + 5;
-    
+
     emit initialized();
-    
+
     readSettings();
-    
+
     connect(m_satviewer, SIGNAL(timeChanged()), this, SLOT(refresh()));
 }
 
@@ -108,12 +109,18 @@ void GLSatAbstractWidget::paintGL() {
     glTranslatef(m_dx, m_dy, m_dz);
     glScalef(m_zoom, m_zoom, 0.0);
 
-    if (list_map_ready   ) glCallList(list_map); // map
-    if (list_net_ready   ) glCallList(list_net); //net
-    if (list_sun_ready   ) glCallList(list_sun); //sun
-    if (list_events_ready) glCallList(list_events); //locList events
-    if (list_loc_ready   ) glCallList(list_loc); //locList zrl names
-    if (list_sat_ready   ) glCallList(list_sat); //satList
+    if (list_map_ready)
+        glCallList(list_map); // map
+    if (list_net_ready)
+        glCallList(list_net); // net
+    if (list_sun_ready)
+        glCallList(list_sun); // sun
+    if (list_events_ready)
+        glCallList(list_events); // locList events
+    if (list_loc_ready)
+        glCallList(list_loc); // locList zrl names
+    if (list_sat_ready)
+        glCallList(list_sat); // satList
 }
 
 void GLSatAbstractWidget::resizeGL(int width, int height) {
@@ -139,7 +146,8 @@ void GLSatAbstractWidget::loadTexture(QString filePath) {
         dir.cd("satviewer");
         filePath = dir.filePath("map.png");
     }
-    if (textureID) delete textureID;
+    if (textureID)
+        delete textureID;
     textureID = new QOpenGLTexture(QImage(filePath), QOpenGLTexture::GenerateMipMaps);
 }
 
@@ -148,13 +156,13 @@ void GLSatAbstractWidget::refresh() {
         qWarning("GLSatAbstractWidget::refresh invalid");
         return;
     }
-//	compileMapList();
+    //	compileMapList();
     compileSatList();
     compileEventsList();
-//	compileLocList();
+    //	compileLocList();
     compileSunList();
-//	refreshAll();
-//	paintGL();
+    //	refreshAll();
+    //	paintGL();
     update();
 }
 
@@ -222,8 +230,10 @@ void GLSatAbstractWidget::compileEventsList() {
 
 float GLSatAbstractWidget::zoom(float value) {
     m_zoom += value;
-    if (m_zoom < 1) m_zoom = 1;
-    if (m_zoom > 30) m_zoom = 30;
+    if (m_zoom < 1)
+        m_zoom = 1;
+    if (m_zoom > 30)
+        m_zoom = 30;
     moveX();
     moveY();
     emit zoomed(m_zoom);
@@ -232,16 +242,20 @@ float GLSatAbstractWidget::zoom(float value) {
 
 float GLSatAbstractWidget::moveX(float value) {
     m_dx += value;
-    if (m_zoom < m_dx + 1) m_dx = m_zoom - 1;
-    if (m_zoom < -m_dx + 1) m_dx = 1 - m_zoom;
+    if (m_zoom < m_dx + 1)
+        m_dx = m_zoom - 1;
+    if (m_zoom < -m_dx + 1)
+        m_dx = 1 - m_zoom;
     emit movedX(m_dx);
     return m_dx;
 }
 
 float GLSatAbstractWidget::moveY(float value) {
     m_dy += value;
-    if (m_zoom < m_dy + 1) m_dy = m_zoom - 1;
-    if (m_zoom < -m_dy + 1) m_dy = 1 - m_zoom;
+    if (m_zoom < m_dy + 1)
+        m_dy = m_zoom - 1;
+    if (m_zoom < -m_dy + 1)
+        m_dy = 1 - m_zoom;
     emit movedY(m_dy);
     return m_dy;
 }

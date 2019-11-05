@@ -8,30 +8,37 @@
 #ifndef SLOCDIALOG_H_
 #define SLOCDIALOG_H_
 
-#include <inttypes.h>
 #include "ui_loc.h"
+#include <QColorDialog>
 #include <QDialog>
-#include <QPixmapCache>
 #include <QFileDialog>
 #include <QFontDialog>
-#include <QColorDialog>
+#include <QPixmapCache>
 #include <QValidator>
+#include <inttypes.h>
 
 #include "locutils/Location.h"
 #include "ogl/GLSatAbstractWidget.h"
 
-class SLocDialog:  public QDialog {
+class SLocDialog : public QDialog {
     Q_OBJECT
 public:
     Location defaultLoc;
     SLocDialog(GLSatAbstractWidget *satWidget);
     virtual ~SLocDialog();
 
-    inline Location *loc() { return m_loc; }
-    void setLoc(Location *loc) { m_loc = loc; }
+    inline Location *loc() {
+        return m_loc;
+    }
+    void setLoc(Location *loc) {
+        m_loc = loc;
+    }
     void makeLoc(Location *loc);
     void setSatWidget(GLSatAbstractWidget *satWidget);
-    inline Ui::LocDialog * getWidget() { return &widget; }
+    inline Ui::LocDialog *getWidget() {
+        return &widget;
+    }
+
 protected:
     void showEvent(QShowEvent *event);
 
@@ -50,7 +57,6 @@ private slots:
     void setLocFont();
     void setDefault();
     void setIcon();
-
 };
 
 #endif /* SLOCDIALOG_H_ */

@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   sunmodel.h
  * Author: taran
  *
@@ -17,14 +17,11 @@ void sunmodel_ll(time_t t, double *lat, double *lon);
 /**
  * @param[in] use_arc Atmospheric refraction correction flag, 1 or 'y' if set.
  */
-void sunmodel_ae(time_t t, double lat, double lon, double *azm, double *elv, 
-        char use_arc);
+void sunmodel_ae(time_t t, double lat, double lon, double *azm, double *elv, char use_arc);
 void sunmodel_test(void);
-
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* SUNMODEL_H */
-

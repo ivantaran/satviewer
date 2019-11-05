@@ -8,20 +8,20 @@
 #ifndef SWINDOW_H_
 #define SWINDOW_H_
 
-#include <inttypes.h>
-#include <QSettings>
-#include <QShortcut>
-#include <QDesktopWidget>
 #include "SDlgOptions.h"
-#include "ui_SatViewer.h"
-#include "ui_settings.h"
-#include "uchecker/UCheck.h"
-#include "ogl/RadarWidget.h"
+#include "SatViewer.h"
 #include "ogl/GLSatWidget.h"
 #include "ogl/GLSatWidget3d.h"
-#include "SatViewer.h"
+#include "ogl/RadarWidget.h"
+#include "uchecker/UCheck.h"
+#include "ui_SatViewer.h"
+#include "ui_settings.h"
+#include <QDesktopWidget>
+#include <QSettings>
+#include <QShortcut>
+#include <inttypes.h>
 
-class SWindow: public QMainWindow {
+class SWindow : public QMainWindow {
     Q_OBJECT
 public:
     SDlgOptions *dlgOptions;
@@ -67,7 +67,7 @@ private slots:
     void selectLanguage(int value);
     void setSwlVars(Satellite *sat, Location *loc, double *time);
     void selectStyle(int value);
-//    void selectGlWidget(int value);
+    //    void selectGlWidget(int value);
     void selectPalette(bool value);
     //	void onSatModelChanged(int index);
     void onBtnPrintScrClicked();

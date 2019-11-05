@@ -9,17 +9,16 @@
 
 #include "Location.h"
 
+#include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
-#include <math.h>
-
 
 Location::Location(void) {
     _name = "";
     icon_name = "";
 
-    icon_index = (uint32_t) -1;
+    icon_index = (uint32_t)-1;
     icon_width = 0;
     icon_height = 0;
 
@@ -27,14 +26,14 @@ Location::Location(void) {
     name_y = 0;
     lines_width = 1;
 
-    show_label  = true;
-    show_zrv    = false;
-    show_lines  = false;
+    show_label = true;
+    show_zrv = false;
+    show_lines = false;
     active_zone = true;
 
-    _color      = 0x000000FF;
+    _color = 0x000000FF;
     color_label = 0x00FFFF00;
-    color_zrv   = 0xFF608080;
+    color_zrv = 0xFF608080;
     color_lines = 0x0000FFFF;
     satWObject = 0;
     lat = 0.0;
@@ -62,24 +61,24 @@ void Location::copy(Location *src) {
     _height = src->height();
     calcXYZ();
 
-    visibleLabel( src->isVisibleLabel() );
-    visibleLines( src->isVisibleLines() );
-    visibleZrv  ( src->isVisibleZrv()   );
+    visibleLabel(src->isVisibleLabel());
+    visibleLines(src->isVisibleLines());
+    visibleZrv(src->isVisibleZrv());
 
-    setColorLabel( src->colorLabel() );
-    setColorLines( src->colorLines() );
-    setColorZrv  ( src->colorZrv()   );
+    setColorLabel(src->colorLabel());
+    setColorLines(src->colorLines());
+    setColorZrv(src->colorZrv());
 
-    setFont( src->font() );
+    setFont(src->font());
 
-    setNameX( src->nameX() );
-    setNameY( src->nameY() );
+    setNameX(src->nameX());
+    setNameY(src->nameY());
 
-    setLinesWidth( src->linesWidth() );
+    setLinesWidth(src->linesWidth());
 
-    setZrlAzimuth( src->zrlAzimuth() );
-    setZrlRange  ( src->zrlRange()   );
-    setZrlWidth  ( src->zrlWidth()   );
+    setZrlAzimuth(src->zrlAzimuth());
+    setZrlRange(src->zrlRange());
+    setZrlWidth(src->zrlWidth());
 }
 
 void Location::setName(QString name) {
@@ -88,14 +87,14 @@ void Location::setName(QString name) {
 
 void Location::calcXYZ() {
     // TODO this not valid
-    double const a_axis = 6378137.0;   //WGS-84 earth's semi major axis
-    double const b_axis = 6356752.31;  //WGS-84 earth's semi minor axis
+    double const a_axis = 6378137.0;  // WGS-84 earth's semi major axis
+    double const b_axis = 6356752.31; // WGS-84 earth's semi minor axis
     double const e1sqr = ((a_axis * a_axis - b_axis * b_axis) / (a_axis * a_axis));
-    double N = a_axis / sqrt(1.0 - e1sqr * sin(lat*M_PI/180.0) * sin(lat*M_PI/180.0));
-    //TODO
-    m_rg[0] = (N + _height)*cos(lat*M_PI/180.0)*cos(lon*M_PI/180.0);
-    m_rg[1] = (N + _height)*cos(lat*M_PI/180.0)*sin(lon*M_PI/180.0);
-    m_rg[2] = (N*(1.0 - e1sqr) + _height)*sin(lat*M_PI/180.0);
+    double N = a_axis / sqrt(1.0 - e1sqr * sin(lat * M_PI / 180.0) * sin(lat * M_PI / 180.0));
+    // TODO
+    m_rg[0] = (N + _height) * cos(lat * M_PI / 180.0) * cos(lon * M_PI / 180.0);
+    m_rg[1] = (N + _height) * cos(lat * M_PI / 180.0) * sin(lon * M_PI / 180.0);
+    m_rg[2] = (N * (1.0 - e1sqr) + _height) * sin(lat * M_PI / 180.0);
 }
 
 void Location::setLatitude(double latitude) {

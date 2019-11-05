@@ -7,9 +7,8 @@
  *      Author: Ivan Ryazanov
  */
 #include "satogl.h"
-#include "math.h"
 #include "GL/glu.h"
+#include "math.h"
 //#include <QtOpenGL>
 #include "locutils/Location.h"
 #include "satutils/Satellite.h"
-

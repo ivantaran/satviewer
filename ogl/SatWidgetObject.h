@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   SatWidgetObject.h
  * Author: Ivan Ryazanov
  *
@@ -6,26 +6,36 @@
  */
 
 #ifndef SATWIDGETOBJECT_H
-#define	SATWIDGETOBJECT_H
+#define SATWIDGETOBJECT_H
 
-#include <QtCore>
-#include <QString>
-#include <QOpenGLWidget>
 #include <QOpenGLFunctions_2_0>
+#include <QOpenGLWidget>
+#include <QString>
+#include <QtCore>
 
 class SatWidgetObject : protected QOpenGLFunctions_2_0 {
 public:
     SatWidgetObject(QString fileName = QString(), QOpenGLWidget *parentWidget = 0);
     virtual ~SatWidgetObject();
-    inline QString fileName() { return file_name; }
-    virtual void exec(float x, float y, float z) { Q_UNUSED(x); Q_UNUSED(y); Q_UNUSED(z); }
-    virtual void load(QString fileName, QOpenGLWidget *parentWidget) { Q_UNUSED(fileName); Q_UNUSED(parentWidget); }
-    virtual void make() {}
+    inline QString fileName() {
+        return file_name;
+    }
+    virtual void exec(float x, float y, float z) {
+        Q_UNUSED(x);
+        Q_UNUSED(y);
+        Q_UNUSED(z);
+    }
+    virtual void load(QString fileName, QOpenGLWidget *parentWidget) {
+        Q_UNUSED(fileName);
+        Q_UNUSED(parentWidget);
+    }
+    virtual void make() {
+    }
 
 private:
     QString file_name;
+
 protected:
 };
 
-#endif	/* SATWIDGETOBJECT_H */
-
+#endif /* SATWIDGETOBJECT_H */

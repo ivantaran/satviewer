@@ -16,29 +16,28 @@ SLocDialog::SLocDialog(GLSatAbstractWidget *satWidget) {
     m_loc = nullptr;
 
     setSatWidget(satWidget);
-    
+
     m_doubleValidator.setLocale(QLocale::C);
     widget.lineEditAzimuth->setValidator(&m_doubleValidator);
-    widget.lineEditHeight->setValidator (&m_doubleValidator);
-    widget.lineEditLat->setValidator    (&m_doubleValidator);
-    widget.lineEditLon->setValidator    (&m_doubleValidator);
-    widget.lineEditRange->setValidator  (&m_doubleValidator);
-    widget.lineEditWidth->setValidator  (&m_doubleValidator);
+    widget.lineEditHeight->setValidator(&m_doubleValidator);
+    widget.lineEditLat->setValidator(&m_doubleValidator);
+    widget.lineEditLon->setValidator(&m_doubleValidator);
+    widget.lineEditRange->setValidator(&m_doubleValidator);
+    widget.lineEditWidth->setValidator(&m_doubleValidator);
 
-    connect(widget.btnColorName , SIGNAL(clicked()), this, SLOT(setColorLocName ()));
-    connect(widget.btnColorZrv  , SIGNAL(clicked()), this, SLOT(setColorLocZrv  ()));
+    connect(widget.btnColorName, SIGNAL(clicked()), this, SLOT(setColorLocName()));
+    connect(widget.btnColorZrv, SIGNAL(clicked()), this, SLOT(setColorLocZrv()));
     connect(widget.btnColorLines, SIGNAL(clicked()), this, SLOT(setColorLocLines()));
-    connect(widget.btnFont      , SIGNAL(clicked()), this, SLOT(setLocFont      ()));
-    connect(widget.btnDefault   , SIGNAL(clicked()), this, SLOT(setDefault      ()));
-    connect(widget.btnIcon      , SIGNAL(clicked()), this, SLOT(setIcon         ()));
+    connect(widget.btnFont, SIGNAL(clicked()), this, SLOT(setLocFont()));
+    connect(widget.btnDefault, SIGNAL(clicked()), this, SLOT(setDefault()));
+    connect(widget.btnIcon, SIGNAL(clicked()), this, SLOT(setIcon()));
 }
 
 SLocDialog::~SLocDialog() {
-
 }
 
 uint32_t SLocDialog::flipRgb(uint32_t rgb) {
-    //OpenGL 0xAABBGGRR //Qt 0xAARRGGBB
+    // OpenGL 0xAABBGGRR //Qt 0xAARRGGBB
     uint8_t a, r, g, b;
     b = rgb;
     g = rgb >> 8;
@@ -48,7 +47,7 @@ uint32_t SLocDialog::flipRgb(uint32_t rgb) {
     return rgb;
 }
 
-void SLocDialog::showEvent(QShowEvent * event) {
+void SLocDialog::showEvent(QShowEvent *event) {
     Q_UNUSED(event)
 
     if (m_loc == nullptr) {
@@ -60,23 +59,23 @@ void SLocDialog::showEvent(QShowEvent * event) {
 
     widget.btnFont->setFont(m_loc->font());
 
-    widget.lineEditName->setText   ( m_loc->name() );
-    widget.lineEditLat->setText    ( QString::number( m_loc->latitude(),   'g', 16) );
-    widget.lineEditLon->setText    ( QString::number( m_loc->longitude(),  'g', 16) );
-    widget.lineEditHeight->setText ( QString::number( m_loc->height(),     'g', 16) );
-    widget.lineEditAzimuth->setText( QString::number( m_loc->zrlAzimuth(), 'g', 16) );
-    widget.lineEditRange->setText  ( QString::number( m_loc->zrlRange(),   'g', 16) );
-    widget.lineEditWidth->setText  ( QString::number( m_loc->zrlWidth(),   'g', 16) );
+    widget.lineEditName->setText(m_loc->name());
+    widget.lineEditLat->setText(QString::number(m_loc->latitude(), 'g', 16));
+    widget.lineEditLon->setText(QString::number(m_loc->longitude(), 'g', 16));
+    widget.lineEditHeight->setText(QString::number(m_loc->height(), 'g', 16));
+    widget.lineEditAzimuth->setText(QString::number(m_loc->zrlAzimuth(), 'g', 16));
+    widget.lineEditRange->setText(QString::number(m_loc->zrlRange(), 'g', 16));
+    widget.lineEditWidth->setText(QString::number(m_loc->zrlWidth(), 'g', 16));
 
-    widget.spinNameX->setValue( m_loc->nameX() );
-    widget.spinNameY->setValue( m_loc->nameY() );
+    widget.spinNameX->setValue(m_loc->nameX());
+    widget.spinNameY->setValue(m_loc->nameY());
 
-    widget.spinLines->setValue( m_loc->linesWidth() );
+    widget.spinLines->setValue(m_loc->linesWidth());
 
-    widget.checkName->setChecked     ( m_loc->isVisibleLabel() );
-    widget.checkZrv->setChecked      ( m_loc->isVisibleZrv  () );
-    widget.checkZrvLines->setChecked ( m_loc->isVisibleLines() );
-    widget.checkZrvEnable->setChecked( m_loc->isActiveZone  () );
+    widget.checkName->setChecked(m_loc->isVisibleLabel());
+    widget.checkZrv->setChecked(m_loc->isVisibleZrv());
+    widget.checkZrvLines->setChecked(m_loc->isVisibleLines());
+    widget.checkZrvEnable->setChecked(m_loc->isActiveZone());
 
     QRgb rgb = m_loc->colorLabel();
     QPalette pal = widget.btnColorName->palette();
@@ -95,7 +94,7 @@ void SLocDialog::showEvent(QShowEvent * event) {
 }
 
 void SLocDialog::makeLoc(Location *loc) {
-    
+
     if (loc == nullptr) {
         return;
     }
@@ -106,31 +105,31 @@ void SLocDialog::makeLoc(Location *loc) {
         return;
     }
 
-    double lat     = widget.lineEditLat->text().toDouble();
-    double lon     = widget.lineEditLon->text().toDouble();
-    double height  = widget.lineEditHeight->text().toDouble();
+    double lat = widget.lineEditLat->text().toDouble();
+    double lon = widget.lineEditLon->text().toDouble();
+    double height = widget.lineEditHeight->text().toDouble();
     double azimuth = widget.lineEditAzimuth->text().toDouble();
-    double range   = widget.lineEditRange->text().toDouble();
-    double width   = widget.lineEditWidth->text().toDouble();
+    double range = widget.lineEditRange->text().toDouble();
+    double width = widget.lineEditWidth->text().toDouble();
 
-    loc->setName( widget.lineEditName->text() );
-    loc->setLatitude  ( lat     );
-    loc->setLongitude ( lon     );
-    loc->setHeight    ( height  );
-    loc->setZrlAzimuth( azimuth );
-    loc->setZrlRange  ( range   );
-    loc->setZrlWidth  ( width   );
+    loc->setName(widget.lineEditName->text());
+    loc->setLatitude(lat);
+    loc->setLongitude(lon);
+    loc->setHeight(height);
+    loc->setZrlAzimuth(azimuth);
+    loc->setZrlRange(range);
+    loc->setZrlWidth(width);
 
-    loc->setNameX( widget.spinNameX->value() );
-    loc->setNameY( widget.spinNameY->value() );
+    loc->setNameX(widget.spinNameX->value());
+    loc->setNameY(widget.spinNameY->value());
 
-    loc->setLinesWidth( widget.spinLines->value() );
+    loc->setLinesWidth(widget.spinLines->value());
 
-    loc->setFont     ( widget.btnFont->font()             );
-    loc->visibleLabel( widget.checkName->isChecked()      );
-    loc->visibleZrv  ( widget.checkZrv->isChecked()       );
-    loc->visibleLines( widget.checkZrvLines->isChecked()  );
-    loc->activeZone  ( widget.checkZrvEnable->isChecked() );
+    loc->setFont(widget.btnFont->font());
+    loc->visibleLabel(widget.checkName->isChecked());
+    loc->visibleZrv(widget.checkZrv->isChecked());
+    loc->visibleLines(widget.checkZrvLines->isChecked());
+    loc->activeZone(widget.checkZrvEnable->isChecked());
 
     QPalette pal = widget.btnColorName->palette();
     QRgb rgb = pal.color(QPalette::Button).rgba();
@@ -143,15 +142,13 @@ void SLocDialog::makeLoc(Location *loc) {
     pal = widget.btnColorLines->palette();
     rgb = pal.color(QPalette::Button).rgba();
     loc->setColorLines(flipRgb(rgb));
-
 }
 
 void SLocDialog::setBtnColor(QWidget *widget) {
     QPalette pal = widget->palette();
-    QColor color = QColorDialog::getColor(
-            pal.color(QPalette::Button), 
-            this, "", 
-            QColorDialog::ShowAlphaChannel | QColorDialog::DontUseNativeDialog);
+    QColor color =
+        QColorDialog::getColor(pal.color(QPalette::Button), this, "",
+                               QColorDialog::ShowAlphaChannel | QColorDialog::DontUseNativeDialog);
     if (color.isValid()) {
         pal.setColor(QPalette::Button, color);
         widget->setPalette(pal);
@@ -160,8 +157,8 @@ void SLocDialog::setBtnColor(QWidget *widget) {
 
 void SLocDialog::setColorLocName() {
     setBtnColor(widget.btnColorName);
-//        Satellite *sat = satList.getItem(satWidget->indexSat);
-//        sat->setColorLabel(rgb);
+    //        Satellite *sat = satList.getItem(satWidget->indexSat);
+    //        sat->setColorLabel(rgb);
 }
 
 void SLocDialog::setColorLocZrv() {
@@ -175,7 +172,8 @@ void SLocDialog::setColorLocLines() {
 void SLocDialog::setLocFont() {
     bool ok;
     QFont font = QFontDialog::getFont(&ok, widget.btnFont->font(), this);
-    if (ok) widget.btnFont->setFont(font);
+    if (ok)
+        widget.btnFont->setFont(font);
 }
 
 void SLocDialog::setDefault() {
@@ -187,12 +185,9 @@ void SLocDialog::setDefault() {
 void SLocDialog::setIcon() {
     QDir dir = QDir::home();
     dir.cd("satviewer/icons");
-    QString filePath = QFileDialog::getOpenFileName(
-            this, 
-            "Open PNG Image", 
-            dir.path(), 
-            "PNG Images (*.png)", nullptr, 
-            QFileDialog::DontUseNativeDialog);
+    QString filePath =
+        QFileDialog::getOpenFileName(this, "Open PNG Image", dir.path(), "PNG Images (*.png)",
+                                     nullptr, QFileDialog::DontUseNativeDialog);
     if (!filePath.isEmpty()) {
         widget.btnIcon->setIcon(QPixmap(filePath));
         satWidget->setIcon(m_loc, filePath);

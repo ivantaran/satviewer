@@ -7,24 +7,24 @@
  *      Author: Ivan Ryazanov
  */
 
+#include "SScriptFrame.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "SScriptFrame.h"
 
 SScriptFrame::SScriptFrame(QString fileName) {
     widget.setupUi(this);
-    
+
     m_sat = NULL;
     m_loc = NULL;
     m_time = 0.0;
-    
+
     QDir::setCurrent(QCoreApplication::applicationDirPath());
     QFile file(fileName);
-    
+
     if (!file.open(QIODevice::ReadOnly)) {
         widget.textEdit->append(file.errorString() + ": " + file.fileName());
     }
-    
+
     QTextStream stream(&file);
     script = stream.readAll();
     file.close();
@@ -35,19 +35,18 @@ SScriptFrame::SScriptFrame(QString fileName) {
 }
 
 SScriptFrame::~SScriptFrame() {
-
 }
 
 void SScriptFrame::reload() {
     if (m_sat == NULL || m_loc == NULL) {
         return;
     }
-    
+
     widget.textEdit->clear();
 
-    QJSValue ascSat =  engine.newArray(6);
-    QJSValue ascLoc =  engine.newArray(6);
-    
+    QJSValue ascSat = engine.newArray(6);
+    QJSValue ascLoc = engine.newArray(6);
+
     for (int i = 0; i < 6; i++) {
         ascSat.setProperty(i, m_sat->rg()[i]);
         ascLoc.setProperty(i, m_loc->rg()[i]);
@@ -57,12 +56,12 @@ void SScriptFrame::reload() {
     engine.globalObject().setProperty("ascLoc", ascLoc);
     engine.globalObject().setProperty("nameSat", m_sat->name());
     engine.globalObject().setProperty("nameLoc", m_loc->name());
-    engine.globalObject().setProperty("timeCurrent", 
-            QDateTime::fromTime_t(int(m_time)).toUTC()
-            .toString("dd.MM.yyyy H:mm:ss.zzz"));
-    
+    engine.globalObject().setProperty(
+        "timeCurrent",
+        QDateTime::fromTime_t(int(m_time)).toUTC().toString("dd.MM.yyyy H:mm:ss.zzz"));
+
     QJSValue sVal = engine.evaluate(script);
-    
+
     if (sVal.isError()) {
         widget.textEdit->append(sVal.toString());
     }

@@ -15,8 +15,8 @@
 //#undef GLdouble
 //#undef GLfloat
 //#include <QtOpenGL>
-#include "ui_earthsettings.h"
 #include "globj/GLObjecter.h"
+#include "ui_earthsettings.h"
 
 class GLSatWidget3d : public GLSatAbstractWidget {
     Q_OBJECT
@@ -31,21 +31,26 @@ protected:
     void initializeGL();
     void paintGL();
     void resizeGL(int width, int height);
-    void renderText(float x, float y, const QString& text, int color = 0, const QFont &font = QFont());
+    void renderText(float x, float y, const QString &text, int color = 0,
+                    const QFont &font = QFont());
+
 private:
     Ui::EarthWidgetSettings ui;
-//	GLUquadric *gluObj;
+    //	GLUquadric *gluObj;
     GLObjecter *globjEarth;
     GLObjecter *globjSat;
     float m_angle[3];
     void compileMapList();
     void compileSatList();
-    void compileLocList() {}
-    void compileSunList() {}
-    void compileEventsList() {}
-//    void setIcon(Satellite *sat, const QString& fileName = "") {}
-//    void setIcon(Location *loc, const QString& fileName = "") {}
-    
+    void compileLocList() {
+    }
+    void compileSunList() {
+    }
+    void compileEventsList() {
+    }
+    //    void setIcon(Satellite *sat, const QString& fileName = "") {}
+    //    void setIcon(Location *loc, const QString& fileName = "") {}
+
 private slots:
     void moveX(double value);
     void moveY(double value);

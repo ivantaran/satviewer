@@ -8,19 +8,22 @@
 #ifndef SSCRIPTFRAME_H_
 #define SSCRIPTFRAME_H_
 
+#include "../locutils/Location.h"
+#include "../satutils/Satellite.h"
 #include "ui_jscalc.h"
 #include <QJSEngine>
-#include "../satutils/Satellite.h"
-#include "../locutils/Location.h"
 
 class SScriptFrame : public QWidget {
     Q_OBJECT;
+
 public:
     SScriptFrame(QString fileName = "");
     virtual ~SScriptFrame();
     void exec(Satellite *sat, Location *loc, double time);
-    inline Ui::JsWidget * getWidget() { return &widget; }
-    
+    inline Ui::JsWidget *getWidget() {
+        return &widget;
+    }
+
 private:
     Satellite *m_sat;
     Location *m_loc;

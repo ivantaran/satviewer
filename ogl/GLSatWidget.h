@@ -9,9 +9,9 @@
 #define GLSATWIDGET_H_
 
 #include "GLSatAbstractWidget.h"
+#include "glsprite/GLSprite.h"
 #include "ui_mapsettings.h"
 #include <QSettings>
-#include "glsprite/GLSprite.h"
 
 class GLSatWidget : public GLSatAbstractWidget {
     Q_OBJECT
@@ -20,10 +20,12 @@ public:
     virtual ~GLSatWidget();
     void readSettings();
     void writeSettings(QSettings *settings);
-    inline void retranslateUi() { ui.retranslateUi(this); }
-    void setIcon(Satellite *sat, const QString& fileName = "");
-    void setIcon(Location *loc, const QString& fileName = "");
-    
+    inline void retranslateUi() {
+        ui.retranslateUi(this);
+    }
+    void setIcon(Satellite *sat, const QString &fileName = "");
+    void setIcon(Location *loc, const QString &fileName = "");
+
 private:
     static const int VertexCount = 128;
     GLfloat vertex[VertexCount][2];
@@ -47,19 +49,19 @@ private:
     void initSatOgl();
     void glZoneLines(float lat);
     void glZoneNight(float lat);
-    void compileFootprint(double longitude, double latitude, 
-        double altitude, double zoneWidth, bool fill, bool lines, 
-        GLfloat linesWidth, GLuint colorPoly, GLuint colorLines);
-    void lfi_ort(double fi, double lam, double* xyz);
-    bool testZRV(double* crd1, double* crd2, double fiz);
+    void compileFootprint(double longitude, double latitude, double altitude, double zoneWidth,
+                          bool fill, bool lines, GLfloat linesWidth, GLuint colorPoly,
+                          GLuint colorLines);
+    void lfi_ort(double fi, double lam, double *xyz);
+    bool testZRV(double *crd1, double *crd2, double fiz);
     int testIOZRV(Satellite *sat, Location *loc, ZrvIoList *list, double &time);
     void fillFootprint(float lat);
     void compileZrl(Location *loc);
     bool testShadow(Satellite *sat, Satellite *sun);
-    
+
 protected:
     void paintEvent(QPaintEvent *event) override;
-        
+
 private slots:
     void btnColorClicked();
     void onBtnMapFileClicked();

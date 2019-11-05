@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   RadarWidget.h
  * Author: Ivan Ryazanov
  *
@@ -17,12 +17,12 @@ class RadarWidget : public GLSatAbstractWidget {
     Q_OBJECT
 public:
     RadarWidget(SatViewer *satviewer, QWidget *parent = nullptr);
-//    RadarWidget(const RadarWidget& orig);
+    //    RadarWidget(const RadarWidget& orig);
     virtual ~RadarWidget();
 
 protected:
     void paintEvent(QPaintEvent *event);
-        
+
 private:
     GLSprite sprite_current, sprite_sun;
     void initializeGL();
@@ -38,4 +38,3 @@ private slots:
 };
 
 #endif /* RADARWIDGET_H */
-

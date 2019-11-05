@@ -8,22 +8,26 @@
 #ifndef SGP4DIALOG_H_
 #define SGP4DIALOG_H_
 
-#include <inttypes.h>
-#include "ui_sgp4.h"
 #include "../models/sgp4/Sgp4Model.h"
 #include "../ogl/GLSatAbstractWidget.h"
+#include "ui_sgp4.h"
+#include <inttypes.h>
 
-class Sgp4Dialog: public QDialog {
+class Sgp4Dialog : public QDialog {
     Q_OBJECT
 public:
     Sgp4Model defaultSat;
     Sgp4Dialog(GLSatAbstractWidget *satWidget);
     virtual ~Sgp4Dialog();
 
-    inline Satellite *sat() { return m_sat; }
+    inline Satellite *sat() {
+        return m_sat;
+    }
     void makeSat(Satellite *sat, bool fromlist = true);
     void setSatWidget(GLSatAbstractWidget *satWidget);
-    inline Ui::SatDialog * getWidget() { return &widget; }
+    inline Ui::SatDialog *getWidget() {
+        return &widget;
+    }
 
 protected:
     void showEvent(QShowEvent *event);

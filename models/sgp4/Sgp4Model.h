@@ -21,21 +21,40 @@ public:
     bool model(double time) override;
     char *getState() override;
     int getStateSize() override;
-    double gsto() override { return elset.gsto; };
-    double minutes() override { return elset.t; };
-    double eccentricity () const { return state.ecc; }
-    double inclination  () const { return state.incl; }
-    double meanAnomaly  () const { return state.m; }
-    double meanMotion   () override { return state.n; }
-    double argLatPerigee() const { return state.argp; }
-    double latAscNode   () const { return state.node; }
-    double bStar        () const { return state.bstar; }
-    double jEpoch       () const { return state.jdsatepoch; }
-    
+    double gsto() override {
+        return elset.gsto;
+    };
+    double minutes() override {
+        return elset.t;
+    };
+    double eccentricity() const {
+        return state.ecc;
+    }
+    double inclination() const {
+        return state.incl;
+    }
+    double meanAnomaly() const {
+        return state.m;
+    }
+    double meanMotion() override {
+        return state.n;
+    }
+    double argLatPerigee() const {
+        return state.argp;
+    }
+    double latAscNode() const {
+        return state.node;
+    }
+    double bStar() const {
+        return state.bstar;
+    }
+    double jEpoch() const {
+        return state.jdsatepoch;
+    }
+
 private:
     elsetrec elset;
     TleReader::sgp4_t state;
 };
 
 #endif /* SGP4MODEL_H_ */
-

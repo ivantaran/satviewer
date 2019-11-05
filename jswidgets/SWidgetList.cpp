@@ -14,12 +14,11 @@ SWidgetList::SWidgetList(QWidget *parent) : QWidget(parent) {
     ui.setupUi(this);
     clear();
     connect(ui.btnSave, SIGNAL(clicked()), this, SLOT(save()));
-    connect(ui.listView, SIGNAL(clicked(const QModelIndex &)), 
-            this, SLOT(changeState(const QModelIndex &)));
+    connect(ui.listView, SIGNAL(clicked(const QModelIndex &)), this,
+            SLOT(changeState(const QModelIndex &)));
 }
 
 SWidgetList::~SWidgetList() {
-
 }
 
 void SWidgetList::init(QWidget *desktop, const QString &path) {
@@ -28,7 +27,7 @@ void SWidgetList::init(QWidget *desktop, const QString &path) {
     QStringList list = dir.entryList(QDir::Files);
     QFileInfo info;
 
-    for (const auto& line : list) {
+    for (const auto &line : list) {
         info.setFile(line);
         if (info.suffix() == "js") {
             SWidget *sWidget = new SWidget(desktop, dir.filePath(line));
@@ -39,14 +38,14 @@ void SWidgetList::init(QWidget *desktop, const QString &path) {
             item->setCheckState(Qt::Checked);
         }
     }
-    
+
     ui.listView->setModel(model);
     stateFile.setFileName(dir.filePath("state.lst"));
     load();
 }
 
 void SWidgetList::setVars(Satellite *sat, Location *loc, double *time) {
-    for (const auto& widget : (*this)) {
+    for (const auto &widget : (*this)) {
         widget->set(sat, loc, time);
     }
 }
@@ -58,12 +57,11 @@ void SWidgetList::save() {
     }
     QStandardItemModel *model = (QStandardItemModel *)ui.listView->model();
     QString line = "";
-    
+
     for (int i = 0; i < model->rowCount(); i++) {
         if (model->item(i)->checkState() == Qt::Checked) {
             line.append('1');
-        }
-        else {
+        } else {
             line.append('0');
         }
     }
@@ -98,14 +96,13 @@ void SWidgetList::changeState(const QModelIndex &index) {
     }
     if (model->item(index.row())->checkState() == Qt::Checked) {
         this->at(index.row())->activate();
-    }
-    else {
+    } else {
         this->at(index.row())->activate(false);
     }
 }
 
 void SWidgetList::setDesktop(QWidget *desktop) {
-    for(const auto& widget : (*this)) {
+    for (const auto &widget : (*this)) {
         widget->setParent(desktop);
     }
 }

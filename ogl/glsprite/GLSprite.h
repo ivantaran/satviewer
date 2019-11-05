@@ -7,19 +7,25 @@
 
 #ifndef GLSPRITE_H_
 #define GLSPRITE_H_
-#include <inttypes.h>
-#include <QOpenGLTexture>
-#include <QImage>
-#include <QtCore>
 #include "../SatWidgetObject.h"
+#include <QImage>
+#include <QOpenGLTexture>
+#include <QtCore>
+#include <inttypes.h>
 
 class GLSprite : public SatWidgetObject {
 public:
     GLSprite(QString fileName = QString(), QOpenGLWidget *parentWidget = 0);
     virtual ~GLSprite();
-    inline int width() { return m_width; }
-    inline int height() { return m_height; }
-    inline int angle() { return m_angle; }
+    inline int width() {
+        return m_width;
+    }
+    inline int height() {
+        return m_height;
+    }
+    inline int angle() {
+        return m_angle;
+    }
 
     void load(QString fileName, QOpenGLWidget *parentWidget) override;
     void make() override;

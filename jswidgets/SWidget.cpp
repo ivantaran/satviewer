@@ -8,10 +8,10 @@
  */
 
 #include "SWidget.h"
-#include <QMouseEvent>
 #include <QBitmap>
-#include <QTimer>
 #include <QDebug>
+#include <QMouseEvent>
+#include <QTimer>
 
 SWidget::SWidget(QWidget *parent, const QString &fileName) : QWidget(parent) {
     m_sat = nullptr;
@@ -20,7 +20,7 @@ SWidget::SWidget(QWidget *parent, const QString &fileName) : QWidget(parent) {
     m_maskColor = Qt::magenta;
     m_fillColor = Qt::black;
     this->resize(64, 32);
-    
+
     QFile file(fileName);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         qWarning() << "Error script file open: " << file.errorString();
@@ -29,13 +29,13 @@ SWidget::SWidget(QWidget *parent, const QString &fileName) : QWidget(parent) {
     QTextStream stream(&file);
     script = stream.readAll();
     file.close();
-    
+
     QJSValue scriptCanvas = engine.newQObject(this);
     engine.globalObject().setProperty("canvas", scriptCanvas);
-    
+
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint);
     setCursor(Qt::OpenHandCursor);
-    
+
     pixmap = QPixmap(width(), height());
     pixmap.fill(Qt::black);
     if (!canvas.begin(&pixmap)) {
@@ -44,7 +44,7 @@ SWidget::SWidget(QWidget *parent, const QString &fileName) : QWidget(parent) {
 
     engine.evaluate(script);
     m_title = engine.globalObject().property("title").toString();
-    
+
     m_interval = 1000;
     m_timer = startTimer(m_interval);
     this->onTimer();
@@ -64,7 +64,6 @@ void SWidget::paintEvent(QPaintEvent *event) {
 }
 
 SWidget::~SWidget() {
-
 }
 
 void SWidget::mouseMoveEvent(QMouseEvent *event) {
@@ -86,9 +85,10 @@ void SWidget::onTimer() {
         hide();
         return;
     }
-    if (!isVisible()) show();
+    if (!isVisible())
+        show();
     setVars();
-    QJSValue value =  engine.evaluate(script);
+    QJSValue value = engine.evaluate(script);
     if (value.isError()) {
         qWarning() << value.toString();
         qWarning() << value.property("lineNumber").toInt();
@@ -121,8 +121,7 @@ void SWidget::setFont(QString fontName, int pointSize, int weight, bool italic) 
     QFont font(fontName, pointSize, weight, italic);
     if (m_maskColor == m_fillColor) {
         font.setStyleStrategy(QFont::NoAntialias);
-    }
-    else {
+    } else {
         font.setStyleStrategy(QFont::PreferAntialias);
     }
     canvas.setFont(font);
@@ -144,8 +143,7 @@ void SWidget::setSize(int w, int h) {
     if (m_maskColor == m_fillColor) {
         canvas.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing, false);
         font.setStyleStrategy(QFont::NoAntialias);
-    }
-    else {
+    } else {
         canvas.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
         font.setStyleStrategy(QFont::PreferAntialias);
     }
@@ -167,8 +165,7 @@ void SWidget::setMaskColor(int value) {
     m_maskColor = QColor::fromRgb(value);
     if (m_maskColor == m_fillColor) {
         canvas.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing, false);
-    }
-    else { 
+    } else {
         canvas.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
     }
 }
@@ -180,8 +177,8 @@ void SWidget::setVars() {
     engine.globalObject().setProperty("timeNow", *m_time);
     engine.globalObject().setProperty("nameSat", m_sat->name());
     engine.globalObject().setProperty("nameLoc", m_loc->name());
-    QJSValue ascSat =  engine.newArray(6);
-    QJSValue ascLoc =  engine.newArray(6);
+    QJSValue ascSat = engine.newArray(6);
+    QJSValue ascLoc = engine.newArray(6);
     for (int i = 0; i < 6; i++) {
         ascSat.setProperty(i, m_sat->rg()[i]);
         ascLoc.setProperty(i, m_loc->rg()[i]);
@@ -207,8 +204,7 @@ void SWidget::activate(bool state) {
     if (state) {
         m_timer = startTimer(m_interval);
         show();
-    }
-    else {
+    } else {
         hide();
     }
 }

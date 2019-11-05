@@ -51,13 +51,13 @@ GLObjecter::GLObjecter(QOpenGLWidget *parent, int index, const char *path, const
 }
 
 void GLObjecter::clear() {
-    for (const auto& i : vertex) {
+    for (const auto &i : vertex) {
         delete[] i;
     }
-    for (const auto& i : tex_vertex) {
+    for (const auto &i : tex_vertex) {
         delete[] i;
     }
-    for (const auto& i : normals) {
+    for (const auto &i : normals) {
         delete[] i;
     }
     vertex.clear();
@@ -65,7 +65,7 @@ void GLObjecter::clear() {
     normals.clear();
     file->clear();
     if (mtlLib != NULL) {
-        delete mtlLib; //TODO add remove textures      
+        delete mtlLib; // TODO add remove textures
     }
 }
 
@@ -110,7 +110,8 @@ void GLObjecter::init() {
         }
         if (strcmp(type, "usemtl") == 0) {
             sscanf(line, "%*s %64s", type);
-            if (mtlLib != NULL) mtlLib->set(type);
+            if (mtlLib != NULL)
+                mtlLib->set(type);
             continue;
         }
         if (strcmp(type, "g") == 0) {
@@ -145,7 +146,7 @@ void GLObjecter::addNormal() {
 void GLObjecter::addFace() {
     char *token;
     int tmp[3];
-    
+
     strtok(line, " ");
     token = strtok(NULL, " ");
 
@@ -153,24 +154,26 @@ void GLObjecter::addFace() {
     while (token != 0) {
         int c = sscanf(token, "%d/%d/%d", &tmp[0], &tmp[1], &tmp[2]);
         switch (c) {
-        default: 
+        default:
         case 0:
             cout << c << " bad face " << token << endl;
             break;
         case 1:
             if (sscanf(token, "%d//%d", &tmp[0], &tmp[2]) == 2) {
-                    glNormal3fv(normals.at(tmp[2] - 1));
-                    glVertex3fv(vertex.at(tmp[0] - 1));
-            }
-            else glVertex3fv(vertex.at(tmp[0] - 1));
+                glNormal3fv(normals.at(tmp[2] - 1));
+                glVertex3fv(vertex.at(tmp[0] - 1));
+            } else
+                glVertex3fv(vertex.at(tmp[0] - 1));
             break;
         case 2:
-            if (mtlLib->mapKdOn()) glTexCoord3fv(tex_vertex.at(tmp[1] - 1));
+            if (mtlLib->mapKdOn())
+                glTexCoord3fv(tex_vertex.at(tmp[1] - 1));
             glVertex3fv(vertex.at(tmp[0] - 1));
             break;
         case 3:
             glNormal3fv(normals.at(tmp[2] - 1));
-            if (mtlLib->mapKdOn()) glTexCoord3fv(tex_vertex.at(tmp[1] - 1));
+            if (mtlLib->mapKdOn())
+                glTexCoord3fv(tex_vertex.at(tmp[1] - 1));
             glVertex3fv(vertex.at(tmp[0] - 1));
             break;
         }

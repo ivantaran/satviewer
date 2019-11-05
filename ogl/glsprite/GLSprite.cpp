@@ -9,7 +9,8 @@
 
 #include "GLSprite.h"
 
-GLSprite::GLSprite(QString fileName, QOpenGLWidget *parentWidget) : SatWidgetObject(fileName, parentWidget) {
+GLSprite::GLSprite(QString fileName, QOpenGLWidget *parentWidget)
+    : SatWidgetObject(fileName, parentWidget) {
     widget = NULL;
     texture = NULL;
     m_x = 0.0;
@@ -18,7 +19,7 @@ GLSprite::GLSprite(QString fileName, QOpenGLWidget *parentWidget) : SatWidgetObj
     m_width = 0;
     m_height = 0;
     m_angle = 0;
-    
+
     load(fileName, parentWidget);
 }
 
@@ -32,7 +33,7 @@ GLSprite::~GLSprite() {
 
 void GLSprite::load(QString fileName, QOpenGLWidget *parentWidget) {
     if ((parentWidget == NULL) || (!parentWidget->isValid())) {
-//        qWarning("GLSprite::load: QOpenGLWidget is not valid");
+        //        qWarning("GLSprite::load: QOpenGLWidget is not valid");
         return;
     }
 
@@ -43,14 +44,13 @@ void GLSprite::load(QString fileName, QOpenGLWidget *parentWidget) {
         qWarning("error: SatWidgetObject initializeOpenGLFunctions");
         exit(-1);
     }
-    
+
     if (!image.load(fileName)) {
         qWarning() << QString("pixmap not loaded: %0").arg(fileName);
         m_width = 0;
         m_height = 0;
         m_angle = 0;
-    }
-    else {
+    } else {
         m_width = image.width();
         m_height = image.height();
         m_angle = 0;
@@ -58,20 +58,19 @@ void GLSprite::load(QString fileName, QOpenGLWidget *parentWidget) {
             delete texture;
         }
         texture = new QOpenGLTexture(image);
-//        if (!texture) {
-//            qWarning("error: GLSprite::load QOpenGLTexture");
-//        }
+        //        if (!texture) {
+        //            qWarning("error: GLSprite::load QOpenGLTexture");
+        //        }
     }
-    
+
     if (glIsList(m_list_index)) {
         glDeleteLists(m_list_index, 1);
     }
-    
+
     m_list_index = glGenLists(1);
     if (glIsList(m_list_index)) {
         make();
-    }
-    else {
+    } else {
         qWarning("error: GLSprite::load glGenLists");
     }
 }
@@ -82,14 +81,14 @@ void GLSprite::resize(int w, int h) {
 }
 
 void GLSprite::make() {
-    
+
     if (!m_width || !m_height || !widget->width() || !widget->height()) {
         qWarning("GLSprite::make: invalid QOpenGLWidget");
         glNewList(m_list_index, GL_COMPILE);
         glEndList();
         return;
     }
-    
+
     GLfloat w = (GLfloat)m_width / widget->width();
     GLfloat h = (GLfloat)m_height / widget->height();
 
@@ -101,10 +100,14 @@ void GLSprite::make() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
     glBegin(GL_QUADS);
-    glTexCoord2f(0.0, 0.0); glVertex2f(-w, -h);
-    glTexCoord2f(0.0, 1.0); glVertex2f(-w,  h);
-    glTexCoord2f(1.0, 1.0); glVertex2f( w,  h);
-    glTexCoord2f(1.0, 0.0); glVertex2f( w, -h);
+    glTexCoord2f(0.0, 0.0);
+    glVertex2f(-w, -h);
+    glTexCoord2f(0.0, 1.0);
+    glVertex2f(-w, h);
+    glTexCoord2f(1.0, 1.0);
+    glVertex2f(w, h);
+    glTexCoord2f(1.0, 0.0);
+    glVertex2f(w, -h);
     glEnd();
     glPopAttrib();
     glEndList();
@@ -114,13 +117,13 @@ void GLSprite::exec(float x, float y, float z) {
     Q_UNUSED(z)
 
     if (!widget || !widget->isValid()) {
-//        qWarning("GLSprite::exec: invalid QOpenGLWidget");
+        //        qWarning("GLSprite::exec: invalid QOpenGLWidget");
         return;
     }
 
     m_x = x;
     m_y = y;
-    
+
     glPushMatrix();
     glTranslatef(m_x, m_y, 0);
     glCallList(m_list_index);
