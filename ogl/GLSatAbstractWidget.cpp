@@ -17,6 +17,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QtMath>
+#include <assert.h>
 
 GLSatAbstractWidget::GLSatAbstractWidget(SatViewer *satviewer, QWidget *parent)
     : QOpenGLWidget(parent) {
