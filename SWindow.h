@@ -36,12 +36,18 @@ private:
     QWidget settingsWidget;
     Ui::SettingsWidget uiSettings;
     Ui::MainWindow widget;
+    QDateTimeEdit m_dateTimeEdit;
+    QWidget m_spacer1;
+    QWidget m_spacer2;
+    QComboBox m_comboBoxTimeZone;
+    QComboBox m_comboBoxTimeStepUnit;
+    QSpinBox m_spinBoxTimeStep;
     QPalette originalPalette;
     GLSatAbstractWidget *satWidget;
-    RadarWidget *radarWidget;
-    double time, timeStep, timeX;
+    RadarWidget *m_radarWidget;
+    time_t time, timeStep;
+    time_t timeX; // default 25 or 50, setting timeX, min 1, max 100, step 5
     int timeType;
-    QShortcut *shcFullScreen, *shcEscFullScreen;
     QLabel labelLoc, labelSat;
     QStringList listLang;
     QString language;
@@ -52,7 +58,7 @@ private:
 
 private slots:
     void fullScreen();
-    void escFullScreen();
+    void exitFullScreen();
     void onTimeTypeChanged(int index);
     void addZRVMessage(QString text);
     void checkVersion(bool checked);
@@ -63,13 +69,11 @@ private slots:
     void onBackwardClick();
     void onForwardClick();
     void onStepChanged(int value = 0);
-    void onTimeXChanged(int value);
+    void onTimeXChanged(int value); // TODO remove this
     void selectLanguage(int value);
     void setSwlVars(Satellite *sat, Location *loc, double *time);
     void selectStyle(int value);
-    //    void selectGlWidget(int value);
     void selectPalette(bool value);
-    //	void onSatModelChanged(int index);
     void onBtnPrintScrClicked();
     void resetSettings();
     void readSettings();
