@@ -12,80 +12,80 @@ QT      += gui core sql widgets network qml
 
 HEADERS += \
     SatViewer.h \
-    SWindow.h \
-    SDlgOptions.h \
-    SLocDialog.h \
-    dialogs/sgp4/Sgp4Dialog.h \
-    models/sgp4/SGP4.h \
-    models/sgp4/Sgp4Model.h \
-    models/sun/sunmodel.h \
-    jscalc/SScriptFrame.h \
-    ogl/GLSatAbstractWidget.h \
-    ogl/GLSatWidget.h \
-    ogl/RadarWidget.h \
-    ogl/GLSatWidget3d.h \
-    satutils/Satellite.h \
-    satutils/TleReader.h \
-    locutils/Location.h \
-    zrvutils/ZrvIoList.h \
-    tleupd/SUpdater.h \
-    sql/dbsql.h \
-    jswidgets/SWidget.h \
-    jswidgets/SWidgetList.h \
-    uchecker/UCheck.h \
-    ogl/globj/GLObjMaterial.h \
-    ogl/globj/GLObjecter.h \
-    ogl/glsprite/GLSprite.h \
-    ogl/SatWidgetObject.h
+    SatViewer.h \
+    utils/models/sgp4/SGP4.h \
+    utils/models/sgp4/Sgp4Model.h \
+    utils/models/sun/sunmodel.c \
+    utils/ogl/GLSatAbstractWidget.h \
+    utils/ogl/GLSatWidget.h \
+    utils/ogl/RadarWidget.h \
+    utils/ogl/GLSatWidget3d.h \
+    utils/ogl/globj/GLObjMaterial.h \
+    utils/ogl/globj/GLObjecter.h \
+    utils/ogl/glsprite/GLSprite.h \
+    utils/ogl/SatWidgetObject.h \
+    utils/Satellite.h \
+    utils/TleReader.h \
+    utils/Location.h \
+    utils/ZrvIoList.h \ 
+    gui/SWindow.h \
+    gui/SDlgOptions.h \
+    gui/SLocDialog.h \
+    gui/Sgp4Dialog.h \
+    gui/SWidget.h \
+    gui/SWidgetList.h \
+    gui/UCheck.h \
+    gui/SScriptFrame.h \
+    gui/SUpdater.h
 
 SOURCES += \
     main.cpp \
     SatViewer.cpp \
-    SWindow.cpp \
-    SDlgOptions.cpp \
-    SLocDialog.cpp \
-    dialogs/sgp4/Sgp4Dialog.cpp \
-    models/sgp4/SGP4.cpp \
-    models/sgp4/Sgp4Model.cpp \
-    models/sun/sunmodel.c \
-    jscalc/SScriptFrame.cpp \
-    ogl/GLSatAbstractWidget.cpp \
-    ogl/GLSatWidget.cpp \
-    ogl/RadarWidget.cpp \
-    ogl/GLSatWidget3d.cpp \
-    satutils/Satellite.cpp \
-    satutils/TleReader.cpp \
-    locutils/Location.cpp \
-    zrvutils/ZrvIoList.cpp \ 
-    tleupd/SUpdater.cpp \
-    jswidgets/SWidget.cpp \
-    jswidgets/SWidgetList.cpp \
-    uchecker/UCheck.cpp \
-    ogl/globj/GLObjMaterial.cpp \
-    ogl/globj/GLObjecter.cpp \
-    ogl/glsprite/GLSprite.cpp \
-    ogl/SatWidgetObject.cpp
+    utils/models/sgp4/SGP4.cpp \
+    utils/models/sgp4/Sgp4Model.cpp \
+    utils/models/sun/sunmodel.c \
+    utils/ogl/GLSatAbstractWidget.cpp \
+    utils/ogl/GLSatWidget.cpp \
+    utils/ogl/RadarWidget.cpp \
+    utils/ogl/GLSatWidget3d.cpp \
+    utils/ogl/globj/GLObjMaterial.cpp \
+    utils/ogl/globj/GLObjecter.cpp \
+    utils/ogl/glsprite/GLSprite.cpp \
+    utils/ogl/SatWidgetObject.cpp \
+    utils/Satellite.cpp \
+    utils/TleReader.cpp \
+    utils/Location.cpp \
+    utils/ZrvIoList.cpp \ 
+    gui/SWindow.cpp \
+    gui/SDlgOptions.cpp \
+    gui/SLocDialog.cpp \
+    gui/Sgp4Dialog.cpp \
+    gui/SWidget.cpp \
+    gui/SWidgetList.cpp \
+    gui/UCheck.cpp \
+    gui/SScriptFrame.cpp \
+    gui/SUpdater.cpp
                                 
-RESOURCES = ui/SatViewer.qrc
+RESOURCES = gui/SatViewer.qrc
 
 FORMS += \
-    ui/SatViewer.ui \
-    ui/options.ui \
-    ui/settings.ui \
-    ui/sat.ui \
-    ui/loc.ui \
-    ui/jscalc.ui \
-    ui/tleupd.ui \
-    ui/jswidgetlist.ui \
-    ui/mapsettings.ui \
-    ui/earthsettings.ui \
-    dialogs/sgp4/ui/sgp4.ui
+    gui/ui/SatViewer.ui \
+    gui/ui/options.ui \
+    gui/ui/settings.ui \
+    gui/ui/sat.ui \
+    gui/ui/loc.ui \
+    gui/ui/jscalc.ui \
+    gui/ui/tleupd.ui \
+    gui/ui/jswidgetlist.ui \
+    gui/ui/mapsettings.ui \
+    gui/ui/earthsettings.ui \
+    gui/ui/sgp4.ui
 
 TRANSLATIONS = \
-    satviewer_fr.ts \
-    satviewer_de.ts \
-    satviewer_es.ts \
-    satviewer_ru.ts
+    gui/translations/satviewer_fr.ts \
+    gui/translations/satviewer_de.ts \
+    gui/translations/satviewer_es.ts \
+    gui/translations/satviewer_ru.ts
 
 CODECFORTR = UTF-8
 

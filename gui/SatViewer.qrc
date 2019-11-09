@@ -1,0 +1,35 @@
+<RCC>
+  <qresource prefix="toolbar">
+    <file>icons/export.svg</file>
+    <file>icons/play-button.svg</file>
+    <file>icons/left-arrow-1.svg</file>
+    <file>icons/power.svg</file>
+    <file>icons/pause.svg</file>
+    <file>icons/right-arrow-1.svg</file>
+    <file>icons/down-arrow.svg</file>
+    <file>icons/menu.svg</file>
+  </qresource>
+  <qresource prefix="status">
+    <file>icons/correct.svg</file>
+    <file>icons/right-arrow-1.svg</file>
+    <file>icons/prohibition.svg</file>
+  </qresource>
+  <qresource prefix="options">
+    <file>icons/satviewer.svg</file>
+    <file>icons/info.svg</file>
+  </qresource>
+  <qresource prefix="actions">
+    <file>icons/garbage.svg</file>
+    <file>icons/folder.svg</file>
+    <file>icons/cancel-1.svg</file>
+    <file>icons/edit.svg</file>
+    <file>icons/add.svg</file>
+    <file>icons/remove.svg</file>
+    <file>icons/refresh.svg</file>
+  </qresource>
+  <qresource prefix="list">
+    <file>icons/right-arrow-1.svg</file>
+    <file>icons/left-arrow-1.svg</file>
+  </qresource>
+  <qresource prefix="icon"/>
+</RCC>

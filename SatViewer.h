@@ -8,9 +8,9 @@
 #ifndef SATVIEWER_H
 #define SATVIEWER_H
 
-#include "locutils/Location.h"
-#include "satutils/Satellite.h"
-#include "zrvutils/ZrvIoList.h"
+#include "utils/Location.h"
+#include "utils/Satellite.h"
+#include "utils/ZrvIoList.h"
 
 class SatViewer : public QObject {
     Q_OBJECT
