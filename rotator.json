@@ -1,0 +1,29 @@
+{
+    "name": "zc702",
+    "host": "192.168.1.5", 
+    "port": 4533, 
+    "azm": {
+        "pwmHoming": -25.5,
+        "pwmMin": 25.0,
+        "pwmMax": 100.0,
+        "angleMin": 0.0,
+        "angleMax": 360.0,
+        "tolerance": 0.5, 
+        "rate": 100,
+        "kp": 400, 
+        "ki": 150, 
+        "kd": 5
+    },
+    "elv": {
+        "pwmHoming": -32.0,
+        "pwmMin": 31.0,
+        "pwmMax": 100.0,
+        "angleMin": 0.0,
+        "angleMax": 180.0,
+        "tolerance": 0.5,
+        "rate": 100,
+        "kp": 400, 
+        "ki": 150, 
+        "kd": 5
+    }
+}

@@ -11,6 +11,7 @@
 #include "../utils/Satellite.h"
 #include "../utils/ZrvIoList.h"
 #include "../utils/ogl/GLSatWidget.h"
+#include "RotatorSettings.h"
 #include "SLocDialog.h"
 #include "SScriptFrame.h"
 #include "SUpdater.h"
@@ -54,6 +55,7 @@ public:
     void saveListViewLoc();
     void loadListViewSat();
     void loadListViewLoc();
+    void setRotatorSettings(RotatorSettings *rotatorSettings);
 
 private:
     SatViewer *m_satviewer;

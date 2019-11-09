@@ -8,7 +8,6 @@
  */
 #include "SDlgOptions.h"
 #include "Sgp4Dialog.h"
-#include "RotatorSettings.h"
 #include "../utils/dbsql.h"
 #include <fstream>
 
@@ -34,7 +33,6 @@ SDlgOptions::SDlgOptions(SatViewer *satviewer, GLSatAbstractWidget *w) {
     jswList = new SWidgetList();
     jswList->setParent(widget.tabWidgetSettings);
     widget.tabWidgetSettings->insertTab(1, jswList, tr("Widgets"));
-    widget.tabWidgetSettings->insertTab(3, new RotatorSettings(this), tr("Rotator"));
 
     dir = QDir::home();
     dir.cd("satviewer/jsprm");
@@ -95,6 +93,10 @@ SDlgOptions::SDlgOptions(SatViewer *satviewer, GLSatAbstractWidget *w) {
 
 SDlgOptions::~SDlgOptions() {
     db.close();
+}
+
+void SDlgOptions::setRotatorSettings(RotatorSettings *rotatorSettings) {
+    widget.tabWidgetSettings->insertTab(3, rotatorSettings, tr("Rotators"));
 }
 
 void SDlgOptions::saveListViewSat() {

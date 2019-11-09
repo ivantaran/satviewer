@@ -1,6 +1,7 @@
 #ifndef ROTATORSETTINGS_H_
 #define ROTATORSETTINGS_H_
 
+#include "RotatorWidget.h"
 #include "ui_rotatorSettings.h"
 #include <QHostAddress>
 #include <QString>
@@ -9,18 +10,13 @@
 class RotatorSettings : public QWidget {
     Q_OBJECT
 private:
+    QWidget *m_mainWindow;
     Ui::RotatorSettings ui;
-
-    class RotatorConnection {
-    public:
-        QHostAddress host = QHostAddress::LocalHost;
-        quint16 port = 4533;
-    };
-    QMap <QString, RotatorConnection *> m_settings;
+    QMap<QString, RotatorWidget *> m_settings;
     void updateTable();
-    
+
 public:
-    RotatorSettings(QWidget *parent = nullptr);
+    RotatorSettings(QWidget *parent = nullptr, QWidget *mainWindow = nullptr);
     virtual ~RotatorSettings();
 
 private slots:

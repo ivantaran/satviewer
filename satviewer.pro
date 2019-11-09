@@ -26,11 +26,13 @@ HEADERS += \
     utils/ogl/globj/GLObjecter.h \
     utils/ogl/glsprite/GLSprite.h \
     utils/ogl/SatWidgetObject.h \
+    utils/Rotator.h \
     utils/Satellite.h \
     utils/TleReader.h \
     utils/Location.h \
     utils/ZrvIoList.h \ 
     gui/RotatorSettings.h \
+    gui/RotatorWidget.h \
     gui/SWindow.h \
     gui/SDlgOptions.h \
     gui/SLocDialog.h \
@@ -55,11 +57,13 @@ SOURCES += \
     utils/ogl/globj/GLObjecter.cpp \
     utils/ogl/glsprite/GLSprite.cpp \
     utils/ogl/SatWidgetObject.cpp \
+    utils/Rotator.cpp \
     utils/Satellite.cpp \
     utils/TleReader.cpp \
     utils/Location.cpp \
     utils/ZrvIoList.cpp \ 
     gui/RotatorSettings.cpp \
+    gui/RotatorWidget.cpp \
     gui/SWindow.cpp \
     gui/SDlgOptions.cpp \
     gui/SLocDialog.cpp \
@@ -84,8 +88,8 @@ FORMS += \
     gui/ui/mapsettings.ui \
     gui/ui/earthsettings.ui \
     gui/ui/earthsettings.ui \
-    gui/ui/rotatorSettings.ui
     gui/ui/rotator.ui
+    gui/ui/rotatorSettings.ui
     gui/ui/sgp4.ui
 
 TRANSLATIONS = \

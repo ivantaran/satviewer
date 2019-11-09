@@ -11,6 +11,7 @@
 #include "../utils/ogl/GLSatWidget.h"
 #include "../utils/ogl/GLSatWidget3d.h"
 #include "../utils/ogl/RadarWidget.h"
+#include "RotatorWidget.h"
 #include "SDlgOptions.h"
 #include "SatViewer.h"
 #include "UCheck.h"
@@ -53,6 +54,7 @@ private:
     QString language;
     QTranslator m_translator;
     UCheck *uCheck;
+    QMap<QString, RotatorWidget *> m_rotators;
     void closeEvent(QCloseEvent *event);
     void wheelEvent(QWheelEvent *event);
 

@@ -65,6 +65,7 @@ SWindow::SWindow(SatViewer *satviewer) {
     move((qApp->desktop()->width() - width()) / 2, (qApp->desktop()->height() - height()) / 2);
     dlgOptions->move((qApp->desktop()->width() - dlgOptions->width()) / 2,
                      (qApp->desktop()->height() - dlgOptions->height()) / 2);
+    dlgOptions->setRotatorSettings(new RotatorSettings(dlgOptions, widget.dockWidget1->parentWidget()));
     connect(widget.actionMenu, SIGNAL(triggered()), dlgOptions, SLOT(show()));
 
     uiSettings.setupUi(&settingsWidget);
