@@ -10,6 +10,8 @@ OBJECTS_DIR = build
 CONFIG  += console debug c++11
 QT      += gui core sql widgets network qml
 
+QMAKE_CXXFLAGS_DEBUG += -O0
+
 HEADERS += \
     SatViewer.h \
     SatViewer.h \
@@ -28,6 +30,7 @@ HEADERS += \
     utils/TleReader.h \
     utils/Location.h \
     utils/ZrvIoList.h \ 
+    gui/RotatorSettings.h \
     gui/SWindow.h \
     gui/SDlgOptions.h \
     gui/SLocDialog.h \
@@ -56,6 +59,7 @@ SOURCES += \
     utils/TleReader.cpp \
     utils/Location.cpp \
     utils/ZrvIoList.cpp \ 
+    gui/RotatorSettings.cpp \
     gui/SWindow.cpp \
     gui/SDlgOptions.cpp \
     gui/SLocDialog.cpp \
@@ -79,6 +83,9 @@ FORMS += \
     gui/ui/jswidgetlist.ui \
     gui/ui/mapsettings.ui \
     gui/ui/earthsettings.ui \
+    gui/ui/earthsettings.ui \
+    gui/ui/rotatorSettings.ui
+    gui/ui/rotator.ui
     gui/ui/sgp4.ui
 
 TRANSLATIONS = \

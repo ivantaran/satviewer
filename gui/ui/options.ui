@@ -141,7 +141,8 @@
                     <string>Open TLE File</string>
                    </property>
                    <property name="icon">
-                    <iconset theme="document-open"/>
+                    <iconset theme="document-open">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Open TLE"/>
@@ -157,7 +158,8 @@
                     <string>Remove</string>
                    </property>
                    <property name="icon">
-                    <iconset theme="list-remove"/>
+                    <iconset theme="list-remove">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Remove"/>
@@ -173,7 +175,8 @@
                     <string>Remove All</string>
                    </property>
                    <property name="icon">
-                    <iconset theme="user-trash"/>
+                    <iconset theme="user-trash">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Remove All"/>
@@ -211,7 +214,8 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset theme="go-right"/>
+                    <iconset theme="go-right">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="autoRaise">
                     <bool>true</bool>
@@ -248,7 +252,8 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset theme="accessories-text-editor"/>
+                    <iconset theme="accessories-text-editor">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Edit"/>
@@ -273,7 +278,8 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset theme="list-remove"/>
+                    <iconset theme="list-remove">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Remove"/>
@@ -292,7 +298,8 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset theme="user-trash"/>
+                    <iconset theme="user-trash">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Select All"/>
@@ -652,7 +659,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="SatViewer.qrc">
+                    <iconset>
                      <normaloff>:/actions/edit.svg</normaloff>:/actions/edit.svg</iconset>
                    </property>
                    <property name="shortcut">
@@ -678,7 +685,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="SatViewer.qrc">
+                    <iconset>
                      <normaloff>:/actions/remove.svg</normaloff>:/actions/remove.svg</iconset>
                    </property>
                    <property name="autoRaise">
@@ -695,7 +702,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="SatViewer.qrc">
+                    <iconset>
                      <normaloff>:/actions/garbage.svg</normaloff>:/actions/garbage.svg</iconset>
                    </property>
                    <property name="autoRaise">
@@ -755,7 +762,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="SatViewer.qrc">
+                    <iconset>
                      <normaloff>:/list/right-arrow-1.svg</normaloff>:/list/right-arrow-1.svg</iconset>
                    </property>
                    <property name="autoRaise">
@@ -785,7 +792,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="SatViewer.qrc">
+                    <iconset>
                      <normaloff>:/actions/garbage.svg</normaloff>:/actions/garbage.svg</iconset>
                    </property>
                    <property name="shortcut">
@@ -805,7 +812,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="SatViewer.qrc">
+                    <iconset>
                      <normaloff>:/actions/remove.svg</normaloff>:/actions/remove.svg</iconset>
                    </property>
                    <property name="shortcut">
@@ -825,7 +832,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="SatViewer.qrc">
+                    <iconset>
                      <normaloff>:/actions/add.svg</normaloff>:/actions/add.svg</iconset>
                    </property>
                    <property name="shortcut">
@@ -845,7 +852,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="SatViewer.qrc">
+                    <iconset>
                      <normaloff>:/actions/folder.svg</normaloff>:/actions/folder.svg</iconset>
                    </property>
                    <property name="shortcut">
@@ -1075,11 +1082,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_3">
-      <attribute name="title">
-       <string>Page</string>
-      </attribute>
-     </widget>
      <widget class="QWidget" name="tabAbout">
       <attribute name="title">
        <string>About</string>
@@ -1171,7 +1173,7 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <resources>
-  <include location="SatViewer.qrc"/>
+  <include location="../SatViewer.qrc"/>
  </resources>
  <connections/>
 </ui>

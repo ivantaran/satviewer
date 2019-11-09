@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>RotatorSettings</class>
+ <widget class="QWidget" name="RotatorSettings">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -16,6 +16,12 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTableWidget" name="tableWidget">
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
      <column>
       <property name="text">
        <string>Name</string>
@@ -41,7 +47,8 @@
         <string>Add</string>
        </property>
        <property name="icon">
-        <iconset theme="add"/>
+        <iconset theme="add">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="shortcut">
         <string>+</string>
@@ -54,7 +61,8 @@
         <string>Remove</string>
        </property>
        <property name="icon">
-        <iconset theme="remove"/>
+        <iconset theme="remove">
+         <normaloff>.</normaloff>.</iconset>
        </property>
        <property name="shortcut">
         <string>-, Del</string>
@@ -77,6 +85,34 @@
     </layout>
    </item>
   </layout>
+  <action name="actionAdd">
+   <property name="icon">
+    <iconset theme="list-add"/>
+   </property>
+   <property name="text">
+    <string>Add</string>
+   </property>
+   <property name="toolTip">
+    <string>Add</string>
+   </property>
+   <property name="shortcut">
+    <string>+</string>
+   </property>
+  </action>
+  <action name="actionRemove">
+   <property name="icon">
+    <iconset theme="list-remove"/>
+   </property>
+   <property name="text">
+    <string>Remove</string>
+   </property>
+   <property name="toolTip">
+    <string>Remove</string>
+   </property>
+   <property name="shortcut">
+    <string>-, Del</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
