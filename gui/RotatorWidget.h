@@ -18,7 +18,8 @@ public:
     Rotator *getRotator();
 
 private slots:
-    void stateChangedSlot(QAbstractSocket::SocketState socketState);
+    void stateSocketChangedSlot(QAbstractSocket::SocketState socketState);
+    void updatedStateSlot(const QString &line);
 };
 
 #endif /* ROTATOR_WIDGET_H_ */

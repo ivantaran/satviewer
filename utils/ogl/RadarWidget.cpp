@@ -252,6 +252,12 @@ void RadarWidget::paintEvent(QPaintEvent *event) {
     painter.end();
 }
 
+void RadarWidget::resizeGL(int width, int height) {
+    GLSatAbstractWidget::resizeGL(width, height);
+    sprite_sun.make();
+    sprite_current.make();
+}
+
 void RadarWidget::onCurrentChanged(Satellite *sat, Location *loc, double *time) {
     if (sat != nullptr) {
     }

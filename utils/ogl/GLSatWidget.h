@@ -60,7 +60,8 @@ private:
     bool testShadow(Satellite *sat, Satellite *sun);
 
 protected:
-    void paintEvent(QPaintEvent *event) override;
+    virtual void paintEvent(QPaintEvent *event) override;
+    virtual void resizeGL(int width, int height) override;
 
 private slots:
     void btnColorClicked();

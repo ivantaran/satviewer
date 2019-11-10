@@ -945,6 +945,13 @@ void GLSatWidget::paintEvent(QPaintEvent *event) {
     painter.end();
 }
 
+void GLSatWidget::resizeGL(int width, int height) {
+    GLSatAbstractWidget::resizeGL(width, height);
+    sprite_sun.make();
+    sprite_current.make();
+    sprite_active.make();
+}
+
 void GLSatWidget::mouseMoveEvent(QMouseEvent *event) {
     float px, py;
     float w = this->width();

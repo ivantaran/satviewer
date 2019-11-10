@@ -1,6 +1,7 @@
 
 #include "RotatorWidget.h"
 #include <QMainWindow>
+#include <QtMath>
 
 RotatorWidget::RotatorWidget(QWidget *parent) : QDockWidget(parent) {
     ui.setupUi(this);
@@ -9,7 +10,7 @@ RotatorWidget::RotatorWidget(QWidget *parent) : QDockWidget(parent) {
     m_rotator.readSettings("rotator.json");
 
     connect(&m_rotator, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this,
-            SLOT(stateChangedSlot(QAbstractSocket::SocketState)));
+            SLOT(stateSocketChangedSlot(QAbstractSocket::SocketState)));
     connect(&m_rotator, SIGNAL(updatedState(const QString &)), this,
             SLOT(updatedStateSlot(const QString &)));
 }
@@ -21,7 +22,7 @@ Rotator *RotatorWidget::getRotator() {
     return &m_rotator;
 }
 
-void RotatorWidget::stateChangedSlot(QAbstractSocket::SocketState socketState) {
+void RotatorWidget::stateSocketChangedSlot(QAbstractSocket::SocketState socketState) {
     QPalette palette = ui.labelConnection->palette();
     if (socketState == QTcpSocket::ConnectedState) {
         palette.setColor(QPalette::Window, Qt::green);
@@ -29,4 +30,9 @@ void RotatorWidget::stateChangedSlot(QAbstractSocket::SocketState socketState) {
         palette.setColor(QPalette::Window, Qt::yellow);
     }
     ui.labelConnection->setPalette(palette);
+}
+
+void RotatorWidget::updatedStateSlot(const QString &line) {
+    ui.lineEditAzimuth->setText(QString("%1").arg(qRadiansToDegrees(m_rotator.getAngle(0)), 7, 'f', 2));
+    ui.lineEditElevation->setText(QString("%1").arg(qRadiansToDegrees(m_rotator.getAngle(1)), 7, 'f', 2));
 }

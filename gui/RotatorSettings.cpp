@@ -8,6 +8,7 @@ RotatorSettings::RotatorSettings(QWidget *parent, QWidget *mainWindow) : QWidget
     ui.buttonRemove->setDefaultAction(ui.actionRemove);
     connect(ui.actionAdd, SIGNAL(triggered()), this, SLOT(addConnection()));
     connect(ui.actionRemove, SIGNAL(triggered()), this, SLOT(removeConnection()));
+    addConnection();
 }
 
 RotatorSettings::~RotatorSettings() {

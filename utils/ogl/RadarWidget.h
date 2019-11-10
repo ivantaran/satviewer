@@ -21,7 +21,8 @@ public:
     virtual ~RadarWidget();
 
 protected:
-    void paintEvent(QPaintEvent *event);
+    virtual void paintEvent(QPaintEvent *event) override;
+    virtual void resizeGL(int width, int height) override;
 
 private:
     GLSprite sprite_current, sprite_sun;

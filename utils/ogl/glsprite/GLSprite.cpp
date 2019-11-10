@@ -11,8 +11,8 @@
 
 GLSprite::GLSprite(QString fileName, QOpenGLWidget *parentWidget)
     : SatWidgetObject(fileName, parentWidget) {
-    widget = NULL;
-    texture = NULL;
+    widget = nullptr;
+    texture = nullptr;
     m_x = 0.0;
     m_y = 0.0;
     m_list_index = 0;
@@ -25,14 +25,15 @@ GLSprite::GLSprite(QString fileName, QOpenGLWidget *parentWidget)
 
 GLSprite::~GLSprite() {
     if (texture) {
+        widget->makeCurrent();
         delete texture;
     }
     glDeleteLists(m_list_index, 1);
-    qWarning("GLSprite is removed");
+    qWarning() << __func__;
 }
 
 void GLSprite::load(QString fileName, QOpenGLWidget *parentWidget) {
-    if ((parentWidget == NULL) || (!parentWidget->isValid())) {
+    if ((parentWidget == nullptr) || (!parentWidget->isValid())) {
         //        qWarning("GLSprite::load: QOpenGLWidget is not valid");
         return;
     }
@@ -58,9 +59,6 @@ void GLSprite::load(QString fileName, QOpenGLWidget *parentWidget) {
             delete texture;
         }
         texture = new QOpenGLTexture(image);
-        //        if (!texture) {
-        //            qWarning("error: GLSprite::load QOpenGLTexture");
-        //        }
     }
 
     if (glIsList(m_list_index)) {
@@ -117,7 +115,6 @@ void GLSprite::exec(float x, float y, float z) {
     Q_UNUSED(z)
 
     if (!widget || !widget->isValid()) {
-        //        qWarning("GLSprite::exec: invalid QOpenGLWidget");
         return;
     }
 
