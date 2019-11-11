@@ -2,6 +2,12 @@
     "name": "zc702",
     "host": "192.168.1.5", 
     "port": 4533, 
+    "init": [
+        "w AW0,-65 AW1,64 AW2,255 AW3,0 AW4,8192 AW5,11 AW6,400 AW7,15 AW8,50",
+        "w AC",
+        "w EW0,-82 EW1,79 EW2,255 EW3,0 EW4,4096 EW5,11 EW6,400 EW7,15 EW8,50", 
+        "w EC"
+    ],
     "azm": {
         "pwmHoming": -25.5,
         "pwmMin": 25.0,

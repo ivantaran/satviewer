@@ -14,7 +14,8 @@ private:
     static const QString DEFAULT_HOST;
     QHostAddress m_host;
     quint16 m_port;
-
+    QStringList m_initList;
+    
     typedef enum {
         StatusUnknown = 0x00,
         StatusIdle = 0x01,

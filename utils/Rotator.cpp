@@ -1,6 +1,7 @@
 
 #include "Rotator.h"
 #include <QFile>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QtMath>
@@ -11,8 +12,8 @@ Rotator::Rotator() {
 
     connect(this, SIGNAL(readyRead()), this, SLOT(readyReadSlot()));
 
-    m_timerSlowId = startTimer(3000);
-    m_timerFastId = startTimer(200);
+    m_timerSlowId = startTimer(5000);
+    m_timerFastId = startTimer(1000);
 }
 
 Rotator::~Rotator() {
@@ -21,10 +22,10 @@ Rotator::~Rotator() {
 
 void Rotator::timerEvent(QTimerEvent *event) {
     if (event->timerId() == m_timerSlowId) {
-        requestConfigSlot();
+        // requestConfigSlot();
         reconnect();
     } else if (event->timerId() == m_timerFastId) {
-        requestPosition();
+        // requestPosition();
     }
 }
 
@@ -81,7 +82,9 @@ void Rotator::acceptConfigRegister(uint index, uint addr, int value) {
 
 void Rotator::writeLine(const QString &line) {
     if (isOpen() && isWritable()) {
-        write(("w " + line).toUtf8());
+        write((line + '\n').toUtf8());
+        qWarning() << (line + '\n');
+        flush();
     }
 }
 
@@ -134,41 +137,6 @@ void Rotator::readyReadSlot() {
         }
 
         emit updatedState(m_stateLine);
-        //     if (m_stateLine.contains("state:")) {
-        //         m_stateLine = m_stateLine.remove("state:");
-        //         QStringList list = m_stateLine.split(QChar(','));
-        //         if (list.count() >= 14) {
-        //             uint position = 0;
-        //             for (size_t i = 0; i < 2; i++) {
-        //                 m_mode[i] = static_cast<ControllerMode>(list.at(position++).toUInt(&ok));
-        //                 m_error[i] =
-        //                 static_cast<ControllerError>(list.at(position++).toUInt(&ok));
-        //                 m_currentSensor[i] = list.at(position++).toUInt(&ok);
-        //                 m_diag[i] = list.at(position++).toUInt(&ok);
-        //                 m_pwm[i] = (qreal)list.at(position++).toUInt(&ok) / 2.55;
-        //                 uint ina = list.at(position++).toUInt(&ok) & 0x01;
-        //                 uint inb = list.at(position++).toUInt(&ok) & 0x01;
-        //                 m_direction[i] = ina | (inb << 1);
-        //                 m_angle[i] = (qreal)list.at(position++).toInt(&ok) / -4096.0 * M_PI;
-        //                 m_endstop[i] = list.at(position++).toUInt(&ok) > 0;
-        //             }
-        //         }
-        //     }
-        //     else if (m_stateLine.contains("config:")) {
-        //         m_stateLine = m_stateLine.remove("config:");
-        //         QStringList list = m_stateLine.split(QChar(','));
-        //         if (list.count() >= 12) {
-        //             uint position = 0;
-        //             for (size_t i = 0; i < 2; i++) {
-        //                 m_pwmHoming[i] = (qreal)list.at(position++).toInt(&ok) / 2.55;
-        //                 m_pwmMin[i] = (qreal)list.at(position++).toInt(&ok) / 2.55;
-        //                 m_pwmMax[i] = (qreal)list.at(position++).toInt(&ok) / 2.55;
-        //                 m_angleMin[i] = (qreal)list.at(position++).toInt(&ok) / 4096.0 * M_PI;
-        //                 m_angleMax[i] = (qreal)list.at(position++).toInt(&ok) / 4096.0 * M_PI;
-        //                 m_tolerance[i] = (qreal)list.at(position++).toInt(&ok) / 4096.0 * M_PI;
-        //             }
-        //         }
-        //     }
     }
 }
 
@@ -293,20 +261,20 @@ qreal Rotator::getTolerance(uint index) {
 
 void Rotator::setMotion(uint index, qreal value) {
     int pwm = qRound(value * 2.55);
-    writeLine(QString("set %1 motion %2\n").arg(index).arg(pwm));
+    writeLine(QString("w set %1 motion %2\n").arg(index).arg(pwm));
 }
 
 void Rotator::setModePid(uint index, int kp, int ki, int kd) {
-    writeLine(QString("set %1 pid %2,%3,%4\n").arg(index).arg(kp).arg(ki).arg(kd));
+    writeLine(QString("w set %1 pid %2,%3,%4\n").arg(index).arg(kp).arg(ki).arg(kd));
 }
 
 void Rotator::setTarget(uint index, qreal angle) {
     int value = qRound(-4096.0 * angle / M_PI);
-    writeLine(QString("set %1 target %2\n").arg(index).arg(value));
+    writeLine(QString("w set %1 target %2\n").arg(index).arg(value));
 }
 
 void Rotator::setModeDefault(uint index) {
-    writeLine(QString("set %1 default\n").arg(index));
+    writeLine(QString("w set %1 default\n").arg(index));
 }
 
 void Rotator::setModeHoming(uint index) {
@@ -318,61 +286,61 @@ void Rotator::clearError(uint index) {
 }
 
 void Rotator::requestConfigSlot() {
-    writeLine(QString("AR0 AR1 AR2 AR3 AR4 AR5 AR6 AR7 AR8 \n"));
-    writeLine(QString("ER0 ER1 ER2 ER3 ER4 ER5 ER6 ER7 ER8 \n"));
-    writeLine(QString("GE GS \n"));
+    writeLine(QString("w AR0 AR1 AR2 AR3 AR4 AR5 AR6 AR7 AR8 \n"));
+    writeLine(QString("w ER0 ER1 ER2 ER3 ER4 ER5 ER6 ER7 ER8 \n"));
+    writeLine(QString("w GE GS \n"));
 }
 
 void Rotator::requestPosition() {
-    writeLine(QString("AZ EL \n"));
+    writeLine(QString("w AZ EL \n"));
 }
 
 void Rotator::setPwmHoming(uint index, qreal value) {
     writeLine(
-        QString("%1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('0').arg(qRound(value * 2.55)));
+        QString("w %1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('0').arg(qRound(value * 2.55)));
 }
 
 void Rotator::setPwmMin(uint index, qreal value) {
     writeLine(
-        QString("%1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('1').arg(qRound(value * 2.55)));
+        QString("w %1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('1').arg(qRound(value * 2.55)));
 }
 
 void Rotator::setPwmMax(uint index, qreal value) {
     writeLine(
-        QString("%1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('2').arg(qRound(value * 2.55)));
+        QString("w %1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('2').arg(qRound(value * 2.55)));
 }
 
 void Rotator::setAngleMin(uint index, qreal value) {
-    writeLine(QString("%1%2,%3 \n")
+    writeLine(QString("w %1%2,%3 \n")
                   .arg(index == 0 ? "AW" : "EW")
                   .arg('3')
                   .arg(qRound(4096.0 * value / M_PI)));
 }
 
 void Rotator::setAngleMax(uint index, qreal value) {
-    writeLine(QString("%1%2,%3 \n")
+    writeLine(QString("w %1%2,%3 \n")
                   .arg(index == 0 ? "AW" : "EW")
                   .arg('4')
                   .arg(qRound(4096.0 * value / M_PI)));
 }
 
 void Rotator::setTolerance(uint index, qreal value) {
-    writeLine(QString("%1%2,%3 \n")
+    writeLine(QString("w %1%2,%3 \n")
                   .arg(index == 0 ? "AW" : "EW")
                   .arg('5')
                   .arg(qRound(4096.0 * value / M_PI)));
 }
 
 void Rotator::setKp(uint index, int value) {
-    writeLine(QString("%1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('6').arg(value));
+    writeLine(QString("w %1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('6').arg(value));
 }
 
 void Rotator::setKi(uint index, int value) {
-    writeLine(QString("%1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('7').arg(value));
+    writeLine(QString("w %1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('7').arg(value));
 }
 
 void Rotator::setKd(uint index, int value) {
-    writeLine(QString("%1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('8').arg(value));
+    writeLine(QString("w %1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('8').arg(value));
 }
 
 void Rotator::setConfig(uint index, qreal pwmHoming, qreal pwmMin, qreal pwmMax, qreal angleMin,
@@ -431,6 +399,13 @@ void Rotator::readSettings(const QString &fileName) {
 
     QJsonDocument jsonDoc = QJsonDocument::fromJson(text.toUtf8());
     QJsonObject jsonObject = jsonDoc.object();
+
+    m_initList.clear();
+    value = jsonObject.value("init");
+    QJsonArray jsonArray = value.toArray();
+    for (const auto &item: jsonArray) {
+        m_initList.append(item.toString());
+    }
 
     value = jsonObject.value("azm");
     readConfig(0, value.toObject());

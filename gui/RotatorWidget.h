@@ -20,6 +20,7 @@ public:
 private slots:
     void stateSocketChangedSlot(QAbstractSocket::SocketState socketState);
     void updatedStateSlot(const QString &line);
+    void sendLine();
 };
 
 #endif /* ROTATOR_WIDGET_H_ */

@@ -13,6 +13,7 @@ RotatorWidget::RotatorWidget(QWidget *parent) : QDockWidget(parent) {
             SLOT(stateSocketChangedSlot(QAbstractSocket::SocketState)));
     connect(&m_rotator, SIGNAL(updatedState(const QString &)), this,
             SLOT(updatedStateSlot(const QString &)));
+    connect(ui.buttonSendLine, SIGNAL(clicked()), this, SLOT(sendLine()));
 }
 
 RotatorWidget::~RotatorWidget() {
@@ -33,6 +34,13 @@ void RotatorWidget::stateSocketChangedSlot(QAbstractSocket::SocketState socketSt
 }
 
 void RotatorWidget::updatedStateSlot(const QString &line) {
-    ui.lineEditAzimuth->setText(QString("%1").arg(qRadiansToDegrees(m_rotator.getAngle(0)), 7, 'f', 2));
-    ui.lineEditElevation->setText(QString("%1").arg(qRadiansToDegrees(m_rotator.getAngle(1)), 7, 'f', 2));
+    ui.lineEditAzimuth->setText(
+        QString("%1").arg(qRadiansToDegrees(m_rotator.getAngle(0)), 7, 'f', 2));
+    ui.lineEditElevation->setText(
+        QString("%1").arg(qRadiansToDegrees(m_rotator.getAngle(1)), 7, 'f', 2));
+    qWarning() << line;
+}
+
+void RotatorWidget::sendLine() {
+    m_rotator.writeLine(ui.lineEdit->text());
 }

@@ -240,7 +240,7 @@
        <widget class="QLineEdit" name="lineEdit"/>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="buttonSendLine">
         <property name="text">
          <string>Send</string>
         </property>
