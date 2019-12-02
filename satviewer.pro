@@ -88,8 +88,8 @@ FORMS += \
     gui/ui/mapsettings.ui \
     gui/ui/earthsettings.ui \
     gui/ui/earthsettings.ui \
-    gui/ui/rotator.ui
-    gui/ui/rotatorSettings.ui
+    gui/ui/rotator.ui \
+    gui/ui/rotatorSettings.ui \
     gui/ui/sgp4.ui
 
 TRANSLATIONS = \

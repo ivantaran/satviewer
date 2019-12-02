@@ -210,9 +210,6 @@
                    <property name="toolTip">
                     <string>View</string>
                    </property>
-                   <property name="text">
-                    <string/>
-                   </property>
                    <property name="icon">
                     <iconset theme="go-right">
                      <normaloff>.</normaloff>.</iconset>
@@ -247,9 +244,6 @@
                   <widget class="QToolButton" name="btnChangeDbSat">
                    <property name="toolTip">
                     <string>Edit</string>
-                   </property>
-                   <property name="text">
-                    <string/>
                    </property>
                    <property name="icon">
                     <iconset theme="accessories-text-editor">
@@ -655,12 +649,8 @@
                    <property name="toolTip">
                     <string>Edit</string>
                    </property>
-                   <property name="text">
-                    <string/>
-                   </property>
                    <property name="icon">
-                    <iconset>
-                     <normaloff>:/actions/edit.svg</normaloff>:/actions/edit.svg</iconset>
+                    <iconset theme="accessories-text-editor"/>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Edit"/>
@@ -681,12 +671,8 @@
                    <property name="toolTip">
                     <string>Remove</string>
                    </property>
-                   <property name="text">
-                    <string/>
-                   </property>
                    <property name="icon">
-                    <iconset>
-                     <normaloff>:/actions/remove.svg</normaloff>:/actions/remove.svg</iconset>
+                    <iconset theme="list-remove"/>
                    </property>
                    <property name="autoRaise">
                     <bool>true</bool>
@@ -702,8 +688,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset>
-                     <normaloff>:/actions/garbage.svg</normaloff>:/actions/garbage.svg</iconset>
+                    <iconset theme="user-trash"/>
                    </property>
                    <property name="autoRaise">
                     <bool>true</bool>
@@ -758,12 +743,8 @@
                    <property name="toolTip">
                     <string>View</string>
                    </property>
-                   <property name="text">
-                    <string/>
-                   </property>
                    <property name="icon">
-                    <iconset>
-                     <normaloff>:/list/right-arrow-1.svg</normaloff>:/list/right-arrow-1.svg</iconset>
+                    <iconset theme="go-right"/>
                    </property>
                    <property name="autoRaise">
                     <bool>true</bool>
@@ -792,8 +773,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset>
-                     <normaloff>:/actions/garbage.svg</normaloff>:/actions/garbage.svg</iconset>
+                    <iconset theme="user-trash"/>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Remove All"/>
@@ -812,8 +792,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset>
-                     <normaloff>:/actions/remove.svg</normaloff>:/actions/remove.svg</iconset>
+                    <iconset theme="list-remove"/>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Remove"/>
@@ -832,8 +811,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset>
-                     <normaloff>:/actions/add.svg</normaloff>:/actions/add.svg</iconset>
+                    <iconset theme="list-add"/>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Add"/>
@@ -852,8 +830,7 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset>
-                     <normaloff>:/actions/folder.svg</normaloff>:/actions/folder.svg</iconset>
+                    <iconset theme="document-open"/>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Open"/>

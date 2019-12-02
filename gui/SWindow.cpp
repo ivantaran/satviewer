@@ -26,21 +26,22 @@ SWindow::SWindow(SatViewer *satviewer) {
     statusBar()->addWidget(&labelSat, 0);
 
     satWidget = new GLSatWidget(satviewer, this);
+
     m_radarWidget = new RadarWidget(satviewer, this);
-    
+
     m_spacer1.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     m_spacer2.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     m_dateTimeEdit.setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     m_comboBoxTimeZone.setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     m_comboBoxTimeStepUnit.setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     m_spinBoxTimeStep.setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    
+
     m_dateTimeEdit.setDisplayFormat(tr("dd.MM.yyyy H:mm:ss"));
     m_dateTimeEdit.setCalendarPopup(true);
 
     m_comboBoxTimeZone.addItem(tr("UTC"));
     m_comboBoxTimeZone.addItem(tr("Local"));
-    
+
     m_comboBoxTimeStepUnit.addItem(tr("sec"));
     m_comboBoxTimeStepUnit.addItem(tr("min"));
     m_comboBoxTimeStepUnit.addItem(tr("hour"));
@@ -65,7 +66,8 @@ SWindow::SWindow(SatViewer *satviewer) {
     move((qApp->desktop()->width() - width()) / 2, (qApp->desktop()->height() - height()) / 2);
     dlgOptions->move((qApp->desktop()->width() - dlgOptions->width()) / 2,
                      (qApp->desktop()->height() - dlgOptions->height()) / 2);
-    dlgOptions->setRotatorSettings(new RotatorSettings(dlgOptions, widget.dockWidget1->parentWidget()));
+    dlgOptions->setRotatorSettings(
+        new RotatorSettings(dlgOptions, widget.dockWidget1->parentWidget()));
     connect(widget.actionMenu, SIGNAL(triggered()), dlgOptions, SLOT(show()));
 
     uiSettings.setupUi(&settingsWidget);
@@ -103,7 +105,8 @@ SWindow::SWindow(SatViewer *satviewer) {
     connect(widget.actionForward, SIGNAL(triggered()), this, SLOT(onForwardClick()));
     connect(uiSettings.btnReset, SIGNAL(clicked()), this, SLOT(resetSettings()));
     connect(&m_spinBoxTimeStep, SIGNAL(valueChanged(int)), this, SLOT(onStepChanged(int)));
-    connect(&m_comboBoxTimeStepUnit, SIGNAL(currentIndexChanged(int)), this, SLOT(onStepChanged(int)));
+    connect(&m_comboBoxTimeStepUnit, SIGNAL(currentIndexChanged(int)), this,
+            SLOT(onStepChanged(int)));
     connect(&m_comboBoxTimeZone, SIGNAL(currentIndexChanged(int)), this,
             SLOT(onTimeTypeChanged(int)));
     connect(uiSettings.comboLanguage, SIGNAL(currentIndexChanged(int)), this,
