@@ -15,6 +15,6 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
     - name: qmake
-      run: qmake
+      run: qmake satviewer.pro
     - name: make
       run: make
