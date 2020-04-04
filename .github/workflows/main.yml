@@ -12,9 +12,5 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v2
-    - name: qmake
-      run: qmake ./satviewer.pro
-    - name: make
-      run: make
+    - name: test
+      run: pwd
