@@ -13,6 +13,6 @@ jobs:
 
     steps:
       - name: satviewer
-        uses: ivantaran/satviewer
+        uses: ivantaran/satviewer@master
       - name: test
         run: ls -lia
