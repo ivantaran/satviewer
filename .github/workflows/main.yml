@@ -13,4 +13,4 @@ jobs:
 
     steps:
     - name: test
-      run: ls -lia
+      run: ls .. -lia
