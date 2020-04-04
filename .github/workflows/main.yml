@@ -9,10 +9,14 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
+      - name: install qt
+        uses: jurplel/install-qt-action@v2
       - name: satviewer
         uses: actions/checkout@v2
-      - name: test
-        run: ls -lia
+      - name: qmake
+        run: qmake
+      - name: make
+        run: make
