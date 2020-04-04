@@ -12,5 +12,7 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-    - name: test
-      run: ls .. -lia
+      - name: satviewer
+        uses: ivantaran/satviewer
+      - name: test
+        run: ls -lia
