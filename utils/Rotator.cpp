@@ -22,10 +22,10 @@ Rotator::~Rotator() {
 
 void Rotator::timerEvent(QTimerEvent *event) {
     if (event->timerId() == m_timerSlowId) {
-        // requestConfigSlot();
+        requestConfigSlot();
         reconnect();
     } else if (event->timerId() == m_timerFastId) {
-        // requestPosition();
+        requestPosition();
     }
 }
 

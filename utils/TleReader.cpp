@@ -85,9 +85,9 @@ void TleReader::item(int index) {
     else {
         sscanf(lines[0][index], "%24[^\r\n]", m_name);
     }
-    sscanf(lines[1][index], "%*s %*s %*s %lf %*s %*s %7lf %2d", 
-            &epochdays, &m_state.bstar, &bexp);
-    sscanf(lines[2][index], "%*s %*s %lf %lf %lf %lf %lf %11lf", 
+    sscanf(lines[1][index], "%*18c%2d%lf %*s %*s %7lf %2d", 
+        &epochyr, &epochdays, &m_state.bstar, &bexp);
+    sscanf(lines[2][index], "%*8c %lf %lf %lf %lf %lf %11lf", 
             &m_state.incl, &m_state.node, &m_state.ecc, &m_state.argp, 
             &m_state.m, &m_state.n);
 
@@ -99,8 +99,7 @@ void TleReader::item(int index) {
     m_state.m     *= deg2rad;
     m_state.n     /= xpdotp;
 
-    epochyr = (int)(epochdays / 1000);
-    epochdays -= epochyr * 1000;
+    epochyr = (epochyr < 57) ? epochyr + 2000 : epochyr + 1900; // TODO need to fix for dates after 2057
     m_state.jdsatepoch = jday(epochyr, epochdays);
 }
 
@@ -109,10 +108,9 @@ void TleReader::days2mdhms(int xyear, double xdays) {
     double    temp;
     int lmonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-    if (xyear < 50) year = xyear + 2000;
-    else year = xyear + 1900;
-    days = xdays;
-
+    days = xdays; // rid days field
+    year = xyear; // rid year field
+    
     dayofyr = (int)floor(days);
     /* ----------------- find month and day of month ---------------- */
     if ( (year % 4) == 0 ) lmonth[1] = 29;

@@ -56,7 +56,7 @@ bool Sgp4Model::modelInit(char *state, int size) {
     this->state.n = s->n;
     this->state.node = s->node;
 
-    result = SGP4Funcs::sgp4init(gravconsttype::wgs84, 'i', 0, this->state.jdsatepoch - 2440587.5,
+    result = SGP4Funcs::sgp4init(gravconsttype::wgs84, 'i', 0, this->state.jdsatepoch - 2433281.5, //- 2440587.5,
                                  this->state.bstar, 0.0,
                                  0.0, // TODO const double xndot, const double xnddot
                                  this->state.ecc, this->state.argp, this->state.incl, this->state.m,

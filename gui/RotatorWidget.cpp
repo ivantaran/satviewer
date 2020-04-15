@@ -38,6 +38,10 @@ void RotatorWidget::updatedStateSlot(const QString &line) {
         QString("%1").arg(qRadiansToDegrees(m_rotator.getAngle(0)), 7, 'f', 2));
     ui.lineEditElevation->setText(
         QString("%1").arg(qRadiansToDegrees(m_rotator.getAngle(1)), 7, 'f', 2));
+    ui.labelAzimuthStatus->setText(m_rotator.getStatusString(0));
+    ui.labelElevationStatus->setText(m_rotator.getStatusString(1));
+    ui.labelAzimuthError->setText(m_rotator.getErrorString(0));
+    ui.labelElevationError->setText(m_rotator.getErrorString(1));
     qWarning() << line;
 }
 
