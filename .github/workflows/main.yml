@@ -1,0 +1,22 @@
+name: main
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: install qt
+        uses: jurplel/install-qt-action@v2
+      - name: satviewer
+        uses: actions/checkout@v2
+      - name: qmake
+        run: qmake
+      - name: make
+        run: make
