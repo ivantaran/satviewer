@@ -2,6 +2,8 @@
 #define ROTATOR_WIDGET_H_
 
 #include "../utils/Rotator.h"
+#include "RotatorRadar.h"
+
 #include "ui_rotator.h"
 #include <QDockWidget>
 
@@ -11,6 +13,7 @@ class RotatorWidget : public QDockWidget {
 private:
     Ui::Rotator ui;
     Rotator m_rotator;
+    RotatorRadar m_radar;
 
 public:
     RotatorWidget(QWidget *parent = nullptr);

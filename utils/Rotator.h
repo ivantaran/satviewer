@@ -15,7 +15,8 @@ private:
     QHostAddress m_host;
     quint16 m_port;
     QStringList m_initList;
-    
+    QMap<QString, QString> m_valuesMap;
+
     typedef enum {
         StatusUnknown = 0x00,
         StatusIdle = 0x01,
@@ -46,15 +47,7 @@ private:
     qreal m_angle[2] = {0.0, 0.0};
     bool m_endstop[2] = {true, true};
 
-    qreal m_pwmHoming[2] = {0.0, 0.0};
-    qreal m_pwmMin[2] = {0.0, 0.0};
-    qreal m_pwmMax[2] = {0.0, 0.0};
-    qreal m_angleMin[2] = {0.0, 0.0};
-    qreal m_angleMax[2] = {0.0, 0.0};
-    qreal m_tolerance[2] = {0.0, 0.0};
-
     void readConfig(uint index, const QJsonObject &jsonObject);
-    void acceptConfigRegister(uint index, uint addr, int value);
     void requestPosition();
 
 public:
@@ -76,44 +69,28 @@ public:
     const QString getErrorString(uint index);
     qreal getAngle(uint index);
     bool isEndstop(uint index);
-    qreal getPwmHoming(uint index);
-    qreal getPwmMin(uint index);
-    qreal getPwmMax(uint index);
-    qreal getAngleMin(uint index);
-    qreal getAngleMax(uint index);
-    qreal getTolerance(uint index);
+
+    const QMap<QString, QString> getValuesMap() { return m_valuesMap; }
 
     void setMotion(uint index, qreal value);
-    void setController(uint index, int kp, int ki, int kd);
-    void setTarget(uint index, qreal angle);
-    void setModeDefault(uint index);
-    void setModePid(uint index, int kp, int ki, int kd);
-    void setModeHoming(uint index);
 
-    void setPwmHoming(uint index, qreal value);
-    void setPwmMin(uint index, qreal value);
-    void setPwmMax(uint index, qreal value);
-    void setAngleMin(uint index, qreal value);
-    void setAngleMax(uint index, qreal value);
-    void setTolerance(uint index, qreal value);
-    void setKp(uint index, int value);
-    void setKi(uint index, int value);
-    void setKd(uint index, int value);
 
     void writeLine(const QString &line);
     void clearError(uint index);
     void readSettings(const QString &fileName);
-    void setConfig(uint index, qreal pwmHoming, qreal pwmMin, qreal pwmMax, qreal angleMin,
-                   qreal angleMax, qreal tolerance, int rate, int kp, int ki, int kd);
 
 protected:
     void timerEvent(QTimerEvent *event);
 
 private slots:
     void readyReadSlot();
-
+    void connectedSlot();
+    
 public slots:
+    void park();
     void requestConfigSlot();
+    void resetAll();
+    void stop();
 
 signals:
     void updatedState(const QString &line);

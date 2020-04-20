@@ -11,6 +11,7 @@ Rotator::Rotator() {
     m_port = DEFAULT_PORT;
 
     connect(this, SIGNAL(readyRead()), this, SLOT(readyReadSlot()));
+    connect(this, SIGNAL(connected()), this, SLOT(connectedSlot()));
 
     m_timerSlowId = startTimer(5000);
     m_timerFastId = startTimer(1000);
@@ -53,38 +54,17 @@ void Rotator::reconnect() {
     }
 }
 
-void Rotator::acceptConfigRegister(uint index, uint addr, int value) {
-    if (index > 1) {
-        return;
-    }
-
-    switch (addr) {
-    case 0:
-        m_pwmHoming[index] = (qreal)value / 2.55;
-        break;
-    case 1:
-        m_pwmMin[index] = (qreal)value / 2.55;
-        break;
-    case 2:
-        m_pwmMax[index] = (qreal)value / 2.55;
-        break;
-    case 3:
-        m_angleMin[index] = (qreal)value / 4096.0 * M_PI;
-        break;
-    case 4:
-        m_angleMax[index] = (qreal)value / 4096.0 * M_PI;
-        break;
-    case 5:
-        m_tolerance[index] = (qreal)value / 4096.0 * M_PI;
-        break;
+void Rotator::writeLine(const QString &line) {
+    if (state() == ConnectedState && isOpen() && isWritable()) {
+        write((line + "\n").toUtf8());
+        qWarning() << (line + "\n");
+        flush();
     }
 }
 
-void Rotator::writeLine(const QString &line) {
-    if (isOpen() && isWritable()) {
-        write((line + '\n').toUtf8());
-        qWarning() << (line + '\n');
-        flush();
+void Rotator::connectedSlot() {
+    for (const auto &line : m_initList) {
+        writeLine(line);
     }
 }
 
@@ -96,26 +76,16 @@ void Rotator::readyReadSlot() {
 
     while (canReadLine()) {
         m_stateLine = QString::fromUtf8(readLine()).trimmed();
+        
+        if (m_stateLine.isEmpty()) {
+            continue;
+        }
 
         QStringList list = m_stateLine.split(QChar(' '));
-        QRegExp r("([A-Z]{2})([-+]?[0-9]+\\.?[0-9]*)?(\\,)?([-+]?[0-9]*\\.?[0-9]*)");
+        QRegExp r("([A-Z]{2})([-+]?[0-9a-z]+\\.?[0-9]*)?(\\,)?([-+]?[0-9]*\\.?[0-9]*)");
         for (const auto &sub : list) {
             r.exactMatch(sub);
-            if (r.cap(1) == "AR") {
-                addr = r.cap(2).toUInt(&ok_addr);
-                vi = r.cap(4).toInt(&ok_value);
-                if (!ok_addr || !ok_value) {
-                    continue;
-                }
-                acceptConfigRegister(0, addr, vi);
-            } else if (r.cap(1) == "ER") {
-                addr = r.cap(2).toUInt(&ok_addr);
-                vi = r.cap(4).toInt(&ok_value);
-                if (!ok_addr || !ok_value) {
-                    continue;
-                }
-                acceptConfigRegister(1, addr, vi);
-            } else if (r.cap(1) == "GS") {
+            if (r.cap(1) == "GS") {
                 vi = r.cap(2).toInt(&ok_value);
                 m_status[0] = vi & 0xff;
                 m_status[1] = (vi >> 8) & 0xff;
@@ -133,6 +103,11 @@ void Rotator::readyReadSlot() {
                 if (ok_value) {
                     m_angle[1] = qDegreesToRadians(vr);
                 }
+            }
+            if (r.cap(3) == ",") {
+                m_valuesMap[r.cap(1) + r.cap(2)] = r.cap(4);
+            } else if (!r.cap(2).isEmpty()) {
+                m_valuesMap[r.cap(1)] = r.cap(2);
             }
         }
 
@@ -231,161 +206,30 @@ qreal Rotator::getAngle(uint index) {
     return index < 2 ? m_angle[index] : 0.0;
 }
 
-bool Rotator::isEndstop(uint index) {
-    return index < 2 ? m_endstop[index] : true;
-}
-
-qreal Rotator::getPwmHoming(uint index) {
-    return index < 2 ? m_pwmHoming[index] : 0.0;
-}
-
-qreal Rotator::getPwmMin(uint index) {
-    return index < 2 ? m_pwmMin[index] : 0.0;
-}
-
-qreal Rotator::getPwmMax(uint index) {
-    return index < 2 ? m_pwmMax[index] : 0.0;
-}
-
-qreal Rotator::getAngleMin(uint index) {
-    return index < 2 ? m_angleMin[index] : 0.0;
-}
-
-qreal Rotator::getAngleMax(uint index) {
-    return index < 2 ? m_angleMax[index] : 0.0;
-}
-
-qreal Rotator::getTolerance(uint index) {
-    return index < 2 ? m_tolerance[index] : 0.0;
-}
-
-void Rotator::setMotion(uint index, qreal value) {
-    int pwm = qRound(value * 2.55);
-    writeLine(QString("w set %1 motion %2\n").arg(index).arg(pwm));
-}
-
-void Rotator::setModePid(uint index, int kp, int ki, int kd) {
-    writeLine(QString("w set %1 pid %2,%3,%4\n").arg(index).arg(kp).arg(ki).arg(kd));
-}
-
-void Rotator::setTarget(uint index, qreal angle) {
-    int value = qRound(-4096.0 * angle / M_PI);
-    writeLine(QString("w set %1 target %2\n").arg(index).arg(value));
-}
-
-void Rotator::setModeDefault(uint index) {
-    writeLine(QString("w set %1 default\n").arg(index));
-}
-
-void Rotator::setModeHoming(uint index) {
-    writeLine(QString("set %1 homing\n").arg(index));
-}
-
 void Rotator::clearError(uint index) {
-    writeLine(QString("%1 \n").arg(index == 0 ? "AC" : "EC"));
+    writeLine(QString("%1").arg(index == 0 ? "AC" : "EC"));
 }
 
 void Rotator::requestConfigSlot() {
-    writeLine(QString("w AR0 AR1 AR2 AR3 AR4 AR5 AR6 AR7 AR8 \n"));
-    writeLine(QString("w ER0 ER1 ER2 ER3 ER4 ER5 ER6 ER7 ER8 \n"));
-    writeLine(QString("w GE GS \n"));
+    writeLine(QString("w AR0 AR1 AR2 AR3 AR4 AR5 AR6 AR7 AR8 AR9 ARa ARb"));
+    writeLine(QString("w ER0 ER1 ER2 ER3 ER4 ER5 ER6 ER7 ER8 ER9 ERa ERb"));
+    writeLine(QString("w GE GS"));
 }
 
 void Rotator::requestPosition() {
-    writeLine(QString("w AZ EL \n"));
+    writeLine(QString("w AZ EL"));
 }
 
-void Rotator::setPwmHoming(uint index, qreal value) {
-    writeLine(
-        QString("w %1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('0').arg(qRound(value * 2.55)));
+void Rotator::park() {
+    writeLine(QString("K"));
 }
 
-void Rotator::setPwmMin(uint index, qreal value) {
-    writeLine(
-        QString("w %1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('1').arg(qRound(value * 2.55)));
+void Rotator::resetAll() {
+    writeLine(QString("R 1"));
 }
 
-void Rotator::setPwmMax(uint index, qreal value) {
-    writeLine(
-        QString("w %1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('2').arg(qRound(value * 2.55)));
-}
-
-void Rotator::setAngleMin(uint index, qreal value) {
-    writeLine(QString("w %1%2,%3 \n")
-                  .arg(index == 0 ? "AW" : "EW")
-                  .arg('3')
-                  .arg(qRound(4096.0 * value / M_PI)));
-}
-
-void Rotator::setAngleMax(uint index, qreal value) {
-    writeLine(QString("w %1%2,%3 \n")
-                  .arg(index == 0 ? "AW" : "EW")
-                  .arg('4')
-                  .arg(qRound(4096.0 * value / M_PI)));
-}
-
-void Rotator::setTolerance(uint index, qreal value) {
-    writeLine(QString("w %1%2,%3 \n")
-                  .arg(index == 0 ? "AW" : "EW")
-                  .arg('5')
-                  .arg(qRound(4096.0 * value / M_PI)));
-}
-
-void Rotator::setKp(uint index, int value) {
-    writeLine(QString("w %1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('6').arg(value));
-}
-
-void Rotator::setKi(uint index, int value) {
-    writeLine(QString("w %1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('7').arg(value));
-}
-
-void Rotator::setKd(uint index, int value) {
-    writeLine(QString("w %1%2,%3 \n").arg(index == 0 ? "AW" : "EW").arg('8').arg(value));
-}
-
-void Rotator::setConfig(uint index, qreal pwmHoming, qreal pwmMin, qreal pwmMax, qreal angleMin,
-                        qreal angleMax, qreal tolerance, int rate, int kp, int ki, int kd) {
-
-    ki = (ki * rate) / 1000;
-    kd = (kd * 1000) / rate;
-
-    setPwmHoming(index, pwmHoming);
-    setPwmMin(index, pwmMin);
-    setPwmMax(index, pwmMax);
-    setAngleMin(index, angleMin);
-    setAngleMax(index, angleMax);
-    setTolerance(index, tolerance);
-    setKp(index, kp);
-    setKi(index, ki);
-    setKd(index, kd);
-}
-
-void Rotator::readConfig(uint index, const QJsonObject &jsonObject) {
-    QJsonValue value;
-
-    value = jsonObject.value(QString("pwmHoming"));
-    qreal pwmHoming = value.toDouble(0.0);
-    value = jsonObject.value(QString("pwmMin"));
-    qreal pwmMin = value.toDouble(0.0);
-    value = jsonObject.value(QString("pwmMax"));
-    qreal pwmMax = value.toDouble(0.0);
-    value = jsonObject.value(QString("angleMin"));
-    qreal angleMin = qDegreesToRadians(value.toDouble(0.0));
-    value = jsonObject.value(QString("angleMax"));
-    qreal angleMax = qDegreesToRadians(value.toDouble(0.0));
-    value = jsonObject.value(QString("tolerance"));
-    qreal tolerance = qDegreesToRadians(value.toDouble(0.0));
-
-    value = jsonObject.value(QString("rate"));
-    int rate = value.toInt(100);
-    value = jsonObject.value(QString("kp"));
-    int kp = value.toInt(0);
-    value = jsonObject.value(QString("ki"));
-    int ki = value.toInt(0);
-    value = jsonObject.value(QString("kd"));
-    int kd = value.toInt(0);
-
-    setConfig(index, pwmHoming, pwmMin, pwmMax, angleMin, angleMax, tolerance, rate, kp, ki, kd);
+void Rotator::stop() {
+    writeLine(QString("S"));
 }
 
 void Rotator::readSettings(const QString &fileName) {
@@ -406,13 +250,6 @@ void Rotator::readSettings(const QString &fileName) {
     for (const auto &item: jsonArray) {
         m_initList.append(item.toString());
     }
-
-    value = jsonObject.value("azm");
-    readConfig(0, value.toObject());
-    clearError(0);
-    value = jsonObject.value("elv");
-    readConfig(1, value.toObject());
-    clearError(1);
 
     value = jsonObject.value("host");
     m_host = QHostAddress(value.toString(DEFAULT_HOST));
