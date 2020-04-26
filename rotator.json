@@ -4,9 +4,9 @@
     "host": "127.0.0.1", 
     "port": 4533, 
     "init": [
-        "w AW0,-65 AW1,64 AW2,255 AW3,0 AW4,8192 AW5,11 AW6,400 AW7,15 AW8,50 AW9,-200 AWa,-4000 AWb,0",
+        "w AW0,-65 AW1,30 AW2,255 AW3,0 AW4,8192 AW5,11 AW6,400 AW7,15 AW8,50 AW9,-100 AWa,-2000 AWb,0",
         "w AC",
-        "w EW0,-82 EW1,79 EW2,255 EW3,0 EW4,4096 EW5,11 EW6,400 EW7,15 EW8,50 EW9,-200 EWa,-4000 EWb,0", 
+        "w EW0,-82 EW1,40 EW2,255 EW3,0 EW4,4096 EW5,11 EW6,400 EW7,15 EW8,50 EW9,-200 EWa,-4000 EWb,0", 
         "w EC"
     ]
 }
