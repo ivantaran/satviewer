@@ -31,6 +31,7 @@ HEADERS += \
     utils/TleReader.h \
     utils/Location.h \
     utils/ZrvIoList.h \ 
+    gui/RotatorRadar.h \
     gui/RotatorSettings.h \
     gui/RotatorWidget.h \
     gui/SWindow.h \
@@ -62,6 +63,7 @@ SOURCES += \
     utils/TleReader.cpp \
     utils/Location.cpp \
     utils/ZrvIoList.cpp \ 
+    gui/RotatorRadar.cpp \
     gui/RotatorSettings.cpp \
     gui/RotatorWidget.cpp \
     gui/SWindow.cpp \
