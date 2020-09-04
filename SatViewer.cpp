@@ -5,22 +5,34 @@
  * Created on April 13, 2019, 9:45 PM
  */
 
-#include <cfloat>
-
 #include "SatViewer.h"
+#include <QByteArray>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QtMath>
+#include <float.h>
 
 SatViewer::SatViewer() {
+    m_host = QHostAddress::LocalHost;
+    m_port = DEFAULT_PORT;
+
     m_satellites.clear();
     m_locations.clear();
     m_currentSatellite = nullptr;
     m_currentLocation = nullptr;
     m_time = 0.0;
-}
 
-SatViewer::SatViewer(const SatViewer &orig) {
+    connect(this, SIGNAL(readyRead()), this, SLOT(readyReadSlot()));
+    connect(this, SIGNAL(connected()), this, SLOT(connectedSlot()));
+
+    m_timerSlowId = startTimer(5000);
+    m_timerFastId = startTimer(1000);
+    loadSatellitesJson();
 }
 
 SatViewer::~SatViewer() {
+    saveSatellitesJson();
     // TODO
     //    for (const auto& sat : m_satellites) {
     //        if (sat != nullptr) {
@@ -37,8 +49,63 @@ SatViewer::~SatViewer() {
     //    m_locations.clear();
 }
 
+void SatViewer::readyReadSlot() {
+    while (bytesAvailable() > 0) {
+        QByteArray byteArray = readAll();
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(byteArray);
+        QJsonObject jsonObject = jsonDoc.object();
+
+        for (const auto &item : jsonObject) {
+            qWarning() << item.toObject().keys();
+            QJsonObject satelliteObject = item.toObject();
+            QJsonArray jsonArray = satelliteObject.value("Coords").toArray();
+            QJsonValue name = satelliteObject.value("Title");
+            QJsonValue satnum = satelliteObject.value("Satnum");
+            if (m_satellites.contains(satnum.toInt())) {
+            } else {
+                Satellite *sat = new Satellite();
+                sat->setSatnum(satnum.toInt());
+                appendSatellite(sat);
+            }
+            Satellite *sat = m_satellites[satnum.toInt()];
+            sat->setName(name.toString());
+            sat->setAbsoluteCoords(
+                jsonArray[0].toDouble() * 1000.0, jsonArray[1].toDouble() * 1000.0,
+                jsonArray[2].toDouble() * 1000.0, jsonArray[3].toDouble() * 1000.0,
+                jsonArray[4].toDouble() * 1000.0, jsonArray[5].toDouble() * 1000.0);
+            break;
+        }
+    }
+}
+
+void SatViewer::connectedSlot() {
+}
+
+void SatViewer::reconnect() {
+    if (state() == QTcpSocket::ConnectedState || state() == QTcpSocket::ConnectingState) {
+
+    } else {
+        connectToHost(m_host, m_port);
+    }
+}
+
+void SatViewer::requestGosat() {
+    if (state() == QTcpSocket::ConnectedState) {
+        write("{\"idList\":[25544]}\n");
+    }
+}
+
+void SatViewer::timerEvent(QTimerEvent *event) {
+    if (event->timerId() == m_timerSlowId) {
+        reconnect();
+    } else if (event->timerId() == m_timerFastId) {
+        requestGosat();
+    }
+}
+
 void SatViewer::appendSatellite(Satellite *sat) {
-    m_satellites.push_back(sat);
+    m_satellites[sat->satnum()] = sat;
+    // m_satellites.push_back(sat);
 }
 
 void SatViewer::appendLocation(Location *loc) {
@@ -46,7 +113,7 @@ void SatViewer::appendLocation(Location *loc) {
 }
 
 void SatViewer::removeSatellite(Satellite *sat) {
-    m_satellites.remove(sat);
+    // m_satellites.remove(sat);
     //    int pos = satList.indexOf(sat);
     //    if (pos == -1) return;
     //    ioList.deleteSat(satList.at(pos));
@@ -71,6 +138,46 @@ void SatViewer::clearSatellites() {
 
 void SatViewer::clearLocations() {
     m_locations.clear();
+}
+
+void SatViewer::loadSatellitesJson() {
+    // QJsonValue value;
+    QString path = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).first();
+    QDir dir = QDir(path);
+    dir.mkpath(dir.absolutePath());
+
+    qWarning() << path << dir.absoluteFilePath("ololo.json");
+    QFile file(dir.absoluteFilePath("satellites.json"));
+    file.open(QFile::ReadOnly | QFile::Text);
+    QString text = file.readAll();
+    file.close();
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(text.toUtf8());
+    QJsonObject jsonObject = jsonDoc.object();
+    QJsonValue value = jsonObject.value("idList");
+    QJsonArray jsonArray = value.toArray();
+    for (const auto &id : jsonArray) {
+        m_satellites[id.toInt()] = new Satellite();
+    }
+}
+
+void SatViewer::saveSatellitesJson() {
+    QString path = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).first();
+    QDir dir = QDir(path);
+    dir.mkpath(dir.absolutePath());
+
+    qWarning() << path << dir.absoluteFilePath("ololo.json");
+    QFile file(dir.absoluteFilePath("satellites.json"));
+    file.open(QFile::WriteOnly | QFile::Text);
+
+    QJsonArray jsonArray;
+    for (const auto &id : m_satellites.keys()) {
+        jsonArray.append(id);
+    }
+    QJsonObject jsonObject;
+    jsonObject["idList"] = jsonArray;
+    file.write(QJsonDocument(jsonObject).toJson());
+    file.close();
 }
 
 Satellite *SatViewer::currentSatellite() {

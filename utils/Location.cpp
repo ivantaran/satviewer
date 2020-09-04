@@ -35,7 +35,7 @@ Location::Location(void) {
     color_label = 0x00FFFF00;
     color_zrv = 0xFF608080;
     color_lines = 0x0000FFFF;
-    satWObject = 0;
+    satWObject = nullptr;
     lat = 0.0;
     lon = 0.0;
     _height = 0.0;

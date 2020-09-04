@@ -9,7 +9,6 @@
 
 #include "GLSatAbstractWidget.h"
 
-#include "../models/sgp4/Sgp4Model.h"
 #include "satogl.h"
 #include <QCoreApplication>
 #include <QDateTime>
@@ -43,8 +42,6 @@ GLSatAbstractWidget::GLSatAbstractWidget(SatViewer *satviewer, QWidget *parent)
 
     shwSun = true;
     shwNight = true;
-
-    setSatModel();
 
     list_map_ready = true;
     list_net_ready = true;
@@ -140,10 +137,14 @@ void GLSatAbstractWidget::refreshAll() {
     compileSunList();
 
     for (const auto &sat : m_satviewer->satellites()) {
-        sat->satWObject->make();
+        if (sat->satWObject != nullptr) {
+            sat->satWObject->make();
+        }
     }
     for (const auto &loc : m_satviewer->locations()) {
-        loc->satWObject->make();
+        if (loc->satWObject != nullptr) {
+            loc->satWObject->make();
+        }
     }
 
     update();
@@ -203,11 +204,6 @@ void GLSatAbstractWidget::showSun(bool value) {
 void GLSatAbstractWidget::showNight(bool value) {
     shwNight = value;
     refreshAll();
-}
-
-void GLSatAbstractWidget::setSatModel(int index) {
-    Q_UNUSED(index);
-    getSatModel = (CustomSat)Sgp4Model::getSatModel; // TODO: drop this method
 }
 
 void GLSatAbstractWidget::compileMapList() {

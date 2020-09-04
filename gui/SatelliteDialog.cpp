@@ -1,20 +1,20 @@
 // This is an open source non-commercial project. Dear PVS-Studio, please check it.
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 /*
- * Sgp4Dialog.cpp
+ * SatelliteDialog.cpp
  *
  *  Created on: 28.12.2009
  *      Author: Ivan Ryazanov
  */
 
-#include "Sgp4Dialog.h"
+#include "SatelliteDialog.h"
 #include <QColorDialog>
 #include <QFileDialog>
 #include <QFontDialog>
 #include <QPixmapCache>
 #include <QtMath>
 
-Sgp4Dialog::Sgp4Dialog(GLSatAbstractWidget *satWidget) {
+SatelliteDialog::SatelliteDialog(GLSatAbstractWidget *satWidget) {
     widget.setupUi(this);
 
     m_sat = nullptr;
@@ -40,10 +40,10 @@ Sgp4Dialog::Sgp4Dialog(GLSatAbstractWidget *satWidget) {
     connect(widget.btnIcon, SIGNAL(clicked()), this, SLOT(setIcon()));
 }
 
-Sgp4Dialog::~Sgp4Dialog() {
+SatelliteDialog::~SatelliteDialog() {
 }
 
-uint32_t Sgp4Dialog::flipRgb(uint32_t rgb) {
+uint32_t SatelliteDialog::flipRgb(uint32_t rgb) {
     // OpenGL 0xAABBGGRR //Qt 0xAARRGGBB
     uint8_t a, r, g, b;
     b = rgb;
@@ -54,7 +54,7 @@ uint32_t Sgp4Dialog::flipRgb(uint32_t rgb) {
     return rgb;
 }
 
-void Sgp4Dialog::showEvent(QShowEvent *event) {
+void SatelliteDialog::showEvent(QShowEvent *event) {
     Q_UNUSED(event)
 
     if (m_sat == nullptr) {
@@ -71,24 +71,11 @@ void Sgp4Dialog::showEvent(QShowEvent *event) {
     widget.btnFont->setFont(m_sat->font());
 
     widget.lineEditName->setText(m_sat->name());
-    widget.lineEditI->setText(QString::number(qRadiansToDegrees(m_sat->inclination()), 'g', 16));
-    widget.lineEditOmg->setText(
-        QString::number(qRadiansToDegrees(m_sat->argLatPerigee()), 'g', 16));
-    widget.lineEditE->setText(QString::number(m_sat->eccentricity(), 'g', 16));
-    widget.lineEditW->setText(QString::number(qRadiansToDegrees(m_sat->latAscNode()), 'g', 16));
-    widget.lineEditM0->setText(QString::number(qRadiansToDegrees(m_sat->meanAnomaly()), 'g', 16));
-    widget.lineEditN->setText(QString::number(qRadiansToDegrees(m_sat->meanMotion()) * 4, 'g', 16));
-
-    widget.lineEditBStar->setText(QString::number(m_sat->bStar(), 'g', 16));
     widget.spinZRV->setValue(qRadiansToDegrees(m_sat->zrvWidth()));
 
     widget.spinNameX->setValue((int)m_sat->nameX());
     widget.spinNameY->setValue((int)m_sat->nameY());
     widget.spinLines->setValue(m_sat->linesWidth());
-
-    uint64_t tm = (uint64_t)(86400000.0 * (m_sat->jEpoch() - 2440587.5));
-    widget.dateTimeEdit->setDateTime(QDateTime::fromMSecsSinceEpoch(tm).toUTC());
-    widget.lineEditTime->setText(QString::number(m_sat->jEpoch(), 'g', 16));
 
     widget.checkName->setChecked(m_sat->isVisibleLabel());
     widget.checkTrack->setChecked(m_sat->isVisibleTrack());
@@ -118,14 +105,14 @@ void Sgp4Dialog::showEvent(QShowEvent *event) {
     widget.btnColorTrack->setPalette(pal);
 }
 
-void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
+void SatelliteDialog::makeSat(Satellite *sat, bool fromlist) {
 
     QPalette pal;
     QRgb rgb;
     TleReader::sgp4_t state;
     QPixmap pixmap;
 
-    m_sat = (Sgp4Model *)sat;
+    m_sat = (Satellite *)sat;
 
     if (fromlist && exec() == QDialog::Rejected) {
         return;
@@ -147,8 +134,6 @@ void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
     state.jdsatepoch = widget.lineEditTime->text().toDouble();
 
     double zrv = qDegreesToRadians(widget.spinZRV->value());
-
-    m_sat->modelInit((char *)&state, sizeof(state));
 
     m_sat->setName(name);
     m_sat->setZrv(zrv);
@@ -183,7 +168,7 @@ void Sgp4Dialog::makeSat(Satellite *sat, bool fromlist) {
     m_sat->setColorTrack(flipRgb(rgb));
 }
 
-void Sgp4Dialog::setBtnColor(QWidget *widget) {
+void SatelliteDialog::setBtnColor(QWidget *widget) {
     QPalette pal = widget->palette();
     QColor color =
         QColorDialog::getColor(pal.color(QPalette::Button), this, "",
@@ -194,23 +179,23 @@ void Sgp4Dialog::setBtnColor(QWidget *widget) {
     }
 }
 
-void Sgp4Dialog::setColorSatName() {
+void SatelliteDialog::setColorSatName() {
     setBtnColor(widget.btnColorName);
 }
 
-void Sgp4Dialog::setColorSatZrv() {
+void SatelliteDialog::setColorSatZrv() {
     setBtnColor(widget.btnColorZrv);
 }
 
-void Sgp4Dialog::setColorSatLines() {
+void SatelliteDialog::setColorSatLines() {
     setBtnColor(widget.btnColorLines);
 }
 
-void Sgp4Dialog::setColorSatTrack() {
+void SatelliteDialog::setColorSatTrack() {
     setBtnColor(widget.btnColorTrack);
 }
 
-void Sgp4Dialog::setSatFont() {
+void SatelliteDialog::setSatFont() {
     bool ok;
     QFont font = QFontDialog::getFont(&ok, widget.btnFont->font(), this);
     if (ok) {
@@ -218,13 +203,13 @@ void Sgp4Dialog::setSatFont() {
     }
 }
 
-void Sgp4Dialog::setDefault() {
-    Sgp4Model *sat = m_sat;
+void SatelliteDialog::setDefault() {
+    Satellite *sat = m_sat;
     makeSat(&defaultSat, false);
     m_sat = sat;
 }
 
-void Sgp4Dialog::setIcon() {
+void SatelliteDialog::setIcon() {
     QDir dir = QDir::home();
     dir.cd("satviewer/icons");
     QString filePath =
@@ -236,6 +221,6 @@ void Sgp4Dialog::setIcon() {
     }
 }
 
-void Sgp4Dialog::setSatWidget(GLSatAbstractWidget *satWidget) {
+void SatelliteDialog::setSatWidget(GLSatAbstractWidget *satWidget) {
     this->satWidget = satWidget;
 }

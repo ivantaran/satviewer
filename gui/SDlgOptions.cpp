@@ -7,8 +7,8 @@
  *      Author: Ivan Ryazanov
  */
 #include "SDlgOptions.h"
-#include "Sgp4Dialog.h"
 #include "../utils/dbsql.h"
+#include "SatelliteDialog.h"
 #include <fstream>
 
 SDlgOptions::SDlgOptions(SatViewer *satviewer, GLSatAbstractWidget *w) {
@@ -16,7 +16,7 @@ SDlgOptions::SDlgOptions(SatViewer *satviewer, GLSatAbstractWidget *w) {
 
     m_satviewer = satviewer;
 
-    satDialog = new Sgp4Dialog(w);
+    satDialog = new SatelliteDialog(w);
     satDialog->setParent(this, Qt::Dialog | Qt::WindowTitleHint);
     satDialog->setWindowModality(Qt::WindowModal);
 
@@ -107,10 +107,9 @@ void SDlgOptions::saveListViewSat() {
         QString query = QString("INSERT INTO sattemp ('name', 'zrv', 'icon', 'show_label', "
                                 "'show_track', 'show_zrv', 'show_lines', 'active_zone', "
                                 "'color_track', 'color_label', 'color_zrv', 'color_lines', "
-                                "'track', 'font', 'name_x', 'name_y', 'lines_width', "
-                                "'model_state') "
+                                "'track', 'font', 'name_x', 'name_y', 'lines_width') "
                                 "VALUES('%0', %1, '%2', %3, %4, %5, %6, %7, %8, %9, %10, %11, "
-                                "%12, '%13', %14, %15, %16, :model_state);")
+                                "%12, '%13', %14, %15, %16);")
                             .arg(sat->name())
                             .arg(qRadiansToDegrees(sat->zrvWidth()), 0, 'g', 16)
                             .arg(sat->iconName())
@@ -130,8 +129,6 @@ void SDlgOptions::saveListViewSat() {
                             .arg(sat->linesWidth(), 0, 'g', 16);
         QSqlQuery q(db);
         q.prepare(query);
-        QByteArray bytes(sat->getState(), sat->getStateSize());
-        q.bindValue(":model_state", bytes);
         q.exec();
     }
     db.exec("COMMIT;");
@@ -182,29 +179,28 @@ void SDlgOptions::loadListViewSat() {
         modelSatTemp.fetchMore();
     }
 
-    for (int i = 0; i < modelSatTemp.rowCount(); i++) {
-        satWidget->setSatModel(0);
-        Satellite *sat = satWidget->getSatModel();
-        setSat(sat, modelSatTemp.record(i));
-        sat->setZrv(qDegreesToRadians(modelSatTemp.record(i).field("zrv").value().toDouble()));
-        sat->visibleLabel(modelSatTemp.record(i).field("show_label").value().toBool());
-        sat->visibleTrack(modelSatTemp.record(i).field("show_track").value().toBool());
-        sat->visibleZrv(modelSatTemp.record(i).field("show_zrv").value().toBool());
-        sat->visibleLines(modelSatTemp.record(i).field("show_lines").value().toBool());
-        sat->activeZone(modelSatTemp.record(i).field("active_zone").value().toBool());
-        sat->setColorTrack(modelSatTemp.record(i).field("color_track").value().toUInt());
-        sat->setColorLabel(modelSatTemp.record(i).field("color_label").value().toUInt());
-        sat->setColorZrv(modelSatTemp.record(i).field("color_zrv").value().toUInt());
-        sat->setColorLines(modelSatTemp.record(i).field("color_lines").value().toUInt());
-        sat->setTrack(modelSatTemp.record(i).field("track").value().toDouble());
-        QFont font;
-        font.fromString(modelSatTemp.record(i).field("font").value().toString());
-        sat->setFont(font);
-        sat->setNameX(modelSatTemp.record(i).field("name_x").value().toDouble());
-        sat->setNameY(modelSatTemp.record(i).field("name_y").value().toDouble());
-        sat->setLinesWidth(modelSatTemp.record(i).field("lines_width").value().toDouble());
-        satWidget->satviewer()->appendSatellite(sat);
-    }
+    // for (int i = 0; i < modelSatTemp.rowCount(); i++) {
+    //     Satellite *sat = satWidget->getSatModel();
+    //     setSat(sat, modelSatTemp.record(i));
+    //     sat->setZrv(qDegreesToRadians(modelSatTemp.record(i).field("zrv").value().toDouble()));
+    //     sat->visibleLabel(modelSatTemp.record(i).field("show_label").value().toBool());
+    //     sat->visibleTrack(modelSatTemp.record(i).field("show_track").value().toBool());
+    //     sat->visibleZrv(modelSatTemp.record(i).field("show_zrv").value().toBool());
+    //     sat->visibleLines(modelSatTemp.record(i).field("show_lines").value().toBool());
+    //     sat->activeZone(modelSatTemp.record(i).field("active_zone").value().toBool());
+    //     sat->setColorTrack(modelSatTemp.record(i).field("color_track").value().toUInt());
+    //     sat->setColorLabel(modelSatTemp.record(i).field("color_label").value().toUInt());
+    //     sat->setColorZrv(modelSatTemp.record(i).field("color_zrv").value().toUInt());
+    //     sat->setColorLines(modelSatTemp.record(i).field("color_lines").value().toUInt());
+    //     sat->setTrack(modelSatTemp.record(i).field("track").value().toDouble());
+    //     QFont font;
+    //     font.fromString(modelSatTemp.record(i).field("font").value().toString());
+    //     sat->setFont(font);
+    //     sat->setNameX(modelSatTemp.record(i).field("name_x").value().toDouble());
+    //     sat->setNameY(modelSatTemp.record(i).field("name_y").value().toDouble());
+    //     sat->setLinesWidth(modelSatTemp.record(i).field("lines_width").value().toDouble());
+    //     satWidget->satviewer()->appendSatellite(sat);
+    // }
     modelSatTemp.clear();
 
     updateListViewSat();
@@ -327,12 +323,6 @@ void SDlgOptions::setSat(Satellite *sat, QSqlRecord record) {
     if (sat == NULL || record.isEmpty()) {
         return;
     }
-    QByteArray model_state = record.field("model_state").value().toByteArray();
-    if (model_state.size() <= 0) {
-        qWarning("empty model");
-        return;
-    }
-
     QString icon = record.field("icon").value().toString();
     if (icon.isEmpty() || !QFile::exists(icon)) {
         QDir dir = QDir::home();
@@ -342,8 +332,6 @@ void SDlgOptions::setSat(Satellite *sat, QSqlRecord record) {
     satWidget->setIcon(sat, icon);
 
     sat->setName(record.field("name").value().toString());
-    qWarning() << model_state.size();
-    sat->modelInit(model_state.data(), model_state.size());
 }
 
 void SDlgOptions::setLoc(Location *loc, QSqlRecord record) {
@@ -492,50 +480,6 @@ void SDlgOptions::setFilterLoc() {
         modelDbLoc->setFilter("");
         modelDbLoc->select();
     }
-}
-
-void SDlgOptions::loadDbFromTle() {
-    QDir dir = QDir::home();
-    dir.cd("satviewer/tle");
-    QStringList fileList = QFileDialog::getOpenFileNames(this, "Open TLE File", dir.path(),
-                                                         "Text Files (*.txt);;All Files (*.*)",
-                                                         NULL, QFileDialog::DontUseNativeDialog);
-    if (fileList.isEmpty()) {
-        return;
-    }
-    TleReader tle;
-    db.exec("BEGIN;");
-    for (const auto &filePath : fileList) {
-        if (filePath.isEmpty()) {
-            continue;
-        }
-        tle.init(filePath.toLocal8Bit().data());
-        for (int i = 0; i < tle.count(); i++) {
-            tle.item(i);
-            QString query = QString("INSERT INTO sat ('groupname', 'name', 'i', 'omg', 'e', "
-                                    "'w', 'm0', 'n', 'bstar', 'time', 'model_state') "
-                                    "VALUES('%0', '%1', %2, %3, %4, %5, %6, %7, %8, %9, "
-                                    ":model_state);")
-                                .arg(QFileInfo(filePath).baseName())
-                                .arg(QString(tle.name()).trimmed())
-                                .arg(qRadiansToDegrees(tle.inclination()), 0, 'g', 16)
-                                .arg(qRadiansToDegrees(tle.argLatPerigee()), 0, 'g', 16)
-                                .arg(tle.eccentricity(), 0, 'g', 16)
-                                .arg(qRadiansToDegrees(tle.latAscNode()), 0, 'g', 16)
-                                .arg(qRadiansToDegrees(tle.meanAnomaly()), 0, 'g', 16)
-                                .arg(tle.meanMotion() * 1440.0 / (2.0 * M_PI), 0, 'g', 16)
-                                .arg(tle.bStar(), 0, 'g', 16)
-                                .arg(tle.jEpoch(), 0, 'g', 16);
-
-            QSqlQuery q(db);
-            q.prepare(query);
-            QByteArray bytes(tle.state(), tle.sizeState());
-            q.bindValue(":model_state", bytes);
-            q.exec();
-        }
-    }
-    db.exec("COMMIT;");
-    modelDbSat->submitAll();
 }
 
 void SDlgOptions::loadDbLoc() {

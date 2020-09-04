@@ -16,7 +16,7 @@
 #include "SScriptFrame.h"
 #include "SUpdater.h"
 #include "SWidgetList.h"
-#include "Sgp4Dialog.h"
+#include "SatelliteDialog.h"
 #include "ui_options.h"
 #include <QColorDialog>
 #include <QDataWidgetMapper>
@@ -31,7 +31,7 @@
 class SDlgOptions : public QDialog {
     Q_OBJECT
 public:
-    Sgp4Dialog *satDialog;
+    SatelliteDialog *satDialog;
     SLocDialog *locDialog;
     SScriptFrame *scriptFrame;
     SUpdater *tleFrame;
@@ -89,7 +89,6 @@ private slots:
     void setFilterLocName(const QString &line);
     void setFilterSat();
     void setFilterLoc();
-    void loadDbFromTle();
     void addDbLoc();
     void loadDbLoc();
     void clearDbSat();

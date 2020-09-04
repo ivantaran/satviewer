@@ -9,7 +9,6 @@
 
 #include "GLSatWidget.h"
 
-#include "../models/sun/sunmodel.h"
 #include "satogl.h"
 #include <QColorDialog>
 #include <QDateTime>
@@ -184,11 +183,11 @@ int GLSatWidget::testIOZRV(Satellite *sat, Location *loc, ZrvIoList *list, doubl
     double fiz = 0;
     double z = sat->zrvWidth();
     //---------------------
-    if (fabs(cos(z) * sat->radiusEarth()) > (sat->altitude() + sat->radiusEarth()))
+    if (fabs(cos(z) * Satellite::RadiusEarth) > (sat->altitude() + Satellite::RadiusEarth))
         fiz = -z;
     else
         fiz = (M_PI / 2 - z -
-               asin(cos(z) * sat->radiusEarth() / (sat->altitude() + sat->radiusEarth())));
+               asin(cos(z) * Satellite::RadiusEarth / (sat->altitude() + Satellite::RadiusEarth)));
     //---------------------
     double ortl[3], orts[3];
     lfi_ort(loc->latitude() * M_PI / 180, loc->longitude() * M_PI / 180, ortl);
@@ -294,11 +293,11 @@ bool GLSatWidget::testShadow(Satellite *sat, Satellite *sun) {
         sqrt(sun->r()[0] * sun->r()[0] + sun->r()[1] * sun->r()[1] + sun->r()[2] * sun->r()[2]);
 
     if ((r_sat == 0.0) || (r_sun == 0.0) ||
-        (sat->radiusEarth() > r_sat)) { // TODO: compare with epsilon
+        (Satellite::RadiusEarth > r_sat)) { // TODO: compare with epsilon
         return true;
     }
 
-    double f = asin(sat->radiusEarth() / r_sat);
+    double f = asin(Satellite::RadiusEarth / r_sat);
     double l =
         M_PI -
         acos((sat->r()[0] * sun->r()[0] + sat->r()[1] * sun->r()[1] + sat->r()[2] * sun->r()[2]) /
@@ -755,7 +754,7 @@ void GLSatWidget::compileSatList() {
         sat->model(m_satviewer->time());
         px = sat->longitude() / M_PI;
         py = -2.0 * sat->latitude() / M_PI;
-        if (sat->satWObject) {
+        if (sat->satWObject != nullptr) {
             sat->satWObject->exec(px, py, 0.0);
         }
     }
@@ -852,19 +851,21 @@ void GLSatWidget::compileEventsList() {
 
         px = loc->longitude() / 180.0;
         py = -loc->latitude() / 90.0;
-        loc->satWObject->exec(px, py, 0.0);
-
-        if (inZRV > 0.0)
+        if (loc->satWObject != nullptr) {
+            loc->satWObject->exec(px, py, 0.0);
+        }
+        if (inZRV > 0.0) {
             sprite_active.exec(px, py, 0.0);
+        }
     }
     glEndList();
 }
 
 void GLSatWidget::compileSunList() {
-    double lat, lon;
+    double lat = 0.0, lon = 0.0;
     glNewList(list_sun, GL_COMPILE);
 
-    sunmodel_ll((time_t)m_satviewer->time(), &lat, &lon);
+    // sunmodel_ll((time_t)m_satviewer->time(), &lat, &lon);
 
     float px = lon / M_PI;
     float py = -2.0 * lat / M_PI;

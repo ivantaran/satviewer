@@ -19,35 +19,29 @@ class Satellite {
 
 public:
     static const double RadiusEarth;
-    Satellite(void);
-    virtual ~Satellite(void);
+    Satellite();
+    virtual ~Satellite();
     SatWidgetObject *satWObject;
     virtual bool model(double) {
         return false;
     }
-    virtual bool modelInit(char *state, int size) {
-        Q_UNUSED(state);
-        Q_UNUSED(size);
-        return false;
-    }
-    virtual char *getState() {
-        return 0;
-    }
-    virtual int getStateSize() {
-        return 0;
-    }
 
     void copy(Satellite *src);
-    void setName(QString name);
-    void setZrv(double value);
+    void setAbsoluteCoords(double *coords);
+    void setAbsoluteCoords(double r0, double r1 = 0.0, double r2 = 0.0, double r3 = 0.0,
+                           double r4 = 0.0, double r5 = 0.0);
     void setFont(QFont font);
-    void setTrack(double value);
-    void setNameX(double value);
-    void setNameY(double value);
     void setIcon(QString name);
     void setLinesWidth(double value);
+    void setName(QString name);
+    void setNameX(double value);
+    void setNameY(double value);
+    void setSatnum(int value);
+    void setTrack(double value);
+    void setZrv(double value);
+
     QString name() const {
-        return _name;
+        return m_name;
     }
     double nameX() const {
         return name_x;
@@ -71,9 +65,6 @@ public:
     }
     double altitude() const {
         return _altitude;
-    }
-    double radiusEarth() const {
-        return radius_earth;
     }
     double zrvWidth() const {
         return zrv;
@@ -177,13 +168,13 @@ public:
     bool isLocation() const;
     void setSatellite(bool satellite);
     bool isSatellite() const;
-
+    int satnum() const;
+    
 protected:
     double lon, lat, _altitude;
     double m_r[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     double m_rg[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     double zrv;
-    double radius_earth;
     void makeGeod();
     void makeRg();
     virtual double gsto() {
@@ -194,14 +185,15 @@ protected:
     }
 
 private:
-    QString icon_name;
-    QString _name;
-    QFont _font;
-    uint32_t _color, color_track, color_label, color_zrv, color_lines, color_track_shadow;
-    double _track;
-    double name_x, name_y;
-    double lines_width;
-    bool show_label, show_track, show_zrv, show_lines, active_zone, show_track_shadow;
     bool satellite, location;
+    bool show_label, show_track, show_zrv, show_lines, active_zone, show_track_shadow;
+    double _track;
+    double lines_width;
+    double name_x, name_y;
+    int m_satnum;
+    QFont _font;
+    QString icon_name;
+    QString m_name;
+    uint32_t _color, color_track, color_label, color_zrv, color_lines, color_track_shadow;
 };
 #endif /* SATELLITE_H_ */

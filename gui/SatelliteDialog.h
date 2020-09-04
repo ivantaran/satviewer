@@ -8,17 +8,16 @@
 #ifndef SGP4DIALOG_H_
 #define SGP4DIALOG_H_
 
-#include "../utils/models/sgp4/Sgp4Model.h"
 #include "../utils/ogl/GLSatAbstractWidget.h"
 #include "ui_sgp4.h"
 #include <inttypes.h>
 
-class Sgp4Dialog : public QDialog {
+class SatelliteDialog : public QDialog {
     Q_OBJECT
 public:
-    Sgp4Model defaultSat;
-    Sgp4Dialog(GLSatAbstractWidget *satWidget);
-    virtual ~Sgp4Dialog();
+    Satellite defaultSat;
+    SatelliteDialog(GLSatAbstractWidget *satWidget);
+    virtual ~SatelliteDialog();
 
     inline Satellite *sat() {
         return m_sat;
@@ -34,7 +33,7 @@ protected:
 
 private:
     Ui::SatDialog widget;
-    Sgp4Model *m_sat;
+    Satellite *m_sat;
     GLSatAbstractWidget *satWidget;
     QDoubleValidator m_doubleValidator;
     void setBtnColor(QWidget *widget);
@@ -50,4 +49,4 @@ private slots:
     void setIcon();
 };
 
-#endif /* SGP4DIALOG_H_ */
+#endif /* SATELLITEDIALOG_H_ */

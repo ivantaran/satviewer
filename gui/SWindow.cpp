@@ -127,6 +127,7 @@ SWindow::~SWindow() {
 }
 
 void SWindow::readStrings() {
+    return; // TODO !!!
     QDir dir = QDir::home();
     dir.cd(QString("satviewer").append(QDir::separator()).append("translations"));
 

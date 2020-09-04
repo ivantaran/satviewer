@@ -7,7 +7,6 @@
 
 #include <QPainter>
 
-#include "../models/sun/sunmodel.h"
 #include "RadarWidget.h"
 
 RadarWidget::RadarWidget(SatViewer *satviewer, QWidget *parent)
@@ -140,7 +139,7 @@ void RadarWidget::compileSatList() {
         SatViewer::aerv(loc->rg(), sat->rg(), aerv);
         if (aerv[1] >= 0.0) {
             polar2ortho(aerv[0], aerv[1], px, py);
-            if (sat->satWObject) {
+            if (sat->satWObject != nullptr) {
                 sat->satWObject->exec(px, py, 0.0);
             }
         }
@@ -174,8 +173,8 @@ void RadarWidget::compileSunList() {
     if (shwSun) {
         double azm = 0.0;
         double elv = 0.0;
-        sunmodel_ae((time_t)m_satviewer->time(), qDegreesToRadians(loc->latitude()),
-                    qDegreesToRadians(loc->longitude()), &azm, &elv, 'n');
+        // sunmodel_ae((time_t)m_satviewer->time(), qDegreesToRadians(loc->latitude()),
+        //             qDegreesToRadians(loc->longitude()), &azm, &elv, 'n');
         if (elv >= 0.0) {
             GLfloat px, py;
             polar2ortho(azm, elv, px, py);

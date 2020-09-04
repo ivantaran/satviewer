@@ -15,9 +15,6 @@ QMAKE_CXXFLAGS_DEBUG += -O0
 HEADERS += \
     SatViewer.h \
     SatViewer.h \
-    utils/models/sgp4/SGP4.h \
-    utils/models/sgp4/Sgp4Model.h \
-    utils/models/sun/sunmodel.c \
     utils/ogl/GLSatAbstractWidget.h \
     utils/ogl/GLSatWidget.h \
     utils/ogl/RadarWidget.h \
@@ -28,7 +25,6 @@ HEADERS += \
     utils/ogl/SatWidgetObject.h \
     utils/Rotator.h \
     utils/Satellite.h \
-    utils/TleReader.h \
     utils/Location.h \
     utils/ZrvIoList.h \ 
     gui/RotatorRadar.h \
@@ -37,7 +33,7 @@ HEADERS += \
     gui/SWindow.h \
     gui/SDlgOptions.h \
     gui/SLocDialog.h \
-    gui/Sgp4Dialog.h \
+    gui/SatelliteDialog.h \
     gui/SWidget.h \
     gui/SWidgetList.h \
     gui/UCheck.h \
@@ -47,9 +43,6 @@ HEADERS += \
 SOURCES += \
     main.cpp \
     SatViewer.cpp \
-    utils/models/sgp4/SGP4.cpp \
-    utils/models/sgp4/Sgp4Model.cpp \
-    utils/models/sun/sunmodel.c \
     utils/ogl/GLSatAbstractWidget.cpp \
     utils/ogl/GLSatWidget.cpp \
     utils/ogl/RadarWidget.cpp \
@@ -60,7 +53,6 @@ SOURCES += \
     utils/ogl/SatWidgetObject.cpp \
     utils/Rotator.cpp \
     utils/Satellite.cpp \
-    utils/TleReader.cpp \
     utils/Location.cpp \
     utils/ZrvIoList.cpp \ 
     gui/RotatorRadar.cpp \
@@ -69,7 +61,7 @@ SOURCES += \
     gui/SWindow.cpp \
     gui/SDlgOptions.cpp \
     gui/SLocDialog.cpp \
-    gui/Sgp4Dialog.cpp \
+    gui/SatelliteDialog.cpp \
     gui/SWidget.cpp \
     gui/SWidgetList.cpp \
     gui/UCheck.cpp \
@@ -85,7 +77,6 @@ FORMS += \
     gui/ui/sat.ui \
     gui/ui/loc.ui \
     gui/ui/jscalc.ui \
-    gui/ui/tleupd.ui \
     gui/ui/jswidgetlist.ui \
     gui/ui/mapsettings.ui \
     gui/ui/earthsettings.ui \
