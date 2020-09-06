@@ -35,7 +35,7 @@ public:
     void loadSatellitesJson();
     void saveSatellitesJson();
 
-    const QMap<int, Satellite *> &satellites() {
+    const QMap<QString, Satellite *> &satellites() {
         return m_satellites;
     }
     const std::list<Location *> &locations() {
@@ -60,17 +60,19 @@ protected:
 private:
     static const QString DEFAULT_HOST;
     static const quint16 DEFAULT_PORT = 8080;
+
     double m_time;
     int m_timerFastId;
     int m_timerSlowId;
     Location *m_currentLocation;
+    QByteArray m_byteArray;
     QHostAddress m_host;
+    QMap<QString, Satellite *> m_satellites;
     quint16 m_port;
     Satellite *m_currentSatellite;
     std::list<Location *> m_locations;
-    // std::list<Satellite *> m_satellites;
-    QMap<int, Satellite *> m_satellites;
     ZrvIoList m_ioList;
+    QJsonObject jsonIdList();
     void requestGosat();
 
 private slots:

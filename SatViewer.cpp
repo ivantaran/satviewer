@@ -50,40 +50,57 @@ SatViewer::~SatViewer() {
 }
 
 void SatViewer::readyReadSlot() {
-    while (bytesAvailable() > 0) {
-        QByteArray byteArray = readAll();
-        QJsonDocument jsonDoc = QJsonDocument::fromJson(byteArray);
-        QJsonObject jsonObject = jsonDoc.object();
+    QJsonParseError parseError;
 
-        for (const auto &item : jsonObject) {
-            qWarning() << item.toObject().keys();
-            QJsonObject satelliteObject = item.toObject();
-            QJsonArray jsonArray = satelliteObject.value("Coords").toArray();
-            QJsonValue name = satelliteObject.value("Title");
-            QJsonValue satnum = satelliteObject.value("Satnum");
-            if (m_satellites.contains(satnum.toInt())) {
-            } else {
-                Satellite *sat = new Satellite();
-                sat->setSatnum(satnum.toInt());
-                appendSatellite(sat);
-            }
-            Satellite *sat = m_satellites[satnum.toInt()];
-            sat->setName(name.toString());
-            sat->setAbsoluteCoords(
-                jsonArray[0].toDouble() * 1000.0, jsonArray[1].toDouble() * 1000.0,
-                jsonArray[2].toDouble() * 1000.0, jsonArray[3].toDouble() * 1000.0,
-                jsonArray[4].toDouble() * 1000.0, jsonArray[5].toDouble() * 1000.0);
+    if (m_byteArray.size() > 0) { // TODO: check warning
+        qWarning() << "m_byteArray isn't null:" << m_byteArray.size();
+    }
+
+    while (canReadLine()) {
+        m_byteArray.append(readLine());
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(m_byteArray, &parseError);
+        if (parseError.error != QJsonParseError::NoError) {
             break;
+        }
+        m_byteArray.clear();
+
+        QJsonObject jsonObject = jsonDoc.object();
+        if (jsonObject.contains("SatMap")) {
+            for (const auto &item : jsonObject.value("SatMap").toObject()) {
+                QJsonObject satelliteObject = item.toObject();
+                QJsonArray jsonArray = satelliteObject.value("Coords").toArray();
+                QJsonValue name = satelliteObject.value("Title");
+                QJsonValue satnum = satelliteObject.value("Satnum");
+                if (m_satellites.contains(name.toString())) {
+                    // nothing
+                } else {
+                    Satellite *sat = new Satellite();
+                    sat->setSatnum(satnum.toInt());
+                    sat->setName(name.toString());
+                    appendSatellite(sat);
+                }
+                Satellite *sat = m_satellites[name.toString()];
+                sat->setAbsoluteCoords(
+                    jsonArray[0].toDouble() * 1000.0, jsonArray[1].toDouble() * 1000.0,
+                    jsonArray[2].toDouble() * 1000.0, jsonArray[3].toDouble() * 1000.0,
+                    jsonArray[4].toDouble() * 1000.0, jsonArray[5].toDouble() * 1000.0);
+            }
+        }
+        if (jsonObject.contains("TleMap")) {
+            QJsonObject tleMap = jsonObject.value("TleMap").toObject();
+            // qWarning() << tleMap.keys();
         }
     }
 }
 
 void SatViewer::connectedSlot() {
+    write(QJsonDocument(jsonIdList()).toJson());
+    write("\n");
+    write("{\"Names\": true}\n");
 }
 
 void SatViewer::reconnect() {
     if (state() == QTcpSocket::ConnectedState || state() == QTcpSocket::ConnectingState) {
-
     } else {
         connectToHost(m_host, m_port);
     }
@@ -91,7 +108,9 @@ void SatViewer::reconnect() {
 
 void SatViewer::requestGosat() {
     if (state() == QTcpSocket::ConnectedState) {
-        write("{\"idList\":[25544]}\n");
+        // write("{\n    \"idList\": [\n        25544,\n        43467,\n        43548,\n        "
+        //       "43556\n    ]\n}\n");
+        write("{}\n");
     }
 }
 
@@ -104,8 +123,7 @@ void SatViewer::timerEvent(QTimerEvent *event) {
 }
 
 void SatViewer::appendSatellite(Satellite *sat) {
-    m_satellites[sat->satnum()] = sat;
-    // m_satellites.push_back(sat);
+    m_satellites[sat->name()] = sat;
 }
 
 void SatViewer::appendLocation(Location *loc) {
@@ -141,12 +159,10 @@ void SatViewer::clearLocations() {
 }
 
 void SatViewer::loadSatellitesJson() {
-    // QJsonValue value;
     QString path = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).first();
     QDir dir = QDir(path);
     dir.mkpath(dir.absolutePath());
 
-    qWarning() << path << dir.absoluteFilePath("ololo.json");
     QFile file(dir.absoluteFilePath("satellites.json"));
     file.open(QFile::ReadOnly | QFile::Text);
     QString text = file.readAll();
@@ -157,8 +173,18 @@ void SatViewer::loadSatellitesJson() {
     QJsonValue value = jsonObject.value("idList");
     QJsonArray jsonArray = value.toArray();
     for (const auto &id : jsonArray) {
-        m_satellites[id.toInt()] = new Satellite();
+        m_satellites[id.toString()] = new Satellite();
     }
+}
+
+QJsonObject SatViewer::jsonIdList() {
+    QJsonArray jsonArray;
+    for (const auto &id : m_satellites.keys()) {
+        jsonArray.append(id);
+    }
+    QJsonObject jsonObject;
+    jsonObject["idList"] = jsonArray;
+    return jsonObject;
 }
 
 void SatViewer::saveSatellitesJson() {
@@ -166,17 +192,10 @@ void SatViewer::saveSatellitesJson() {
     QDir dir = QDir(path);
     dir.mkpath(dir.absolutePath());
 
-    qWarning() << path << dir.absoluteFilePath("ololo.json");
     QFile file(dir.absoluteFilePath("satellites.json"));
     file.open(QFile::WriteOnly | QFile::Text);
 
-    QJsonArray jsonArray;
-    for (const auto &id : m_satellites.keys()) {
-        jsonArray.append(id);
-    }
-    QJsonObject jsonObject;
-    jsonObject["idList"] = jsonArray;
-    file.write(QJsonDocument(jsonObject).toJson());
+    file.write(QJsonDocument(jsonIdList()).toJson());
     file.close();
 }
 
