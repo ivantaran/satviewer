@@ -33,14 +33,15 @@ SatViewer::SatViewer() {
 
 SatViewer::~SatViewer() {
     saveSatellitesJson();
-    // TODO
-    //    for (const auto& sat : m_satellites) {
-    //        if (sat != nullptr) {
-    //            delete sat;
-    //        }
-    //    }
-    //    m_satellites.clear();
+    for (const auto &sat : m_satellites) {
+        if (sat != nullptr) {
+            delete sat;
+        }
+    }
+    m_satellites.clear();
 
+    // TODO Tle map
+    // TODO
     //    for (const auto& loc : m_locations) {
     //        if (loc != nullptr) {
     //            delete loc;
@@ -77,7 +78,7 @@ void SatViewer::readyReadSlot() {
                     Satellite *sat = new Satellite();
                     sat->setSatnum(satnum.toInt());
                     sat->setName(name.toString());
-                    appendSatellite(sat);
+                    m_satellites[name.toString()] = sat;
                 }
                 Satellite *sat = m_satellites[name.toString()];
                 sat->setAbsoluteCoords(
@@ -88,7 +89,19 @@ void SatViewer::readyReadSlot() {
         }
         if (jsonObject.contains("TleMap")) {
             QJsonObject tleMap = jsonObject.value("TleMap").toObject();
-            // qWarning() << tleMap.keys();
+            for (auto &tle : m_tles) {
+                delete tle;
+                tle = nullptr;
+            }
+            m_tles.clear();
+            for (const auto &jsonTle : tleMap) {
+                QJsonObject tleObject = jsonTle.toObject();
+                Tle *tle = new Tle();
+                tle->satnum = tleObject.value("Satnum").toInt();
+                QString id = tleObject.value("Title").toString();
+                m_tles[id] = tle;
+            }
+            emit updated();
         }
     }
 }
@@ -108,8 +121,6 @@ void SatViewer::reconnect() {
 
 void SatViewer::requestGosat() {
     if (state() == QTcpSocket::ConnectedState) {
-        // write("{\n    \"idList\": [\n        25544,\n        43467,\n        43548,\n        "
-        //       "43556\n    ]\n}\n");
         write("{}\n");
     }
 }
@@ -122,8 +133,8 @@ void SatViewer::timerEvent(QTimerEvent *event) {
     }
 }
 
-void SatViewer::appendSatellite(Satellite *sat) {
-    m_satellites[sat->name()] = sat;
+void SatViewer::appendSatellite(const QString &name) {
+    write(QString("{\"idList\": [\"%0\"]}\n").arg(name).toUtf8());
 }
 
 void SatViewer::appendLocation(Location *loc) {

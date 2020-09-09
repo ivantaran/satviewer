@@ -17,11 +17,15 @@
 class SatViewer : public QTcpSocket {
     Q_OBJECT
 public:
+    struct Tle {
+        int satnum;
+    };
+
     SatViewer();
     virtual ~SatViewer();
     static void aerv(const double loc_rg[], const double sat_rg[], double aerv[]);
     void appendLocation(Location *loc);
-    void appendSatellite(Satellite *sat);
+    void appendSatellite(const QString &name);
     void clearLocations();
     void clearSatellites();
     void reconnect();
@@ -41,6 +45,9 @@ public:
     const std::list<Location *> &locations() {
         return m_locations;
     }
+    const QMap<QString, Tle *> &tles() {
+        return m_tles;
+    }
     Satellite *currentSatellite();
     Location *currentLocation();
     ZrvIoList *ioList() {
@@ -53,6 +60,7 @@ public:
 signals:
     void currentChanged(Satellite *sat, Location *loc, double *time);
     void timeChanged();
+    void updated();
 
 protected:
     void timerEvent(QTimerEvent *event);
@@ -68,6 +76,7 @@ private:
     QByteArray m_byteArray;
     QHostAddress m_host;
     QMap<QString, Satellite *> m_satellites;
+    QMap<QString, Tle *> m_tles;
     quint16 m_port;
     Satellite *m_currentSatellite;
     std::list<Location *> m_locations;

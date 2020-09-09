@@ -19,7 +19,7 @@ class Satellite {
 
 public:
     static const double RadiusEarth;
-    Satellite();
+    Satellite(const QString &name = "");
     virtual ~Satellite();
     SatWidgetObject *satWObject;
     virtual bool model(double) {
@@ -169,7 +169,7 @@ public:
     void setSatellite(bool satellite);
     bool isSatellite() const;
     int satnum() const;
-    
+
 protected:
     double lon, lat, _altitude;
     double m_r[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};

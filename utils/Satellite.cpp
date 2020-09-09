@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-Satellite::Satellite() {
-    m_name = "";
+Satellite::Satellite(const QString &name) {
+    m_name = name;
     m_satnum = 0;
     icon_name = "";
     zrv = 0.0;

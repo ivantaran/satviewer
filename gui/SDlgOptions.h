@@ -26,7 +26,6 @@
 #include <QMessageBox>
 #include <QStandardItemModel>
 #include <QtSql>
-#include <inttypes.h>
 
 class SDlgOptions : public QDialog {
     Q_OBJECT
@@ -37,7 +36,7 @@ public:
     SUpdater *tleFrame;
     SWidgetList *jswList;
 
-    QSqlDatabase db;
+    // QSqlDatabase db;
 
     SDlgOptions(SatViewer *satviewer, GLSatAbstractWidget *w);
     virtual ~SDlgOptions();
@@ -60,8 +59,8 @@ public:
 private:
     SatViewer *m_satviewer;
     Ui::Dialog widget;
-    QDataWidgetMapper mapperSat, mapperLoc;
-    QSqlTableModel *modelDbSat, *modelDbLoc;
+    // QDataWidgetMapper mapperSat, mapperLoc;
+    // QSqlTableModel *modelDbSat, *modelDbLoc;
     GLSatAbstractWidget *satWidget;
     void setDb();
     void setSat(Satellite *sat, QSqlRecord record);
@@ -77,6 +76,7 @@ private slots:
     void deleteSatList();
     void addToLocList();
     void deleteLocList();
+    void updateTle();
 
     void selectDbSat(const QModelIndex &current, const QModelIndex &previous);
     void selectDbLoc(const QModelIndex &current, const QModelIndex &previous);
