@@ -30,7 +30,7 @@ public:
     void clearSatellites();
     void reconnect();
     void removeLocation(Location *loc);
-    void removeSatellite(Satellite *sat);
+    void removeSatellite(const QString &name);
     void setCurrentLocation(Location *loc);
     void setCurrentLocationIndex(long unsigned int index);
     void setCurrentSatellite(Satellite *sat);
@@ -60,14 +60,16 @@ public:
 signals:
     void currentChanged(Satellite *sat, Location *loc, double *time);
     void timeChanged();
-    void updated();
+    void updatedTles();
+    void updatedSatellites();
 
 protected:
     void timerEvent(QTimerEvent *event);
 
 private:
-    static const QString DEFAULT_HOST;
-    static const quint16 DEFAULT_PORT = 8080;
+    static const QString KeyAppendId;
+    static const QString KeyRemoveId;
+    static const quint16 DefaultPort = 8080;
 
     double m_time;
     int m_timerFastId;

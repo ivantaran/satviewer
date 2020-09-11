@@ -102,18 +102,7 @@ void SDlgOptions::setRotatorSettings(RotatorSettings *rotatorSettings) {
 }
 
 void SDlgOptions::updateTle() {
-    QStringListModel *model = static_cast<QStringListModel *>(widget.listViewDBSat->model());
-    QStringList list = m_satviewer->tles().keys();
-    QStringList::iterator iter = list.begin();
-    while (iter != list.end()) {
-        if (!iter->contains("noaa", Qt::CaseInsensitive)) {
-            iter = list.erase(iter);
-        } else {
-            ++iter;
-        }
-    }
-    // model->setStringList(m_satviewer->tles().keys());
-    model->setStringList(list);
+    setFilterSatName("");
 }
 
 void SDlgOptions::saveListViewSat() {
@@ -375,12 +364,12 @@ void SDlgOptions::setLoc(Location *loc, QSqlRecord record) {
 }
 
 void SDlgOptions::updateListViewSat() {
-    QStringListModel *model = (QStringListModel *)widget.listViewSat->model();
+    QStringListModel *model = static_cast<QStringListModel *>(widget.listViewSat->model());
     model->setStringList(m_satviewer->satellites().keys());
 }
 
 void SDlgOptions::updateListViewLoc() {
-    QStringListModel *model = (QStringListModel *)widget.listViewLoc->model();
+    QStringListModel *model = static_cast<QStringListModel *>(widget.listViewLoc->model());
     // model->setStringList(m_satviewer->locations().keys());
     // if (model != nullptr) {
     //     model->clear();
@@ -467,11 +456,20 @@ void SDlgOptions::selectLoc(const QModelIndex &current, const QModelIndex &previ
 
 void SDlgOptions::setFilterSatName(const QString &line) {
     QStringListModel *model = static_cast<QStringListModel *>(widget.listViewDBSat->model());
-
-    // QString filter = "";
-    // if (line != "" && line.indexOf('\'') < 0)
-    //     filter = "name LIKE '" + widget.lineEditSatNameFilter->text() + "%'";
-    // modelDbSat->setFilter(filter);
+    QStringList list = m_satviewer->tles().keys();
+    if (line.isEmpty()) {
+        // nothing
+    } else {
+        QStringList::iterator iter = list.begin();
+        while (iter != list.end()) {
+            if (!iter->contains(line, Qt::CaseInsensitive)) {
+                iter = list.erase(iter);
+            } else {
+                ++iter;
+            }
+        }
+    }
+    model->setStringList(list);
 }
 
 void SDlgOptions::setFilterSat() {
@@ -584,7 +582,7 @@ void SDlgOptions::addToSatList(const QModelIndex &index) {
             // satWidget->satviewer()->appendSatellite(sat);
         }
     }
-    // updateListViewSat();
+    updateListViewSat();
 
     // int position = index.row() + indexList.count() + 1;
     // QModelIndex mIndex = widget.listViewDBSat->model()->index(position, 0);
@@ -633,21 +631,16 @@ void SDlgOptions::addToLocList(const QModelIndex &index) {
 }
 
 void SDlgOptions::delFromSatList(const QModelIndex &index) {
+    if (!index.isValid()) {
+        return;
+    }
     QModelIndexList indexList = widget.listViewSat->selectionModel()->selectedIndexes();
-
-    std::vector<Satellite *> v(m_satviewer->satellites().begin(), m_satviewer->satellites().end());
-
     for (const auto &i : indexList) {
-        m_satviewer->removeSatellite(v.at(i.row()));
+        if (i.column() == widget.listViewSat->modelColumn()) {
+            m_satviewer->removeSatellite(i.data().toString());
+        }
     }
-
     updateListViewSat();
-
-    int position = index.isValid() ? index.row() : -1;
-    QModelIndex mIndex = widget.listViewSat->model()->index(position, 0);
-    if (mIndex.isValid()) {
-        widget.listViewSat->setCurrentIndex(mIndex);
-    }
 }
 
 void SDlgOptions::delFromLocList(const QModelIndex &index) {
