@@ -14,8 +14,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-Location::Location(void) {
-    _name = "";
+Location::Location(const QString &name) {
+    m_name = name;
     icon_name = "";
 
     icon_index = (uint32_t)-1;
@@ -58,7 +58,7 @@ void Location::copy(Location *src) {
     setName(src->name());
     lat = src->latitude();
     lon = src->longitude();
-    _height = src->height();
+    _height = src->altitude();
     calcXYZ();
 
     visibleLabel(src->isVisibleLabel());
@@ -81,8 +81,8 @@ void Location::copy(Location *src) {
     setZrlWidth(src->zrlWidth());
 }
 
-void Location::setName(QString name) {
-    _name = name;
+void Location::setName(const QString &name) {
+    m_name = name;
 }
 
 void Location::calcXYZ() {
@@ -107,16 +107,16 @@ void Location::setLongitude(double longitude) {
     calcXYZ();
 }
 
-void Location::setHeight(double height) {
+void Location::setAltitude(double height) {
     _height = height;
     calcXYZ();
 }
 
-void Location::setIcon(QString name) {
+void Location::setIcon(const QString &name) {
     icon_name = name;
 }
 
-void Location::setFont(QFont font) {
+void Location::setFont(const QFont &font) {
     _font = font;
 }
 

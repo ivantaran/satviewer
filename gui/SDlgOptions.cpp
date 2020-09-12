@@ -47,6 +47,8 @@ SDlgOptions::SDlgOptions(SatViewer *satviewer, GLSatAbstractWidget *w) {
 
     setSatWidget(w);
     setDb();
+    updateListViewSat();
+    updateListViewLoc();
 
     connect(widget.lineEditSatNameFilter, SIGNAL(textChanged(const QString &)), this,
             SLOT(setFilterSatName(const QString &)));
@@ -106,9 +108,6 @@ void SDlgOptions::updateTle() {
 }
 
 void SDlgOptions::saveListViewSat() {
-    // db.exec("DELETE FROM sattemp;");
-    // db.exec("BEGIN;");
-
     // for (const auto &sat : m_satviewer->satellites()) {
     //     QString query = QString("INSERT INTO sattemp ('name', 'zrv', 'icon', 'show_label', "
     //                             "'show_track', 'show_zrv', 'show_lines', 'active_zone', "
@@ -133,17 +132,9 @@ void SDlgOptions::saveListViewSat() {
     //                         .arg(sat->nameX(), 0, 'g', 16)
     //                         .arg(sat->nameY(), 0, 'g', 16)
     //                         .arg(sat->linesWidth(), 0, 'g', 16);
-    //     QSqlQuery q(db);
-    //     q.prepare(query);
-    //     q.exec();
-    // }
-    // db.exec("COMMIT;");
 }
 
 void SDlgOptions::saveListViewLoc() {
-    // db.exec("DELETE FROM loctemp;");
-    // db.exec("BEGIN;");
-
     // for (const auto &loc : m_satviewer->locations()) {
     //     QString query = QString("INSERT INTO loctemp ('lat', 'lon', 'height', 'azimuth',
     //     'sector', "
@@ -175,18 +166,9 @@ void SDlgOptions::saveListViewLoc() {
     //                         .arg(loc->linesWidth(), 0, 'g', 16);
     //     db.exec(query);
     // }
-    // db.exec("COMMIT;");
 }
 
 void SDlgOptions::loadListViewSat() {
-    QSqlTableModel modelSatTemp;
-    modelSatTemp.setTable("sattemp");
-    modelSatTemp.setEditStrategy(QSqlTableModel::OnManualSubmit);
-    modelSatTemp.select();
-
-    while (modelSatTemp.canFetchMore()) {
-        modelSatTemp.fetchMore();
-    }
 
     // for (int i = 0; i < modelSatTemp.rowCount(); i++) {
     //     Satellite *sat = satWidget->getSatModel();
@@ -210,51 +192,51 @@ void SDlgOptions::loadListViewSat() {
     //     sat->setLinesWidth(modelSatTemp.record(i).field("lines_width").value().toDouble());
     //     satWidget->satviewer()->appendSatellite(sat);
     // }
-    modelSatTemp.clear();
+    // modelSatTemp.clear();
 
-    updateListViewSat();
+    // updateListViewSat();
     //    if (satWidget->satList.count() == 1) { //TODO
     //        satWidget->setIndexSat(0);
     //    }
-    satWidget->refreshAll();
+    // satWidget->refreshAll();
 }
 
 void SDlgOptions::loadListViewLoc() {
-    QSqlTableModel modelLocTemp;
-    modelLocTemp.setTable("loctemp");
-    modelLocTemp.setEditStrategy(QSqlTableModel::OnManualSubmit);
-    modelLocTemp.select();
+    // QSqlTableModel modelLocTemp;
+    // modelLocTemp.setTable("loctemp");
+    // modelLocTemp.setEditStrategy(QSqlTableModel::OnManualSubmit);
+    // modelLocTemp.select();
 
-    while (modelLocTemp.canFetchMore()) {
-        modelLocTemp.fetchMore();
-    }
+    // while (modelLocTemp.canFetchMore()) {
+    //     modelLocTemp.fetchMore();
+    // }
 
-    Location *loc;
-    for (int i = 0; i < modelLocTemp.rowCount(); i++) {
-        loc = new Location();
-        setLoc(loc, modelLocTemp.record(i));
-        loc->visibleLabel(modelLocTemp.record(i).field("show_label").value().toBool());
-        loc->visibleZrv(modelLocTemp.record(i).field("show_zrv").value().toBool());
-        loc->visibleLines(modelLocTemp.record(i).field("show_lines").value().toBool());
-        loc->activeZone(modelLocTemp.record(i).field("active_zone").value().toBool());
-        loc->setColorLabel(modelLocTemp.record(i).field("color_label").value().toUInt());
-        loc->setColorZrv(modelLocTemp.record(i).field("color_zrv").value().toUInt());
-        loc->setColorLines(modelLocTemp.record(i).field("color_lines").value().toUInt());
-        QFont font;
-        font.fromString(modelLocTemp.record(i).field("font").value().toString());
-        loc->setFont(font);
-        loc->setNameX(modelLocTemp.record(i).field("name_x").value().toDouble());
-        loc->setNameY(modelLocTemp.record(i).field("name_y").value().toDouble());
-        loc->setLinesWidth(modelLocTemp.record(i).field("lines_width").value().toDouble());
-        satWidget->satviewer()->appendLocation(loc);
-    }
-    modelLocTemp.clear();
+    // Location *loc;
+    // for (int i = 0; i < modelLocTemp.rowCount(); i++) {
+    //     loc = new Location();
+    //     setLoc(loc, modelLocTemp.record(i));
+    //     loc->visibleLabel(modelLocTemp.record(i).field("show_label").value().toBool());
+    //     loc->visibleZrv(modelLocTemp.record(i).field("show_zrv").value().toBool());
+    //     loc->visibleLines(modelLocTemp.record(i).field("show_lines").value().toBool());
+    //     loc->activeZone(modelLocTemp.record(i).field("active_zone").value().toBool());
+    //     loc->setColorLabel(modelLocTemp.record(i).field("color_label").value().toUInt());
+    //     loc->setColorZrv(modelLocTemp.record(i).field("color_zrv").value().toUInt());
+    //     loc->setColorLines(modelLocTemp.record(i).field("color_lines").value().toUInt());
+    //     QFont font;
+    //     font.fromString(modelLocTemp.record(i).field("font").value().toString());
+    //     loc->setFont(font);
+    //     loc->setNameX(modelLocTemp.record(i).field("name_x").value().toDouble());
+    //     loc->setNameY(modelLocTemp.record(i).field("name_y").value().toDouble());
+    //     loc->setLinesWidth(modelLocTemp.record(i).field("lines_width").value().toDouble());
+    //     satWidget->satviewer()->appendLocation(loc);
+    // }
+    // modelLocTemp.clear();
 
-    updateListViewLoc();
-    //    if (satWidget->locList.count() == 1) { // TODO
-    //        satWidget->setIndexLoc(0);
-    //    }
-    satWidget->refreshAll();
+    // updateListViewLoc();
+    // //    if (satWidget->locList.count() == 1) { // TODO
+    // //        satWidget->setIndexLoc(0);
+    // //    }
+    // satWidget->refreshAll();
 }
 
 void SDlgOptions::setDb() {
@@ -349,7 +331,7 @@ void SDlgOptions::setLoc(Location *loc, QSqlRecord record) {
     }
     loc->setLatitude(record.field("lat").value().toDouble());
     loc->setLongitude(record.field("lon").value().toDouble());
-    loc->setHeight(record.field("height").value().toDouble());
+    loc->setAltitude(record.field("height").value().toDouble());
     loc->setZrlAzimuth(record.field("azimuth").value().toDouble());
     loc->setZrlRange(record.field("r").value().toDouble());
     loc->setZrlWidth(record.field("sector").value().toDouble());
@@ -370,13 +352,7 @@ void SDlgOptions::updateListViewSat() {
 
 void SDlgOptions::updateListViewLoc() {
     QStringListModel *model = static_cast<QStringListModel *>(widget.listViewLoc->model());
-    // model->setStringList(m_satviewer->locations().keys());
-    // if (model != nullptr) {
-    //     model->clear();
-    //     for (const auto &loc : m_satviewer->locations()) {
-    //         model->appendRow(new QStandardItem(loc->name()));
-    //     }
-    // }
+    model->setStringList(m_satviewer->locations().keys());
 }
 
 void SDlgOptions::setBtnColor(QWidget *widget) {
@@ -644,20 +620,16 @@ void SDlgOptions::delFromSatList(const QModelIndex &index) {
 }
 
 void SDlgOptions::delFromLocList(const QModelIndex &index) {
+    if (!index.isValid()) {
+        return;
+    }
     QModelIndexList indexList = widget.listViewLoc->selectionModel()->selectedIndexes();
-
-    std::vector<Location *> v{m_satviewer->locations().begin(), m_satviewer->locations().end()};
-
     for (const auto &i : indexList) {
-        m_satviewer->removeLocation(v.at(i.row()));
+        if (i.column() == widget.listViewLoc->modelColumn()) {
+            m_satviewer->removeLocation(i.data().toString());
+        }
     }
-
     updateListViewLoc();
-    int position = index.isValid() ? index.row() : -1;
-    QModelIndex mIndex = widget.listViewLoc->model()->index(position, 0);
-    if (mIndex.isValid()) {
-        widget.listViewLoc->setCurrentIndex(mIndex);
-    }
 }
 
 void SDlgOptions::scriptParameters() {
@@ -734,15 +706,11 @@ void SDlgOptions::aboutQt() {
 }
 
 void SDlgOptions::clearSatList() {
-    //    widget.listViewSat->selectAll();
-    //    delFromSatList(widget.listViewSat->currentIndex());
     m_satviewer->clearSatellites();
     updateListViewSat();
 }
 
 void SDlgOptions::clearLocList() {
-    //    widget.listViewLoc->selectAll();
-    //    delFromLocList(widget.listViewLoc->currentIndex());
     m_satviewer->clearLocations();
     updateListViewLoc();
 }

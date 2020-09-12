@@ -15,20 +15,20 @@
 
 class Location {
 public:
-    Location(void);
-    virtual ~Location(void);
+    Location(const QString &name = "");
+    virtual ~Location();
     SatWidgetObject *satWObject;
     void copy(Location *src);
 
-    void setName(QString name);
+    void setAltitude(double height);
+    void setFont(const QFont &font);
+    void setIcon(const QString &name);
     void setLatitude(double latitude);
+    void setLinesWidth(double value);
     void setLongitude(double longitude);
-    void setHeight(double height);
-    void setFont(QFont font);
+    void setName(const QString &name);
     void setNameX(double value);
     void setNameY(double value);
-    void setIcon(QString name);
-    void setLinesWidth(double value);
 
     void setZrlWidth(double value) {
         _zrlWidth = value;
@@ -41,7 +41,7 @@ public:
     }
 
     inline QString name() {
-        return _name;
+        return m_name;
     }
     inline double nameX() {
         return name_x;
@@ -55,7 +55,7 @@ public:
     inline double longitude() {
         return lon;
     }
-    inline double height() {
+    inline double altitude() {
         return _height;
     }
     inline double *rg() {
@@ -148,7 +148,7 @@ private:
     void calcXYZ();
     uint32_t icon_index, icon_width, icon_height;
     QString icon_name;
-    QString _name;
+    QString m_name;
     QFont _font;
     uint32_t _color, color_label, color_zrv, color_lines;
     bool show_label, show_zrv, show_lines, active_zone;

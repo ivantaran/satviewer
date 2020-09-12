@@ -29,26 +29,15 @@ SatViewer::SatViewer() {
     m_timerSlowId = startTimer(5000);
     m_timerFastId = startTimer(1000);
     loadSatellitesJson();
+    loadLocationsJson();
 }
 
 SatViewer::~SatViewer() {
     saveSatellitesJson();
-    for (auto &sat : m_satellites) {
-        if (sat != nullptr) {
-            delete sat;
-            sat = nullptr;
-        }
-    }
-    m_satellites.clear();
-
-    // TODO Tle map
-    // TODO
-    //    for (const auto& loc : m_locations) {
-    //        if (loc != nullptr) {
-    //            delete loc;
-    //        }
-    //    }
-    //    m_locations.clear();
+    clearLlas();
+    clearLocations();
+    clearSatellites();
+    clearTles();
 }
 
 void SatViewer::readyReadSlot() {
@@ -93,11 +82,7 @@ void SatViewer::readyReadSlot() {
         }
         if (jsonObject.contains("TleMap")) {
             QJsonObject tleMap = jsonObject.value("TleMap").toObject();
-            for (auto &tle : m_tles) {
-                delete tle;
-                tle = nullptr;
-            }
-            m_tles.clear();
+            clearTles();
             for (const auto &jsonTle : tleMap) {
                 QJsonObject tleObject = jsonTle.toObject();
                 Tle *tle = new Tle();
@@ -147,8 +132,7 @@ void SatViewer::appendSatellite(const QString &name) {
     }
 }
 
-void SatViewer::appendLocation(Location *loc) {
-    m_locations.push_back(loc);
+void SatViewer::appendLocation(const QString &name) {
 }
 
 void SatViewer::removeSatellite(const QString &name) {
@@ -164,24 +148,52 @@ void SatViewer::removeSatellite(const QString &name) {
     //    ioList.deleteSat(satList.at(pos));
 }
 
-void SatViewer::removeLocation(Location *loc) {
-    m_locations.remove(loc);
-    //    int pos = locList.indexOf(loc);
-    //    if (pos == -1) return;
-    //    ioList.deleteLoc(locList.at(pos));
-    //    locList.removeAt(pos);
-    //    delete loc;
-    //    setIndexLoc(pos - 1);
+void SatViewer::removeLocation(const QString &name) {
+    if (m_locations.contains(name)) {
+        Location *loc = m_locations[name];
+        m_satellites.remove(name);
+        if (loc == currentLocation()) {
+            setCurrentLocationIndex(0);
+        }
+        delete loc;
+    }
+    emit updatedLocations();
 }
 
 void SatViewer::clearSatellites() {
-    // m_satellites.clear();
-    // delete ...
+    for (auto &item : m_satellites) {
+        if (item != nullptr) {
+            delete item;
+        }
+    }
+    m_satellites.clear();
 }
 
 void SatViewer::clearLocations() {
-    // m_locations.clear();
-    // delete ...
+    for (auto &item : m_locations) {
+        if (item != nullptr) {
+            delete item;
+        }
+    }
+    m_locations.clear();
+}
+
+void SatViewer::clearTles() {
+    for (auto &item : m_tles) {
+        if (item != nullptr) {
+            delete item;
+        }
+    }
+    m_tles.clear();
+}
+
+void SatViewer::clearLlas() {
+    for (auto &item : m_llas) {
+        if (item != nullptr) {
+            delete item;
+        }
+    }
+    m_llas.clear();
 }
 
 void SatViewer::loadSatellitesJson() {
@@ -200,6 +212,28 @@ void SatViewer::loadSatellitesJson() {
     QJsonArray jsonArray = value.toArray();
     for (const auto &id : jsonArray) {
         m_satellites[id.toString()] = new Satellite(id.toString());
+    }
+}
+
+void SatViewer::loadLocationsJson() {
+    QString path = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).first();
+    QDir dir = QDir(path);
+    dir.mkpath(dir.absolutePath());
+
+    QFile file(dir.absoluteFilePath("locations.json"));
+    file.open(QFile::ReadOnly | QFile::Text);
+    QString text = file.readAll();
+    file.close();
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(text.toUtf8());
+    QJsonObject jsonObject = jsonDoc.object().value("Locations").toObject();
+    for (const auto &locName : jsonObject.keys()) {
+        Location *loc = new Location(locName);
+        m_locations[locName] = loc;
+        QJsonObject locObject = jsonObject.value(locName).toObject();
+        loc->setLatitude(locObject.value("Latitude").toDouble());
+        loc->setLongitude(locObject.value("Longitude").toDouble());
+        loc->setAltitude(locObject.value("Altitude").toDouble());
     }
 }
 
@@ -223,6 +257,18 @@ void SatViewer::saveSatellitesJson() {
 
     file.write(QJsonDocument(jsonIdList()).toJson());
     file.close();
+}
+
+void SatViewer::saveLocationsJson() {
+    // QString path = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).first();
+    // QDir dir = QDir(path);
+    // dir.mkpath(dir.absolutePath());
+
+    // QFile file(dir.absoluteFilePath("locations.json"));
+    // file.open(QFile::WriteOnly | QFile::Text);
+
+    // file.write(QJsonDocument(jsonIdList()).toJson());
+    // file.close();
 }
 
 Satellite *SatViewer::currentSatellite() {

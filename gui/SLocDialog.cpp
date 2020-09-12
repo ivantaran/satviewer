@@ -62,7 +62,7 @@ void SLocDialog::showEvent(QShowEvent *event) {
     widget.lineEditName->setText(m_loc->name());
     widget.lineEditLat->setText(QString::number(m_loc->latitude(), 'g', 16));
     widget.lineEditLon->setText(QString::number(m_loc->longitude(), 'g', 16));
-    widget.lineEditHeight->setText(QString::number(m_loc->height(), 'g', 16));
+    widget.lineEditHeight->setText(QString::number(m_loc->altitude(), 'g', 16));
     widget.lineEditAzimuth->setText(QString::number(m_loc->zrlAzimuth(), 'g', 16));
     widget.lineEditRange->setText(QString::number(m_loc->zrlRange(), 'g', 16));
     widget.lineEditWidth->setText(QString::number(m_loc->zrlWidth(), 'g', 16));
@@ -115,7 +115,7 @@ void SLocDialog::makeLoc(Location *loc) {
     loc->setName(widget.lineEditName->text());
     loc->setLatitude(lat);
     loc->setLongitude(lon);
-    loc->setHeight(height);
+    loc->setAltitude(height);
     loc->setZrlAzimuth(azimuth);
     loc->setZrlRange(range);
     loc->setZrlWidth(width);
