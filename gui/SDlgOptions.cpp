@@ -9,7 +9,6 @@
 #include "SDlgOptions.h"
 #include "../utils/dbsql.h"
 #include "SatelliteDialog.h"
-#include <fstream>
 
 SDlgOptions::SDlgOptions(SatViewer *satviewer, GLSatAbstractWidget *w) {
     widget.setupUi(this);
@@ -46,9 +45,10 @@ SDlgOptions::SDlgOptions(SatViewer *satviewer, GLSatAbstractWidget *w) {
     widget.listViewLoc->setModel(new QStringListModel(this));
 
     setSatWidget(w);
-    setDb();
-    updateListViewSat();
+
+    updateListViewLla();
     updateListViewLoc();
+    updateListViewSat();
 
     connect(widget.lineEditSatNameFilter, SIGNAL(textChanged(const QString &)), this,
             SLOT(setFilterSatName(const QString &)));
@@ -85,6 +85,10 @@ SDlgOptions::SDlgOptions(SatViewer *satviewer, GLSatAbstractWidget *w) {
     connect(widget.btnClearLocList, SIGNAL(clicked()), this, SLOT(clearLocList()));
     connect(widget.btnChangeDbSat, SIGNAL(clicked()), this, SLOT(changeDbSat()));
     connect(widget.btnChangeDbLoc, SIGNAL(clicked()), this, SLOT(changeDbLoc()));
+
+    connect(widget.listViewDBLoc->selectionModel(),
+            SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this,
+            SLOT(selectDbLoc(const QModelIndex &, const QModelIndex &)));
 
     connect(widget.listViewSat->selectionModel(),
             SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this,
@@ -352,7 +356,11 @@ void SDlgOptions::updateListViewSat() {
 
 void SDlgOptions::updateListViewLoc() {
     QStringListModel *model = static_cast<QStringListModel *>(widget.listViewLoc->model());
-    model->setStringList(m_satviewer->locations().keys());
+    QStringList list;
+    for (const auto &loc : m_satviewer->locations()) {
+        list.append(loc->name());
+    }
+    model->setStringList(list);
 }
 
 void SDlgOptions::setBtnColor(QWidget *widget) {
@@ -408,12 +416,13 @@ void SDlgOptions::selectDbSat(const QModelIndex &current, const QModelIndex &pre
 }
 
 void SDlgOptions::selectDbLoc(const QModelIndex &current, const QModelIndex &previous) {
-    // Q_UNUSED(previous)
-    // if (current.isValid()) {
-    //     mapperLoc.setCurrentIndex(current.row());
-    //     Location loc;
-    //     setLoc(&loc, modelDbLoc->record(current.row()));
-    // }
+    Q_UNUSED(previous)
+    QString name = current.data().toString();
+    SatViewer::Lla *lla = m_satviewer->llas().at(current.row());
+    widget.lineEditLocName->setText(name);
+    widget.lineEditLocLat->setText(QString::number(lla->lla[0]));
+    widget.lineEditLocLon->setText(QString::number(lla->lla[1]));
+    widget.lineEditLocHeight->setText(QString::number(lla->lla[2]));
 }
 
 void SDlgOptions::selectSat(const QModelIndex &current, const QModelIndex &previous) {
@@ -459,10 +468,16 @@ void SDlgOptions::setFilterSat() {
 }
 
 void SDlgOptions::setFilterLocName(const QString &line) {
-    // QString filter = "";
-    // if (line != "" && line.indexOf('\'') < 0)
-    //     filter = "name LIKE '" + widget.lineEditLocNameFilter->text() + "%'";
-    // modelDbLoc->setFilter(filter);
+    QStringListModel *model = static_cast<QStringListModel *>(widget.listViewDBLoc->model());
+    int i = 0;
+    for (const auto &name : model->stringList()) {
+        if (name.contains(line, Qt::CaseInsensitive)) {
+            widget.listViewDBLoc->setRowHidden(i, false);
+        } else {
+            widget.listViewDBLoc->setRowHidden(i, true);
+        }
+        i++;
+    }
 }
 
 void SDlgOptions::setFilterLoc() {
@@ -475,11 +490,14 @@ void SDlgOptions::setFilterLoc() {
     // }
 }
 
-void SDlgOptions::loadDbLoc() {
-    // QString query;
-    // char buf[256];
-    // QString filePath;
-    // ifstream f;
+void SDlgOptions::updateListViewLla() {
+    QStringListModel *model = static_cast<QStringListModel *>(widget.listViewDBLoc->model());
+    QStringList list;
+    for (const auto &lla : m_satviewer->llas()) {
+        list.append(lla->name);
+    }
+    model->setStringList(list);
+
     // QDir dir = QDir::home();
     // dir.cd("satviewer/loc");
     // QStringList fileList = QFileDialog::getOpenFileNames(this, "Open File", dir.path(),
@@ -488,30 +506,6 @@ void SDlgOptions::loadDbLoc() {
     // if (fileList.isEmpty()) {
     //     return;
     // }
-    // db.exec("BEGIN;");
-    // for (const auto &filePath : fileList) {
-    //     if (filePath.isEmpty()) {
-    //         continue;
-    //     }
-    //     f.open(filePath.toLocal8Bit().constData());
-    //     if (!f.is_open()) {
-    //         continue;
-    //     }
-    //     do {
-    //         f.getline(buf, 256);
-    //         if (strlen(buf) > 0) {
-    //             query =
-    //                 QString(
-    //                     "INSERT INTO loc (name, lat, lon, height, azimuth, sector, r)
-    //                     VALUES(%0);") .arg(buf);
-    //             db.exec(query);
-    //         }
-    //     } while (!f.eof());
-    //     f.close();
-    //     f.clear();
-    // }
-    // db.exec("COMMIT;");
-    // modelDbLoc->submitAll();
 }
 
 void SDlgOptions::clearDbSat() {
@@ -620,16 +614,16 @@ void SDlgOptions::delFromSatList(const QModelIndex &index) {
 }
 
 void SDlgOptions::delFromLocList(const QModelIndex &index) {
-    if (!index.isValid()) {
-        return;
-    }
-    QModelIndexList indexList = widget.listViewLoc->selectionModel()->selectedIndexes();
-    for (const auto &i : indexList) {
-        if (i.column() == widget.listViewLoc->modelColumn()) {
-            m_satviewer->removeLocation(i.data().toString());
-        }
-    }
-    updateListViewLoc();
+    // if (!index.isValid()) {
+    //     return;
+    // }
+    // QModelIndexList indexList = widget.listViewLoc->selectionModel()->selectedIndexes();
+    // for (const auto &i : indexList) {
+    //     if (i.column() == widget.listViewLoc->modelColumn()) {
+    //         m_satviewer->removeLocation(i.data().toString());
+    //     }
+    // }
+    // updateListViewLoc();
 }
 
 void SDlgOptions::scriptParameters() {

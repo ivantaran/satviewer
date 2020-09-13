@@ -21,6 +21,7 @@ public:
         int satnum;
     };
     struct Lla {
+        QString name;
         double lla[3];
     };
 
@@ -33,10 +34,11 @@ public:
     void clearLocations();
     void clearSatellites();
     void clearTles();
+    void loadLlas(const QString &fileName);
     void loadLocationsJson();
     void loadSatellitesJson();
     void reconnect();
-    void removeLocation(const QString &name);
+    void removeLocation(int index);
     void removeSatellite(const QString &name);
     void saveLocationsJson();
     void saveSatellitesJson();
@@ -49,13 +51,13 @@ public:
     const QMap<QString, Satellite *> &satellites() {
         return m_satellites;
     }
-    const QMap<QString, Location *> &locations() {
+    const QList<Location *> &locations() {
         return m_locations;
     }
     const QMap<QString, Tle *> &tles() {
         return m_tles;
     }
-    const QMap<QString, Lla *> &llas() {
+    const QList<Lla *> &llas() {
         return m_llas;
     }
     Satellite *currentSatellite();
@@ -88,12 +90,13 @@ private:
     int m_timerSlowId;
     Location *m_currentLocation;
     QByteArray m_byteArray;
+    QDir m_appDataDir;
     QHostAddress m_host;
     QJsonObject jsonIdList();
-    QMap<QString, Location *> m_locations;
+    QList<Lla *> m_llas;
+    QList<Location *> m_locations;
     QMap<QString, Satellite *> m_satellites;
     QMap<QString, Tle *> m_tles;
-    QMap<QString, Lla *> m_llas;
     quint16 m_port;
     Satellite *m_currentSatellite;
     ZrvIoList m_ioList;

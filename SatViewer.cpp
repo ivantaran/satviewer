@@ -23,6 +23,10 @@ SatViewer::SatViewer() {
     m_currentLocation = nullptr;
     m_time = 0.0;
 
+    QString path = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).first();
+    m_appDataDir = QDir(path);
+    m_appDataDir.mkpath(m_appDataDir.absolutePath());
+
     connect(this, SIGNAL(readyRead()), this, SLOT(readyReadSlot()));
     connect(this, SIGNAL(connected()), this, SLOT(connectedSlot()));
 
@@ -30,6 +34,7 @@ SatViewer::SatViewer() {
     m_timerFastId = startTimer(1000);
     loadSatellitesJson();
     loadLocationsJson();
+    loadLlas(m_appDataDir.absoluteFilePath("cities15000.txt"));
 }
 
 SatViewer::~SatViewer() {
@@ -148,15 +153,18 @@ void SatViewer::removeSatellite(const QString &name) {
     //    ioList.deleteSat(satList.at(pos));
 }
 
-void SatViewer::removeLocation(const QString &name) {
-    if (m_locations.contains(name)) {
-        Location *loc = m_locations[name];
-        m_satellites.remove(name);
-        if (loc == currentLocation()) {
-            setCurrentLocationIndex(0);
-        }
-        delete loc;
-    }
+void SatViewer::removeLocation(int index) {
+    // TODO 0 <= index < size()
+    m_locations.removeAt(index);
+
+    // if (m_locations.contains(name)) {
+    //     Location *loc = m_locations[name];
+    //     m_satellites.remove(name);
+    //     if (loc == currentLocation()) {
+    //         setCurrentLocationIndex(0);
+    //     }
+    //     delete loc;
+    // }
     emit updatedLocations();
 }
 
@@ -196,6 +204,29 @@ void SatViewer::clearLlas() {
     m_llas.clear();
 }
 
+void SatViewer::loadLlas(const QString &fileName) {
+    QFile file(fileName);
+    bool ok = file.open(QFile::ReadOnly | QFile::Text);
+    if (!ok) {
+        qWarning() << __func__ << file.errorString();
+        return;
+    }
+    QTextStream ts(&file);
+    QString line = ts.readLine();
+    while (!line.isNull()) {
+        QStringList list = line.split(',');
+        if (list.size() >= 3) {
+            QString name = list[0].remove('"');
+            double latitude = list[1].toDouble();
+            double longitude = list[2].toDouble();
+            double altitude = list[3].toDouble();
+            m_llas.append(new Lla({name, {latitude, longitude, altitude}}));
+        }
+        line = ts.readLine();
+    }
+    file.close();
+}
+
 void SatViewer::loadSatellitesJson() {
     QString path = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).first();
     QDir dir = QDir(path);
@@ -211,7 +242,8 @@ void SatViewer::loadSatellitesJson() {
     QJsonValue value = jsonObject.value(KeyAppendId);
     QJsonArray jsonArray = value.toArray();
     for (const auto &id : jsonArray) {
-        m_satellites[id.toString()] = new Satellite(id.toString());
+        QString name = id.toString();
+        m_satellites[name] = new Satellite(name);
     }
 }
 
@@ -226,14 +258,14 @@ void SatViewer::loadLocationsJson() {
     file.close();
 
     QJsonDocument jsonDoc = QJsonDocument::fromJson(text.toUtf8());
-    QJsonObject jsonObject = jsonDoc.object().value("Locations").toObject();
-    for (const auto &locName : jsonObject.keys()) {
-        Location *loc = new Location(locName);
-        m_locations[locName] = loc;
-        QJsonObject locObject = jsonObject.value(locName).toObject();
-        loc->setLatitude(locObject.value("Latitude").toDouble());
-        loc->setLongitude(locObject.value("Longitude").toDouble());
-        loc->setAltitude(locObject.value("Altitude").toDouble());
+    QJsonArray jsonArray = jsonDoc.object().value("Locations").toArray();
+    for (const auto &locValue : jsonArray) {
+        QJsonObject locObject = locValue.toObject();
+        QString name = locObject.value("Name").toString();
+        double latitude = locObject.value("Latitude").toDouble();
+        double longitude = locObject.value("Longitude").toDouble();
+        double altitude = locObject.value("Altitude").toDouble();
+        m_locations.append(new Location(name, latitude, longitude, altitude));
     }
 }
 
@@ -325,9 +357,9 @@ void SatViewer::setTime(double value) {
     emit timeChanged();
 }
 
+// TODO remake this
 void SatViewer::aerv(const double loc_rg[], const double sat_rg[], double aerv[]) {
     double m[3][3];
-
     double d[3];
     double p = sqrt(loc_rg[0] * loc_rg[0] + loc_rg[1] * loc_rg[1]);
     double r = sqrt(loc_rg[0] * loc_rg[0] + loc_rg[1] * loc_rg[1] + loc_rg[2] * loc_rg[2]);
@@ -342,8 +374,6 @@ void SatViewer::aerv(const double loc_rg[], const double sat_rg[], double aerv[]
         aerv[1] = 0.0;
         aerv[2] = 0.0;
         aerv[3] = 0.0;
-        aerv[4] = 0.0;
-        aerv[5] = 0.0;
         return;
     }
 

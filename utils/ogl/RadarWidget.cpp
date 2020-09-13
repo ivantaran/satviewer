@@ -14,9 +14,6 @@ RadarWidget::RadarWidget(SatViewer *satviewer, QWidget *parent)
     m_colorNet = 0x00808080;
 }
 
-// RadarWidget::RadarWidget(const RadarWidget& orig) {
-//}
-
 RadarWidget::~RadarWidget() {
 }
 

@@ -15,7 +15,8 @@
 
 class Location {
 public:
-    Location(const QString &name = "");
+    Location(const QString &name = "", double latitude = 0.0, double longitude = 0.0,
+             double altitude = 0.0);
     virtual ~Location();
     SatWidgetObject *satWObject;
     void copy(Location *src);
@@ -50,13 +51,13 @@ public:
         return name_y;
     }
     inline double latitude() {
-        return lat;
+        return m_latitude;
     }
     inline double longitude() {
-        return lon;
+        return m_longitude;
     }
     inline double altitude() {
-        return _height;
+        return m_altitude;
     }
     inline double *rg() {
         return m_rg;
@@ -155,7 +156,7 @@ private:
 
     double name_x, name_y;
     double lines_width;
-    double lat, lon, _height;
+    double m_latitude, m_longitude, m_altitude;
     double _zrlWidth, _zrlAzimuth, _zrlRange;
     double m_rg[6];
 };

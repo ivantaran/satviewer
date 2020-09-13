@@ -70,7 +70,7 @@ public:
         return zrv;
     }
     virtual double meanMotion() {
-        return 0.0;
+        return 0.0; // TODO remove
     }
 
     QString iconName() const {

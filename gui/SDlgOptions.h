@@ -67,6 +67,7 @@ private:
     void setLoc(Location *loc, QSqlRecord record);
     void updateListViewSat();
     void updateListViewLoc();
+    void updateListViewLla();
     void setBtnColor(QWidget *widget);
     uint32_t flipRgb(uint32_t rgb);
 
@@ -90,7 +91,6 @@ private slots:
     void setFilterSat();
     void setFilterLoc();
     void addDbLoc();
-    void loadDbLoc();
     void clearDbSat();
     void clearDbLoc();
     void deleteDbSat();
