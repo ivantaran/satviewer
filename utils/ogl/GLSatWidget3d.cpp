@@ -195,7 +195,6 @@ void GLSatWidget3d::compileSatList() {
             trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
             trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
             for (double i = trackBegin; i < trackEnd; i += tper / 180.0) {
-                sat->model(i + m_satviewer->time());
                 glVertex3f(sat->rg()[0] / radiusEarth, sat->rg()[1] / radiusEarth,
                            sat->rg()[2] / radiusEarth);
             }
@@ -203,7 +202,6 @@ void GLSatWidget3d::compileSatList() {
             glPopAttrib();
         }
 
-        sat->model(m_satviewer->time());
         float r = sqrtf(sat->rg()[0] * sat->rg()[0] + sat->rg()[1] * sat->rg()[1] +
                         sat->rg()[2] * sat->rg()[2]);
         float rz = sqrtf(sat->rg()[0] * sat->rg()[0] + sat->rg()[1] * sat->rg()[1]);

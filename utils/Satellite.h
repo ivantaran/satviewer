@@ -13,7 +13,6 @@
 #include <QFont>
 #include <QString>
 #include <inttypes.h>
-#include <stdio.h>
 
 class Satellite {
 
@@ -22,9 +21,6 @@ public:
     Satellite(const QString &name = "");
     virtual ~Satellite();
     SatWidgetObject *satWObject;
-    virtual bool model(double) {
-        return false;
-    }
 
     void copy(Satellite *src);
     void setAbsoluteCoords(double *coords);

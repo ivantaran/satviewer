@@ -689,7 +689,6 @@ void GLSatWidget::compileSatList() {
 
     for (const auto &sat : m_satviewer->satellites()) {
         bool shadow_state = testShadow(sat, nullptr); // TODO: check sun shadow
-        sat->model(m_satviewer->time());
 
         if (sat->isVisibleZrv() || sat->isVisibleLines()) {
             compileFootprint(sat->longitude(), sat->latitude(), sat->altitude(), sat->zrvWidth(),
@@ -709,11 +708,9 @@ void GLSatWidget::compileSatList() {
             double tper = 120.0 * M_PI / sat->meanMotion(); // TODO move this line
             double trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
             double trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
-            sat->model(trackBegin + m_satviewer->time());
             tmpx = sat->longitude() / M_PI;
             tmpy = -2.0 * sat->latitude() / M_PI;
             for (double i = trackBegin; i < trackEnd; i += tper / 180.0) {
-                sat->model(i + m_satviewer->time());
                 if (sat->isVisibleTrackShadow()) {
                     if (shadow_state) {
                         clr = sat->colorTrack();
@@ -751,7 +748,6 @@ void GLSatWidget::compileSatList() {
             glDisable(GL_LINE_SMOOTH);
         }
 
-        sat->model(m_satviewer->time());
         px = sat->longitude() / M_PI;
         py = -2.0 * sat->latitude() / M_PI;
         if (sat->satWObject != nullptr) {
@@ -761,7 +757,6 @@ void GLSatWidget::compileSatList() {
 
     Satellite *sat = m_satviewer->currentSatellite();
     if (sat != nullptr) {
-        sat->model(m_satviewer->time());
         px = sat->longitude() / M_PI;
         py = -2.0 * sat->latitude() / M_PI;
         sprite_current.exec(px, py, 0.0);

@@ -92,8 +92,6 @@ void RadarWidget::compileSatList() {
 
     for (const auto &sat : m_satviewer->satellites()) {
 
-        sat->model(m_satviewer->time());
-
         if (sat->isVisibleTrack()) {
             glShadeModel(GL_SMOOTH);
             glEnable(GL_ALPHA_TEST);
@@ -111,7 +109,6 @@ void RadarWidget::compileSatList() {
             double trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
             bool inZone = false;
             for (double i = trackBegin; i < trackEnd; i += tper / 180.0) {
-                sat->model(i + m_satviewer->time());
                 SatViewer::aerv(loc->rg(), sat->rg(), aerv);
                 if (aerv[1] < 0.0) {
                     if (inZone) {
@@ -132,7 +129,6 @@ void RadarWidget::compileSatList() {
             glDisable(GL_LINE_SMOOTH);
         }
 
-        sat->model(m_satviewer->time());
         SatViewer::aerv(loc->rg(), sat->rg(), aerv);
         if (aerv[1] >= 0.0) {
             polar2ortho(aerv[0], aerv[1], px, py);
@@ -144,7 +140,6 @@ void RadarWidget::compileSatList() {
 
     Satellite *sat = m_satviewer->currentSatellite();
     if (sat != nullptr) {
-        sat->model(m_satviewer->time());
         SatViewer::aerv(loc->rg(), sat->rg(), aerv);
         if (aerv[1] >= 0.0) {
             polar2ortho(aerv[0], aerv[1], px, py);
