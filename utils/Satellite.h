@@ -34,8 +34,14 @@ public:
     void setNameY(double value);
     void setSatnum(int value);
     void setTrack(double value);
+    void setTrackPoint(const double point[6], size_t index);
     void setZrv(double value);
+    void setTrackSize(size_t size);
+    const double *trackPointLla(size_t index);
 
+    size_t trackSize() const {
+        return m_track_size;
+    }
     QString name() const {
         return m_name;
     }
@@ -45,14 +51,12 @@ public:
     double nameY() const {
         return name_y;
     }
-
-    double *r() {
+    const double *r() {
         return m_r;
     }
-    double *rg() {
+    const double *rg() {
         return m_rg;
     }
-
     double latitude() const {
         return lat;
     }
@@ -68,7 +72,6 @@ public:
     virtual double meanMotion() {
         return 0.0; // TODO remove
     }
-
     QString iconName() const {
         return icon_name;
     }
@@ -79,7 +82,6 @@ public:
     inline QFont font() {
         return _font;
     }
-
     uint32_t color() const {
         return _color;
     }
@@ -98,7 +100,6 @@ public:
     uint32_t colorTrackShadow() const {
         return color_track_shadow;
     }
-
     void setColor(uint32_t color) {
         _color = color;
     }
@@ -117,11 +118,9 @@ public:
     void setColorTrackShadow(uint32_t color) {
         color_track_shadow = color;
     }
-
     double track() const {
         return _track;
     }
-
     void visibleLabel(bool value = true) {
         show_label = value;
     }
@@ -140,7 +139,6 @@ public:
     void visibleTrackShadow(bool value = true) {
         show_track_shadow = value;
     }
-
     bool isVisibleLabel() const {
         return show_label;
     }
@@ -173,6 +171,7 @@ protected:
     double zrv;
     void makeGeod();
     void makeRg();
+    void ecef2lla(const double *ecef, double *lla);
     virtual double gsto() {
         return 0.0;
     }
@@ -181,6 +180,9 @@ protected:
     }
 
 private:
+    double *m_track;
+    double *m_trackLla;
+    size_t m_track_size;
     bool satellite, location;
     bool show_label, show_track, show_zrv, show_lines, active_zone, show_track_shadow;
     double _track;

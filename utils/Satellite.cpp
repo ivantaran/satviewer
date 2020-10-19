@@ -37,6 +37,9 @@ Satellite::Satellite(const QString &name) {
     satWObject = nullptr;
     satellite = true;
     location = false;
+    m_track = nullptr;
+    m_trackLla = nullptr;
+    m_track_size = 0;
 }
 
 void Satellite::setLocation(bool value) {
@@ -62,6 +65,12 @@ int Satellite::satnum() const {
 Satellite::~Satellite(void) {
     if (satWObject != nullptr) {
         delete satWObject;
+    }
+    if (m_track != nullptr) {
+        delete m_track;
+    }
+    if (m_trackLla != nullptr) {
+        delete m_trackLla;
     }
     qWarning("satellite is removed");
 }
@@ -92,6 +101,41 @@ void Satellite::makeGeod() {
 
     N = a_axis / sqrt(1.0 - e1sqr * sin(lat) * sin(lat));
     _altitude = p / cos(lat) - N;
+}
+
+/*
+ * convert earth-centered earth-fixed (ECEF) cartesian coordinates to latitude, longitude, and
+ * altitude
+ */
+void Satellite::ecef2lla(const double *ecef, double *lla) {
+    double p, t, sint, cost, n, sinlat;
+    double const WZ = 7.2921151467e-5;
+    // WGS-84 earth's semi major axis
+    double const a_axis = 6378137.0;
+    // WGS-84 earth's semi minor axis
+    double const b_axis = 6356752.31;
+    // first  numerical eccentricity
+    double const e1sqr = ((a_axis * a_axis - b_axis * b_axis) / (a_axis * a_axis));
+    // second numerical eccentricity
+    double const e2sqr = ((a_axis * a_axis - b_axis * b_axis) / (b_axis * b_axis));
+
+    p = sqrt(ecef[0] * ecef[0] + ecef[1] * ecef[1]);
+    t = atan(ecef[2] * a_axis / (p * b_axis));
+    sint = sin(t);
+    cost = cos(t);
+
+    lla[0] = atan2(ecef[2] + e2sqr * b_axis * sint * sint * sint,
+                   p - e1sqr * a_axis * cost * cost * cost);
+    lla[1] = atan2(ecef[1], ecef[0]);
+
+    lla[1] -= WZ * minutes() * 60.0 + gsto();
+    lla[1] = fmod(lla[1] + 3.0 * M_PI, 2.0 * M_PI) - M_PI;
+    if (lla[1] < -M_PI) {
+        lla[1] += 2.0 * M_PI;
+    }
+    sinlat = sin(lla[0]);
+    n = a_axis / sqrt(1.0 - e1sqr * sinlat * sinlat);
+    lla[2] = p / cos(lla[0]) - n;
 }
 
 void Satellite::copy(Satellite *src) {
@@ -179,6 +223,37 @@ void Satellite::setTrack(double value) {
         _track = value;
     else
         show_track = false;
+}
+
+void Satellite::setTrackSize(size_t size) {
+    if (size == m_track_size && m_track != nullptr) {
+        // nothing
+    } else if (m_track == nullptr) {
+        m_track = new double[size * 6];
+        m_trackLla = new double[size * 3];
+        m_track_size = size;
+    } else {
+        delete m_track;
+        m_track = new double[size * 6];
+        m_trackLla = new double[size * 3];
+        m_track_size = size;
+    }
+}
+
+void Satellite::setTrackPoint(const double point[6], size_t index) {
+    size_t indexLla = index * 3;
+    index *= 6;
+    m_track[index] = point[0];
+    m_track[index + 1] = point[1];
+    m_track[index + 2] = point[2];
+    m_track[index + 3] = point[3];
+    m_track[index + 4] = point[4];
+    m_track[index + 5] = point[5];
+    ecef2lla(&m_track[index], &m_trackLla[indexLla]);
+}
+
+const double *Satellite::trackPointLla(size_t index) {
+    return &m_trackLla[index * 3];
 }
 
 void Satellite::setNameX(double value) {

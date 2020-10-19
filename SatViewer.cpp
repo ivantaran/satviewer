@@ -64,15 +64,35 @@ void SatViewer::readyReadSlot() {
         if (jsonObject.contains("SatMap")) {
             for (const auto &item : jsonObject.value("SatMap").toObject()) {
                 QJsonObject satelliteObject = item.toObject();
-                QJsonArray jsonArray = satelliteObject.value("Coords").toArray();
+                QJsonArray coordsArray = satelliteObject.value("Coords").toArray();
                 QJsonValue name = satelliteObject.value("Title");
                 QJsonValue satnum = satelliteObject.value("Satnum");
+                QJsonArray trackArray = satelliteObject.value("Track").toArray();
+
+                // qWarning() << trackArray.size() << name;
                 if (m_satellites.contains(name.toString())) {
                     Satellite *sat = m_satellites[name.toString()];
                     sat->setAbsoluteCoords(
-                        jsonArray[0].toDouble() * 1000.0, jsonArray[1].toDouble() * 1000.0,
-                        jsonArray[2].toDouble() * 1000.0, jsonArray[3].toDouble() * 1000.0,
-                        jsonArray[4].toDouble() * 1000.0, jsonArray[5].toDouble() * 1000.0);
+                        coordsArray[0].toDouble() * 1000.0, coordsArray[1].toDouble() * 1000.0,
+                        coordsArray[2].toDouble() * 1000.0, coordsArray[3].toDouble() * 1000.0,
+                        coordsArray[4].toDouble() * 1000.0, coordsArray[5].toDouble() * 1000.0);
+
+                    size_t i = 0;
+                    sat->setTrackSize(trackArray.size());
+                    for (auto jsonPoint : trackArray) {
+                        QJsonArray jsonPointArray = jsonPoint.toArray();
+                        double point[6] = {
+                            jsonPointArray[0].toDouble() * 1000.0,
+                            jsonPointArray[1].toDouble() * 1000.0,
+                            jsonPointArray[2].toDouble() * 1000.0,
+                            jsonPointArray[3].toDouble() * 1000.0,
+                            jsonPointArray[4].toDouble() * 1000.0,
+                            jsonPointArray[5].toDouble() * 1000.0,
+                        };
+                        sat->setTrackPoint(point, i);
+                        i++;
+                    }
+
                 } else {
                     write(QString("{\"%0\": [\"%1\"]}\n")
                               .arg(KeyRemoveId)
