@@ -14,7 +14,6 @@
 #include "RotatorSettings.h"
 #include "SLocDialog.h"
 #include "SScriptFrame.h"
-#include "SUpdater.h"
 #include "SWidgetList.h"
 #include "SatelliteDialog.h"
 #include "ui_options.h"
@@ -33,7 +32,6 @@ public:
     SatelliteDialog *satDialog;
     SLocDialog *locDialog;
     SScriptFrame *scriptFrame;
-    SUpdater *tleFrame;
     SWidgetList *jswList;
 
     // QSqlDatabase db;

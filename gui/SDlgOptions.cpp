@@ -24,10 +24,6 @@ SDlgOptions::SDlgOptions(SatViewer *satviewer, GLSatAbstractWidget *w) {
     locDialog->setWindowModality(Qt::WindowModal);
 
     QDir dir = QDir::home();
-    dir.cd("satviewer/tle");
-    tleFrame = new SUpdater(dir.filePath("tle_list.lst"));
-    tleFrame->setParent(widget.tabWidgetSettings);
-    widget.tabWidgetSettings->insertTab(0, tleFrame, tr("TLE"));
 
     jswList = new SWidgetList();
     jswList->setParent(widget.tabWidgetSettings);

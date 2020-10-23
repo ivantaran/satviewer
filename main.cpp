@@ -12,7 +12,7 @@
 void copyDefault() {
     QString home = QDir::home().path() + QDir::separator() + "satviewer" + QDir::separator();
     if (QDir(home).exists()) {
-        qWarning("profile is exists");
+        qWarning("profile exists");
         return;
     }
     QDir().mkpath(home);

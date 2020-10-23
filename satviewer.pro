@@ -37,8 +37,7 @@ HEADERS += \
     gui/SWidget.h \
     gui/SWidgetList.h \
     gui/UCheck.h \
-    gui/SScriptFrame.h \
-    gui/SUpdater.h
+    gui/SScriptFrame.h
 
 SOURCES += \
     main.cpp \
@@ -65,8 +64,7 @@ SOURCES += \
     gui/SWidget.cpp \
     gui/SWidgetList.cpp \
     gui/UCheck.cpp \
-    gui/SScriptFrame.cpp \
-    gui/SUpdater.cpp
+    gui/SScriptFrame.cpp
                                 
 RESOURCES = gui/SatViewer.qrc
 

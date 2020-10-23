@@ -12,14 +12,17 @@
 #include <QDialog>
 #include <QtNetwork>
 
-class SUpdater: public QWidget {
+class SUpdater : public QWidget {
     Q_OBJECT
 
 public:
     SUpdater(QString fileName = "");
     virtual ~SUpdater();
     void load(QString fileName);
-    inline Ui::Updater *getWidget() { return &widget; }
+    inline Ui::Updater *getWidget() {
+        return &widget;
+    }
+
 private:
     Ui::Updater widget;
     QNetworkAccessManager manager;

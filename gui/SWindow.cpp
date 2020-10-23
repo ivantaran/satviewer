@@ -26,7 +26,6 @@ SWindow::SWindow(SatViewer *satviewer) {
     statusBar()->addWidget(&labelSat, 0);
 
     satWidget = new GLSatWidget(satviewer, this);
-
     m_radarWidget = new RadarWidget(satviewer, this);
 
     m_spacer1.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -242,6 +241,7 @@ void SWindow::readSettings() {
     onStepChanged();
     onTimeClick();
     onTimer();
+    show();
 }
 
 void SWindow::writeSettings() {
@@ -478,7 +478,6 @@ void SWindow::selectLanguage(int value) {
     dlgOptions->satDialog->getWidget()->retranslateUi(dlgOptions->satDialog);
     dlgOptions->locDialog->getWidget()->retranslateUi(dlgOptions->locDialog);
     // dlgOptions->scriptFrame->retranslateUi(dlgOptions->scriptFrame);
-    dlgOptions->tleFrame->getWidget()->retranslateUi(dlgOptions->tleFrame);
     dlgOptions->jswList->retranslateUi();
     satWidget->retranslateUi();
     uiSettings.comboLanguage->blockSignals(true);
