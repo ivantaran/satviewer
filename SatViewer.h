@@ -11,6 +11,7 @@
 #include "utils/Location.h"
 #include "utils/Satellite.h"
 #include "utils/ZrvIoList.h"
+#include <QDateTime>
 #include <QHostAddress>
 #include <QTcpSocket>
 
@@ -46,7 +47,7 @@ public:
     void setCurrentLocationIndex(long unsigned int index);
     void setCurrentSatellite(Satellite *sat);
     void setCurrentSatelliteIndex(long unsigned int index);
-    void setTime(double value);
+    void setTime(const QDateTime &value);
 
     const QMap<QString, Satellite *> &satellites() {
         return m_satellites;
@@ -65,7 +66,7 @@ public:
     ZrvIoList *ioList() {
         return &m_ioList;
     }
-    double time() {
+    const QDateTime &time() {
         return m_time;
     }
 
@@ -85,7 +86,8 @@ private:
     static const QString KeyRemoveId;
     static const quint16 DefaultPort = 8080;
 
-    double m_time;
+    QDateTime m_time;
+    double m_delete_this_var = 0.0;
     int m_timerFastId;
     int m_timerSlowId;
     Location *m_currentLocation;

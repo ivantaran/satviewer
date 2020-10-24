@@ -21,7 +21,7 @@ SatViewer::SatViewer() {
     m_locations.clear();
     m_currentSatellite = nullptr;
     m_currentLocation = nullptr;
-    m_time = 0.0;
+    m_time.setTime_t(0);
 
     QString path = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).first();
     m_appDataDir = QDir(path);
@@ -135,7 +135,13 @@ void SatViewer::reconnect() {
 
 void SatViewer::requestGosat() {
     if (state() == QTcpSocket::ConnectedState) {
-        write("{}\n");
+        if (m_time.isNull()) {
+            write("{}\n");
+        } else {
+            QString timeLine = m_time.toString("yyyy-MM-ddThh:mm:ss.zzzZ");
+            QString timeJson = QString("{\"Time\":\"%0\"}\n").arg(timeLine);
+            write(timeJson.toUtf8());
+        }
     }
 }
 
@@ -143,7 +149,7 @@ void SatViewer::timerEvent(QTimerEvent *event) {
     if (event->timerId() == m_timerSlowId) {
         reconnect();
     } else if (event->timerId() == m_timerFastId) {
-        requestGosat();
+        // requestGosat();
     }
 }
 
@@ -348,7 +354,7 @@ void SatViewer::setCurrentSatelliteIndex(long unsigned int index) {
     } else {
         m_currentSatellite = nullptr;
     }
-    emit currentChanged(m_currentSatellite, m_currentLocation, &m_time);
+    emit currentChanged(m_currentSatellite, m_currentLocation, &m_delete_this_var);
 }
 
 void SatViewer::setCurrentLocationIndex(long unsigned int index) {
@@ -359,21 +365,22 @@ void SatViewer::setCurrentLocationIndex(long unsigned int index) {
     } else {
         m_currentLocation = nullptr;
     }
-    emit currentChanged(m_currentSatellite, m_currentLocation, &m_time);
+    emit currentChanged(m_currentSatellite, m_currentLocation, &m_delete_this_var);
 }
 
 void SatViewer::setCurrentSatellite(Satellite *sat) {
     m_currentSatellite = sat;
-    emit currentChanged(m_currentSatellite, m_currentLocation, &m_time);
+    emit currentChanged(m_currentSatellite, m_currentLocation, &m_delete_this_var);
 }
 
 void SatViewer::setCurrentLocation(Location *loc) {
     m_currentLocation = loc;
-    emit currentChanged(m_currentSatellite, m_currentLocation, &m_time);
+    emit currentChanged(m_currentSatellite, m_currentLocation, &m_delete_this_var);
 }
 
-void SatViewer::setTime(double value) {
+void SatViewer::setTime(const QDateTime &value) {
     m_time = value;
+    requestGosat();
     emit timeChanged();
 }
 

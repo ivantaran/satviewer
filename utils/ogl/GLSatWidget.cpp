@@ -846,38 +846,38 @@ void GLSatWidget::compileEventsList() {
     glNewList(list_events, GL_COMPILE);
     for (const auto &loc : m_satviewer->locations()) {
         inZRV = 0;
-        if (loc->isActiveZone()) {
-            for (const auto &sat : m_satviewer->satellites()) {
-                if (!sat->isAtctiveZone())
-                    continue;
-                oldTime = m_satviewer->time();
-                statusZRV = testIOZRV(sat, loc, m_satviewer->ioList(), oldTime);
-                if (statusZRV > -1)
-                    inZRV++;
-                if (statusZRV == 1) {
-                    tmpTime = QDateTime::fromTime_t((uint)m_satviewer->time());
-                    msg = QString("%0|%1|%2|%3|%4")
-                              .arg(sat->name())
-                              .arg("i")
-                              .arg(loc->name())
-                              .arg((time_t)m_satviewer->time())
-                              //                            .arg(tmpTime.time().toString())
-                              .arg("*");
-                    emit statusZRVChanged(msg);
-                }
-                if (statusZRV == 2) {
-                    tmpTime = QDateTime::fromTime_t((uint)m_satviewer->time());
-                    msg = QString("%0|%1|%2|%3|%4")
-                              .arg(sat->name())
-                              .arg("o")
-                              .arg(loc->name())
-                              .arg((time_t)m_satviewer->time())
-                              //                            .arg(tmpTime.time().toString())
-                              .arg(m_satviewer->time() - oldTime);
-                    emit statusZRVChanged(msg);
-                }
-            }
-        }
+        // if (loc->isActiveZone()) {
+        //     for (const auto &sat : m_satviewer->satellites()) {
+        //         if (!sat->isAtctiveZone())
+        //             continue;
+        //         oldTime = m_satviewer->time();
+        //         statusZRV = testIOZRV(sat, loc, m_satviewer->ioList(), oldTime);
+        //         if (statusZRV > -1)
+        //             inZRV++;
+        //         if (statusZRV == 1) {
+        //             tmpTime = QDateTime::fromTime_t((uint)m_satviewer->time());
+        //             msg = QString("%0|%1|%2|%3|%4")
+        //                       .arg(sat->name())
+        //                       .arg("i")
+        //                       .arg(loc->name())
+        //                       .arg((time_t)m_satviewer->time())
+        //                       //                            .arg(tmpTime.time().toString())
+        //                       .arg("*");
+        //             emit statusZRVChanged(msg);
+        //         }
+        //         if (statusZRV == 2) {
+        //             tmpTime = QDateTime::fromTime_t((uint)m_satviewer->time());
+        //             msg = QString("%0|%1|%2|%3|%4")
+        //                       .arg(sat->name())
+        //                       .arg("o")
+        //                       .arg(loc->name())
+        //                       .arg((time_t)m_satviewer->time())
+        //                       //                            .arg(tmpTime.time().toString())
+        //                       .arg(m_satviewer->time() - oldTime);
+        //             emit statusZRVChanged(msg);
+        //         }
+        //     }
+        // }
 
         px = loc->longitude() / 180.0;
         py = -loc->latitude() / 90.0;

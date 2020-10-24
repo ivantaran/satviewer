@@ -386,7 +386,7 @@ void SWindow::onTimer() {
         break;
     }
 
-    m_satviewer->setTime(time);
+    m_satviewer->setTime(QDateTime::fromTime_t(time).toUTC());
 }
 
 void SWindow::onPlayClick() {

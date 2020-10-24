@@ -628,7 +628,7 @@ void SDlgOptions::scriptParameters() {
     if ((sat == nullptr) || (loc == nullptr)) {
         return;
     }
-    scriptFrame->exec(sat, loc, m_satviewer->time());
+    scriptFrame->exec(sat, loc, (double)m_satviewer->time().toTime_t());
 }
 
 void SDlgOptions::addDbLoc() {
