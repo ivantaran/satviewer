@@ -9,7 +9,6 @@
 
 #include "GLSatWidget.h"
 
-#include "satogl.h"
 #include <QColorDialog>
 #include <QDateTime>
 #include <QDir>
@@ -125,39 +124,6 @@ void GLSatWidget::glZoneLines(float lat) {
     }
     glDisable(GL_BLEND);
     glDisable(GL_LINE_SMOOTH);
-}
-
-void GLSatWidget::glZoneNight(float lat) {
-    int breakpoint = 0;
-    GLfloat polar;
-
-    if (fabs(vertex[0][0] - vertex[VertexCount - 1][0]) > 1) {
-        breakpoint = 0;
-    }
-    for (int i = 0; i < VertexCount - 1; i++)
-        if (fabs(vertex[i][0] - vertex[i + 1][0]) > 1) {
-            breakpoint = i + 1;
-        }
-
-    if (lat > 0)
-        polar = 1.0f;
-    else
-        polar = -1.0f;
-
-    glBegin(GL_TRIANGLE_STRIP);
-    glVertex2f(-polar, vertex[breakpoint][1]);
-    glVertex2f(-polar, polar);
-    for (int i = breakpoint; i < VertexCount; i++) {
-        glVertex2fv(vertex[i]);
-        glVertex2f(vertex[i][0], polar);
-    }
-    for (int i = 0; i < breakpoint; i++) {
-        glVertex2fv(vertex[i]);
-        glVertex2f(vertex[i][0], polar);
-    }
-    glVertex2f(polar, vertex[breakpoint][1]);
-    glVertex2f(polar, polar);
-    glEnd();
 }
 
 void GLSatWidget::lfi_ort(double fi, double lam, double *xyz) {
@@ -903,15 +869,9 @@ void GLSatWidget::compileSunList() {
     if (shwNight) {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
-        compileFootprint(lon, lat, 149597871000.0 - Satellite::RadiusEarth, 0.0, false, false,
+        compileFootprint(lon, lat, 149597871000.0 - Satellite::RadiusEarth, 0.0, true, true,
                          1.0, // linesWidth
-                         0, 0);
-        glColor4ubv((GLubyte *)&clrNight);
-        glZoneNight(lat);
-        if (true) {
-            glColor3f(0.4, 0.4, 0.4);
-            glZoneLines(lat);
-        }
+                         clrNight, m_colorLinesNight);
         glDisable(GL_BLEND);
     }
 

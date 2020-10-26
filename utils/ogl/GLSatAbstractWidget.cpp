@@ -9,7 +9,6 @@
 
 #include "GLSatAbstractWidget.h"
 
-#include "satogl.h"
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QDir>
@@ -29,7 +28,7 @@ GLSatAbstractWidget::GLSatAbstractWidget(SatViewer *satviewer, QWidget *parent)
     m_colorNet = 0xFF8B8B8B;
     clrNetFont = 0x0;
     clrNight = 0x00666666;
-
+    m_colorLinesNight = 0xff666666;
     m_zoom = 1.0;
     m_dx = 0.0;
     m_dy = 0.0;

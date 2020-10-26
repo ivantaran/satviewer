@@ -96,7 +96,7 @@ signals:
 
 protected:
     SatViewer *m_satviewer;
-    GLuint m_colorNet, clrNetFont, clrNight;
+    GLuint m_colorNet, clrNetFont, clrNight, m_colorLinesNight;
     GLuint list_map, list_net, list_events, list_sun, list_loc, list_sat;
     bool list_map_ready, list_net_ready, list_events_ready, list_sun_ready, list_loc_ready,
         list_sat_ready, list_labels_ready;

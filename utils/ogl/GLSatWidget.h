@@ -48,7 +48,6 @@ private:
     float moveY(float value = 0);
     void initSatOgl();
     void glZoneLines(float lat);
-    void glZoneNight(float lat);
     void compileFootprint(double longitude, double latitude, double altitude, double zoneWidth,
                           bool fill, bool lines, GLfloat linesWidth, GLuint colorPoly,
                           GLuint colorLines);
