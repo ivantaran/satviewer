@@ -12,6 +12,7 @@
 #include "utils/Satellite.h"
 #include "utils/ZrvIoList.h"
 #include <QDateTime>
+#include <QDir>
 #include <QHostAddress>
 #include <QTcpSocket>
 

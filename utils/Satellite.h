@@ -9,7 +9,6 @@
 #define SATELLITE_H_
 
 #include "TleReader.h"
-#include "ogl/SatWidgetObject.h"
 #include <QFont>
 #include <QString>
 #include <inttypes.h>
@@ -20,7 +19,6 @@ public:
     static const double RadiusEarth;
     Satellite(const QString &name = "");
     virtual ~Satellite();
-    SatWidgetObject *satWObject;
 
     void copy(Satellite *src);
     void setAbsoluteCoords(double *coords);

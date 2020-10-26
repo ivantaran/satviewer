@@ -8,7 +8,6 @@
 #ifndef LOCATION_H_
 #define LOCATION_H_
 
-#include "../utils/ogl/SatWidgetObject.h"
 #include <QFont>
 #include <QString>
 #include <inttypes.h>
@@ -18,7 +17,7 @@ public:
     Location(const QString &name = "", double latitude = 0.0, double longitude = 0.0,
              double altitude = 0.0);
     virtual ~Location();
-    SatWidgetObject *satWObject;
+
     void copy(Location *src);
 
     void setAltitude(double height);
@@ -147,17 +146,16 @@ public:
 
 private:
     void calcXYZ();
-    uint32_t icon_index, icon_width, icon_height;
-    QString icon_name;
-    QString m_name;
-    QFont _font;
-    uint32_t _color, color_label, color_zrv, color_lines;
     bool show_label, show_zrv, show_lines, active_zone;
-
-    double name_x, name_y;
+    double _zrlWidth, _zrlAzimuth, _zrlRange;
     double lines_width;
     double m_latitude, m_longitude, m_altitude;
-    double _zrlWidth, _zrlAzimuth, _zrlRange;
     double m_rg[6];
+    double name_x, name_y;
+    QFont _font;
+    QString icon_name;
+    QString m_name;
+    uint32_t _color, color_label, color_zrv, color_lines;
+    uint32_t icon_index, icon_width, icon_height;
 };
 #endif /* LOCATION_H_ */

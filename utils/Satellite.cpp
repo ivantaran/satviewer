@@ -34,7 +34,6 @@ Satellite::Satellite(const QString &name) {
     color_track_shadow = 0xFF407464;
 
     _track = 0.5;
-    satWObject = nullptr;
     satellite = true;
     location = false;
     m_track = nullptr;
@@ -63,9 +62,6 @@ int Satellite::satnum() const {
 }
 
 Satellite::~Satellite(void) {
-    if (satWObject != nullptr) {
-        delete satWObject;
-    }
     if (m_track != nullptr) {
         delete m_track;
     }

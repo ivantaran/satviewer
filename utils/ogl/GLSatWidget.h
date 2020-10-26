@@ -32,6 +32,7 @@ private:
 
     Ui::MapWidgetSettings ui;
     GLSprite sprite_current, sprite_active, sprite_sun;
+    GLSprite sprite_sat, sprite_loc;
 
     void initializeGL();
     void compileMapList();

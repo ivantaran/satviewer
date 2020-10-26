@@ -459,13 +459,13 @@ void GLSatWidget::writeSettings(QSettings *settings) {
 }
 
 void GLSatWidget::setIcon(Satellite *sat, const QString &fileName) {
-    if (sat->satWObject != nullptr) {
-        delete sat->satWObject;
-    }
-    if (!fileName.isEmpty()) {
-        sat->setIcon(fileName);
-    }
-    sat->satWObject = new GLSprite(sat->iconName(), this);
+    // if (sat->satWObject != nullptr) {
+    //     delete sat->satWObject;
+    // }
+    // if (!fileName.isEmpty()) {
+    //     sat->setIcon(fileName);
+    // }
+    // sat->satWObject = new GLSprite(sat->iconName(), this);
 }
 
 void GLSatWidget::setIcon(Location *loc, const QString &fileName) {
@@ -577,6 +577,8 @@ void GLSatWidget::initializeGL() {
     sprite_current.load(dir.filePath("current.png"), this);
     sprite_active.load(dir.filePath("active.png"), this);
     sprite_sun.load(dir.filePath("sun.png"), this);
+    sprite_sat.load(dir.filePath("sat.png"), this);
+    sprite_loc.load(dir.filePath("loc.png"), this);
 }
 
 void GLSatWidget::compileMapList() {
@@ -751,9 +753,7 @@ void GLSatWidget::compileSatList() {
 
         px = sat->longitude() / M_PI;
         py = -2.0 * sat->latitude() / M_PI;
-        if (sat->satWObject != nullptr) {
-            sat->satWObject->exec(px, py, 0.0);
-        }
+        sprite_sat.exec(px, py, 0.0);
     }
 
     Satellite *sat = m_satviewer->currentSatellite();

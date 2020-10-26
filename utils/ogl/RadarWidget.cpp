@@ -132,9 +132,9 @@ void RadarWidget::compileSatList() {
         SatViewer::aerv(loc->rg(), sat->rg(), aerv);
         if (aerv[1] >= 0.0) {
             polar2ortho(aerv[0], aerv[1], px, py);
-            if (sat->satWObject != nullptr) {
-                sat->satWObject->exec(px, py, 0.0);
-            }
+            // if (sat->satWObject != nullptr) {
+            //     sat->satWObject->exec(px, py, 0.0);
+            // }
         }
     }
 
