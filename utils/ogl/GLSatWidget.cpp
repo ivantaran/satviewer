@@ -469,13 +469,13 @@ void GLSatWidget::setIcon(Satellite *sat, const QString &fileName) {
 }
 
 void GLSatWidget::setIcon(Location *loc, const QString &fileName) {
-    if (loc->satWObject != nullptr) {
-        delete loc->satWObject;
-    }
-    if (!fileName.isEmpty()) {
-        loc->setIcon(fileName);
-    }
-    loc->satWObject = new GLSprite(loc->iconName(), this);
+    // if (loc->satWObject != nullptr) {
+    //     delete loc->satWObject;
+    // }
+    // if (!fileName.isEmpty()) {
+    //     loc->setIcon(fileName);
+    // }
+    // loc->satWObject = new GLSprite(loc->iconName(), this);
 }
 
 void GLSatWidget::btnColorClicked() {
@@ -574,11 +574,11 @@ void GLSatWidget::initializeGL() {
     GLSatAbstractWidget::initializeGL();
     QDir dir = QDir::home();
     dir.cd("satviewer/icons");
-    sprite_current.load(dir.filePath("current.png"), this);
     sprite_active.load(dir.filePath("active.png"), this);
-    sprite_sun.load(dir.filePath("sun.png"), this);
-    sprite_sat.load(dir.filePath("sat.png"), this);
+    sprite_current.load(dir.filePath("current.png"), this);
     sprite_loc.load(dir.filePath("loc.png"), this);
+    sprite_sat.load(dir.filePath("sat.png"), this);
+    sprite_sun.load(dir.filePath("sun.png"), this);
 }
 
 void GLSatWidget::compileMapList() {
@@ -673,45 +673,9 @@ void GLSatWidget::compileSatList() {
             glLineWidth(sat->linesWidth());
 
             glBegin(GL_LINE_STRIP);
-            // double tper = 120.0 * M_PI / sat->meanMotion(); // TODO move this line
-            // double trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
-            // double trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
-            // tmpx = sat->longitude() / M_PI;
-            // tmpy = -2.0 * sat->latitude() / M_PI;
-            // for (double i = trackBegin; i < trackEnd; i += tper / 180.0) {
-            //     if (sat->isVisibleTrackShadow()) {
-            //         if (shadow_state) {
-            //             clr = sat->colorTrack();
-            //             glColor4ubv((GLubyte *)&clr);
-            //         } else {
-            //             clr = sat->colorTrackShadow();
-            //             glColor4ubv((GLubyte *)&clr);
-            //         }
-            //     } else {
-            //         clr = sat->colorTrack();
-            //         glColor4ubv((GLubyte *)&clr);
-            //     }
-            //     px = sat->longitude() / M_PI;
-            //     py = -2.0 * sat->latitude() / M_PI;
-            //     if (fabs(px - tmpx) > 1.75) {
-            //         if (px > tmpx) {
-            //             glVertex2f(-1.0, 0.5 * (py + tmpy));
-            //             glEnd();
-            //             glBegin(GL_LINE_STRIP);
-            //             glVertex2f(1.0, 0.5 * (py + tmpy));
-            //         } else {
-            //             glVertex2f(1.0, 0.5 * (py + tmpy));
-            //             glEnd();
-            //             glBegin(GL_LINE_STRIP);
-            //             glVertex2f(-1.0, 0.5 * (py + tmpy));
-            //         }
-            //     }
-            //     glVertex2f(px, py);
-            //     tmpx = px;
-            //     tmpy = py;
-            // }
-            tmpx = sat->longitude() / M_PI;
-            tmpy = -2.0 * sat->latitude() / M_PI;
+            const double *lla = sat->trackPointLla(0);
+            tmpx = lla[1] / M_PI;
+            tmpy = -2.0 * lla[0] / M_PI;
             for (size_t i = 0; i < sat->trackSize(); i++) {
                 if (sat->isVisibleTrackShadow()) {
                     if (shadow_state) {
@@ -847,9 +811,7 @@ void GLSatWidget::compileEventsList() {
 
         px = loc->longitude() / 180.0;
         py = -loc->latitude() / 90.0;
-        if (loc->satWObject != nullptr) {
-            loc->satWObject->exec(px, py, 0.0);
-        }
+        sprite_loc.exec(px, py, 0.0);
         if (inZRV > 0.0) {
             sprite_active.exec(px, py, 0.0);
         }

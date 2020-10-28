@@ -22,6 +22,7 @@ void RadarWidget::initializeGL() {
     QDir dir = QDir::home();
     dir.cd("satviewer/icons");
     sprite_current.load(dir.filePath("current.png"), this);
+    sprite_sat.load(dir.filePath("sat.png"), this);
     sprite_sun.load(dir.filePath("sun.png"), this);
 
     connect(m_satviewer, SIGNAL(currentChanged(Satellite *, Location *, double *)), this,
@@ -132,9 +133,7 @@ void RadarWidget::compileSatList() {
         SatViewer::aerv(loc->rg(), sat->rg(), aerv);
         if (aerv[1] >= 0.0) {
             polar2ortho(aerv[0], aerv[1], px, py);
-            // if (sat->satWObject != nullptr) {
-            //     sat->satWObject->exec(px, py, 0.0);
-            // }
+            sprite_sat.exec(px, py, 0.0);
         }
     }
 

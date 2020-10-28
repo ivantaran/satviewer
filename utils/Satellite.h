@@ -141,7 +141,7 @@ public:
         return show_label;
     }
     bool isVisibleTrack() const {
-        return show_track;
+        return show_track && (trackSize() > 0);
     }
     bool isVisibleZrv() const {
         return show_zrv;

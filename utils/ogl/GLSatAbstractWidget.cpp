@@ -134,13 +134,6 @@ void GLSatAbstractWidget::refreshAll() {
     compileLocList();
     compileEventsList();
     compileSunList();
-
-    for (const auto &loc : m_satviewer->locations()) {
-        if (loc->satWObject != nullptr) {
-            loc->satWObject->make();
-        }
-    }
-
     update();
 }
 

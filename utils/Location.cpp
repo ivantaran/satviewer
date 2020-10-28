@@ -35,7 +35,6 @@ Location::Location(const QString &name, double latitude, double longitude, doubl
     color_label = 0x00FFFF00;
     color_zrv = 0xFF608080;
     color_lines = 0x0000FFFF;
-    satWObject = nullptr;
     m_latitude = latitude;
     m_longitude = longitude;
     m_altitude = altitude;

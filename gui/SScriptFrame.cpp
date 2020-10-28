@@ -8,8 +8,10 @@
  */
 
 #include "SScriptFrame.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include <QDateTime>
+#include <QDir>
+#include <QFile>
+#include <QTextStream>
 
 SScriptFrame::SScriptFrame(QString fileName) {
     widget.setupUi(this);

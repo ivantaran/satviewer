@@ -8,6 +8,8 @@
  */
 
 #include "SWidgetList.h"
+#include <QDebug>
+#include <QDir>
 #include <QStandardItemModel>
 
 SWidgetList::SWidgetList(QWidget *parent) : QWidget(parent) {

@@ -25,7 +25,8 @@ protected:
     virtual void resizeGL(int width, int height) override;
 
 private:
-    GLSprite sprite_current, sprite_sun;
+    GLSprite sprite_current, sprite_sun, sprite_sat;
+
     void initializeGL();
     void compileMapList();
     void compileSatList();

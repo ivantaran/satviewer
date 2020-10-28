@@ -15,6 +15,7 @@
 #include <QDir>
 #include <QHostAddress>
 #include <QTcpSocket>
+#include <QTimerEvent>
 
 class SatViewer : public QTcpSocket {
     Q_OBJECT
