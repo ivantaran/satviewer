@@ -195,24 +195,24 @@ void GLSatWidget3d::compileSatList() {
             trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
             trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
             for (double i = trackBegin; i < trackEnd; i += tper / 180.0) {
-                glVertex3f(sat->rg()[0] / radiusEarth, sat->rg()[1] / radiusEarth,
-                           sat->rg()[2] / radiusEarth);
+                glVertex3f(sat->ecef()[0] / radiusEarth, sat->ecef()[1] / radiusEarth,
+                           sat->ecef()[2] / radiusEarth);
             }
             glEnd();
             glPopAttrib();
         }
 
-        float r = sqrtf(sat->rg()[0] * sat->rg()[0] + sat->rg()[1] * sat->rg()[1] +
-                        sat->rg()[2] * sat->rg()[2]);
-        float rz = sqrtf(sat->rg()[0] * sat->rg()[0] + sat->rg()[1] * sat->rg()[1]);
+        float r = sqrtf(sat->ecef()[0] * sat->ecef()[0] + sat->ecef()[1] * sat->ecef()[1] +
+                        sat->ecef()[2] * sat->ecef()[2]);
+        float rz = sqrtf(sat->ecef()[0] * sat->ecef()[0] + sat->ecef()[1] * sat->ecef()[1]);
         glPushMatrix();
         globjSat->move(0, 0, 0);
         globjSat->rotateX(0);
         globjSat->rotateY(0);
         globjSat->rotateY(0);
-        float arzx = acosf(sat->rg()[0] / rz) * 180 / M_PI;
-        float az = acosf(sat->rg()[2] / r) * 180 / M_PI;
-        if (sat->rg()[1] < 0)
+        float arzx = acosf(sat->ecef()[0] / rz) * 180 / M_PI;
+        float az = acosf(sat->ecef()[2] / r) * 180 / M_PI;
+        if (sat->ecef()[1] < 0)
             arzx = -arzx;
         glRotatef(arzx, 0, 0, 1);
         glRotatef(az, 0, 1, 0);

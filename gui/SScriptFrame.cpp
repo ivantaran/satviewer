@@ -50,7 +50,7 @@ void SScriptFrame::reload() {
     QJSValue ascLoc = engine.newArray(6);
 
     for (int i = 0; i < 6; i++) {
-        ascSat.setProperty(i, m_sat->rg()[i]);
+        ascSat.setProperty(i, m_sat->ecef()[i]);
         ascLoc.setProperty(i, m_loc->rg()[i]);
     }
 

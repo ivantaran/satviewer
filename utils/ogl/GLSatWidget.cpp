@@ -249,31 +249,32 @@ void GLSatWidget::compileZrl(Location *loc) {
 
 bool GLSatWidget::testShadow(Satellite *sat, Satellite *sun) {
 
-    if ((sat == nullptr) || (sun == nullptr)) {
-        return true;
-    }
+    // if ((sat == nullptr) || (sun == nullptr)) {
+    //     return true;
+    // }
 
-    double r_sat =
-        sqrt(sat->r()[0] * sat->r()[0] + sat->r()[1] * sat->r()[1] + sat->r()[2] * sat->r()[2]);
-    double r_sun =
-        sqrt(sun->r()[0] * sun->r()[0] + sun->r()[1] * sun->r()[1] + sun->r()[2] * sun->r()[2]);
+    // double r_sat =
+    //     sqrt(sat->r()[0] * sat->r()[0] + sat->r()[1] * sat->r()[1] + sat->r()[2] * sat->r()[2]);
+    // double r_sun =
+    //     sqrt(sun->r()[0] * sun->r()[0] + sun->r()[1] * sun->r()[1] + sun->r()[2] * sun->r()[2]);
 
-    if ((r_sat == 0.0) || (r_sun == 0.0) ||
-        (Satellite::RadiusEarth > r_sat)) { // TODO: compare with epsilon
-        return true;
-    }
+    // if ((r_sat == 0.0) || (r_sun == 0.0) ||
+    //     (Satellite::RadiusEarth > r_sat)) { // TODO: compare with epsilon
+    //     return true;
+    // }
 
-    double f = asin(Satellite::RadiusEarth / r_sat);
-    double l =
-        M_PI -
-        acos((sat->r()[0] * sun->r()[0] + sat->r()[1] * sun->r()[1] + sat->r()[2] * sun->r()[2]) /
-             (r_sat * r_sun));
+    // double f = asin(Satellite::RadiusEarth / r_sat);
+    // double l =
+    //     M_PI -
+    //     acos((sat->r()[0] * sun->r()[0] + sat->r()[1] * sun->r()[1] + sat->r()[2] * sun->r()[2])
+    //     /
+    //          (r_sat * r_sun));
 
-    if ((-f < l) && (l < f)) {
-        return false;
-    }
+    // if ((-f < l) && (l < f)) {
+    //     return false;
+    // }
 
-    return true;
+    // return true;
 }
 
 void GLSatWidget::fillFootprint(float lat) {

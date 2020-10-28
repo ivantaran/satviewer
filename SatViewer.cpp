@@ -73,7 +73,7 @@ void SatViewer::readyReadSlot() {
                 // qWarning() << trackArray.size() << name;
                 if (m_satellites.contains(name.toString())) {
                     Satellite *sat = m_satellites[name.toString()];
-                    sat->setAbsoluteCoords(
+                    sat->setEcef(
                         coordsArray[0].toDouble() * 1000.0, coordsArray[1].toDouble() * 1000.0,
                         coordsArray[2].toDouble() * 1000.0, coordsArray[3].toDouble() * 1000.0,
                         coordsArray[4].toDouble() * 1000.0, coordsArray[5].toDouble() * 1000.0);
@@ -385,7 +385,7 @@ void SatViewer::setTime(const QDateTime &value) {
     emit timeChanged();
 }
 
-// TODO remake this
+// TODO remake this and move to satviewer class
 void SatViewer::aerv(const double loc_rg[], const double sat_rg[], double aerv[]) {
     double m[3][3];
     double d[3];

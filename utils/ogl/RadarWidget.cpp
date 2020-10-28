@@ -110,7 +110,7 @@ void RadarWidget::compileSatList() {
             double trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
             bool inZone = false;
             for (double i = trackBegin; i < trackEnd; i += tper / 180.0) {
-                SatViewer::aerv(loc->rg(), sat->rg(), aerv);
+                SatViewer::aerv(loc->rg(), sat->ecef(), aerv);
                 if (aerv[1] < 0.0) {
                     if (inZone) {
                         inZone = false;
@@ -130,7 +130,7 @@ void RadarWidget::compileSatList() {
             glDisable(GL_LINE_SMOOTH);
         }
 
-        SatViewer::aerv(loc->rg(), sat->rg(), aerv);
+        SatViewer::aerv(loc->rg(), sat->ecef(), aerv);
         if (aerv[1] >= 0.0) {
             polar2ortho(aerv[0], aerv[1], px, py);
             sprite_sat.exec(px, py, 0.0);
@@ -139,7 +139,7 @@ void RadarWidget::compileSatList() {
 
     Satellite *sat = m_satviewer->currentSatellite();
     if (sat != nullptr) {
-        SatViewer::aerv(loc->rg(), sat->rg(), aerv);
+        SatViewer::aerv(loc->rg(), sat->ecef(), aerv);
         if (aerv[1] >= 0.0) {
             polar2ortho(aerv[0], aerv[1], px, py);
             sprite_current.exec(px, py, 0.0);
@@ -217,7 +217,7 @@ void RadarWidget::paintEvent(QPaintEvent *event) {
             painter.setPen(sat->colorLabel());
             painter.setFont(sat->font());
 
-            SatViewer::aerv(loc->rg(), sat->rg(), aerv);
+            SatViewer::aerv(loc->rg(), sat->ecef(), aerv);
             if (aerv[1] >= 0.0) {
                 polar2ortho(aerv[0], aerv[1], px, py);
                 double dx = 0.5 * w * (1.0 + px) + sat->nameX();
@@ -279,7 +279,7 @@ void RadarWidget::mouseMoveEvent(QMouseEvent *event) {
     Satellite *currentSat = nullptr;
 
     for (const auto &sat : m_satviewer->satellites()) {
-        SatViewer::aerv(loc->rg(), sat->rg(), aerv);
+        SatViewer::aerv(loc->rg(), sat->ecef(), aerv);
         GLfloat sx, sy;
         if (aerv[1] >= 0.0) {
             polar2ortho(aerv[0], aerv[1], sx, sy);

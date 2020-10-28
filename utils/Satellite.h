@@ -21,9 +21,9 @@ public:
     virtual ~Satellite();
 
     void copy(Satellite *src);
-    void setAbsoluteCoords(double *coords);
-    void setAbsoluteCoords(double r0, double r1 = 0.0, double r2 = 0.0, double r3 = 0.0,
-                           double r4 = 0.0, double r5 = 0.0);
+    void setEcef(double *coords);
+    void setEcef(double r0, double r1 = 0.0, double r2 = 0.0, double r3 = 0.0, double r4 = 0.0,
+                 double r5 = 0.0);
     void setFont(QFont font);
     void setIcon(QString name);
     void setLinesWidth(double value);
@@ -49,20 +49,17 @@ public:
     double nameY() const {
         return name_y;
     }
-    const double *r() {
-        return m_r;
-    }
-    const double *rg() {
-        return m_rg;
+    const double *ecef() {
+        return m_ecef;
     }
     double latitude() const {
-        return lat;
+        return m_lla[0];
     }
     double longitude() const {
-        return lon;
+        return m_lla[1];
     }
     double altitude() const {
-        return _altitude;
+        return m_lla[2];
     }
     double zrvWidth() const {
         return zrv;
@@ -163,19 +160,11 @@ public:
     int satnum() const;
 
 protected:
-    double lon, lat, _altitude;
-    double m_r[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-    double m_rg[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    // lla[3] latitude, longitude, altitude
+    double m_lla[3] = {0.0, 0.0, 0.0};
+    double m_ecef[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     double zrv;
-    void makeGeod();
-    void makeRg();
     void ecef2lla(const double *ecef, double *lla);
-    virtual double gsto() {
-        return 0.0;
-    }
-    virtual double minutes() {
-        return 0.0;
-    }
 
 private:
     double *m_track;
