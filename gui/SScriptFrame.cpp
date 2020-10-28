@@ -51,7 +51,7 @@ void SScriptFrame::reload() {
 
     for (int i = 0; i < 6; i++) {
         ascSat.setProperty(i, m_sat->ecef()[i]);
-        ascLoc.setProperty(i, m_loc->rg()[i]);
+        ascLoc.setProperty(i, m_loc->ecef()[i]);
     }
 
     engine.globalObject().setProperty("ascSat", ascSat);

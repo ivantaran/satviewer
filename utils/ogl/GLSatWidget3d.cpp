@@ -191,13 +191,13 @@ void GLSatWidget3d::compileSatList() {
             glDisable(GL_LIGHTING);
             glLineWidth(sat->linesWidth());
             glBegin(GL_LINE_STRIP);
-            tper = 120 * M_PI / sat->meanMotion();
-            trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
-            trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
-            for (double i = trackBegin; i < trackEnd; i += tper / 180.0) {
-                glVertex3f(sat->ecef()[0] / radiusEarth, sat->ecef()[1] / radiusEarth,
-                           sat->ecef()[2] / radiusEarth);
-            }
+            // tper = 120 * M_PI / sat->meanMotion();
+            // trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
+            // trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
+            // for (double i = trackBegin; i < trackEnd; i += tper / 180.0) {
+            //     glVertex3f(sat->ecef()[0] / radiusEarth, sat->ecef()[1] / radiusEarth,
+            //                sat->ecef()[2] / radiusEarth);
+            // }
             glEnd();
             glPopAttrib();
         }

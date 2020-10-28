@@ -105,12 +105,9 @@ void RadarWidget::compileSatList() {
 
             glBegin(GL_LINE_STRIP);
 
-            double tper = 120.0 * M_PI / sat->meanMotion(); // TODO move this line
-            double trackBegin = sat->track() * (-0.5 * tper + tper / 180.0);
-            double trackEnd = sat->track() * (0.5 * tper + tper / 180.0);
             bool inZone = false;
-            for (double i = trackBegin; i < trackEnd; i += tper / 180.0) {
-                SatViewer::aerv(loc->rg(), sat->ecef(), aerv);
+            for (size_t i = 0; i < sat->trackSize(); i++) {
+                SatViewer::aerv(loc->ecef(), sat->trackPointEcef(i), aerv);
                 if (aerv[1] < 0.0) {
                     if (inZone) {
                         inZone = false;
@@ -130,7 +127,7 @@ void RadarWidget::compileSatList() {
             glDisable(GL_LINE_SMOOTH);
         }
 
-        SatViewer::aerv(loc->rg(), sat->ecef(), aerv);
+        SatViewer::aerv(loc->ecef(), sat->ecef(), aerv);
         if (aerv[1] >= 0.0) {
             polar2ortho(aerv[0], aerv[1], px, py);
             sprite_sat.exec(px, py, 0.0);
@@ -139,7 +136,7 @@ void RadarWidget::compileSatList() {
 
     Satellite *sat = m_satviewer->currentSatellite();
     if (sat != nullptr) {
-        SatViewer::aerv(loc->rg(), sat->ecef(), aerv);
+        SatViewer::aerv(loc->ecef(), sat->ecef(), aerv);
         if (aerv[1] >= 0.0) {
             polar2ortho(aerv[0], aerv[1], px, py);
             sprite_current.exec(px, py, 0.0);
@@ -185,9 +182,7 @@ void RadarWidget::paintEvent(QPaintEvent *event) {
     }
 
     QPainter painter(this);
-    //    painter.setPen(clrNetFont);
-    //    painter.setFont(fntNet);
-    //    painter.setCompositionMode(QPainter::CompositionMode_Screen); // TODO
+    // painter.setCompositionMode(QPainter::CompositionMode_Screen); // TODO
     painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 
     int w = width();
@@ -195,29 +190,12 @@ void RadarWidget::paintEvent(QPaintEvent *event) {
     double aerv[4];
     GLfloat px, py;
 
-    //    double dx = width() / 12.0;
-    //    double dy = height() / 6.0;
-    //
-    //    QFontMetrics fm(fntNet);
-    //    int bw = fm.width("00");
-    //    int bh = fm.height();
-    //
-    //    for (int i = 1; i < 6; i++) {
-    //        painter.drawText(0     , dy * i, QString().number(abs(i * 30 - 90)));
-    //        painter.drawText(w - bw, dy * i, QString().number(abs(i * 30 - 90)));
-    //    }
-    //
-    //    for (int i = 1; i < 12; i++) {
-    //        painter.drawText(dx * i, bh, QString().number(abs(i * 30 - 180)));
-    //        painter.drawText(dx * i,  h, QString().number(abs(i * 30 - 180)));
-    //    }
-
     for (const auto &sat : m_satviewer->satellites()) {
         if (sat->isVisibleLabel()) {
             painter.setPen(sat->colorLabel());
             painter.setFont(sat->font());
 
-            SatViewer::aerv(loc->rg(), sat->ecef(), aerv);
+            SatViewer::aerv(loc->ecef(), sat->ecef(), aerv);
             if (aerv[1] >= 0.0) {
                 polar2ortho(aerv[0], aerv[1], px, py);
                 double dx = 0.5 * w * (1.0 + px) + sat->nameX();
@@ -227,18 +205,6 @@ void RadarWidget::paintEvent(QPaintEvent *event) {
         }
     }
 
-    //    for (const auto& loc : m_satviewer->locations()) {
-    //        if (loc->isVisibleLabel()) {
-    //            painter.setPen(loc->colorLabel());
-    //            painter.setFont(loc->font());
-    //
-    //            double dx = 0.5 * w * (1.0 + loc->longitude() / 180.0) + loc->nameX();
-    //            double dy = h * (0.5 - loc->latitude() / 180.0) - loc->nameY();
-    //
-    //            painter.drawText(dx,  dy, loc->name());
-    //        }
-    //    }
-
     painter.end();
 }
 
@@ -246,6 +212,7 @@ void RadarWidget::resizeGL(int width, int height) {
     GLSatAbstractWidget::resizeGL(width, height);
     sprite_sun.make();
     sprite_current.make();
+    sprite_sat.make();
 }
 
 void RadarWidget::onCurrentChanged(Satellite *sat, Location *loc, double *time) {
@@ -279,7 +246,7 @@ void RadarWidget::mouseMoveEvent(QMouseEvent *event) {
     Satellite *currentSat = nullptr;
 
     for (const auto &sat : m_satviewer->satellites()) {
-        SatViewer::aerv(loc->rg(), sat->ecef(), aerv);
+        SatViewer::aerv(loc->ecef(), sat->ecef(), aerv);
         GLfloat sx, sy;
         if (aerv[1] >= 0.0) {
             polar2ortho(aerv[0], aerv[1], sx, sy);

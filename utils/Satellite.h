@@ -21,7 +21,7 @@ public:
     virtual ~Satellite();
 
     void copy(Satellite *src);
-    void setEcef(double *coords);
+    void setEcef(double *ecef);
     void setEcef(double r0, double r1 = 0.0, double r2 = 0.0, double r3 = 0.0, double r4 = 0.0,
                  double r5 = 0.0);
     void setFont(QFont font);
@@ -36,6 +36,7 @@ public:
     void setZrv(double value);
     void setTrackSize(size_t size);
     const double *trackPointLla(size_t index);
+    const double *trackPointEcef(size_t index);
 
     size_t trackSize() const {
         return m_track_size;
@@ -63,9 +64,6 @@ public:
     }
     double zrvWidth() const {
         return zrv;
-    }
-    virtual double meanMotion() {
-        return 0.0; // TODO remove
     }
     QString iconName() const {
         return icon_name;

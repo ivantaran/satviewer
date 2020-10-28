@@ -41,12 +41,13 @@ Location::Location(const QString &name, double latitude, double longitude, doubl
     _zrlWidth = 0.0;
     _zrlAzimuth = 0.0;
     _zrlRange = 0.0;
-    m_rg[0] = 0.0;
-    m_rg[1] = 0.0;
-    m_rg[2] = 0.0;
-    m_rg[3] = 0.0;
-    m_rg[4] = 0.0;
-    m_rg[5] = 0.0;
+    m_ecef[0] = 0.0;
+    m_ecef[1] = 0.0;
+    m_ecef[2] = 0.0;
+    m_ecef[3] = 0.0;
+    m_ecef[4] = 0.0;
+    m_ecef[5] = 0.0;
+    lla2ecef();
 }
 
 Location::~Location(void) {
@@ -58,7 +59,7 @@ void Location::copy(Location *src) {
     m_latitude = src->latitude();
     m_longitude = src->longitude();
     m_altitude = src->altitude();
-    calcXYZ();
+    lla2ecef();
 
     visibleLabel(src->isVisibleLabel());
     visibleLines(src->isVisibleLines());
@@ -84,32 +85,32 @@ void Location::setName(const QString &name) {
     m_name = name;
 }
 
-void Location::calcXYZ() {
+void Location::lla2ecef() {
     // TODO this not valid
     double const a_axis = 6378137.0;  // WGS-84 earth's semi major axis
     double const b_axis = 6356752.31; // WGS-84 earth's semi minor axis
     double const e1sqr = ((a_axis * a_axis - b_axis * b_axis) / (a_axis * a_axis));
-    double N = a_axis /
+    double n = a_axis /
                sqrt(1.0 - e1sqr * sin(m_latitude * M_PI / 180.0) * sin(m_latitude * M_PI / 180.0));
     // TODO
-    m_rg[0] = (N + m_altitude) * cos(m_latitude * M_PI / 180.0) * cos(m_longitude * M_PI / 180.0);
-    m_rg[1] = (N + m_altitude) * cos(m_latitude * M_PI / 180.0) * sin(m_longitude * M_PI / 180.0);
-    m_rg[2] = (N * (1.0 - e1sqr) + m_altitude) * sin(m_latitude * M_PI / 180.0);
+    m_ecef[0] = (n + m_altitude) * cos(m_latitude * M_PI / 180.0) * cos(m_longitude * M_PI / 180.0);
+    m_ecef[1] = (n + m_altitude) * cos(m_latitude * M_PI / 180.0) * sin(m_longitude * M_PI / 180.0);
+    m_ecef[2] = (n * (1.0 - e1sqr) + m_altitude) * sin(m_latitude * M_PI / 180.0);
 }
 
 void Location::setLatitude(double latitude) {
     m_latitude = latitude;
-    calcXYZ();
+    lla2ecef();
 }
 
 void Location::setLongitude(double longitude) {
     m_longitude = longitude;
-    calcXYZ();
+    lla2ecef();
 }
 
-void Location::setAltitude(double height) {
-    m_altitude = height;
-    calcXYZ();
+void Location::setAltitude(double altitude) {
+    m_altitude = altitude;
+    lla2ecef();
 }
 
 void Location::setIcon(const QString &name) {

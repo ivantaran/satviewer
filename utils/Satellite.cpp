@@ -2,7 +2,7 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 #include "Satellite.h"
 
-#include <math.h>
+#include <QtMath>
 #include <stdlib.h>
 #include <string.h>
 
@@ -203,6 +203,10 @@ void Satellite::setTrackPoint(const double point[6], size_t index) {
 
 const double *Satellite::trackPointLla(size_t index) {
     return &m_trackLla[index * 3];
+}
+
+const double *Satellite::trackPointEcef(size_t index) {
+    return &m_track[index * 6];
 }
 
 void Satellite::setNameX(double value) {

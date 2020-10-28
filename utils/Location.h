@@ -20,7 +20,7 @@ public:
 
     void copy(Location *src);
 
-    void setAltitude(double height);
+    void setAltitude(double altitude);
     void setFont(const QFont &font);
     void setIcon(const QString &name);
     void setLatitude(double latitude);
@@ -58,10 +58,9 @@ public:
     inline double altitude() {
         return m_altitude;
     }
-    inline double *rg() {
-        return m_rg;
+    const double *ecef() {
+        return m_ecef;
     }
-
     inline double zrlWidth() {
         return _zrlWidth;
     }
@@ -145,12 +144,12 @@ public:
     }
 
 private:
-    void calcXYZ();
+    void lla2ecef();
     bool show_label, show_zrv, show_lines, active_zone;
     double _zrlWidth, _zrlAzimuth, _zrlRange;
     double lines_width;
     double m_latitude, m_longitude, m_altitude;
-    double m_rg[6];
+    double m_ecef[6];
     double name_x, name_y;
     QFont _font;
     QString icon_name;
