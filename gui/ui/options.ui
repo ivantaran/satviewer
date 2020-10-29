@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
-    <height>768</height>
+    <width>571</width>
+    <height>530</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -650,7 +650,8 @@
                     <string>Edit</string>
                    </property>
                    <property name="icon">
-                    <iconset theme="accessories-text-editor"/>
+                    <iconset theme="accessories-text-editor">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Edit"/>
@@ -672,7 +673,8 @@
                     <string>Remove</string>
                    </property>
                    <property name="icon">
-                    <iconset theme="list-remove"/>
+                    <iconset theme="list-remove">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="autoRaise">
                     <bool>true</bool>
@@ -688,7 +690,8 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset theme="user-trash"/>
+                    <iconset theme="user-trash">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="autoRaise">
                     <bool>true</bool>
@@ -744,7 +747,8 @@
                     <string>View</string>
                    </property>
                    <property name="icon">
-                    <iconset theme="go-right"/>
+                    <iconset theme="go-right">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="autoRaise">
                     <bool>true</bool>
@@ -773,7 +777,8 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset theme="user-trash"/>
+                    <iconset theme="user-trash">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Remove All"/>
@@ -792,7 +797,8 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset theme="list-remove"/>
+                    <iconset theme="list-remove">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Remove"/>
@@ -811,7 +817,8 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset theme="list-add"/>
+                    <iconset theme="list-add">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Add"/>
@@ -830,7 +837,8 @@
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset theme="document-open"/>
+                    <iconset theme="document-open">
+                     <normaloff>.</normaloff>.</iconset>
                    </property>
                    <property name="shortcut">
                     <string extracomment="Open"/>
@@ -1089,7 +1097,7 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/options/satviewer.svg&quot; /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/logo/satviewer.svg&quot; /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:36pt; font-weight:600;&quot;&gt;SatViewer&lt;/span&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:18pt;&quot;&gt;satellite tracking tool&lt;/span&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:18pt;&quot;&gt;version 19.1&lt;/span&gt;&lt;/p&gt;

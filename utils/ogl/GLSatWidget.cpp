@@ -901,9 +901,11 @@ void GLSatWidget::paintEvent(QPaintEvent *event) {
 
 void GLSatWidget::resizeGL(int width, int height) {
     GLSatAbstractWidget::resizeGL(width, height);
-    sprite_sun.make();
-    sprite_current.make();
     sprite_active.make();
+    sprite_current.make();
+    sprite_loc.make();
+    sprite_sat.make();
+    sprite_sun.make();
 }
 
 void GLSatWidget::mouseMoveEvent(QMouseEvent *event) {
