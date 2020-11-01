@@ -277,10 +277,10 @@ bool GLSatWidget::testShadow(Satellite *sat, Satellite *sun) {
     // return true;
 }
 
-void GLSatWidget::fillFootprint(float lat) {
+void GLSatWidget::fillFootprint(float lat, bool outside) {
     int count = 0;
     int breakpoint[2], bp1;
-    GLfloat polar, y;
+    GLfloat polar, polar0, y; // TODO rename polar and polar0 as polarX and polarY
 
     if (fabsf(vertex[0][0] - vertex[VertexCount - 1][0]) > 1.0) {
         breakpoint[count] = 0;
@@ -306,21 +306,22 @@ void GLSatWidget::fillFootprint(float lat) {
 
     case 1:
         polar = (lat < 0.0) ? 1.0 : -1.0;
+        polar0 = (lat < 0.0) ^ outside ? 1.0 : -1.0;
         bp1 = (breakpoint[0] + VertexCount - 1) % VertexCount;
         y = 0.5 * (vertex[breakpoint[0]][1] + vertex[bp1][1]);
         glBegin(GL_TRIANGLE_STRIP);
         glVertex2f(polar, y);
-        glVertex2f(polar, polar);
+        glVertex2f(polar, polar0);
         for (int i = breakpoint[0]; i < VertexCount; i++) {
             glVertex2fv(vertex[i]);
-            glVertex2f(vertex[i][0], polar);
+            glVertex2f(vertex[i][0], polar0);
         }
         for (int i = 0; i < breakpoint[0]; i++) {
             glVertex2fv(vertex[i]);
-            glVertex2f(vertex[i][0], polar);
+            glVertex2f(vertex[i][0], polar0);
         }
         glVertex2f(-polar, y);
-        glVertex2f(-polar, polar);
+        glVertex2f(-polar, polar0);
         glEnd();
         break;
 
@@ -350,8 +351,8 @@ void GLSatWidget::fillFootprint(float lat) {
 }
 
 void GLSatWidget::compileFootprint(double longitude, double latitude, double altitude,
-                                   double zoneWidth, bool fill, bool lines, GLfloat linesWidth,
-                                   GLuint colorPoly, GLuint colorLines) {
+                                   double zoneWidth, bool fill, bool fillOutside, bool lines,
+                                   GLfloat linesWidth, GLuint colorFill, GLuint colorLines) {
     double x, y;
     double fiz;
     double polar, angle = 0;
@@ -394,10 +395,10 @@ void GLSatWidget::compileFootprint(double longitude, double latitude, double alt
     }
 
     if (fill) {
-        glColor4ubv((GLubyte *)&colorPoly);
+        glColor4ubv((GLubyte *)&colorFill);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
-        fillFootprint(latitude);
+        fillFootprint(latitude, fillOutside);
         glDisable(GL_BLEND);
     }
 
@@ -661,7 +662,7 @@ void GLSatWidget::compileSatList() {
 
         if (sat->isVisibleZrv() || sat->isVisibleLines()) {
             compileFootprint(sat->longitude(), sat->latitude(), sat->altitude(), sat->zrvWidth(),
-                             sat->isVisibleZrv(), sat->isVisibleLines(), sat->linesWidth(),
+                             sat->isVisibleZrv(), false, sat->isVisibleLines(), sat->linesWidth(),
                              sat->colorZrv(), sat->colorLines());
         }
 
@@ -821,18 +822,18 @@ void GLSatWidget::compileEventsList() {
 }
 
 void GLSatWidget::compileSunList() {
-    double lat = 0.0, lon = 0.0;
+    double lla[3];
     glNewList(list_sun, GL_COMPILE);
 
-    // sunmodel_ll((time_t)m_satviewer->time(), &lat, &lon);
+    Satellite::ecef2lla(m_satviewer->sunEcef(), lla);
 
-    float px = lon / M_PI;
-    float py = -2.0 * lat / M_PI;
+    float px = lla[1] / M_PI;
+    float py = -2.0 * lla[0] / M_PI;
 
     if (shwNight) {
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_BLEND);
-        compileFootprint(lon, lat, 149597871000.0 - Satellite::RadiusEarth, 0.0, true, true,
+        compileFootprint(lla[1], lla[0], lla[2], 0.0, true, true, true,
                          1.0, // linesWidth
                          clrNight, m_colorLinesNight);
         glDisable(GL_BLEND);

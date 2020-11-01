@@ -23,14 +23,14 @@ public:
     inline void retranslateUi() {
         ui.retranslateUi(this);
     }
-    void setIcon(Satellite *sat, const QString &fileName = "");
     void setIcon(Location *loc, const QString &fileName = "");
+    void setIcon(Satellite *sat, const QString &fileName = "");
 
 private:
     static const int VertexCount = 128;
-    GLfloat vertex[VertexCount][2];
-
     Ui::MapWidgetSettings ui;
+
+    GLfloat vertex[VertexCount][2];
     GLSprite sprite_current, sprite_active, sprite_sun;
     GLSprite sprite_sat, sprite_loc;
 
@@ -50,12 +50,12 @@ private:
     void initSatOgl();
     void glZoneLines(float lat);
     void compileFootprint(double longitude, double latitude, double altitude, double zoneWidth,
-                          bool fill, bool lines, GLfloat linesWidth, GLuint colorPoly,
-                          GLuint colorLines);
+                          bool fill, bool fillOutside, bool lines, GLfloat linesWidth,
+                          GLuint colorFill, GLuint colorLines);
     void lfi_ort(double fi, double lam, double *xyz);
     bool testZRV(double *crd1, double *crd2, double fiz);
     int testIOZRV(Satellite *sat, Location *loc, ZrvIoList *list, double &time);
-    void fillFootprint(float lat);
+    void fillFootprint(float lat, bool outside = false);
     void compileZrl(Location *loc);
     bool testShadow(Satellite *sat, Satellite *sun);
 

@@ -51,6 +51,10 @@ public:
     void setCurrentSatelliteIndex(long unsigned int index);
     void setTime(const QDateTime &value);
 
+    const double *sunEcef() {
+        return m_sunEcef;
+    }
+
     const QMap<QString, Satellite *> &satellites() {
         return m_satellites;
     }
@@ -90,6 +94,8 @@ private:
 
     QDateTime m_time;
     double m_delete_this_var = 0.0;
+    double m_sunEcef[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+
     int m_timerFastId;
     int m_timerSlowId;
     Location *m_currentLocation;

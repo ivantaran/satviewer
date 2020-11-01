@@ -151,18 +151,19 @@ public:
         return show_track_shadow;
     }
 
-    void setLocation(bool location);
     bool isLocation() const;
-    void setSatellite(bool satellite);
     bool isSatellite() const;
     int satnum() const;
+    void setLocation(bool location);
+    void setSatellite(bool satellite);
+
+    static void ecef2lla(const double *ecef, double *lla);
 
 protected:
     // lla[3] latitude, longitude, altitude
     double m_lla[3] = {0.0, 0.0, 0.0};
     double m_ecef[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     double zrv;
-    void ecef2lla(const double *ecef, double *lla);
 
 private:
     double *m_track;

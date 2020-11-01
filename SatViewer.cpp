@@ -99,12 +99,18 @@ void SatViewer::readyReadSlot() {
                               .arg(KeyRemoveId)
                               .arg(name.toString())
                               .toUtf8());
-                    // Satellite *sat = new Satellite();
-                    // sat->setSatnum(satnum.toInt());
-                    // sat->setName(name.toString());
-                    // m_satellites[name.toString()] = sat;
                 }
             }
+        }
+        if (jsonObject.contains("Sun")) {
+            QJsonObject sunObject = jsonObject.value("Sun").toObject();
+            QJsonArray coords = sunObject.value("Coords").toArray();
+            m_sunEcef[0] = coords[0].toDouble();
+            m_sunEcef[1] = coords[1].toDouble();
+            m_sunEcef[2] = coords[2].toDouble();
+            m_sunEcef[3] = coords[3].toDouble();
+            m_sunEcef[4] = coords[4].toDouble();
+            m_sunEcef[5] = coords[5].toDouble();
         }
         if (jsonObject.contains("TleMap")) {
             QJsonObject tleMap = jsonObject.value("TleMap").toObject();
