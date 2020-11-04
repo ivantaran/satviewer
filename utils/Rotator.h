@@ -1,9 +1,12 @@
 #ifndef ROTATOR_H_
 #define ROTATOR_H_
 
+#include "Location.h"
+#include "Satellite.h"
+
 #include <QHostAddress>
-#include <QTcpSocket>
 #include <QString>
+#include <QTcpSocket>
 #include <QTimerEvent>
 
 class Rotator : public QTcpSocket {
@@ -12,10 +15,14 @@ class Rotator : public QTcpSocket {
 private:
     static const quint16 DEFAULT_PORT = 4533;
     static const QString DEFAULT_HOST;
+
+    const Location *m_loc;
+    const Satellite *m_sat;
     QHostAddress m_host;
-    quint16 m_port;
-    QStringList m_initList;
     QMap<QString, QString> m_valuesMap;
+    QStringList m_initList;
+    quint16 m_port;
+    bool m_tracking;
 
     typedef enum {
         StatusUnknown = 0x00,
@@ -49,35 +56,42 @@ private:
 
     void readConfig(uint index, const QJsonObject &jsonObject);
     void requestPosition();
+    void doTracking();
 
 public:
     Rotator();
     virtual ~Rotator();
-    void setHost(const QHostAddress &host);
-    void setPort(quint16 port);
 
-    void reconnect();
-    QHostAddress getHost() const;
-    quint16 getPort() const;
-    qreal getPwm(uint index);
-    uint getCurrentAdc(uint index);
-    qreal getCurrentAmp(uint index);
-    uint getDiag(uint index);
-    uint getDirection(uint index);
-    const QString getDirectionString(uint index);
-    const QString getStatusString(uint index);
-    const QString getErrorString(uint index);
-    qreal getAngle(uint index);
     bool isEndstop(uint index);
-
-    const QMap<QString, QString> getValuesMap() { return m_valuesMap; }
-
-    void setMotion(uint index, qreal value);
-
-
-    void writeLine(const QString &line);
+    bool isTracking() const;
+    bool setTracking(bool value);
+    const Location *getLocation() const;
+    const QHostAddress getHost() const;
+    const QString getDirectionString(uint index) const;
+    const QString getErrorString(uint index) const;
+    const QString getStatusString(uint index) const;
+    const Satellite *getSatellite() const;
+    qreal getAngle(uint index);
+    qreal getCurrentAmp(uint index);
+    qreal getPwm(uint index);
+    quint16 getPort() const;
+    uint getCurrentAdc(uint index);
+    uint getDiag(uint index) const;
+    uint getDirection(uint index) const;
     void clearError(uint index);
     void readSettings(const QString &fileName);
+    void reconnect();
+    void setHost(const QHostAddress &host);
+    void setLocation(const Location *loc);
+    void setMotion(uint index, qreal value);
+    void setPort(quint16 port);
+    void setSatellite(const Satellite *sat);
+    void writeLine(const QString &line);
+    void setPosition(double azimuth, double elevation);
+
+    const QMap<QString, QString> getValuesMap() {
+        return m_valuesMap;
+    }
 
 protected:
     void timerEvent(QTimerEvent *event);
@@ -85,7 +99,7 @@ protected:
 private slots:
     void readyReadSlot();
     void connectedSlot();
-    
+
 public slots:
     void park();
     void requestConfigSlot();

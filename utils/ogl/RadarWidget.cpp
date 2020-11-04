@@ -5,9 +5,10 @@
  * Created on April 13, 2019, 6:58 PM
  */
 
-#include <QPainter>
-
 #include "RadarWidget.h"
+#include "../satmath.h"
+
+#include <QPainter>
 
 RadarWidget::RadarWidget(SatViewer *satviewer, QWidget *parent)
     : GLSatAbstractWidget(satviewer, parent) {
@@ -107,7 +108,7 @@ void RadarWidget::compileSatList() {
 
             bool inZone = false;
             for (size_t i = 0; i < sat->trackSize(); i++) {
-                SatViewer::aerv(loc->ecef(), sat->trackPointEcef(i), aerv);
+                satmath_aerv(loc->ecef(), sat->trackPointEcef(i), aerv);
                 if (aerv[1] < 0.0) {
                     if (inZone) {
                         inZone = false;
@@ -127,7 +128,7 @@ void RadarWidget::compileSatList() {
             glDisable(GL_LINE_SMOOTH);
         }
 
-        SatViewer::aerv(loc->ecef(), sat->ecef(), aerv);
+        satmath_aerv(loc->ecef(), sat->ecef(), aerv);
         if (aerv[1] >= 0.0) {
             polar2ortho(aerv[0], aerv[1], px, py);
             sprite_sat.exec(px, py, 0.0);
@@ -136,7 +137,7 @@ void RadarWidget::compileSatList() {
 
     Satellite *sat = m_satviewer->currentSatellite();
     if (sat != nullptr) {
-        SatViewer::aerv(loc->ecef(), sat->ecef(), aerv);
+        satmath_aerv(loc->ecef(), sat->ecef(), aerv);
         if (aerv[1] >= 0.0) {
             polar2ortho(aerv[0], aerv[1], px, py);
             sprite_current.exec(px, py, 0.0);
@@ -195,7 +196,7 @@ void RadarWidget::paintEvent(QPaintEvent *event) {
             painter.setPen(sat->colorLabel());
             painter.setFont(sat->font());
 
-            SatViewer::aerv(loc->ecef(), sat->ecef(), aerv);
+            satmath_aerv(loc->ecef(), sat->ecef(), aerv);
             if (aerv[1] >= 0.0) {
                 polar2ortho(aerv[0], aerv[1], px, py);
                 double dx = 0.5 * w * (1.0 + px) + sat->nameX();
@@ -246,7 +247,7 @@ void RadarWidget::mouseMoveEvent(QMouseEvent *event) {
     Satellite *currentSat = nullptr;
 
     for (const auto &sat : m_satviewer->satellites()) {
-        SatViewer::aerv(loc->ecef(), sat->ecef(), aerv);
+        satmath_aerv(loc->ecef(), sat->ecef(), aerv);
         GLfloat sx, sy;
         if (aerv[1] >= 0.0) {
             polar2ortho(aerv[0], aerv[1], sx, sy);

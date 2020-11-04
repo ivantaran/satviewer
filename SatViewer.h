@@ -30,7 +30,6 @@ public:
 
     SatViewer();
     virtual ~SatViewer();
-    static void aerv(const double loc_rg[], const double sat_rg[], double aerv[]);
     void appendLocation(const QString &name);
     void appendSatellite(const QString &name);
     void clearLlas();
@@ -90,7 +89,7 @@ protected:
 private:
     static const QString KeyAppendId;
     static const QString KeyRemoveId;
-    static const quint16 DefaultPort = 8080;
+    static const quint16 DefaultPort = 4672;
 
     QDateTime m_time;
     double m_delete_this_var = 0.0;

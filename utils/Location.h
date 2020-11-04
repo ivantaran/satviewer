@@ -58,7 +58,7 @@ public:
     inline double altitude() {
         return m_altitude;
     }
-    const double *ecef() {
+    const double *ecef() const {
         return m_ecef;
     }
     inline double zrlWidth() {

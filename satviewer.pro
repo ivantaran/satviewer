@@ -23,6 +23,7 @@ HEADERS += \
     utils/ogl/globj/GLObjecter.h \
     utils/ogl/glsprite/GLSprite.h \
     utils/ogl/SatWidgetObject.h \
+    utils/satmath.h \
     utils/Rotator.h \
     utils/Satellite.h \
     utils/Location.h \
@@ -50,6 +51,7 @@ SOURCES += \
     utils/ogl/globj/GLObjecter.cpp \
     utils/ogl/glsprite/GLSprite.cpp \
     utils/ogl/SatWidgetObject.cpp \
+    utils/satmath.c \
     utils/Rotator.cpp \
     utils/Satellite.cpp \
     utils/Location.cpp \

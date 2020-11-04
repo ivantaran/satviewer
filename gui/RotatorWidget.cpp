@@ -11,8 +11,10 @@ RotatorWidget::RotatorWidget(QWidget *parent) : QDockWidget(parent) {
     }
     m_rotator.readSettings("rotator.json");
     ui.layoutRadar->addWidget(&m_radar);
-    ui.tableValues->verticalHeader()->setDefaultSectionSize(ui.tableValues->verticalHeader()->minimumSectionSize());
-    ui.tableRotator->verticalHeader()->setDefaultSectionSize(ui.tableRotator->verticalHeader()->minimumSectionSize());
+    ui.tableValues->verticalHeader()->setDefaultSectionSize(
+        ui.tableValues->verticalHeader()->minimumSectionSize());
+    ui.tableRotator->verticalHeader()->setDefaultSectionSize(
+        ui.tableRotator->verticalHeader()->minimumSectionSize());
     for (int j = 0; j < ui.tableRotator->horizontalHeader()->count(); j++) {
         ui.tableRotator->horizontalHeader()->setSectionResizeMode(j, QHeaderView::Stretch);
         for (int i = 0; i < ui.tableRotator->verticalHeader()->count(); i++) {
@@ -26,10 +28,11 @@ RotatorWidget::RotatorWidget(QWidget *parent) : QDockWidget(parent) {
             SLOT(stateSocketChangedSlot(QAbstractSocket::SocketState)));
     connect(&m_rotator, SIGNAL(updatedState(const QString &)), this,
             SLOT(updatedStateSlot(const QString &)));
-    connect(ui.buttonSendLine, SIGNAL(clicked()), this, SLOT(sendLine()));
     connect(ui.buttonPark, SIGNAL(clicked()), &m_rotator, SLOT(park()));
     connect(ui.buttonReset, SIGNAL(clicked()), &m_rotator, SLOT(resetAll()));
+    connect(ui.buttonSendLine, SIGNAL(clicked()), this, SLOT(sendLine()));
     connect(ui.buttonStop, SIGNAL(clicked()), &m_rotator, SLOT(stop()));
+    connect(ui.buttonTrack, SIGNAL(clicked(bool)), this, SLOT(trackSlot(bool)));
 }
 
 RotatorWidget::~RotatorWidget() {
@@ -93,4 +96,8 @@ void RotatorWidget::updatedStateSlot(const QString &line) {
 
 void RotatorWidget::sendLine() {
     m_rotator.writeLine(ui.lineEdit->text());
+}
+
+void RotatorWidget::trackSlot(bool value) {
+    ui.buttonTrack->setChecked(m_rotator.setTracking(value));
 }

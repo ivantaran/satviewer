@@ -50,7 +50,7 @@ public:
     double nameY() const {
         return name_y;
     }
-    const double *ecef() {
+    const double *ecef() const {
         return m_ecef;
     }
     double latitude() const {
@@ -169,7 +169,7 @@ private:
     double *m_track;
     double *m_trackLla;
     size_t m_track_size;
-    bool satellite, location;
+    bool satellite, location; // TODO remove this vars
     bool show_label, show_track, show_zrv, show_lines, active_zone, show_track_shadow;
     double _track;
     double lines_width;

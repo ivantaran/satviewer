@@ -1,5 +1,7 @@
 
 #include "Rotator.h"
+#include "satmath.h"
+
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -9,6 +11,10 @@
 Rotator::Rotator() {
     m_host = QHostAddress::LocalHost;
     m_port = DEFAULT_PORT;
+
+    m_sat = nullptr;
+    m_loc = nullptr;
+    m_tracking = false;
 
     connect(this, SIGNAL(readyRead()), this, SLOT(readyReadSlot()));
     connect(this, SIGNAL(connected()), this, SLOT(connectedSlot()));
@@ -27,7 +33,16 @@ void Rotator::timerEvent(QTimerEvent *event) {
         reconnect();
     } else if (event->timerId() == m_timerFastId) {
         requestPosition();
+        doTracking();
     }
+}
+
+void Rotator::setSatellite(const Satellite *sat) {
+    m_sat = sat;
+}
+
+void Rotator::setLocation(const Location *loc) {
+    m_loc = loc;
 }
 
 void Rotator::setHost(const QHostAddress &host) {
@@ -38,7 +53,7 @@ void Rotator::setPort(quint16 port) {
     m_port = port;
 }
 
-QHostAddress Rotator::getHost() const {
+const QHostAddress Rotator::getHost() const {
     return m_host;
 }
 
@@ -76,7 +91,7 @@ void Rotator::readyReadSlot() {
 
     while (canReadLine()) {
         m_stateLine = QString::fromUtf8(readLine()).trimmed();
-        
+
         if (m_stateLine.isEmpty()) {
             continue;
         }
@@ -130,15 +145,36 @@ qreal Rotator::getCurrentAmp(uint index) {
     return current;
 }
 
-uint Rotator::getDiag(uint index) {
+uint Rotator::getDiag(uint index) const {
     return index < 2 ? m_diag[index] : 0;
 }
 
-uint Rotator::getDirection(uint index) {
+uint Rotator::getDirection(uint index) const {
     return index < 2 ? m_direction[index] : 0;
 }
 
-const QString Rotator::getDirectionString(uint index) {
+const Satellite *Rotator::getSatellite() const {
+    return m_sat;
+}
+
+const Location *Rotator::getLocation() const {
+    return m_loc;
+}
+
+bool Rotator::isTracking() const {
+    return m_tracking;
+}
+
+bool Rotator::setTracking(bool value) {
+
+    if (m_sat && m_loc) {
+        m_tracking = value;
+    }
+
+    return m_tracking;
+}
+
+const QString Rotator::getDirectionString(uint index) const {
     QString result;
     switch (getDirection(index)) {
     case 0:
@@ -160,7 +196,7 @@ const QString Rotator::getDirectionString(uint index) {
     return result;
 }
 
-const QString Rotator::getStatusString(uint index) {
+const QString Rotator::getStatusString(uint index) const {
     QString result;
 
     if (index < 2) {
@@ -192,7 +228,7 @@ const QString Rotator::getStatusString(uint index) {
     return result;
 }
 
-const QString Rotator::getErrorString(uint index) {
+const QString Rotator::getErrorString(uint index) const {
     QString result;
 
     if (index < 2) {
@@ -218,6 +254,12 @@ void Rotator::requestConfigSlot() {
 
 void Rotator::requestPosition() {
     writeLine(QString("w AZ EL"));
+}
+
+void Rotator::setPosition(double azimuth, double elevation) {
+    writeLine(QString("w AZ%1 EL%2")
+                  .arg(qRadiansToDegrees(azimuth), 0, 'f', 2)
+                  .arg(qRadiansToDegrees(elevation), 0, 'f', 2));
 }
 
 void Rotator::park() {
@@ -247,7 +289,7 @@ void Rotator::readSettings(const QString &fileName) {
     m_initList.clear();
     value = jsonObject.value("init");
     QJsonArray jsonArray = value.toArray();
-    for (const auto &item: jsonArray) {
+    for (const auto &item : jsonArray) {
         m_initList.append(item.toString());
     }
 
@@ -255,6 +297,15 @@ void Rotator::readSettings(const QString &fileName) {
     m_host = QHostAddress(value.toString(DEFAULT_HOST));
     value = jsonObject.value("port");
     m_port = value.toInt(DEFAULT_PORT);
+}
+
+void Rotator::doTracking() {
+    if (!m_tracking) {
+        return;
+    }
+    double aerv[4];
+    satmath_aerv(m_loc->ecef(), m_sat->ecef(), aerv);
+    setPosition(aerv[0], aerv[1]);
 }
 
 const QString Rotator::DEFAULT_HOST = QHostAddress(QHostAddress::LocalHost).toString();

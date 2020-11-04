@@ -7,7 +7,6 @@
  *      Author: Ivan Ryazanov
  */
 #include "SDlgOptions.h"
-#include "../utils/dbsql.h"
 #include "SatelliteDialog.h"
 
 SDlgOptions::SDlgOptions(SatViewer *satviewer, GLSatAbstractWidget *w) {
