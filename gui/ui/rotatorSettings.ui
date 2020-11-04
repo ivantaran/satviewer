@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1003</width>
-    <height>631</height>
+    <width>373</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,32 +42,13 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QToolButton" name="buttonAdd">
-       <property name="text">
-        <string>Add</string>
-       </property>
-       <property name="icon">
-        <iconset theme="add">
-         <normaloff>.</normaloff>.</iconset>
-       </property>
-       <property name="shortcut">
-        <string>+</string>
-       </property>
-      </widget>
+      <widget class="QToolButton" name="buttonAdd"/>
      </item>
      <item>
-      <widget class="QToolButton" name="buttonRemove">
-       <property name="text">
-        <string>Remove</string>
-       </property>
-       <property name="icon">
-        <iconset theme="remove">
-         <normaloff>.</normaloff>.</iconset>
-       </property>
-       <property name="shortcut">
-        <string>-, Del</string>
-       </property>
-      </widget>
+      <widget class="QToolButton" name="buttonRemove"/>
+     </item>
+     <item>
+      <widget class="QToolButton" name="buttonTrack"/>
      </item>
      <item>
       <spacer name="horizontalSpacer">
@@ -87,7 +68,8 @@
   </layout>
   <action name="actionAdd">
    <property name="icon">
-    <iconset theme="list-add"/>
+    <iconset theme="list-add">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Add</string>
@@ -101,7 +83,8 @@
   </action>
   <action name="actionRemove">
    <property name="icon">
-    <iconset theme="list-remove"/>
+    <iconset theme="list-remove">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Remove</string>
@@ -111,6 +94,17 @@
    </property>
    <property name="shortcut">
     <string>-, Del</string>
+   </property>
+  </action>
+  <action name="actionTrack">
+   <property name="icon">
+    <iconset theme="task-due"/>
+   </property>
+   <property name="text">
+    <string>Track</string>
+   </property>
+   <property name="shortcut">
+    <string>T</string>
    </property>
   </action>
  </widget>

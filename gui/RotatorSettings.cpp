@@ -3,15 +3,27 @@
 
 RotatorSettings::RotatorSettings(QWidget *parent, QWidget *mainWindow) : QWidget(parent) {
     ui.setupUi(this);
+    m_loc = nullptr;
+    m_sat = nullptr;
     m_mainWindow = mainWindow;
     ui.buttonAdd->setDefaultAction(ui.actionAdd);
     ui.buttonRemove->setDefaultAction(ui.actionRemove);
+    ui.buttonTrack->setDefaultAction(ui.actionTrack);
     connect(ui.actionAdd, SIGNAL(triggered()), this, SLOT(addConnection()));
     connect(ui.actionRemove, SIGNAL(triggered()), this, SLOT(removeConnection()));
+    connect(ui.actionTrack, SIGNAL(triggered()), this, SLOT(trackSlot()));
     addConnection();
 }
 
 RotatorSettings::~RotatorSettings() {
+}
+
+void RotatorSettings::setSatellite(const Satellite *sat) {
+    m_sat = sat;
+}
+
+void RotatorSettings::setLocation(const Location *loc) {
+    m_loc = loc;
 }
 
 void RotatorSettings::updateTable() {
@@ -44,4 +56,20 @@ void RotatorSettings::removeConnection() {
         }
     }
     updateTable();
+}
+
+void RotatorSettings::trackSlot() {
+    int row = ui.tableWidget->currentRow();
+
+    if (row < 0) {
+        return;
+    }
+
+    RotatorWidget *rw = m_settings.value(ui.tableWidget->item(row, 0)->text());
+    if (!rw) {
+        return;
+    }
+    Rotator *r = rw->getRotator();
+    r->setSatellite(m_sat);
+    r->setLocation(m_loc);
 }

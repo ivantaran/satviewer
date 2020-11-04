@@ -3,8 +3,8 @@
 
 #include "../utils/Rotator.h"
 #include "RotatorRadar.h"
-
 #include "ui_rotator.h"
+
 #include <QDockWidget>
 
 class RotatorWidget : public QDockWidget {

@@ -62,11 +62,10 @@ SWindow::SWindow(SatViewer *satviewer) {
 
     dlgOptions = new SDlgOptions(satviewer, satWidget);
     dlgOptions->setParent(this, Qt::Window);
-    move((qApp->desktop()->width() - width()) / 2, (qApp->desktop()->height() - height()) / 2);
+    m_rotatorSettingsWidget.setParent(dlgOptions);
     dlgOptions->move((qApp->desktop()->width() - dlgOptions->width()) / 2,
                      (qApp->desktop()->height() - dlgOptions->height()) / 2);
-    dlgOptions->setRotatorSettings(
-        new RotatorSettings(dlgOptions, widget.dockWidget1->parentWidget()));
+    dlgOptions->setRotatorSettings(&m_rotatorSettingsWidget);
     connect(widget.actionMenu, SIGNAL(triggered()), dlgOptions, SLOT(show()));
 
     uiSettings.setupUi(&settingsWidget);
@@ -120,6 +119,7 @@ SWindow::SWindow(SatViewer *satviewer) {
     // connect(m_radarWidget, SIGNAL(initialized()), this, SLOT(onStart()));
 
     QTimer::singleShot(0, this, SLOT(onStart()));
+    move((qApp->desktop()->width() - width()) / 2, (qApp->desktop()->height() - height()) / 2);
 }
 
 SWindow::~SWindow() {
@@ -503,6 +503,8 @@ void SWindow::setSwlVars(Satellite *sat, Location *loc, double *secs) {
     } else {
         labelSat.setText("");
     }
+    m_rotatorSettingsWidget.setLocation(loc);
+    m_rotatorSettingsWidget.setSatellite(sat);
 }
 
 void SWindow::fullScreen() {

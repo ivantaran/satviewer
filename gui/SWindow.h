@@ -33,28 +33,30 @@ public:
     void writeSettings();
 
 private:
-    SatViewer *m_satviewer;
-    QWidget settingsWidget;
-    Ui::SettingsWidget uiSettings;
     Ui::MainWindow widget;
+    Ui::SettingsWidget uiSettings;
+
+    GLSatAbstractWidget *m_radarWidget;
+    GLSatAbstractWidget *satWidget;
+    QComboBox m_comboBoxTimeStepUnit;
+    QComboBox m_comboBoxTimeZone;
     QDateTimeEdit m_dateTimeEdit;
+    QPalette originalPalette;
+    QSpinBox m_spinBoxTimeStep;
+    QTranslator m_translator;
     QWidget m_spacer1;
     QWidget m_spacer2;
-    QComboBox m_comboBoxTimeZone;
-    QComboBox m_comboBoxTimeStepUnit;
-    QSpinBox m_spinBoxTimeStep;
-    QPalette originalPalette;
-    GLSatAbstractWidget *satWidget;
-    RadarWidget *m_radarWidget;
+    QWidget settingsWidget;
+    RotatorSettings m_rotatorSettingsWidget;
+    SatViewer *m_satviewer;
+    UCheck *uCheck;
+
     time_t time, timeStep;
     time_t timeX; // default 25 or 50, setting timeX, min 1, max 100, step 5
     int timeType;
     QLabel labelLoc, labelSat;
     QStringList listLang;
     QString language;
-    QTranslator m_translator;
-    UCheck *uCheck;
-    QMap<QString, RotatorWidget *> m_rotators;
     void closeEvent(QCloseEvent *event);
     void wheelEvent(QWheelEvent *event);
 
