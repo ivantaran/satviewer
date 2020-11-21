@@ -493,12 +493,12 @@ void SWindow::selectLanguage(int value) {
 
 void SWindow::setSwlVars(Satellite *sat, Location *loc, double *secs) {
     dlgOptions->jswList->setVars(sat, loc, secs);
-    if (loc != NULL) {
+    if (loc != nullptr) {
         labelLoc.setText(loc->name());
     } else {
         labelLoc.setText("");
     }
-    if (sat != NULL) {
+    if (sat != nullptr) {
         labelSat.setText(sat->name());
     } else {
         labelSat.setText("");
