@@ -1,5 +1,4 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 /*
  * Sgp.cpp
  *
@@ -56,7 +55,8 @@ bool Sgp4Model::modelInit(char *state, int size) {
     this->state.n = s->n;
     this->state.node = s->node;
 
-    result = SGP4Funcs::sgp4init(gravconsttype::wgs84, 'i', 0, this->state.jdsatepoch - 2433281.5, //- 2440587.5,
+    result = SGP4Funcs::sgp4init(gravconsttype::wgs84, 'i', 0,
+                                 this->state.jdsatepoch - 2433281.5, //- 2440587.5,
                                  this->state.bstar, 0.0,
                                  0.0, // TODO const double xndot, const double xnddot
                                  this->state.ecc, this->state.argp, this->state.incl, this->state.m,

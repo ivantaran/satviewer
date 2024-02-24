@@ -1,5 +1,4 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 /*
  * SUpdater.cpp
  *
@@ -8,8 +7,8 @@
  */
 
 #include "SUpdater.h"
-#include <QStandardItemModel>
 #include <QFileInfo>
+#include <QStandardItemModel>
 
 SUpdater::SUpdater(QString fileName) {
     widget.setupUi(this);
@@ -19,32 +18,30 @@ SUpdater::SUpdater(QString fileName) {
     httpRequestAborted = false;
     urlIndex = 0;
 
-    connect(widget.btnUpdate, SIGNAL(clicked()), this, SLOT(updateTle()) );
-    connect(widget.btnSave  , SIGNAL(clicked()), this, SLOT(save())      );
-    connect(widget.btnAdd   , SIGNAL(clicked()), this, SLOT(addLine())   );
+    connect(widget.btnUpdate, SIGNAL(clicked()), this, SLOT(updateTle()));
+    connect(widget.btnSave, SIGNAL(clicked()), this, SLOT(save()));
+    connect(widget.btnAdd, SIGNAL(clicked()), this, SLOT(addLine()));
     connect(widget.btnRemove, SIGNAL(clicked()), this, SLOT(removeLine()));
-    connect(widget.btnClear , SIGNAL(clicked()), this, SLOT(clear())     );
-    connect(widget.btnAbort , SIGNAL(clicked()), this, SLOT(abort())     );
-    
+    connect(widget.btnClear, SIGNAL(clicked()), this, SLOT(clear()));
+    connect(widget.btnAbort, SIGNAL(clicked()), this, SLOT(abort()));
+
     load(fileName);
 }
 
 SUpdater::~SUpdater() {
-
 }
 
 void SUpdater::updateTle() {
     QStandardItemModel *model = (QStandardItemModel *)widget.listView->model();
-    
-    while ( (urlIndex < model->rowCount()) &&
-            (model->item(urlIndex)->checkState() == Qt::Unchecked) )
+
+    while ((urlIndex < model->rowCount()) && (model->item(urlIndex)->checkState() == Qt::Unchecked))
         urlIndex++;
-    
+
     if (urlIndex >= model->rowCount()) {
         urlIndex = 0;
         return;
     }
-    
+
     widget.progressBar->setValue(0);
 
     if (file) {
@@ -58,7 +55,7 @@ void SUpdater::updateTle() {
 
     QFileInfo fileInfo(url.url());
     QString fileName = fileInfo.fileName();
-    
+
     if (fileName.isEmpty()) {
         fileName = "index.html";
     }
@@ -71,8 +68,8 @@ void SUpdater::updateTle() {
     file = new QFile(fileInfo.path() + "/" + fileName);
 
     if (!file->open(QFile::WriteOnly)) {
-        widget.textStatus->appendPlainText(QString("[%0]: %1").arg(fileName)
-            .arg(file->errorString()));
+        widget.textStatus->appendPlainText(
+            QString("[%0]: %1").arg(fileName).arg(file->errorString()));
         delete file;
         file = NULL;
         return;
@@ -80,9 +77,9 @@ void SUpdater::updateTle() {
 
     httpRequestAborted = false;
     reply = manager.get(QNetworkRequest(url));
-    
-    connect(reply, SIGNAL(finished()) , this, SLOT(httpFinished()) );  // TODO disconnect
-    connect(reply, SIGNAL(downloadProgress(qint64, qint64)), this, 
+
+    connect(reply, SIGNAL(finished()), this, SLOT(httpFinished())); // TODO disconnect
+    connect(reply, SIGNAL(downloadProgress(qint64, qint64)), this,
             SLOT(updateDataReadProgress(qint64, qint64)));
 }
 
@@ -97,19 +94,17 @@ void SUpdater::updateDataReadProgress(qint64 bytesRead, qint64 totalBytes) {
 
 void SUpdater::httpFinished() {
     QStandardItemModel *model = (QStandardItemModel *)widget.listView->model();
-    
+
     if (reply->error()) {
         file->remove();
         model->item(urlIndex)->setIcon(QIcon(":/status/prohibition.svg"));
-        widget.textStatus->appendPlainText(QString("[%0]: %1")
-            .arg(file->fileName()).arg(reply->errorString()));
-    }
-    else {
+        widget.textStatus->appendPlainText(
+            QString("[%0]: %1").arg(file->fileName()).arg(reply->errorString()));
+    } else {
         model->item(urlIndex)->setIcon(QIcon(":/status/correct.svg"));
         if (file->isWritable()) {
             file->write(reply->readAll());
-        }
-        else {
+        } else {
             qWarning("Error: SUpdater file write");
         }
     }
@@ -117,7 +112,7 @@ void SUpdater::httpFinished() {
     file->close();
     reply->deleteLater();
     reply = 0;
-    
+
     if (httpRequestAborted) {
         return;
     }
@@ -139,16 +134,15 @@ void SUpdater::load(QString fileName) {
     listFile = new QFile(fileName);
 
     if (!listFile->exists()) {
-        widget.textStatus->appendPlainText(QString("Error access to file [%0].")
-            .arg(fileName));
+        widget.textStatus->appendPlainText(QString("Error access to file [%0].").arg(fileName));
         return;
     }
 
     listFile->open(QFile::ReadOnly | QFile::Text);
 
     if (!listFile->isOpen()) {
-        widget.textStatus->appendPlainText(QString("[%0]: %1").arg(fileName)
-            .arg(file->errorString()));
+        widget.textStatus->appendPlainText(
+            QString("[%0]: %1").arg(fileName).arg(file->errorString()));
         return;
     };
 
@@ -158,7 +152,8 @@ void SUpdater::load(QString fileName) {
         url = line.section(',', 1).trimmed();
         model->appendRow(new QStandardItem(url));
         model->item(i)->setCheckable(true);
-        if (state) model->item(i)->setCheckState(Qt::Checked);
+        if (state)
+            model->item(i)->setCheckState(Qt::Checked);
         i++;
     }
 
@@ -172,16 +167,16 @@ void SUpdater::save() {
     QStandardItemModel *model = (QStandardItemModel *)widget.listView->model();
 
     if (!listFile->exists()) {
-        widget.textStatus->appendPlainText(QString("Error access to file [%0].")
-            .arg(listFile->fileName()));
+        widget.textStatus->appendPlainText(
+            QString("Error access to file [%0].").arg(listFile->fileName()));
         return;
     }
 
     listFile->open(QFile::WriteOnly | QFile::Text);
 
     if (!listFile->isOpen()) {
-        widget.textStatus->appendPlainText(QString("[%0]: %1")
-            .arg(listFile->fileName()).arg(file->errorString()));
+        widget.textStatus->appendPlainText(
+            QString("[%0]: %1").arg(listFile->fileName()).arg(file->errorString()));
         return;
     }
 

@@ -1,5 +1,4 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 /*
  * SDlgOptions.cpp
  *
@@ -7,8 +6,8 @@
  *      Author: Ivan Ryazanov
  */
 #include "SDlgOptions.h"
-#include "Sgp4Dialog.h"
 #include "../utils/dbsql.h"
+#include "Sgp4Dialog.h"
 #include <fstream>
 
 SDlgOptions::SDlgOptions(SatViewer *satviewer, GLSatAbstractWidget *w) {

@@ -1,5 +1,4 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 /*
  * UCheck.cpp
  *
@@ -9,18 +8,19 @@
 
 #include "UCheck.h"
 #include <QDir>
-#include <QSettings>
 #include <QMessageBox>
+#include <QSettings>
 
-UCheck::UCheck(QWidget * parent, int versionId, QString request) : QNetworkAccessManager(parent) {
+UCheck::UCheck(QWidget *parent, int versionId, QString request) : QNetworkAccessManager(parent) {
     m_id = versionId;
-    m_request = request;	//"/version/current.txt"
+    m_request = request; //"/version/current.txt"
     m_file.setFileName(QDir::temp().filePath("satviewer.ver"));
     reply = NULL;
 }
 
 UCheck::~UCheck() {
-    if (m_file.isOpen()) m_file.close();
+    if (m_file.isOpen())
+        m_file.close();
 }
 
 void UCheck::check() {
@@ -28,7 +28,7 @@ void UCheck::check() {
         qWarning("error: can't create 'satviewer.ver' file in the temp");
     reply = get(QNetworkRequest(m_request));
 
-    connect(reply, SIGNAL(finished()) , this, SLOT(httpFinished ()));
+    connect(reply, SIGNAL(finished()), this, SLOT(httpFinished()));
     connect(reply, SIGNAL(readyRead()), this, SLOT(httpReadyRead()));
 }
 
@@ -39,10 +39,10 @@ void UCheck::httpFinished() {
         QString name = settings.value("name", "").toString();
         QString url = settings.value("url", "").toString();
         if ((id > m_id) && (!name.isEmpty()) && (!url.isEmpty())) {
-            QMessageBox::information((QWidget *)parent(), 
-                    tr("Update is avaible"), 
-                    tr("Latest version %1 here:<br><a href=\"%2\">%2</a>")
-            .arg(name).arg(url), QMessageBox::Ok);
+            QMessageBox::information(
+                (QWidget *)parent(), tr("Update is avaible"),
+                tr("Latest version %1 here:<br><a href=\"%2\">%2</a>").arg(name).arg(url),
+                QMessageBox::Ok);
         }
         m_file.close();
         m_file.remove();
@@ -54,6 +54,6 @@ void UCheck::httpFinished() {
 void UCheck::httpReadyRead() {
     if (m_file.isOpen() && m_file.isWritable())
         m_file.write(reply->readAll());
-    else 
+    else
         qWarning("error: can't write 'satviewer.ver' file in the temp");
 }

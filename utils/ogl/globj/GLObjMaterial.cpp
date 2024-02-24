@@ -1,5 +1,4 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 /*
  * GLObjMaterial.cpp
  *
@@ -79,7 +78,7 @@ void GLObjMaterial::init() {
         //			glBindTexture(GL_TEXTURE_2D, *material->mapKa());
         //			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         //			gluBuild2DMipmaps(GL_TEXTURE_2D, 4, img.width(), img.height(), GL_RGBA,
-        //GL_UNSIGNED_BYTE, img.bits()); 			continue;
+        // GL_UNSIGNED_BYTE, img.bits()); 			continue;
         //		}
         if ((strcmp(type, "map_Kd") == 0) && (material != 0)) {
             material->setMapKdOn(true);
@@ -104,7 +103,7 @@ void GLObjMaterial::init() {
             //			glBindTexture(GL_TEXTURE_2D, *material->mapKd());
             //			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
             //			gluBuild2DMipmaps(GL_TEXTURE_2D, 4, img.width(), img.height(), GL_RGBA,
-            //GL_UNSIGNED_BYTE, img.bits());
+            // GL_UNSIGNED_BYTE, img.bits());
             continue;
         }
         //		if ((strcmp(type, "map_Ks") == 0) && (material != 0)) {
@@ -116,7 +115,7 @@ void GLObjMaterial::init() {
         //			glBindTexture(GL_TEXTURE_2D, *material->mapKs());
         //			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         //			gluBuild2DMipmaps(GL_TEXTURE_2D, 4, img.width(), img.height(), GL_RGBA,
-        //GL_UNSIGNED_BYTE, img.bits()); 			continue;
+        // GL_UNSIGNED_BYTE, img.bits()); 			continue;
         //		}
         //		if ((strcmp(type, "map_Ke") == 0) && (material != 0)) {
         //			material->setMapKeOn(true);
@@ -127,7 +126,7 @@ void GLObjMaterial::init() {
         //			glBindTexture(GL_TEXTURE_2D, *material->mapKe());
         //			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         //			gluBuild2DMipmaps(GL_TEXTURE_2D, 4, img.width(), img.height(), GL_RGBA,
-        //GL_UNSIGNED_BYTE, img.bits()); 			continue;
+        // GL_UNSIGNED_BYTE, img.bits()); 			continue;
         //		}
         //		if ((strcmp(type, "map_Ns") == 0) && (material != 0)) {
         //			material->setMapNsOn(true);
@@ -138,7 +137,7 @@ void GLObjMaterial::init() {
         //			glBindTexture(GL_TEXTURE_2D, *material->mapNs());
         //			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         //			gluBuild2DMipmaps(GL_TEXTURE_2D, 4, img.width(), img.height(), GL_RGBA,
-        //GL_UNSIGNED_BYTE, img.bits()); 			continue;
+        // GL_UNSIGNED_BYTE, img.bits()); 			continue;
         //		}
     }
 }

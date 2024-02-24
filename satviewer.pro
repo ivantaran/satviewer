@@ -105,10 +105,3 @@ CODECFORTR = UTF-8
 #win32:{
 #    RC_FILE = satviewer.rc
 #}
-
-pvs_studio.target = analyze
-#pvs_studio.output = true
-pvs_studio.format = fullhtml
-pvs_studio.cxxflags = -std=c++11
-pvs_studio.sources = $${SOURCES}
-include(PVS-Studio.pri)
