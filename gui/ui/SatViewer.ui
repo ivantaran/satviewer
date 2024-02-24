@@ -21,7 +21,7 @@
    <string>SatViewer</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="SatViewer.qrc">
+   <iconset>
     <normaloff>:/options/satviewer.svg</normaloff>:/options/satviewer.svg</iconset>
   </property>
   <property name="locale">
@@ -64,7 +64,8 @@
   </widget>
   <action name="actionMenu">
    <property name="icon">
-    <iconset theme="emblem-system"/>
+    <iconset theme="emblem-system">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Menu</string>
@@ -75,7 +76,8 @@
   </action>
   <action name="actionExit">
    <property name="icon">
-    <iconset theme="application-exit"/>
+    <iconset theme="application-exit">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -86,7 +88,8 @@
   </action>
   <action name="actionFullScreen">
    <property name="icon">
-    <iconset theme="view-fullscreen"/>
+    <iconset theme="view-fullscreen">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>FullScreen</string>
@@ -100,7 +103,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="media-eject"/>
+    <iconset theme="media-eject">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Time</string>
@@ -114,7 +118,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="media-playback-start"/>
+    <iconset theme="media-playback-start">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Play</string>
@@ -128,7 +133,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="media-seek-backward"/>
+    <iconset theme="media-seek-backward">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Backward</string>
@@ -142,7 +148,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="media-seek-forward"/>
+    <iconset theme="media-seek-forward">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Forward</string>
@@ -161,7 +168,7 @@
   </action>
  </widget>
  <resources>
-  <include location="SatViewer.qrc"/>
+  <include location="../SatViewer.qrc"/>
  </resources>
  <connections>
   <connection>

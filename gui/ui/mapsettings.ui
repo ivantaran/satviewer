@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>320</width>
-    <height>268</height>
+    <height>317</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -228,7 +228,7 @@
   <tabstop>checkNight</tabstop>
  </tabstops>
  <resources>
-  <include location="SatViewer.qrc"/>
+  <include location="../SatViewer.qrc"/>
  </resources>
  <connections/>
 </ui>
