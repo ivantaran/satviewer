@@ -1,4 +1,5 @@
 #include "RotatorRadar.h"
+#include <QPainterPath>
 
 RotatorRadar::RotatorRadar() {
 }
@@ -6,7 +7,7 @@ RotatorRadar::RotatorRadar() {
 RotatorRadar::~RotatorRadar() {
 }
 
-void RotatorRadar::paintEvent(QPaintEvent* event) {
+void RotatorRadar::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event)
 
     m_colorBackground = Qt::black;
@@ -16,24 +17,24 @@ void RotatorRadar::paintEvent(QPaintEvent* event) {
 
     const qreal scale0 = 0.14644660940672623779957781894758;
     const qreal scale1 = (1.0 - scale0);
-    
+
     QPainter p;
     p.begin(this);
     // this->setMargins(&p);
 
     p.setRenderHint(QPainter::Antialiasing, true);
     p.setRenderHint(QPainter::TextAntialiasing, true);
-    
+
     QPen pen = p.pen();
     pen.setWidth(1);
     p.setPen(m_colorGrid);
-    
+
     QPainterPath path;
     qreal rx = p.device()->width();
     qreal ry = p.device()->height();
-    
+
     QPointF point(0.5 * rx, 0.5 * ry);
-    
+
     path.addEllipse(point, 0.50 * rx, 0.50 * ry);
     p.fillPath(path, m_colorBackground);
     path.addEllipse(point, 0.25 * rx, 0.25 * ry);
@@ -43,7 +44,7 @@ void RotatorRadar::paintEvent(QPaintEvent* event) {
     p.drawLine(0.5 * rx, 0, 0.5 * rx, ry);
     p.drawLine(rx * scale0 + 1, ry * scale0 + 1, rx * scale1 - 1, ry * scale1 - 1);
     p.drawLine(rx * scale0 + 1, ry * scale1 - 1, rx * scale1 - 1, ry * scale0 + 1);
-    
+
     // drawItems(&p);
     drawSensor(&p);
 
@@ -51,11 +52,11 @@ void RotatorRadar::paintEvent(QPaintEvent* event) {
 }
 
 // void RotatorRadar::drawItems(QPainter *p) {
-    
+
 //     QString label;
 //     bool visible;
 //     qreal xx, yy, rr;
-    
+
 //     qreal w = (qreal)p->device()->width();
 //     qreal h = (qreal)p->device()->height();
 //     qreal r = qMin(w, h) * 0.075;
@@ -64,7 +65,7 @@ void RotatorRadar::paintEvent(QPaintEvent* event) {
 //     font.setPointSizeF(r);
 //     font.setFamily("Consolas");
 //     p->setFont(font);
-    
+
 //     for (int i = 0; i < ItemsCount; i++) {
 //         rr = 0.5 - items[i].elv / M_PI;
 //         if (rr >= 0.0 && rr <= 0.5) {
@@ -79,7 +80,7 @@ void RotatorRadar::paintEvent(QPaintEvent* event) {
 //             label = "00";
 //             visible = false;
 //         }
-        
+
 //         if (visible) {
 //             qreal x = w * 0.5 + xx * w;
 //             qreal y = h * 0.5 + yy * h;
@@ -113,16 +114,16 @@ void RotatorRadar::paintEvent(QPaintEvent* event) {
 
 void RotatorRadar::resizeEvent(QResizeEvent *event) {
     Q_UNUSED(event)
-    
+
     int size = qMin(this->width(), this->height());
     this->resize(size, size);
 }
 
 void RotatorRadar::drawSensor(QPainter *p) {
-    
+
     bool visible;
     qreal xx, yy, rr;
-    
+
     qreal w = (qreal)p->device()->width();
     qreal h = (qreal)p->device()->height();
     qreal r = qMin(w, h) * 0.033;
@@ -131,19 +132,18 @@ void RotatorRadar::drawSensor(QPainter *p) {
     font.setPointSizeF(r);
     font.setFamily("Consolas");
     p->setFont(font);
-    
+
     rr = (0.5 - m_sensor.elv / M_PI);
     if (m_sensor.visible) {
         xx = rr * qCos(m_sensor.azm - M_PI_2);
         yy = rr * qSin(m_sensor.azm - M_PI_2);
         visible = true;
-    }
-    else {
+    } else {
         xx = 0.0;
         yy = 0.0;
         visible = false;
     }
-    
+
     if (visible) {
         qreal x = w * 0.5 + xx * w;
         qreal y = h * 0.5 + yy * h;

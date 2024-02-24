@@ -8,6 +8,7 @@
 #include "SatViewer.h"
 #include "gui/SWindow.h"
 #include <QApplication>
+#include <QtDebug>
 
 void copyDefault() {
     QString home = QDir::home().path() + QDir::separator() + "satviewer" + QDir::separator();
