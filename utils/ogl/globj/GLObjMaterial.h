@@ -17,7 +17,6 @@
 #include <vector>
 
 #define BUF_SIZE 256
-using namespace std;
 
 class mtl {
 public:
@@ -196,9 +195,9 @@ public:
     bool mapNsOn();
 
 private:
-    ifstream file;
+    std::ifstream file;
     std::string m_path;
-    vector<mtl *> materials;
+    std::vector<mtl *> materials;
     mtl *material;
     mtl defMtl;
     char line[BUF_SIZE];

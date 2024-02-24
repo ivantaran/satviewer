@@ -10,15 +10,13 @@
 
 #include <inttypes.h>
 //#include <QtOpenGL>
+#include "GLObjMaterial.h"
+#include <QOpenGLFunctions_2_0>
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include "GLObjMaterial.h"
-#include <QOpenGLFunctions_2_0>
 
 #define BUF_SIZE 256
-
-using namespace std;
 
 class GLObjecter : protected QOpenGLFunctions_2_0 {
 public:
@@ -34,7 +32,7 @@ public:
     void exec();
 
 private:
-    iostream *file;
+    std::iostream *file;
     std::string m_path;
     float m_xyz[3];
     float m_angle[3];

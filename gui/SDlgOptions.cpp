@@ -541,7 +541,7 @@ void SDlgOptions::loadDbLoc() {
     QString query;
     char buf[256];
     QString filePath;
-    ifstream f;
+    std::ifstream f;
     QDir dir = QDir::home();
     dir.cd("satviewer/loc");
     QStringList fileList = QFileDialog::getOpenFileNames(this, "Open File", dir.path(),

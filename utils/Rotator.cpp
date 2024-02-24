@@ -18,7 +18,7 @@ Rotator::Rotator() {
 }
 
 Rotator::~Rotator() {
-    qWarning() << __func__ << endl;
+    qWarning() << __func__;
 }
 
 void Rotator::timerEvent(QTimerEvent *event) {
@@ -76,7 +76,7 @@ void Rotator::readyReadSlot() {
 
     while (canReadLine()) {
         m_stateLine = QString::fromUtf8(readLine()).trimmed();
-        
+
         if (m_stateLine.isEmpty()) {
             continue;
         }
@@ -247,7 +247,7 @@ void Rotator::readSettings(const QString &fileName) {
     m_initList.clear();
     value = jsonObject.value("init");
     QJsonArray jsonArray = value.toArray();
-    for (const auto &item: jsonArray) {
+    for (const auto &item : jsonArray) {
         m_initList.append(item.toString());
     }
 

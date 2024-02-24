@@ -13,8 +13,6 @@
 #include <stdlib.h>
 #include <vector>
 
-using namespace std;
-
 class ZrvIoListItem {
 public:
     double time;

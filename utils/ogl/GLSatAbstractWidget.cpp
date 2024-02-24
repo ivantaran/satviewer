@@ -86,7 +86,7 @@ void GLSatAbstractWidget::initializeGL() {
     //    glBlendFunc(GL_DST_COLOR, GL_SRC_COLOR);
     //    loadTexture();
     list_map = glGenLists(6);
-    qWarning() << "list_map" << list_map << endl;
+    qWarning() << "list_map" << list_map;
     assert(list_map > 0);
 
     list_net = list_map + 1;

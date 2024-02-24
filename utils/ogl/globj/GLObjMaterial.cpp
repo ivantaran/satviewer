@@ -19,11 +19,11 @@ GLObjMaterial::GLObjMaterial(QOpenGLWidget *parent, const char *path, const char
     m_path = path;
     m_parent = parent;
     m_parent->makeCurrent();
-    string fullname = path;
+    std::string fullname = path;
     fullname.append("/").append(fileName);
     file.open(fullname.c_str());
     if (!file.is_open()) {
-        cout << "mtl file not open " << fullname << endl;
+        std::cout << "mtl file not open " << fullname;
         return;
     }
     setlocale(LC_NUMERIC, "C");
@@ -32,7 +32,7 @@ GLObjMaterial::GLObjMaterial(QOpenGLWidget *parent, const char *path, const char
 }
 
 GLObjMaterial::~GLObjMaterial() {
-    for (vector<mtl *>::iterator i = materials.begin(); i != materials.end(); i++)
+    for (std::vector<mtl *>::iterator i = materials.begin(); i != materials.end(); i++)
         delete *i;
 }
 
@@ -83,7 +83,7 @@ void GLObjMaterial::init() {
         if ((strcmp(type, "map_Kd") == 0) && (material != 0)) {
             material->setMapKdOn(true);
             sscanf(line, "%*s %64s", type);
-            string fullname = m_path;
+            std::string fullname = m_path;
             fullname.append("/").append(type);
             m_parent->makeCurrent();
             if (!img.load(fullname.c_str())) {
@@ -149,7 +149,7 @@ void GLObjMaterial::addMaterial() {
 }
 
 void GLObjMaterial::set(char *mtlName) {
-    vector<mtl *>::iterator current;
+    std::vector<mtl *>::iterator current;
     material = 0;
     current = materials.begin();
     while (current != materials.end()) {

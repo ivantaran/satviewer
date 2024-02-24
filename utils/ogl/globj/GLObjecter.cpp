@@ -28,21 +28,21 @@ GLObjecter::GLObjecter(QOpenGLWidget *parent, int index, const char *path, const
         puts("error: GLObjecter initializeOpenGLFunctions");
         exit(-1);
     }
-    string fullname = path;
+    std::string fullname = path;
     fullname.append("/").append(fileName);
-    filebuf fbuf;
-    fbuf.open(fullname.c_str(), _S_in);
+    std::filebuf fbuf;
+    fbuf.open(fullname.c_str(), std::_S_in);
     if (!fbuf.is_open()) {
-        cout << "obj file not open " << fileName << endl;
+        std::cout << "obj file not open " << fileName;
         return;
     }
-    ifstream f(fullname.c_str());
+    std::ifstream f(fullname.c_str());
     if (!f.is_open()) {
-        cout << "obj file not open " << fileName << endl;
+        std::cout << "obj file not open " << fileName;
         return;
     }
 
-    file = new iostream(&fbuf);
+    file = new std::iostream(&fbuf);
     mtlLib = 0;
     setlocale(LC_NUMERIC, "C");
     init();
@@ -115,7 +115,7 @@ void GLObjecter::init() {
         }
         if (strcmp(type, "g") == 0) {
             sscanf(line, "%*s %64s", type);
-            cout << type << endl;
+            std::cout << type;
             continue;
         }
     }
@@ -155,7 +155,7 @@ void GLObjecter::addFace() {
         switch (c) {
         default:
         case 0:
-            cout << c << " bad face " << token << endl;
+            std::cout << c << " bad face " << token;
             break;
         case 1:
             if (sscanf(token, "%d//%d", &tmp[0], &tmp[2]) == 2) {

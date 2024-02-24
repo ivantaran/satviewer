@@ -1,18 +1,9 @@
-
-/*
- * SatList.h
- *
- *  Created on: 21.05.2009
- *      Author: Ivan Ryazanov
- */
-
 #include "TleReader.h"
+
 #include <fstream>
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
-
-using namespace std;
 
 #define deg2rad (M_PI / 180.0)
 #define xpdotp (1440.0 / (2.0 * M_PI))
@@ -38,7 +29,7 @@ void TleReader::init(const char *fileName) {
     m_count = -1;
     fName = new char[strlen(fileName) + 1];
     strcpy(fName, fileName);
-    ifstream f(fName);
+    std::ifstream f(fName);
     if (!f.is_open())
         return;
     char line1[TLE_LINE_LEN], line2[TLE_LINE_LEN];
@@ -57,7 +48,7 @@ void TleReader::init(const char *fileName) {
     // f.clear();
     // f.seekg(0);
     f.close();
-    fstream fa(fName);
+    std::fstream fa(fName);
     for (int i = 0; i < 3; i++) {
         lines[i] = new char *[m_count];
         for (int j = 0; j < m_count; j++)
