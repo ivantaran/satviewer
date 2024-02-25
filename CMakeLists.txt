@@ -5,8 +5,6 @@ project(satviewer VERSION 1.0.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_AUTOUIC_SEARCH_PATHS "gui/ui")
-
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -21,20 +19,20 @@ find_package(Qt5 COMPONENTS Core REQUIRED)
 find_package(Qt5 COMPONENTS Sql REQUIRED)
 find_package(Qt5 COMPONENTS Qml REQUIRED)
 
+set(CMAKE_AUTOUIC_SEARCH_PATHS "src/gui/ui")
+
 file(GLOB SOURCES
-    "gui/*.cpp"
-    "utils/*.cpp"
-    "utils/ogl/*.cpp"
-    "utils/ogl/globj/*.cpp"
-    "utils/ogl/glsprite/*.cpp"
-    "utils/models/sun/*.c"
-    "utils/models/sgp4/*.cpp"
+    "src/*.cpp"
+    "src/gui/*.cpp"
+    "src/gui/SatViewer.qrc"
+    "src/ogl/*.cpp"
+    "src/ogl/globj/*.cpp"
+    "src/ogl/glsprite/*.cpp"
+    "src/models/sun/*.c"
+    "src/models/sgp4/*.cpp"
 )
 add_executable(satviewer
-    main.cpp
     ${SOURCES}
-    SatViewer.cpp
-    gui/SatViewer.qrc
 )
 
 target_link_libraries(satviewer Qt5::Widgets)

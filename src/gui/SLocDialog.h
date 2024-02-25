@@ -17,8 +17,8 @@
 #include <QValidator>
 #include <inttypes.h>
 
-#include "../utils/Location.h"
-#include "../utils/ogl/GLSatAbstractWidget.h"
+#include "../Location.h"
+#include "../ogl/GLSatAbstractWidget.h"
 
 class SLocDialog : public QDialog {
     Q_OBJECT

@@ -8,7 +8,7 @@
 #ifndef LOCATION_H_
 #define LOCATION_H_
 
-#include "../utils/ogl/SatWidgetObject.h"
+#include "ogl/SatWidgetObject.h"
 #include <QFont>
 #include <QString>
 #include <inttypes.h>

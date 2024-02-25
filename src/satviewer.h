@@ -1,5 +1,5 @@
 /*
- * File:   SatViewer.h
+ * File:   satviewer.h
  * Author: Ivan Ryazanov
  *
  * Created on April 13, 2019, 9:45 PM
@@ -8,9 +8,9 @@
 #ifndef SATVIEWER_H
 #define SATVIEWER_H
 
-#include "utils/Location.h"
-#include "utils/Satellite.h"
-#include "utils/ZrvIoList.h"
+#include "Location.h"
+#include "Satellite.h"
+#include "ZrvIoList.h"
 
 class SatViewer : public QObject {
     Q_OBJECT

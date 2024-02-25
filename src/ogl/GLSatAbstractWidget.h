@@ -14,8 +14,8 @@
 #include <QSettings>
 #include <inttypes.h>
 
-#include "../../SatViewer.h"
 #include "../ZrvIoList.h"
+#include "../satviewer.h"
 
 typedef Satellite *(*CustomSat)(); // TODO remove this
 

@@ -6,7 +6,7 @@
  *      Author: Ivan Ryazanov
  */
 #include "SDlgOptions.h"
-#include "../utils/dbsql.h"
+#include "../dbsql.h"
 #include "Sgp4Dialog.h"
 #include <fstream>
 

@@ -8,8 +8,8 @@
 #ifndef SGP4DIALOG_H_
 #define SGP4DIALOG_H_
 
-#include "../utils/models/sgp4/Sgp4Model.h"
-#include "../utils/ogl/GLSatAbstractWidget.h"
+#include "../models/sgp4/Sgp4Model.h"
+#include "../ogl/GLSatAbstractWidget.h"
 #include "ui_sgp4.h"
 #include <inttypes.h>
 

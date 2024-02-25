@@ -1,5 +1,5 @@
 /*
- * File:   SatViewer.cpp
+ * File:   satviewer.cpp
  * Author: Ivan Ryazanov
  *
  * Created on April 13, 2019, 9:45 PM
@@ -7,7 +7,7 @@
 
 #include <cfloat>
 
-#include "SatViewer.h"
+#include "satviewer.h"
 
 SatViewer::SatViewer() {
     m_satellites.clear();

@@ -8,10 +8,10 @@
 #ifndef SWINDOW_H_
 #define SWINDOW_H_
 
-#include "../SatViewer.h"
-#include "../utils/ogl/GLSatWidget.h"
-#include "../utils/ogl/GLSatWidget3d.h"
-#include "../utils/ogl/RadarWidget.h"
+#include "../ogl/GLSatWidget.h"
+#include "../ogl/GLSatWidget3d.h"
+#include "../ogl/RadarWidget.h"
+#include "../satviewer.h"
 #include "RotatorWidget.h"
 #include "SDlgOptions.h"
 #include "UCheck.h"

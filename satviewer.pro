@@ -13,8 +13,8 @@ QT      += gui core sql widgets network qml
 QMAKE_CXXFLAGS_DEBUG += -O0
 
 HEADERS += \
-    SatViewer.h \
-    SatViewer.h \
+    satviewer.h \
+    satviewer.h \
     utils/models/sgp4/SGP4.h \
     utils/models/sgp4/Sgp4Model.h \
     utils/models/sun/sunmodel.c \
@@ -46,7 +46,7 @@ HEADERS += \
 
 SOURCES += \
     main.cpp \
-    SatViewer.cpp \
+    satviewer.cpp \
     utils/models/sgp4/SGP4.cpp \
     utils/models/sgp4/Sgp4Model.cpp \
     utils/models/sun/sunmodel.c \

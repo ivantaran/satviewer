@@ -8,7 +8,7 @@
             "name": "debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/satviewer",
+            "program": "${workspaceFolder}/build/satviewer",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

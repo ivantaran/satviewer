@@ -5,8 +5,8 @@
  * Created on April 13, 2019, 9:41 PM
  */
 
-#include "SatViewer.h"
 #include "gui/SWindow.h"
+#include "satviewer.h"
 #include <QApplication>
 #include <QtDebug>
 

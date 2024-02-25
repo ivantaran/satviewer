@@ -1,7 +1,7 @@
 #ifndef ROTATOR_WIDGET_H_
 #define ROTATOR_WIDGET_H_
 
-#include "../utils/Rotator.h"
+#include "../Rotator.h"
 #include "RotatorRadar.h"
 
 #include "ui_rotator.h"
