@@ -14,9 +14,9 @@
 #include "RotatorSettings.h"
 #include "SLocDialog.h"
 #include "SScriptFrame.h"
-#include "SUpdater.h"
 #include "SWidgetList.h"
 #include "Sgp4Dialog.h"
+#include "supdater.h"
 #include "ui_options.h"
 #include <QColorDialog>
 #include <QDataWidgetMapper>
