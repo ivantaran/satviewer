@@ -1,5 +1,11 @@
 {
     "C_Cpp.default.includePath": [
         "/usr/include/x86_64-linux-gnu/qt5/**"
-    ]
+    ],
+    "files.associations": {
+        "qstandarditemmodel": "cpp",
+        "atomic": "cpp",
+        "memory_resource": "cpp",
+        "stop_token": "cpp"
+    }
 }
