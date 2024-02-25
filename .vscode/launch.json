@@ -12,6 +12,7 @@
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
+            "preLaunchTask": "make",
             "environment": [
                 {
                     "name": "GTK_PATH"

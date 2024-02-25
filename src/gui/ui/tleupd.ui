@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>285</height>
+    <width>373</width>
+    <height>319</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -93,7 +93,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="network-receive"/>
+         <iconset theme="network-receive">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="autoRaise">
          <bool>true</bool>
@@ -109,7 +110,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="process-stop"/>
+         <iconset theme="process-stop">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="autoRaise">
          <bool>true</bool>
@@ -132,7 +134,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="document-save"/>
+         <iconset theme="document-save">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="autoRaise">
          <bool>true</bool>
@@ -148,7 +151,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="list-add"/>
+         <iconset theme="list-add">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="autoRaise">
          <bool>true</bool>
@@ -164,7 +168,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="list-remove"/>
+         <iconset theme="list-remove">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="autoRaise">
          <bool>true</bool>
@@ -180,7 +185,8 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="user-trash"/>
+         <iconset theme="user-trash">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="autoRaise">
          <bool>true</bool>
