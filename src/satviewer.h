@@ -1,16 +1,10 @@
-/*
- * File:   satviewer.h
- * Author: Ivan Ryazanov
- *
- * Created on April 13, 2019, 9:45 PM
- */
 
 #ifndef SATVIEWER_H
 #define SATVIEWER_H
 
-#include "Location.h"
-#include "Satellite.h"
 #include "ZrvIoList.h"
+#include "location.h"
+#include "satellite.h"
 
 class SatViewer : public QObject {
     Q_OBJECT

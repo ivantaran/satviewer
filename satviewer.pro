@@ -27,9 +27,9 @@ HEADERS += \
     utils/ogl/glsprite/GLSprite.h \
     utils/ogl/SatWidgetObject.h \
     utils/Rotator.h \
-    utils/Satellite.h \
+    utils/satellite.h \
     utils/TleReader.h \
-    utils/Location.h \
+    utils/location.h \
     utils/ZrvIoList.h \ 
     gui/RotatorRadar.h \
     gui/RotatorSettings.h \
@@ -59,9 +59,9 @@ SOURCES += \
     utils/ogl/glsprite/GLSprite.cpp \
     utils/ogl/SatWidgetObject.cpp \
     utils/Rotator.cpp \
-    utils/Satellite.cpp \
+    utils/satellite.cpp \
     utils/TleReader.cpp \
-    utils/Location.cpp \
+    utils/location.cpp \
     utils/ZrvIoList.cpp \ 
     gui/RotatorRadar.cpp \
     gui/RotatorSettings.cpp \

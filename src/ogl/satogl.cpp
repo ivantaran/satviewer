@@ -9,5 +9,5 @@
 // #include "GL/glu.h"
 // #include "math.h"
 //#include <QtOpenGL>
-// #include "locutils/Location.h"
-// #include "satutils/Satellite.h"
+// #include "locutils/location.h"
+// #include "satutils/satellite.h"

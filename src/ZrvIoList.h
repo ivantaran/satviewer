@@ -8,8 +8,8 @@
 #ifndef ZRVIOLIST_H_
 #define ZRVIOLIST_H_
 
-#include "Location.h"
-#include "Satellite.h"
+#include "location.h"
+#include "satellite.h"
 #include <stdlib.h>
 #include <vector>
 

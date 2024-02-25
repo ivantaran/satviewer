@@ -1,17 +1,9 @@
-/*
- * File:   satviewer.cpp
- * Author: Ivan Ryazanov
- *
- * Created on April 13, 2019, 9:45 PM
- */
 
 #include <cfloat>
 
 #include "satviewer.h"
 
 SatViewer::SatViewer() {
-    m_satellites.clear();
-    m_locations.clear();
     m_currentSatellite = nullptr;
     m_currentLocation = nullptr;
     m_time = 0.0;

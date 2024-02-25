@@ -8,9 +8,9 @@
 #ifndef SDLGOPTIONS_H_
 #define SDLGOPTIONS_H_
 
-#include "../Satellite.h"
 #include "../ZrvIoList.h"
 #include "../ogl/GLSatWidget.h"
+#include "../satellite.h"
 #include "RotatorSettings.h"
 #include "SLocDialog.h"
 #include "SScriptFrame.h"

@@ -8,8 +8,8 @@
 #ifndef SWIDGET_H_
 #define SWIDGET_H_
 
-#include "../Location.h"
-#include "../Satellite.h"
+#include "../location.h"
+#include "../satellite.h"
 #include <QFontMetrics>
 #include <QJSEngine>
 #include <QPainter>

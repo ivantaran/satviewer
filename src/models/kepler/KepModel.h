@@ -8,7 +8,7 @@
 #ifndef KEPMODEL_H_
 #define KEPMODEL_H_
 
-#include "../../satviewer/satutils/Satellite.h"
+#include "../../satviewer/satutils/satellite.h"
 
 class KepModel : public Satellite {
 public:

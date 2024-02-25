@@ -8,8 +8,8 @@
 #ifndef SGP4MODEL_H_
 #define SGP4MODEL_H_
 
-#include "../../Satellite.h"
 #include "../../TleReader.h"
+#include "../../satellite.h"
 #include "SGP4.h"
 
 class Sgp4Model : public Satellite {

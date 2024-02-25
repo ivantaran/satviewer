@@ -8,8 +8,8 @@
 #ifndef SSCRIPTFRAME_H_
 #define SSCRIPTFRAME_H_
 
-#include "../Location.h"
-#include "../Satellite.h"
+#include "../location.h"
+#include "../satellite.h"
 #include "ui_jscalc.h"
 #include <QJSEngine>
 
