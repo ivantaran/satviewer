@@ -115,11 +115,9 @@ void SUpdater::httpFinished() {
 }
 
 void SUpdater::load(const QString &fileName) {
-    QString line, url, name;
+    QString line, url;
     bool state;
     int i = 0;
-    QStandardItemModel *model = new QStandardItemModel();
-    // model->setColumnCount(2);
     if (listFile != 0) {
         listFile->close();
         delete listFile;
@@ -140,14 +138,12 @@ void SUpdater::load(const QString &fileName) {
         return;
     };
 
+    QStandardItemModel *model = new QStandardItemModel(this);
     while (!listFile->atEnd()) {
         line = QString(listFile->readLine());
         state = line.section(',', 0, 0).toInt();
-        // name = line.section(',', 0, 1).trimmed();
         url = line.section(',', 1).trimmed();
-        QStandardItem *item = new QStandardItem(url);
-        // QStandardItem *itemName = new QStandardItem("name");
-        // item->appendRow(itemName);
+        model->appendRow(new QStandardItem(url));
         model->item(i)->setCheckable(true);
         if (state) {
             model->item(i)->setCheckState(Qt::Checked);
