@@ -1,7 +1,6 @@
+#include "satviewer.h"
 
 #include <cfloat>
-
-#include "satviewer.h"
 
 SatViewer::SatViewer() {
     m_currentSatellite = nullptr;
