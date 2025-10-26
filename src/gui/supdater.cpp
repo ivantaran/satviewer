@@ -5,12 +5,12 @@
 
 SUpdater::SUpdater(const QString &fileName) {
     widget.setupUi(this);
-    file = 0;
-    listFile = 0;
+    listFile = nullptr;
     httpGetId = -1;
     httpRequestAborted = false;
     urlIndex = 0;
-
+    m_reply = nullptr;
+    m_path = "";
     connect(widget.btnUpdate, SIGNAL(clicked()), this, SLOT(updateTle()));
     connect(widget.btnSave, SIGNAL(clicked()), this, SLOT(save()));
     connect(widget.btnAdd, SIGNAL(clicked()), this, SLOT(addLine()));
@@ -37,42 +37,17 @@ void SUpdater::updateTle() {
 
     widget.progressBar->setValue(0);
 
-    if (file) {
-        file->close();
-        delete file;
-        file = NULL;
-    }
-
     QUrl url(model->item(urlIndex)->text());
     model->item(urlIndex)->setIcon(QIcon(":/status/right-arrow-1.svg"));
 
-    QFileInfo fileInfo(url.url());
-    QString fileName = fileInfo.fileName();
-
-    if (fileName.isEmpty()) {
-        fileName = "index.html";
-    }
-
-    if (QFile::exists(fileName)) {
-        QFile::remove(fileName);
-    }
-
-    fileInfo.setFile(listFile->fileName());
-    file = new QFile(fileInfo.path() + "/" + fileName);
-
-    if (!file->open(QFile::WriteOnly)) {
-        widget.textStatus->appendPlainText(
-            QString("[%0]: %1").arg(fileName).arg(file->errorString()));
-        delete file;
-        file = NULL;
-        return;
-    }
+    QFileInfo fileInfo(listFile->fileName());
+    m_path = fileInfo.path() + QDir::separator();
 
     httpRequestAborted = false;
-    reply = manager.get(QNetworkRequest(url));
+    m_reply = m_manager.get(QNetworkRequest(url));
 
-    connect(reply, SIGNAL(finished()), this, SLOT(httpFinished())); // TODO disconnect
-    connect(reply, SIGNAL(downloadProgress(qint64, qint64)), this,
+    connect(m_reply, SIGNAL(finished()), this, SLOT(httpFinished())); // TODO disconnect
+    connect(m_reply, SIGNAL(downloadProgress(qint64, qint64)), this,
             SLOT(updateDataReadProgress(qint64, qint64)));
 }
 
@@ -88,23 +63,37 @@ void SUpdater::updateDataReadProgress(qint64 bytesRead, qint64 totalBytes) {
 void SUpdater::httpFinished() {
     QStandardItemModel *model = (QStandardItemModel *)widget.listView->model();
 
-    if (reply->error()) {
-        file->remove();
+    if (m_reply->error()) {
         model->item(urlIndex)->setIcon(QIcon(":/status/prohibition.svg"));
-        widget.textStatus->appendPlainText(
-            QString("[%0]: %1").arg(file->fileName()).arg(reply->errorString()));
+        QString err = QString("Download of [%0] failed: %1.")
+                          .arg(m_reply->url().toString(), m_reply->errorString());
+        widget.textStatus->appendPlainText(err);
     } else {
-        model->item(urlIndex)->setIcon(QIcon(":/status/correct.svg"));
-        if (file->isWritable()) {
-            file->write(reply->readAll());
-        } else {
-            qWarning("Error: SUpdater file write");
+        QVariant content = m_reply->header(QNetworkRequest::ContentDispositionHeader);
+        if (content.isValid()) {
+            QString disposition = content.toString();
+            QRegularExpression regex("filename\\*?=\"?([^\";]+)\"?");
+            QRegularExpressionMatch match = regex.match(disposition);
+            if (match.hasMatch()) {
+                QString fileName = match.captured(1).trimmed();
+                if (fileName.contains('%')) {
+                    fileName = QUrl::fromPercentEncoding(fileName.toUtf8());
+                }
+
+                QFile file(m_path + fileName);
+                if (file.open(QFile::WriteOnly)) {
+                    file.write(m_reply->readAll());
+                    file.close();
+                    model->item(urlIndex)->setIcon(QIcon(":/status/correct.svg"));
+                } else {
+                    qWarning("Error: SUpdater file write");
+                }
+            }
         }
     }
 
-    file->close();
-    reply->deleteLater();
-    reply = 0;
+    m_reply->deleteLater();
+    m_reply = nullptr;
 
     if (httpRequestAborted) {
         return;
@@ -134,7 +123,7 @@ void SUpdater::load(const QString &fileName) {
 
     if (!listFile->isOpen()) {
         widget.textStatus->appendPlainText(
-            QString("[%0]: %1").arg(fileName).arg(file->errorString()));
+            QString("[%0]: %1").arg(fileName).arg(listFile->errorString()));
         return;
     };
 
@@ -170,7 +159,7 @@ void SUpdater::save() {
 
     if (!listFile->isOpen()) {
         widget.textStatus->appendPlainText(
-            QString("[%0]: %1").arg(listFile->fileName()).arg(file->errorString()));
+            QString("[%0]: %1").arg(listFile->fileName()).arg(listFile->errorString()));
         return;
     }
 
@@ -201,7 +190,7 @@ void SUpdater::clear() {
 
 void SUpdater::abort() {
     httpRequestAborted = true;
-    if (reply) {
-        reply->deleteLater(); // TODO assign to NULL
+    if (m_reply) {
+        m_reply->deleteLater(); // TODO assign to NULL
     }
 }

@@ -132,6 +132,7 @@ void SDlgOptions::saveListViewSat() {
         QByteArray bytes(sat->getState(), sat->getStateSize());
         q.bindValue(":model_state", bytes);
         q.exec();
+        qWarning() << q.executedQuery();
     }
     db.exec("COMMIT;");
 }

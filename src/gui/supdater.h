@@ -18,9 +18,10 @@ public:
 
 private:
     Ui::Updater widget;
-    QNetworkAccessManager manager;
-    QNetworkReply *reply;
-    QFile *file, *listFile;
+    QNetworkAccessManager m_manager;
+    QNetworkReply *m_reply;
+    QFile *listFile;
+    QString m_path;
     int httpGetId;
     bool httpRequestAborted;
     int urlIndex;
